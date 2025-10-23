@@ -1,0 +1,140 @@
+:root{
+    --bg: #FAF6F0; /* warm ivory */
+    --wood: #8B5E3C; /* primary wood */
+    --wood-dark: #5A3E2A;
+    --muted: #6E6E6E;
+    --card: #FFFFFF;
+    --accent: #C69C72; /* caramel */
+    --success: #3A8D5A;
+}
+
+*{
+    box-sizing:border-box;
+    /* margin: 0; */
+    padding: 0;
+}
+
+body{
+    margin:0;
+    font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    background:var(--bg);
+    color:var(--wood-dark);
+}
+
+/* layout */
+.app{
+    display:flex;
+    min-height:100vh;
+}
+
+/* sidebar */
+.sidebar{
+    width:260px;
+    background:linear-gradient(180deg,var(--card),#FFF8F0);
+    border-right:1px solid rgba(0,0,0,0.04);
+    padding:22px 16px;
+    position:relative;
+}
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.brand h1{
+    font-size:16px;
+    margin:0;
+}
+
+.brand p{
+    margin:0;
+    font-size:12px;
+    color:var(--muted);
+}
+
+.logo{
+    width:44px;
+    height:44px;
+    border-radius:8px;
+    background:linear-gradient(135deg,var(--wood),var(--accent));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-weight:700;
+}
+
+.nav{
+    margin-top:8px
+}
+
+.nav-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px;
+    border-radius:8px;
+    color:var(--wood-dark);
+    cursor:pointer;
+    margin-bottom:6px;
+}
+
+.nav-item:hover{
+    background:rgba(139,94,60,0.06)
+}
+
+.nav-item.active{
+    background:linear-gradient(90deg, rgba(198,156,114,0.12), rgba(139,94,60,0.06));
+    border-left:3px solid var(--wood);
+    padding-left:9px;
+}
+
+.nav-icon{
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity:0.9
+}
+
+.nav-label{
+    font-size:14px
+}
+
+/* main content */
+.main{
+    flex:1;
+    padding:24px;
+    margin: 0 auto;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.search{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:#fff;
+    padding:8px 12px;
+    border-radius:999px;
+    box-shadow:0 1px 2px rgba(0,0,0,0.03);
+    border:1px solid rgba(0,0,0,0.04);
+}
+
+.search input{
+    border:0;
+    outline:none;
+    font-size:14px;
+}
+
+
+
