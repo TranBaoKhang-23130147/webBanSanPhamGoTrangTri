@@ -1,0 +1,176 @@
+:root {
+    --background-color: #FAF3E0;
+    --primary-color: #8B5E3C;
+    --secondary-color: #7C8A5B;
+    --text-color: #3E2F1C;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    margin: 0;
+    background: var(--background-color);
+}
+
+
+/* ----- HEADER CHÍNH ----- */
+#header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    border-bottom: 2px solid var(--primary-color);
+}
+#logo {
+    display: flex;
+}
+
+/* ----- LOGO ----- */
+#logo .image {
+
+    margin-left:10px;
+    height: 80px;
+    object-fit: contain;
+}
+#header .brand {
+    font-size: 10px;
+    margin-top: 35px;
+    margin-left:-8px;
+
+}
+#header #name-web {
+    font-weight: bold ;
+    padding-bottom:4px;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-right:50px;
+    font-size: 15px;
+}
+
+.user-login {
+    position: relative;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.user-login i {
+
+    color: #000000;
+
+}
+
+/* Ẩn popup */
+
+.user {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0%;
+    border: 1px solid #000000;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 10px;
+    width: 165px;
+    z-index: 20;
+    transform: translate(30%, 0px);
+
+
+}
+.user a + a {
+    border-top: 1px solid #e0e0e0;
+}
+
+#cart-link {
+    color: #333;
+}
+#cart-link:hover {
+    color:var(--primary-color);
+}
+#search-link {
+    color:#333;
+}
+#search-link:hover {
+    color: var(--primary-color);
+}
+
+.user-login:hover .user {
+    display: block;
+
+
+}
+.user-login:hover i {
+    color: var(--primary-color);
+}
+
+/* Link trong popup */
+.user a {
+    display: block;
+    padding: 10px 16px;
+    color: #333;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+
+}
+
+.user a:hover {
+    background-color: #f2f2f2;
+}
+.menu-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.menu-bar .menu {
+    position: relative;
+    display: flex;
+    padding: 15px;
+    cursor: pointer;
+}
+
+
+/* KHỐI MENU CON */
+.submenu {
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    width: 260px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    padding: 6px ;
+}
+
+/* Hiện menu con khi hover */
+.menu:hover .submenu {
+    display: block;
+}
+
+/* item trong submenu */
+.submenu .menu-item {
+    padding: 12px 18px;
+    font-size: 13px;
+    color: #333;
+}
+
+.submenu .menu-item:hover {
+    background: #f3f3f3;
+    color: var(--primary-color);
+    border-radius: 6px;
+}
