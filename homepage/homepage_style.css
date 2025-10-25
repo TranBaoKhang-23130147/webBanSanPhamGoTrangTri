@@ -136,17 +136,41 @@ body {
 
 }
 .menu-bar .menu {
+    position: relative;
     display: flex;
     padding: 15px;
     cursor: pointer;
 }
-.menu-bar .menu:hover {
-    color: #8B5E3C;
-}
-.menu-bar .menu .menu-item {
+
+
+/* KHỐI MENU CON */
+.submenu {
     display: none;
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    width: 260px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    padding: 6px ;
 }
-.menu-bar product:hover {
+
+/* Hiện menu con khi hover */
+.menu:hover .submenu {
     display: block;
-    cursor: pointer;
+}
+
+/* item trong submenu */
+.submenu .menu-item {
+    padding: 12px 18px;
+    font-size: 13px;
+    color: #333;
+}
+
+.submenu .menu-item:hover {
+    background: #f3f3f3;
+    color: var(--primary-color);
+    border-radius: 6px;
 }
