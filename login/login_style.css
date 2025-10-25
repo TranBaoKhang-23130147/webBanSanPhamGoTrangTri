@@ -11,7 +11,6 @@
     --secondary-color: #7C8A5B;
     --text-color: #3E2F1C;
 }
-
 body{
     display: flex;
     justify-content: center;
@@ -39,6 +38,35 @@ body{
 .from-box.login{
     left: 0;
     padding: 0 40px;
+}
+.from-box.login .animation{
+    transform: translatex(0%);
+    transition: .7s;
+    opacity: 1;
+
+    transition-delay: calc(.1s *var(--S));
+}
+.container.active .from-box.login .animation{
+    transform: translatex(-120%);
+    opacity: 0;
+    transition-delay: calc(.1s *var(--D));
+}
+.from-box.Register{
+    right: 0;
+    padding: 0 60px;
+}
+.from-box.Register .animation{
+    transform: translatex(120%);
+    transition: .7s ease;
+    opacity: 0;
+    filter: blur(10px);
+    transition-delay: calc(.1s *var(--S));
+}
+.container.active .from-box.Register .animation{
+    transform: translatex(0%);
+    opacity: 1;
+    filter: blur(0px);
+    transition-delay: calc(.1s *var(--li));
 }
 .from-box h2{
     font-size: 32px;
@@ -124,11 +152,13 @@ body{
     font-size: 14px;
     text-align: center;
     margin: 20px 0 10px;
+    /*pointer-events: none;*/
 }
 .regi-link a{
     text-decoration: none;
     color: var(--primary-color);
     font-weight: 600;
+    /*pointer-events: none;*/
 }
 .regi-link a:hover{
     text-decoration: underline;
@@ -146,6 +176,49 @@ body{
     right: 0;
     text-align: right;
     padding: 0 40px 60px 150px;
+
+}
+.info-content.login .animation{
+    transform: translateX(0);
+    transition: .7s ease;
+    /*transition-delay: calc(.1s * var(--D));*/
+    transition-delay: calc(.1s * var(--S));
+    opacity: 1;
+    filter: blur(0px);
+}
+.container.active .info-content.login .animation{
+    transform: translateX(120%);
+    opacity: 0;
+    filter: blur(10px) ;
+    transition-delay: calc(.1s * var(--D));
+}
+.info-content.Register{
+    /*right: 0;*/
+    left: 0;
+    text-align: left;
+    padding: 0 150px 60px 40px;
+    pointer-events: none;
+    /*display: none;*/
+
+}
+.info-content.Register .animation{
+    transform: translateX(-120%);
+    transition: .7s ease;
+    /*opacity: 0;*/
+    /*transition-delay: calc(.1s * var(--D));*/
+    /*transition-delay: .5s;*/
+    opacity: 0;
+    filter: blur(10px);
+    transition-delay: calc(.1s *var(--S));
+
+
+}
+.container.active .info-content.Register .animation{
+    transform: translateX(0%);
+    opacity: 1;
+    filter: blur(0);
+    transition-delay: calc(.1s * var(--li));
+    /*opacity: 0;*/
 }
 .info-content h2{
     text-transform: uppercase;
@@ -162,6 +235,32 @@ body{
     height: 600px;
     width: 850px;
     background: linear-gradient(45deg,#FAF3E0,#8B5E3C);
+  /*  transform: rotate(10deg) skewY(40deg); */
     transform: rotate(10deg) skewY(40deg);
     transform-origin: bottom right;
+    transition: 1.5s ease;
+    /*transition: 1.6s;*/
+    transition-delay: 1.6s;
+}
+.container.active .curved-shape{
+    transform: rotate(0deg) skewY(0deg);
+    transition-delay: .5s;
+}
+.container .curved-shape1{
+    position: absolute;
+   /* right: 0;*/
+    left: 250px;
+    top: 100%;
+    height: 700px;
+    width: 850px;
+  /*  background: linear-gradient(45deg,#FAF3E0,#8B5E3C);*/
+    background: var(--background-color);
+    border-top: 3px solid var(--primary-color);
+    transform-origin: bottom left;
+    transition: 1.5s ease;
+    transition-delay: .5s ;
+}
+.container.active .curved-shape1{
+    transform: rotate(-11deg) skewY(-41deg);
+    transition-delay: 1.2s;
 }
