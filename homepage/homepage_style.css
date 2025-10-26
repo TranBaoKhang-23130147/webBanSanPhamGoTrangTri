@@ -453,4 +453,60 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
+.footer {
+    background: #F5F5F5;
+    padding: 50px 0;
+    font-family: Arial, sans-serif;
+}
 
+.footer-container {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.footer-col {
+    min-width: 220px;
+    margin-bottom: 20px;
+}
+
+.footer-col h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.footer-col a,
+.footer-col p {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: #333;
+    text-decoration: none;
+}
+
+.footer-logo {
+    width: 170px;
+    margin: 10px 0 15px 0;
+}
+.social-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* khoảng cách giữa icon */
+    margin-top: 10px;
+}
+
+.social-icons a{
+    font-size: 20px;
+    margin-right: 10px;
+
+    color: #333;
+    text-decoration: none;
+}
+
+.social-icons a:hover,
+.footer-col a:hover {
+    color: #8B5E3C;
+}
