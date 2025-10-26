@@ -15,19 +15,26 @@
         <h2 class="animation" style="--D:0 ; --S:21;">Đăng nhập</h2>
         <form action="#">
             <div class="input-box animation" style="--D:1; --S:22;">
-                <input type="text" id="username" required>
-                <label for="username">Tên đăng nhập</label>
-                <i class='bx  bxs-user'  style='color:#8B5E3C'></i>
+                <input type="text" id="email" required>
+                <label for="email">Email</label>
+<!--                <i class='bx  bxs-user'  style='color:#8B5E3C'></i>-->
+                <i class='bx bxl-google' style='color:#8B5E3C'></i>
+
             </div>
             <div class="input-box animation" style="--D:2 ; --S:23;">
                 <input type="password" id="password" required>
                 <label for="password">Mật khẩu</label>
                 <i class='bx  bxs-lock'  style='color:#8B5E3C'></i>
             </div>
-            <div class="input-box animation" style="--D:3; --S:24;">
+            <div class="remeber-forgot animation" style="--D:3 ; --S:24;">
+                <label > <input type="checkbox">Ghi nhớ mật khẩu</label>
+                <a href="forgot-password.html" class="ForgotLink">Quên mật khẩu?</a>
+            </div>
+            <div class="input-box animation" style="--D:4; --S:25;">
                 <button type = "submit" class="btn">Đăng nhập</button>
             </div>
-            <div class="regi-link animation" style="--D:4 ; --S:25;">
+
+            <div class="regi-link animation" style="--D:5 ; --S:26;">
                 <p>Bạn có tài khoản chưa ? <a href="#" class="SignUpLink">Đăng ký</a></p>
             </div>
         </form>
@@ -41,24 +48,37 @@
         <form action="#">
             <div class="input-box animation" style="--li:18 ;--S:1;">
                 <input type="text" required>
-                <label for="username">Tên đăng nhập</label>
+                <label >Tên</label>
                 <i class='bx  bxs-user'  style='color:#8B5E3C'></i>
             </div>
-            <div class="input-box animation" style="--li:18 ;--S:1;">
-                <input type="text" id="email" required>
+<!--            <div class="input-box animation" style="&#45;&#45;li:19 ;&#45;&#45;S:2;">-->
+<!--                <input type="text" required>-->
+<!--                <label >Tên hiển thị</label>-->
+<!--                <i class='bx  bxs-user'  style='color:#8B5E3C'></i>-->
+<!--            </div>-->
+            <div class="input-box animation" style="--li:19 ;--S:2;">
+                <input type="text"  required>
                 <label for="email" >Email</label>
                 <i class='bx bxl-google' style='color:#8B5E3C'></i>
 <!--                <i class='bx bxs-envelope' style='color:#8B5E3C'></i>-->
             </div>
-            <div class="input-box animation" style="--li:19 ;--S:2;">
+            <div class="input-box animation" style="--li:20 ;--S:3;">
                <input type="password" required>
                 <label for="password">Mật khẩu</label>
                 <i class='bx  bxs-lock'  style='color:#8B5E3C'></i>
             </div>
-            <div class="input-box animation" style="--li:20 ;--S:3;">
+            <div class="input-box animation" style="--li:21 ;--S:4;">
+                <input type="password" required>
+                <label for="password">Xác nhận lại mật khẩu</label>
+                <i class='bx  bxs-lock'  style='color:#8B5E3C'></i>
+            </div>
+            <div class="input-box animation" style="--li:22 ;--S:5;">
                 <button type = "submit" class="btn">Đăng ký</button>
             </div>
-            <div class="regi-link animation" style="--li:21;--S:4;">
+<!--            <div class="login-or">-->
+<!--                -->
+<!--            </div>-->
+            <div class="regi-link animation" style="--li:23;--S:6;">
                 <p>Bạn có tài khoản chưa ? <a href="#" class="SignInLink">Đăng nhập</a></p>
             </div>
         </form>
