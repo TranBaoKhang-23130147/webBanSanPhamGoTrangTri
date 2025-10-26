@@ -14,11 +14,11 @@
 body {
     font-family: Helvetica, Arial, sans-serif;
     margin: 0;
-    background: var(--background-color);
+
 }
 
 
-/* ----- HEADER CHÍNH ----- */
+
 #header {
     position: sticky;
     top: 0;
@@ -26,18 +26,20 @@ body {
     height: 80px;
     display: flex;
     align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     justify-content: space-between;
     background-color: #fff;
-    border-bottom: 2px solid var(--primary-color);
+
+    z-index:999;
 }
 #logo {
     display: flex;
 }
 
-/* ----- LOGO ----- */
+
 #logo .image {
 
-    margin-left:10px;
+    margin-left:20px;
     height: 80px;
     object-fit: contain;
 }
@@ -57,7 +59,7 @@ body {
     align-items: center;
     gap: 25px;
     margin-right:50px;
-    font-size: 15px;
+    font-size: 18px;
 }
 
 .user-login {
@@ -72,7 +74,6 @@ body {
 
 }
 
-/* Ẩn popup */
 
 .user {
     display: none;
@@ -115,7 +116,7 @@ body {
     color: var(--primary-color);
 }
 
-/* Link trong popup */
+
 .user a {
     display: block;
     padding: 10px 16px;
@@ -128,6 +129,16 @@ body {
 
 .user a:hover {
     background-color: #f2f2f2;
+}
+.menu {
+    color: #3e2f1c; /* màu chữ mặc định */
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+/* Khi hover vào menu */
+.menu:hover {
+    color: var(--primary-color); /* màu nâu chính */
 }
 .menu-bar {
     display: flex;
@@ -143,7 +154,7 @@ body {
 }
 
 
-/* KHỐI MENU CON */
+
 .submenu {
     display: none;
     position: absolute;
@@ -157,12 +168,12 @@ body {
     padding: 6px ;
 }
 
-/* Hiện menu con khi hover */
+
 .menu:hover .submenu {
     display: block;
 }
 
-/* item trong submenu */
+
 .submenu .menu-item {
     padding: 12px 18px;
     font-size: 13px;
@@ -173,4 +184,273 @@ body {
     background: #f3f3f3;
     color: var(--primary-color);
     border-radius: 6px;
+
 }
+.banner {
+    margin-top: 20px;
+}
+
+.banner-container {
+    position: relative;
+    width: 90%;
+    overflow: hidden;
+    color: #fff;
+    border-radius: 8px;
+    margin: 20px auto 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.banner-slide {
+    display: none;
+    height: 500px;
+    width: 100%;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    position: relative;
+}
+.banner-slide.active {
+    display: block;
+}
+
+
+
+.buy-now-btn {
+    padding: 10px 25px;
+    font-size: 1rem;
+    color: #0d2438;
+    background-color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
+    z-index: 3;
+}
+
+.buy-now-btn:hover {
+    background-color: #ddd;
+    transform: scale(1.05);
+}
+
+
+
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1.8rem;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.nav-btn:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: translateY(-50%) scale(1.2);
+}
+.prev-btn {
+    left: 110px;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+}
+
+.next-btn {
+    right: 110px;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+}
+
+.indicator {
+    position: absolute;
+    bottom: 180px; /* trên nút pause/play một chút */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 5;
+}
+
+
+
+.progress-loader {
+    position: relative;
+    width: 100px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+}
+
+.progress-loader::before,
+.progress-loader::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.progress-loader::before {
+    left: -15px;
+    width: 20px;
+}
+
+.progress-loader::after {
+    right: -15px;
+    width: 20px;
+}
+
+.progress {
+    height: 4px;
+    width: 0;
+    background: #ffffff;
+    border-radius: 2px;
+    position: absolute;
+    top: -1px;
+    animation: loading 5s linear infinite;
+}
+
+@keyframes loading {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+.pause-play-btn {
+    position: absolute;
+    bottom: 172px; /* sát đáy ảnh */
+    left: 67%;
+    transform: translateX(-50%);
+    background-color: rgba(0,0,0,0.5);
+    color: #fff;
+    border: none;
+    /*padding: 10px 15px;*/
+    font-size: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 6;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.pause-play-btn:hover {
+    background-color: rgba(0,0,0,0.7);
+    transform: translateX(-50%) scale(1.2);
+}
+.tooltip {
+    display: none;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    z-index: 10;
+}
+
+.progress-loader:hover{
+    display: block;
+    cursor: pointer;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+    z-index: 1;
+    border-radius: 8px;
+}
+
+.banner-content {
+    position: relative;
+    z-index: 2;
+}
+
+
+.banner-slogan {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 60px;
+    color: #5b3a22; /* Nâu gỗ sang */
+    font-family: "Cormorant Garamond", serif;
+}
+
+.banner-slogan h2 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.banner-slogan p {
+    font-size: 1.15rem;
+    font-weight: 400;
+    opacity: 0.85;
+    width: 70%;
+    margin: auto;
+    line-height: 1.45;
+}
+.san-pham-moi {
+    padding: 50px 0;
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.san-pham-moi .title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #5b3a22;
+    letter-spacing: 1px;
+    font-family: "Cormorant Garamond", serif;
+}
+
+.product-list {
+    width: 90%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 25px;
+}
+
+.product-item {
+    background: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.product-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.product-item h3 {
+    font-size: 1rem;
+    margin: 8px 0 5px;
+    color: #3e2f1c;
+}
+
+.product-item .price {
+    color: #a56b43;
+    font-weight: bold;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
