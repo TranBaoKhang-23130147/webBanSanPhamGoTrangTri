@@ -9,3 +9,7 @@ RegisterLink.addEventListener('click', () => {
 LoginLink.addEventListener('click', () => {
     container.classList.remove('active'); // Quay lại form đăng nhập
 });
+// document.getElementById("forgot-link").addEventListener("click", function(e) {
+//     e.preventDefault(); // chặn link mặc định
+//     window.location.href = "forgot-password.html"; // chuyển sang trang khác
+// });

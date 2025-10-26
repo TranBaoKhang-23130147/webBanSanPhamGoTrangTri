@@ -1,0 +1,137 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    color: var(--text-color);
+}
+:root {
+    /*--background-color: #FAF3E0;*/
+    --background-color: #ffffff;
+    --primary-color: #8B5E3C;
+    --secondary-color: #7C8A5B;
+    --text-color: #3E2F1C;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+
+.container{
+    position: relative;
+    width: 700px;
+    height: 300px;
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 25px var(--primary-color);
+    overflow: hidden;
+}
+.container .form-forgot-pass{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.form-forgot-pass .logo{
+    display: flex;
+    flex-direction: row;
+}
+.form-forgot-pass .image{
+    padding: 8px;
+}
+.form-forgot-pass #name-web{
+    padding: 8px;
+}
+
+.form-forgot-pass h2{
+    font-size: 32px;
+}
+.form-forgot-pass p{
+    font-size: 16px;
+    padding: 10px;
+}
+.form-forgot-pass .input-box{
+    position: relative;
+    width: 100%;
+    height: 23px;
+    margin-top: 25px;
+}
+.input-box input{
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    color: var(--text-color);
+    font-weight: 600;
+    border-bottom: 2px solid var(--text-color);
+    /*padding-right: 23px;*/
+}
+.input-box input:focus,
+.input-box input:valid{
+    border-bottom: 2px solid var(--primary-color);
+}
+.input-box label{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: var(--text-color);
+    transition: .5s;
+}
+.input-box input:focus ~ label,
+.input-box input:valid ~ label{
+    top: -5px;
+    color: var(--primary-color);
+}
+.input-box i{
+    position: absolute;
+    top: 25%;
+    right: 0;
+    font-size: 18px;
+    transform: translateY(-50%);
+    transition: .5s;
+}
+.input-box input:focus ~ i,
+.input-box input:valid ~ i{
+    color: var(--primary-color);
+}
+.btn{
+    position: relative;
+    width: 100%;
+    height: 35px;
+    background:transparent ;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    border: 2px solid var(--primary-color);
+    overflow: hidden;
+    z-index: 1;
+}
+.btn::before{
+    content: "";
+    position: absolute;
+    height: 300%;
+    width: 100%;
+    background: linear-gradient(#FAF3E0,#8B5E3C,#FAF3E0,#8B5E3C);
+    top: -100%;
+    left: 0;
+    z-index: -1;
+    transition: .5s;
+}
+.btn:hover:before{
+    top: 0;
+}
+.form-forgot-pass .continue-login{
+    position: absolute;
+    top: 90%
+}
+
+
