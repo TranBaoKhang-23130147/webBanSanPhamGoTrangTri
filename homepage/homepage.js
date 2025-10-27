@@ -109,3 +109,18 @@ progressLoaders.forEach((loader, index) => {
         startAutoSlide();
     });
 });
+// Thông báo lỗi khi chưa đăng nhập
+let isLoggedIn = false;
+
+document.addEventListener("DOMContentLoaded", function() {
+    const myPage = document.getElementById("myPage");
+
+    myPage.addEventListener("click", function(e) {
+        if (!isLoggedIn) {
+            e.preventDefault();
+            alert("Vui lòng đăng nhập"); // << Giờ sẽ chạy
+        } else {
+            window.location.href = "profile.html";
+        }
+    });
+});
