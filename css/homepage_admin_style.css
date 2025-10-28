@@ -342,3 +342,68 @@ body{
   }
 }
 
+/* === PRODUCTS PAGE === */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.btn-add {
+  background: var(--wood);
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-add:hover {
+  background: var(--wood-dark);
+}
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.toolbar input,
+.toolbar select {
+  padding: 8px 12px;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.thumb {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.status.success { background: #E3F6E9; color: #3A8D5A; }
+.status.warning { background: #FFF5E0; color: #B98120; }
+.status.error { background: #FDECEA; color: #B13A3A; }
+
+.btn.small {
+  font-size: 13px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+.btn.edit { background: #C69C72; color: white; }
+.btn.delete { background: #E57373; color: white; }
+.btn.edit:hover { background: #b3835f; }
+.btn.delete:hover { background: #d95858; }
