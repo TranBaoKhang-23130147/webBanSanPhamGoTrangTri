@@ -1,0 +1,58 @@
+
+<div class="topbar">
+    <h2>Quản lý sản phẩm</h2>
+    <button class="btn-add">+ Thêm sản phẩm</button>
+</div>
+
+<div class="toolbar">
+    <input type="text" id="searchProduct" placeholder="🔍 Tìm sản phẩm...">
+    <select id="filterCategory">
+    <option value="">Tất cả danh mục</option>
+    <option value="decor">Trang trí</option>
+    <option value="furniture">Nội thất</option>
+    <option value="gift">Quà tặng</option>
+    </select>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ảnh</th>
+            <th>Tên sản phẩm</th>
+            <th>Danh mục</th>
+            <th>Ngày thêm</th>
+            <th>Giá (VNĐ)</th>
+            <th>Tồn kho</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody id="productTable">
+        <tr>
+            <td><img src="../img/den_go_decor.png" alt="Đèn gỗ decor" alt="Wood decor" class="thumb"></td>
+            <td>Đèn gỗ treo tường</td>
+            <td>Trang trí</td>
+            <td>28/10/2025</td>
+            <td>650,000</td>
+            <td>12</td>
+            <td><span class="status success">Còn hàng</span></td>
+            <td>
+            <button class="btn small edit">Sửa</button>
+            <button class="btn small delete">Xóa</button>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="../img/den_go_decor.png" alt="Wood decor" class="thumb"></td>
+            <td>Kệ gỗ mini</td>
+            <td>Nội thất</td>
+            <td>28/10/2025</td>
+            <td>480,000</td>
+            <td>3</td>
+            <td><span class="status warning">Sắp hết</span></td>
+            <td>
+            <button class="btn small edit">Sửa</button>
+            <button class="btn small delete">Xóa</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
