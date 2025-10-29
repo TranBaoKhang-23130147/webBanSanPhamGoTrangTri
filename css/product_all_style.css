@@ -12,7 +12,7 @@
 }
 
 body {
-    font-family:sans-serif;
+    font-family: sans-serif;
     margin: 0;
 
 }
@@ -35,7 +35,9 @@ body {
 #logo {
     display: flex;
 }
-
+.menu {
+    text-decoration: none;
+}
 
 #logo .image {
 
@@ -153,9 +155,7 @@ body {
     padding: 5px 15px 5px 15px;
     cursor: pointer;
 }
-.menu {
-    text-decoration: none;
-}
+
 
 
 .submenu {
@@ -169,7 +169,6 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     padding: 6px ;
-
 }
 
 
@@ -190,233 +189,83 @@ body {
     border-radius: 6px;
 
 }
-.banner {
-    margin-top: 20px;
-}
-
-.banner-container {
-    position: relative;
-    width: 90%;
-    overflow: hidden;
-    color: #fff;
-    border-radius: 8px;
-    margin: 20px auto 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.banner-slide {
-    display: none;
-    height: 500px;
+.overlay-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
     width: 100%;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    border-radius: 8px;
-    position: relative;
-}
-.banner-slide.active {
-    display: block;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 0;
 }
 
+.overlay-card {
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(12px);
+    border-radius: 28px;
+    height: 240px;
 
-
-.buy-now-btn {
-    padding: 10px 25px;
-    font-size: 1rem;
-    color: #0d2438;
-    background-color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.3s ease;
-    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.3);
-    z-index: 3;
-}
-
-.buy-now-btn:hover {
-    background-color: #ddd;
-    transform: scale(1.05);
-}
-
-
-
-.nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    font-size: 1.8rem;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
-    z-index: 5;
-}
+    align-items: center;
 
-.nav-btn:hover {
-    background-color: rgba(0, 0, 0, 0.7);
-    transform: translateY(-50%) scale(1.2);
-}
-.prev-btn {
-    left: 110px;
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
-}
-
-.next-btn {
-    right: 110px;
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
-}
-
-.indicator {
-    position: absolute;
-    bottom: 180px; /* trên nút pause/play một chút */
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-    z-index: 5;
-}
-
-
-
-.progress-loader {
-    position: relative;
-    width: 100px;
-    height: 3px;
-    background: rgba(255, 255, 255, 0.2);
-    overflow: hidden;
-}
-
-.progress-loader::before,
-.progress-loader::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    height: 2px;
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.progress-loader::before {
-    left: -15px;
-    width: 20px;
-}
-
-.progress-loader::after {
-    right: -15px;
-    width: 20px;
-}
-
-.progress {
-    height: 4px;
-    width: 0;
-    background: #ffffff;
-    border-radius: 2px;
-    position: absolute;
-    top: -1px;
-    animation: loading 5s linear infinite;
-}
-
-@keyframes loading {
-    0% { width: 0; }
-    100% { width: 100%; }
-}
-.pause-play-btn {
-    position: absolute;
-    bottom: 172px; /* sát đáy ảnh */
-    left: 67%;
-    transform: translateX(-50%);
-    background-color: rgba(0,0,0,0.5);
     color: #fff;
-    border: none;
-    /*padding: 10px 15px;*/
-    font-size: 15px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 6;
-    transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.pause-play-btn:hover {
-    background-color: rgba(0,0,0,0.7);
-    transform: translateX(-50%) scale(1.2);
-}
-.tooltip {
-    display: none;
-    position: absolute;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    z-index: 10;
-}
-
-.progress-loader:hover{
-    display: block;
-    cursor: pointer;
-}
-
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
-    z-index: 1;
-    border-radius: 8px;
-}
-
-.banner-content {
-    position: relative;
-    z-index: 2;
-}
-
-
-.banner-slogan {
     text-align: center;
-    margin-top: 30px;
-    margin-bottom: 60px;
-    color: #5b3a22; /* Nâu gỗ sang */
-    font-family: "Cormorant Garamond", serif;
+    padding: 0 40px;
+    transition: 0.3s;
 }
 
-.banner-slogan h2 {
-    font-size: 2.4rem;
+.overlay-card h3 {
+    font-size: 25px;
     font-weight: 700;
+    margin-bottom: 25px;
     letter-spacing: 1px;
-    margin-bottom: 10px;
 }
 
-.banner-slogan p {
-    font-size: 1.15rem;
-    font-weight: 400;
-    opacity: 0.85;
-    width: 70%;
-    margin: auto;
-    line-height: 1.45;
+.overlay-card button {
+    padding: 10px 30px;
+    border-radius: 20px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    color: #191919;
+    background: #fff;
+    transition: 0.3s;
 }
-.san-pham-moi {
+
+.overlay-card:hover {
+    background: rgba(0, 0, 0, 0.65);
+    transform: translateY(-10px);
+}
+
+/* Responsive: mobile 1 cột */
+@media (max-width: 768px) {
+    .overlay-section {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        padding: 50px 20px;
+    }
+
+    .overlay-card {
+        height: 200px;
+        border-radius: 50px;
+    }
+}
+
+.product-all {
+    background: var(--background-color);
     padding: 50px 0;
     text-align: center;
     font-family: sans-serif;
+    margin-bottom: 90px;
 }
 
-.san-pham-moi .title {
+.product-all .titleProduct {
     font-size: 2rem;
     margin-bottom: 30px;
     color: #5b3a22;
     letter-spacing: 1px;
-    font-family: "Cormorant Garamond", serif;
 }
 
 .product-list {
@@ -457,10 +306,10 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
+
 .footer {
     background: #F5F5F5;
     padding: 50px 0;
-    font-family: Arial, sans-serif;
 }
 
 .footer-container {
