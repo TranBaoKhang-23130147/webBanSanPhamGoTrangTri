@@ -1,9 +1,9 @@
 :root{
-    --bg: #FAF6F0; /* warm ivory */
+    --bg: #FFFFFF; /* warm ivory */
     --wood: #8B5E3C; /* primary wood */
     --wood-dark: #5A3E2A;
     --muted: #6E6E6E;
-    --card: #FFFFFF;
+    --card: #FAF6F0;
     --accent: #C69C72; /* caramel */
     --success: #3A8D5A;
 }
@@ -183,12 +183,12 @@ body{
     font-size: 12px;
 }
 
-.trend.up { 
-    color: var(--success); 
+.trend.up {
+    color: var(--success);
 }
 
-.trend.down { 
-    color: var(--error); 
+.trend.down {
+    color: var(--success);
 }
 
 .trend.stable {
@@ -304,15 +304,15 @@ body{
 }
 
 .status.done {
-    background: rgba(58,141,90,0.1); color: var(--success); 
+    background: rgba(58,141,90,0.1); color: var(--success);
 }
 
-.status.pending { 
-    background: rgba(198,156,114,0.1); color: var(--accent); 
+.status.pending {
+    background: rgba(198,156,114,0.1); color: var(--accent);
 }
 
-.status.cancel { 
-    background: rgba(197,75,75,0.1); color: var(--error); 
+.status.cancel {
+    background: rgba(197,75,75,0.1); color: #d95858;
 }
 
 /* Activity log */

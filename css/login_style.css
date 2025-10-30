@@ -7,9 +7,9 @@
 }
 
 :root {
-    --linear-grad: linear-gradient(to right, #8B5E3C, #B89973);
+    --linear-grad: linear-gradient(to right, #8B5E3C, #5A3E2A);
     --grad-clr1: #8B5E3C;
-    --grad-clr2: #B89973;
+    --grad-clr2: #5A3E2A;
 }
 
 body {
@@ -27,6 +27,7 @@ body {
     box-shadow: 25px 30px 55px #5557;
     border-radius: 13px;
     overflow: hidden;
+    overflow-y: auto;
 }
 .form-container{
     position: absolute;
@@ -34,6 +35,7 @@ body {
     height: 100%;
     padding: 0px 40px;
     transition: all 0.6s ease-in-out;
+
 }
 .sign-up-container{
     opacity: 0;
@@ -104,6 +106,48 @@ a.forgot{
     padding-bottom: 3px;
     border-bottom: 2px solid #EEEEEE;
 }
+.remember-forgot {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    margin: 10px 0 5px;
+}
+
+.remember-forgot label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #333;
+    cursor: pointer;
+    top: 352px;
+    left: 88px;
+    white-space: nowrap;
+}
+/* Ô checkbox */
+.remember-forgot input[type="checkbox"] {
+    accent-color: var(--grad-clr1);
+    width: 15px;
+    height: 15px;
+}
+
+
+/* Link "Quên mật khẩu?" */
+.remember-forgot .forgot {
+    border: none;
+    font-size: 13px;
+    /*color: var(--grad-clr1);*/
+    text-decoration: none;
+    transition: 0.2s;
+    padding-left: 220px;
+}
+
+.remember-forgot .forgot:hover {
+    /*text-decoration: underline;*/
+    color: var(--grad-clr2);
+}
+
 button{
     border-radius: 20px;
     border: 1px solid var(--grad-clr1);
@@ -148,7 +192,7 @@ button{
 
 .overlay {
     position: relative;
-    background-image: url("../img/blog2.jpg");
+    background-image: url("../img/login8.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -158,6 +202,22 @@ button{
     width: 250%;
     transition: transform 0.6s ease-in-out;
 }
+.overlay::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(20, 20, 20, 0.45);
+    z-index: 0;
+}
+
+.overlay-panel {
+    position: relative;
+    z-index: 1;
+}
+
 .overlay-panel {
     position: absolute;
     display: flex;
@@ -208,3 +268,22 @@ p {
 .container.right-panel-active .overlay {
     transform: translateX(50%);
 }
+.password-note {
+    display: block;
+    font-size: 12px;
+    color: #8B5E3C;
+    margin-top: 5px;
+    text-align: left;
+    padding-left: 5px;
+}
+
+.terms {
+    width: 100%;
+    font-size: 12px;
+    color: #333;
+    text-align: left;
+    margin: 15px 0;
+    line-height: 1.5;
+}
+
+
