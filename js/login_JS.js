@@ -1,15 +1,28 @@
-const container = document.querySelector('.container');
-const LoginLink = document.querySelector('.SignInLink');
-const RegisterLink = document.querySelector('.SignUpLink');
+// Lấy các phần tử cần dùng
+const container = document.getElementById('container');
+const overlayBtn = document.getElementById('overlayBtn');
+const overlayCon = document.getElementById('overlayCon');
 
-RegisterLink.addEventListener('click', () => {
-    container.classList.add('active'); // Hiện form đăng ký
+// Khi click vào nút chính giữa
+overlayBtn.addEventListener('click', () => {
+    container.classList.toggle('right-panel-active');
+
+    // Đổi vị trí của overlay
+    if (container.classList.contains('right-panel-active')) {
+        overlayCon.style.transform = 'translateX(-150%)';
+    } else {
+        overlayCon.style.transform = 'translateX(0)';
+    }
 });
 
-LoginLink.addEventListener('click', () => {
-    container.classList.remove('active'); // Quay lại form đăng nhập
+// Khi click nút "Sign Up" ở overlay phải
+document.querySelector('.overlay-right button').addEventListener('click', () => {
+    container.classList.add('right-panel-active');
+    overlayCon.style.transform = 'translateX(-150%)';
 });
-// document.getElementById("forgot-link").addEventListener("click", function(e) {
-//     e.preventDefault(); // chặn link mặc định
-//     window.location.href = "forgot-password.html"; // chuyển sang trang khác
-// });
+
+// Khi click nút "Sign In" ở overlay trái
+document.querySelector('.overlay-left button').addEventListener('click', () => {
+    container.classList.remove('right-panel-active');
+    overlayCon.style.transform = 'translateX(0)';
+});
