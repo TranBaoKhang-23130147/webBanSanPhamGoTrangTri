@@ -134,14 +134,14 @@ body {
     background-color: #f2f2f2;
 }
 .menu {
-    color: #3e2f1c; /* màu chữ mặc định */
+    color: #3e2f1c;
     font-weight: 600;
     transition: 0.3s;
 }
 
 /* Khi hover vào menu */
 .menu:hover {
-    color: var(--primary-color); /* màu nâu chính */
+    color: var(--primary-color);
 }
 .menu-bar {
     display: flex;
@@ -248,7 +248,7 @@ body {
     transform: translateY(-10px);
 }
 
-/* Responsive: mobile 1 cột */
+
 @media (max-width: 768px) {
     .overlay-section {
         grid-template-columns: 1fr;
@@ -356,7 +356,7 @@ body {
 .social-icons {
     display: flex;
     align-items: center;
-    gap: 12px; /* khoảng cách giữa icon */
+    gap: 12px;
     margin-top: 10px;
 }
 
