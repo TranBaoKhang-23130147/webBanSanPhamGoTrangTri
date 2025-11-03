@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang của tôi | Home Decor</title>
+    <link rel="icon" type="image/png" href="../img/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/mypage_style.css">
+    <link rel="stylesheet" href="../css/homepage_style.css">
+</head>
+<body>
+<div id="header">
+    <div id="logo"><img src="../img/logo.png" class="image"/>
+        <div class="brand">
+            <div id="name-web">HOME DECOR</div>
+            <div id="sub-slogan">Nét mộc trong từng góc nhỏ</div>
+        </div>
+    </div>
+
+    <nav class="menu-bar">
+        <a class="menu" id="home" href="homepage_user.html">TRANG CHỦ</a>
+        <div class="menu product-menu">
+            <a id="product" href="product_all_user.html">SẢN PHẨM</a>
+            <div class="submenu">
+                <a href="decorate_livingroom_user.html">TRANG TRÍ PHÒNG KHÁCH</a>
+                <a href="decorate_bedroom_user.html">TRANG TRÍ PHÒNG NGỦ</a>
+                <a href="decorate_kitchen_user.html">TRANG TRÍ PHÒNG BẾP</a>
+                <a href="decorate_homeoffice_user.html">TRANG TRÍ PHÒNG LÀM VIỆC</a>
+                <a href="decorate_miniitem_user.html">ĐỒ TRANG TRÍ MINI</a>
+                <a href="souvenirs_user.html">QUÀ LƯU NIỆM</a>
+            </div>
+        </div>
+        <div class="menu service">DECOR THEO CHỦ ĐỀ</div>
+        <div class="menu" id="introduce">GIỚI THIỆU</div>
+        <div class="menu" id="blog">BÀI VIẾT</div>
+        <div class="menu" id="contact">LIÊN HỆ</div>
+    </nav>
+
+    <div class="icons">
+        <a class="nav_item" href="#" id="cart-link"><i class="fas fa-shopping-cart"></i></a>
+        <a class="nav-item" href="#" id="search-link"><i class="fas fa-search"></i></a>
+        <div class="user-login">
+            <i class="fas fa-user"></i>
+            <div class="user">
+                <a class="nav_item" href="#" id="login">Trang của tôi</a>
+                <a class="nav-item" href="homepage.html" id="register">Đăng xuất</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="profile">
+            <img src="../img/avatar.png" alt="Avatar người dùng">
+            <h3>Kieu</h3>
+        </div>
+
+        <ul class="menu">
+            <li class="active"><i class="fa-solid fa-chart-pie"></i> Tổng quan</li>
+            <li><i class="fa-solid fa-user"></i> Thông tin tài khoản</li>
+            <li><i class="fa-solid fa-box"></i> Quản lý đơn hàng</li>
+            <li><i class="fa-solid fa-warehouse"></i> Kiểm tra tồn kho</li>
+            <li><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử giao dịch</li>
+            <li class="logout"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</li>
+        </ul>
+
+        <div class="support">
+            <h4>CHUYÊN VIÊN HỖ TRỢ</h4>
+            <p>Bạn chưa có người hỗ trợ</p>
+        </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <section class="stats">
+            <h2>Bảng điều khiển</h2>
+            <div class="stats-cards">
+                <div class="card">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <p>0 đ</p>
+                </div>
+                <div class="card">
+                    <i class="fa-solid fa-mobile-screen"></i>
+                    <p>0 đơn</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="chart-section">
+            <div class="chart-header">
+                <select>
+                    <option>Tháng này</option>
+                    <option>Tháng trước</option>
+                </select>
+                <button>Thống kê</button>
+            </div>
+            <div class="chart-box">
+                <p>(bieu do)</p>
+            </div>
+        </section>
+
+        <section class="orders">
+            <h3>Theo dõi đơn hàng</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Ngày đặt</th>
+                    <th>Ngày giao hàng</th>
+                    <th>Thông tin khách hàng</th>
+                    <th>Các thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td colspan="5">Không tìm thấy đơn hàng nào</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="rank">
+            <h3>Cấp độ thành viên</h3>
+            <div class="rank-line">
+                <div class="rank-item active">
+                    <img src="../img/avatar.png" alt="">
+                    <span>Partner</span>
+                </div>
+                <div class="rank-item"><span>Partner Silver</span></div>
+                <div class="rank-item"><span>Partner Gold</span></div>
+                <div class="rank-item"><span>Partner Platinum</span></div>
+                <div class="rank-item"><span>Partner Diamond</span></div>
+            </div>
+        </section>
+
+    </main>
+
+</div>
+<div class="footer">
+    <div class="footer-container">
+        <div class="footer-col">
+            <h3>Về chúng tôi</h3>
+            <p>HOME DECOR</p>
+            <p>Địa chỉ: Trường Đại học Nông Lâm TP.HCM</p>
+            <p>Số điện thoại: 0944459364</p>
+            <p>Email: 23130082@st.hcmuaf.edu.vn</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <h3>Chính sách</h3>
+            <a href="#">Về tụi mình</a>
+            <a href="#">Chính sách Thanh toán</a>
+            <a href="#">Chính sách Giao hàng</a>
+            <a href="#">Chính sách Đổi trả</a>
+        </div>
+
+        <div class="footer-col">
+            <h3>Hỗ trợ khách hàng</h3>
+            <a href="#">Tất cả sản phẩm</a>
+        </div>
+
+        <div class="footer-col">
+            <h3>Chương trình đặc quyền</h3>
+            <a href="#">Ưu đãi sinh viên</a>
+            <a href="#">Ưu đãi Nhân viên đối tác (EPP)</a>
+            <a href="#">Ưu đãi chính phủ</a>
+            <a href="#">VIP Mall</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
