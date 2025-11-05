@@ -9,8 +9,11 @@
     <link rel="stylesheet" href="../css/homepage_style.css">
 </head>
 <body>
+
+<!-- Header -->
 <div id="header">
-    <div id="logo"><img src="../img/logo.png" class="image"/>
+    <div id="logo">
+        <img src="../img/logo.png" class="image"/>
         <div class="brand">
             <div id="name-web">HOME DECOR</div>
             <div id="sub-slogan">Nét mộc trong từng góc nhỏ</div>
@@ -49,19 +52,24 @@
     </div>
 </div>
 
+<!-- Dashboard -->
 <div class="dashboard-container">
 
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="profile">
-            <img src="../img/avatar.png" alt="Avatar người dùng">
-            <h3>Kieu</h3>
+            <div class="avatar-wrapper">
+                <img src="../img/avatar.png" alt="Avatar người dùng">
+            </div>
+            <div class="user-info">
+                <h3>Kieu</h3>
+                <p>kieu@gmail.com</p>
+            </div>
         </div>
-
         <ul class="menu">
             <li class="active"><i class="fa-solid fa-chart-pie"></i> Tổng quan</li>
             <li><i class="fa-solid fa-user"></i> Thông tin tài khoản</li>
-            <li><i class="fa-solid fa-box"></i> Quản lý đơn hàng</li>
+            <li><i class="fa-solid fa-box"></i> Theo dõi đơn hàng</li>
             <li><i class="fa-solid fa-warehouse"></i> Kiểm tra tồn kho</li>
             <li><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử giao dịch</li>
             <li class="logout"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</li>
@@ -76,7 +84,6 @@
     <!-- Main content -->
     <main class="main-content">
         <section class="stats">
-            <h2>Bảng điều khiển</h2>
             <div class="stats-cards">
                 <div class="card">
                     <i class="fa-solid fa-chart-line"></i>
@@ -98,33 +105,63 @@
                 <button>Thống kê</button>
             </div>
             <div class="chart-box">
-                <p>(bieu do)</p>
+                <!-- Biểu đồ sẽ được thêm sau -->
             </div>
         </section>
 
-        <section class="orders">
-            <h3>Theo dõi đơn hàng</h3>
-            <table>
-                <thead>
-                <tr>
-                    <th>Mã đơn</th>
-                    <th>Ngày đặt</th>
-                    <th>Ngày giao hàng</th>
-                    <th>Thông tin khách hàng</th>
-                    <th>Các thao tác</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr><td colspan="5">Không tìm thấy đơn hàng nào</td></tr>
-                </tbody>
-            </table>
-        </section>
+        <div class="order-tracking">
+            <h2>Theo dõi đơn hàng</h2>
+
+            <div class="order-status-buttons">
+                <button class="status-btn active">Chờ xác nhận</button>
+                <button class="status-btn">Chờ lấy hàng</button>
+                <button class="status-btn">Đang vận chuyển</button>
+                <button class="status-btn">Đã giao</button>
+                <button class="status-btn">Đã hủy</button>
+            </div>
+
+            <div class="order-list">
+                <div class="order-item">
+                    <div class="order-info">
+                        <p><strong>Mã đơn:</strong> #DH001</p>
+                        <p><strong>Ngày đặt:</strong> 04/11/2025</p>
+                        <p><strong>Tổng tiền:</strong> 350.000đ</p>
+                    </div>
+                    <button class="detail-btn">Xem chi tiết</button>
+                </div>
+
+                <div class="order-item">
+                    <div class="order-info">
+                        <p><strong>Mã đơn:</strong> #DH002</p>
+                        <p><strong>Ngày đặt:</strong> 03/11/2025</p>
+                        <p><strong>Tổng tiền:</strong> 720.000đ</p>
+                    </div>
+                    <button class="detail-btn">Xem chi tiết</button>
+                </div>
+                <div class="order-item">
+                    <div class="order-info">
+                        <p><strong>Mã đơn:</strong> #DH002</p>
+                        <p><strong>Ngày đặt:</strong> 03/11/2025</p>
+                        <p><strong>Tổng tiền:</strong> 720.000đ</p>
+                    </div>
+                    <button class="detail-btn">Xem chi tiết</button>
+                </div>
+                <div class="order-item">
+                    <div class="order-info">
+                        <p><strong>Mã đơn:</strong> #DH002</p>
+                        <p><strong>Ngày đặt:</strong> 03/11/2025</p>
+                        <p><strong>Tổng tiền:</strong> 720.000đ</p>
+                    </div>
+                    <button class="detail-btn">Xem chi tiết</button>
+                </div>
+            </div>
+        </div>
 
         <section class="rank">
             <h3>Cấp độ thành viên</h3>
             <div class="rank-line">
                 <div class="rank-item active">
-                    <img src="../img/avatar.png" alt="">
+                    <img src="../img/blog1.jpg" alt="">
                     <span>Partner</span>
                 </div>
                 <div class="rank-item"><span>Partner Silver</span></div>
@@ -133,10 +170,10 @@
                 <div class="rank-item"><span>Partner Diamond</span></div>
             </div>
         </section>
-
     </main>
-
 </div>
+
+<!-- Footer -->
 <div class="footer">
     <div class="footer-container">
         <div class="footer-col">
@@ -174,6 +211,24 @@
         </div>
     </div>
 </div>
+<script>
+    const buttons = document.querySelectorAll('.status-btn');
+    const orderTableBody = document.getElementById('orderTableBody');
 
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Bỏ active khỏi nút cũ
+            document.querySelector('.status-btn.active')?.classList.remove('active');
+            // Gán active cho nút mới
+            btn.classList.add('active');
+
+            const status = btn.getAttribute('data-status');
+            // Giả lập thay đổi nội dung bảng (bạn có thể thay bằng fetch dữ liệu thật)
+            orderTableBody.innerHTML = `
+                <tr><td colspan="6" style="text-align:center;">Đang hiển thị đơn hàng ở mục: <b>${btn.textContent}</b></td></tr>
+            `;
+        });
+    });
+</script>
 </body>
 </html>
