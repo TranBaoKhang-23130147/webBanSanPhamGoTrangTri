@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
+:root {
+    --primary-color: #8B5E3C;
+    --primary-hover: #70472B;
+    --bg-color: #f8f7f5;
+    --card-bg: #fff;
+    --text-dark: #333;
+    --text-light: #777;
+    --border-color: #e1e1e1;
+    --radius: 12px;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -8,115 +19,184 @@
 }
 
 body {
-    background: #f6f5f7;
+    background: var(--bg-color);
 }
 
-/* --- Container chính --- */
+/* --- Tổng thể --- */
 .dashboard-container {
     display: flex;
-    min-height: 100vh;
+    min-height: calc(100vh - 100px);
+    margin-top: 20px;
+    gap: 25px;
+    padding: 0 30px;
 }
 
 /* --- Sidebar --- */
 .sidebar {
-    width: 240px;
-    background: #fff;
-    padding: 20px;
-    border-right: 1px solid #e1e1e1;
+    width: 260px;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 25px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .profile {
-    text-align: center;
-    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 15px 10px 10px;
 }
 
-.profile img {
-    width: 80px;
-    height: 80px;
+.avatar-wrapper {
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #a76a3b; /* cùng màu với nút Tổng quan */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.profile h3 {
+.avatar-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-info {
+    text-align: center;
     margin-top: 10px;
-    color: #8B5E3C;
+    margin-bottom: 5px; /* giảm khoảng trống giữa user-info và nút */
 }
 
-.menu {
+.user-info h3 {
+    color: #87542b;
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.user-info p {
+    color: #333;
+    font-size: 13.5px;
+    margin: 0;
+}
+
+/* Nút tổng quan nằm sát */
+.sidebar .btn-overview {
+    margin-top: 0;
+}
+
+
+.sidebar .menu {
     list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 700px;
 }
 
-.menu li {
+.sidebar .menu li {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px;
-    color: #333;
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: var(--text-dark);
+    font-weight: 500;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s;
 }
 
-.menu li:hover,
-.menu li.active {
-    background: #8B5E3C;
+.sidebar .menu li i {
+    color: var(--primary-color);
+}
+
+.sidebar .menu li:hover,
+.sidebar .menu li.active {
+    background: var(--primary-color);
     color: #fff;
-    border-radius: 6px;
+    transform: translateX(4px);
 }
 
-.menu .logout {
+.sidebar .menu li.active i {
+    color: #fff;
+}
+
+.sidebar .logout {
     margin-top: 20px;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid var(--border-color);
     padding-top: 15px;
-    color: #8B5E3C;
+    color: var(--primary-color);
 }
 
 .support {
-    margin-top: 40px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--border-color);
     padding-top: 15px;
     font-size: 13px;
+    text-align: center;
 }
 
-/* --- Phần nội dung --- */
+.support h4 {
+    color: var(--primary-color);
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+/* --- Nội dung chính --- */
 .main-content {
     flex: 1;
-    padding: 20px 40px;
-}
-/* --- Stats --- */
-.stats h2 {
-    color: #8B5E3C;
-    margin-bottom: 10px;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    padding: 25px 30px;
 }
 
+/* --- Stats --- */
 .stats-cards {
     display: flex;
-    gap: 20px;
+    gap: 25px;
+    flex-wrap: wrap;
 }
 
 .card {
-    background: #fff;
-    border-radius: 10px;
-    padding: 15px 25px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    background: var(--bg-color);
+    border-radius: var(--radius);
+    padding: 20px;
+    flex: 1;
+    min-width: 160px;
     text-align: center;
-    width: 150px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
 }
 
 .card i {
-    font-size: 22px;
-    color: #8B5E3C;
+    font-size: 28px;
+    color: var(--primary-color);
 }
 
 .card p {
-    font-weight: bold;
-    margin-top: 10px;
+    font-weight: 600;
+    margin-top: 8px;
+    color: var(--text-dark);
 }
 
 /* --- Biểu đồ --- */
 .chart-section {
-    margin-top: 25px;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
+    margin-top: 30px;
+    background: var(--bg-color);
+    padding: 25px;
+    border-radius: var(--radius);
 }
 
 .chart-header {
@@ -128,53 +208,125 @@ body {
 
 .chart-header select,
 .chart-header button {
-    padding: 5px 10px;
-    border-radius: 5px;
+    padding: 8px 12px;
+    border-radius: 6px;
     border: 1px solid #ccc;
+    font-size: 14px;
 }
 
 .chart-header button {
-    background: #8B5E3C;
+    background: var(--primary-color);
     color: #fff;
     border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.chart-header button:hover {
+    background: var(--primary-hover);
 }
 
 .chart-box {
-    height: 200px;
-    border: 1px dashed #ccc;
+    height: 220px;
+    border: 2px dashed #ccc;
+    border-radius: var(--radius);
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #999;
-}
-
-/* --- Bảng đơn hàng --- */
-.orders {
-    margin-top: 25px;
-}
-
-.orders h3 {
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.orders table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-}
-
-.orders th,
-.orders td {
-    border: 1px solid #ddd;
-    padding: 8px 10px;
-    text-align: left;
+    color: #aaa;
     font-size: 14px;
+}
+
+/* --- Theo dõi đơn hàng --- */
+.order-tracking {
+    margin-top: 35px;
+}
+
+.order-tracking h2 {
+    color: var(--text-dark);
+    margin-bottom: 15px;
+}
+
+.order-status-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.status-btn {
+    flex: 1;
+    padding: 10px 0;
+    background-color: #f3f3f3;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-weight: 500;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.status-btn:hover {
+    background-color: #e9e9e9;
+}
+
+.status-btn.active {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+.order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    padding: 15px 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    transition: all 0.3s;
+}
+
+.order-item:hover {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+}
+
+.order-info p {
+    margin: 4px 0;
+    font-size: 15px;
+    color: var(--text-dark);
+}
+
+.detail-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.detail-btn:hover {
+    background-color: var(--primary-hover);
 }
 
 /* --- Cấp độ thành viên --- */
 .rank {
-    margin-top: 30px;
+    margin-top: 40px;
+}
+
+.rank h3 {
+    color: var(--text-dark);
+    font-size: 18px;
 }
 
 .rank-line {
@@ -182,7 +334,7 @@ body {
     justify-content: space-between;
     align-items: center;
     position: relative;
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 .rank-line::before {
@@ -190,9 +342,9 @@ body {
     position: absolute;
     top: 50%;
     left: 0;
-    height: 2px;
+    height: 3px;
     width: 100%;
-    background: #8B5E3C;
+    background: #ddd;
     z-index: 0;
 }
 
@@ -200,17 +352,29 @@ body {
     position: relative;
     text-align: center;
     z-index: 1;
+    flex: 1;
+}
+
+.rank-item img {
+    width: 50px;
+    opacity: 0.8;
+    border-radius: 50%;
+}
+
+.rank-item.active img {
+    width: 65px;
+    border: 3px solid var(--primary-color);
+    opacity: 1;
 }
 
 .rank-item span {
     display: block;
     font-size: 13px;
-    margin-top: 5px;
-    color: #333;
+    margin-top: 6px;
+    color: var(--text-dark);
 }
 
-.rank-item.active img {
-    width: 50px;
-    border-radius: 50%;
-    border: 3px solid #8B5E3C;
+.rank-item.active span {
+    color: var(--primary-color);
+    font-weight: 600;
 }
