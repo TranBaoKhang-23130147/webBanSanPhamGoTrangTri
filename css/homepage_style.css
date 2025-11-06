@@ -831,8 +831,6 @@ body {
     margin-top: 10px;
     margin-bottom: 40px;
 }
-
-/* --- SLIDER --- */
 .blog-slider {
     display: flex;
     justify-content: center;
@@ -885,7 +883,6 @@ body {
     line-height: 1.4;
 }
 
-/* --- SCROLLBAR HIDDEN --- */
 .blog-slider::-webkit-scrollbar {
     display: none;
 }
@@ -900,7 +897,6 @@ body {
         flex: 0 0 200px;
     }
 }
-/*decor*/
 .theme-decor {
     width: 90%;
     margin: 80px auto;
@@ -916,7 +912,6 @@ body {
     position: relative;
     overflow: hidden;
 }
-/*nen*/
 .theme-decor::before {
     content: "";
     position: absolute;
