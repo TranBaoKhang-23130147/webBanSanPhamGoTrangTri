@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang của tôi | Home Decor</title>
+    <link rel="icon" type="image/png" href="../img/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/mypage_style.css">
+    <link rel="stylesheet" href="../css/homepage_style.css">
+    <link rel="stylesheet" href="../css/account_user.css">
+</head>
+<body>
+
+<!-- Header -->
+<div id="header">
+    <div id="logo"><img src="../img/logo.png" class="image"/>
+        <div class="brand"> <div id="name-web">HOME DECOR</div>
+            <div id="sub-slogan">Nét mộc trong từng góc nhỏ</div></div>
+    </div>
+
+    <nav class="menu-bar">
+
+        <a class="menu" id="home" href="homepage.html"> TRANG CHỦ</a>
+        <div class="menu product-menu">
+            <a id="product" href="product_all.html">SẢN PHẨM</a>
+            <div class="submenu">
+                <a href="decorate_livingroom.html">TRANG TRÍ PHÒNG KHÁCH</a>
+                <a href="decorate_bedroom.html">TRANG TRÍ PHÒNG NGỦ</a>
+                <a href="decorate_kitchen.html">TRANG TRÍ PHÒNG BẾP</a>
+                <a href="decorate_homeoffice.html">TRANG TRÍ PHÒNG LÀM VIỆC</a>
+                <a href="decorate_miniitem.html">ĐỒ TRANG TRÍ MINI</a>
+                <a href="souvenirs.html">QUÀ LƯU NIỆM</a>
+            </div>
+        </div>
+        <div class="menu service">DECOR THEO CHỦ ĐỀ
+
+        </div>
+        <div class="menu" id="introduce">GIỚI THIỆU</div>
+        <div class="menu" id="blog">BÀI VIẾT</div>
+        <div class="menu" id="contact">LIÊN HỆ</div>
+
+
+    </nav>
+    <div class="icons">
+        <a class="nav_item" href="#" id="cart-link">
+            <i class="fas fa-shopping-cart"></i>
+        </a>
+
+        <a class="nav-item" href="#" id="search-link">
+            <i class="fas fa-search"></i>
+        </a>
+
+        <div class="user-login">
+            <i class="fas fa-user"></i>
+            <div class="user">
+                <a class="nav_item" href="#" id="myPage">Trang của tôi</a>
+                <a class="nav-item" href="login.html" id="login-register">Đăng nhập/Đăng ký</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Dashboard -->
+<div class="dashboard-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="profile">
+            <img src="../img/blog1.jpg" alt="Avatar người dùng" class="user-avatar">
+            <div class="user-info">
+                <h3>Kieu</h3>
+                <p>kieu@gmail.com</p>
+                <p class="user-rank">Cấp độ: <span>Partner Diamond</span></p>
+            </div>
+        </div>
+
+        <ul class="menu">
+            <li><i class="fa-solid fa-chart-line"></i> Tổng quan</li>
+            <li class="active"><i class="fa-solid fa-user"></i> Thông tin tài khoản</li>
+            <li><i class="fa-solid fa-box"></i> Theo dõi đơn hàng</li>
+            <li><i class="fa-solid fa-warehouse"></i> Kiểm tra tồn kho</li>
+            <li><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử giao dịch</li>
+            <li class="logout"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</li>
+        </ul>
+
+        <div class="support">
+            <h4>Chuyên viên hỗ trợ</h4>
+            <p>Ngọc Anh - 0909 999 999</p>
+        </div>
+    </aside>
+    <!-- Main content -->  <main class="main-content">
+    <section class="profile-page">
+        <div class="profile-header">
+            <img src="../img/blog1.jpg" alt="Avatar người dùng">
+
+            <div class="info">
+                <h2>Kieu Tran</h2>
+                <p>Thành viên Partner Diamond</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="edit-btn"><i class="fa-solid fa-pen"></i> Chỉnh sửa thông tin</button>
+                <button class="pass-btn"><i class="fa-solid fa-key"></i> Đổi mật khẩu</button>
+            </div>
+        </div>
+
+        <div class="personal-info">
+            <h3>Thông tin cá nhân</h3>
+            <div class="info-row"><label>Họ và tên:</label><span>Kiều Trần Thị Thúy</span></div>
+            <div class="info-row"><label>Giới thiệu:</label><span>Yêu thích decor phong cách mộc mạc, tự nhiên.</span></div>
+            <div class="info-row"><label>Email:</label><span>kieu@gmail.com</span></div>
+            <div class="info-row"><label>Số điện thoại:</label><span>+84 909 999 999</span></div>
+            <div class="info-row"><label>Địa chỉ:</label><span>Chu van an so 1</span></div>
+            <div class="info-row"><label>Ngày sinh:</label><span>02/02/1997</span></div>
+        </div>
+    </section>
+</main>
+</div>
+
+<!-- Popup chỉnh sửa thông tin -->
+<div class="popup" id="edit-popup">
+    <div class="popup-content">
+        <h3>Chỉnh sửa thông tin cá nhân</h3>
+        <form id="edit-form">
+            <label>Họ và tên</label>
+            <input type="text" value="Kiều Trần Thị Thúy">
+
+            <label>Email</label>
+            <input type="email" value="kieu@gmail.com">
+
+            <label>Số điện thoại</label>
+            <input type="text" value="+84 909 999 999">
+
+            <label>Địa chỉ</label>
+            <input type="diachi" value="Chu van an so 1">
+
+            <label>Ngày sinh</label>
+            <input type="date" value="1997-02-02">
+
+            <label>Giới thiệu</label>
+            <textarea rows="3">Yêu thích decor phong cách mộc mạc, tự nhiên.</textarea>
+
+            <div class="popup-buttons">
+                <button type="button" class="cancel-btn">Hủy</button>
+                <button type="submit" class="save-btn">Lưu thay đổi</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Popup đổi mật khẩu -->
+<div class="popup" id="password-popup">
+    <div class="popup-content">
+        <h3>Đổi mật khẩu</h3>
+        <form id="password-form">
+            <label>Mật khẩu hiện tại</label>
+            <input type="password">
+
+            <label>Mật khẩu mới</label>
+            <input type="password">
+
+            <label>Nhập lại mật khẩu mới</label>
+            <input type="password">
+
+            <div class="popup-buttons">
+                <button type="button" class="cancel-btn">Hủy</button>
+                <button type="submit" class="save-btn">Xác nhận</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="../js/account_user.js"></script>
+
+</body>>
+</html>
