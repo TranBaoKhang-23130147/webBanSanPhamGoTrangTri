@@ -1,91 +1,202 @@
 <!doctype html>
 <html lang="vi">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Homepage_Admin</title>
-        <link rel="icon" type="image/png" href="../img/logo.png" >
-        <link rel="stylesheet" href="../css/homepage_admin_style.css" />
-        <link
-                href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
-                rel="stylesheet"
-        />
-        </head>
-    <body>
-        <div class="app">
-            <aside class="sidebar">
-            <div class="brand">
-                <div class="logo"><i class="ri-user-fill"></i></div>
-                <div>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trang Quản Trị | Decor Admin</title>
+    <link rel="icon" type="image/png" href="../img/logo.png">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/homepage_admin.css">
+</head>
+<body>
+<div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="logo"><i class="ri-user-fill"></i></div>
+            <div>
                 <h1>Khang Admin</h1>
                 <p>Quản trị cửa hàng</p>
-                </div>
+            </div>
+        </div>
+
+        <nav class="nav" id="nav">
+            <div class="nav-item active">
+                <i class="ri-home-4-line nav-icon"></i>
+                <div class="nav-label">Tổng quan</div>
             </div>
 
-            <nav class="nav" id="nav">
-                <div class="nav-item active" data-route="overview">
-                    <!-- Thiết lập hệ tọa độ nội bộ của SVG: min-x = 0, min-y = 0, width = 24, height = 24   -->
-                    <svg class="nav-icon" viewBox="0 0 24 24">
-                        <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
-                        <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                    </svg>
-                    <div class="nav-label">Tổng quan</div>
-                </div>
+            <div class="nav-item">
+                <i class="ri-box-3-line nav-icon"></i>
+                <div class="nav-label">Sản phẩm</div>
+            </div>
 
-                <div class="nav-item" data-route="products">
-                    <svg class="nav-icon" viewBox="0 0 24 24">
-                        <path d="M12 3v6"/>
-                        <path d="M16.76 3a2 2 0 0 1 1.8 1.1l2.23 4.479a2 2 0 0 1 .21.891V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9.472a2 2 0 0 1 .211-.894L5.45 4.1A2 2 0 0 1 7.24 3z"/>
-                        <path d="M3.054 9.013h17.893"/>
-                    </svg>
-                    <div class="nav-label">Sản phẩm</div>
-                </div>
+            <div class="nav-item">
+                <i class="ri-shopping-cart-2-line nav-icon"></i>
+                <div class="nav-label">Đơn hàng</div>
+            </div>
 
-                <div class="nav-item" data-route="orders">
-                    <svg class="nav-icon" viewBox="0 0 24 24">
-                        <circle cx="8" cy="21" r="1"/>
-                        <circle cx="19" cy="21" r="1"/>
-                        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
-                    </svg>
-                    <div class="nav-label">Đơn hàng</div>
-                </div>
+            <div class="nav-item">
+                <i class="ri-team-line nav-icon"></i>
+                <div class="nav-label">Khách hàng</div>
+            </div>
 
-                <div class="nav-item" data-route="customers">
-                    <svg class="nav-icon" viewBox="0 0 24 24">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                        <path d="M16 3.128a4 4 0 0 1 0 7.744"/>
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                        <circle cx="9" cy="7" r="4"/>
-                    </svg>
-                    <div class="nav-label">Khách hàng</div>
-                </div>
+            <div class="nav-item">
+                <i class="ri-user-settings-line nav-icon"></i>
+                <div class="nav-label">Hồ sơ</div>
+            </div>
 
-                <div class="nav-item" data-route="profile">
-                    <svg class="nav-icon" viewBox="0 0 24 24">
-                        <path d="M11.5 15H7a4 4 0 0 0-4 4v2"/>
-                        <path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/>
-                        <circle cx="10" cy="7" r="4"/>
-                    </svg>
-                    <div class="nav-label">Hồ sơ</div>
-                </div>
+            <div class="nav-item">
+                <i class="ri-folders-line nav-icon"></i>
+                <div class="nav-label">Danh mục</div>
+            </div>
+        </nav>
+    </aside>
 
-                <div class="nav-item" data-route="categories">
-                    <svg class="nav-icon" viewBox="0 0 24 24">
-                        <path d="M11 13v4"/>
-                        <path d="M15 5v4"/>
-                        <path d="M3 3v16a2 2 0 0 0 2 2h16"/>
-                        <rect x="7" y="13" width="9" height="4" rx="1"/><rect x="7" y="5" width="12" height="4" rx="1"/>
-                    </svg>
-                    <div class="nav-label">Danh mục</div>
-                </div>
-            </nav>
-
-            </aside>
-
-            <main class="main" id="main-content">
-                
-            </main>
+    <!-- Main content -->
+    <main class="main">
+        <div class="topbar">
+            <div class="search">
+                <i class="ri-search-line"></i>
+                <input placeholder="Tìm sản phẩm, đơn hàng, khách hàng..." id="q" />
+            </div>
         </div>
-    <script src="../js/homepage_admin.js"></script>
-    </body>
+
+        <h2>Tổng quan bán hàng</h2>
+        <section class="cards">
+            <div class="card">
+                <h3>Doanh thu hôm nay</h3>
+                <p>₫ 128,450,000</p>
+                <span class="trend up">▲ +12% so với hôm qua</span>
+            </div>
+            <div class="card">
+                <h3>Đơn hàng mới</h3>
+                <p>24</p>
+                <span class="trend down">▼ -5% so với tuần trước</span>
+            </div>
+            <div class="card">
+                <h3>Khách hàng mới</h3>
+                <p>12</p>
+                <span class="trend up">▲ +22%</span>
+            </div>
+            <div class="card">
+                <h3>Sản phẩm tồn kho</h3>
+                <p>8</p>
+                <span class="trend stable">• Không đổi</span>
+            </div>
+        </section>
+
+        <section class="analytics">
+            <div class="chart-placeholder">
+                <h2>Doanh thu theo tháng</h2>
+                <div class="chart-box">[ Biểu đồ placeholder — chèn chart JS sau này ]</div>
+            </div>
+        </section>
+
+        <section class="bestsellers-table">
+            <h2>Sản phẩm bán chạy</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Top</th>
+                    <th>Sản phẩm</th>
+                    <th>Lượt mua</th>
+                    <th>Còn lại</th>
+                    <th>Đánh giá</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td class="product-cell">
+                        <img src="../img/den_go_decor.png" alt="Đèn gỗ decor">
+                        <span>Đèn gỗ decor treo tường</span>
+                    </td>
+                    <td>245</td>
+                    <td>32</td>
+                    <td>4.5⭐</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td class="product-cell">
+                        <img src="../img/ke_go_treo_tuong.png" alt="Kệ gỗ treo tường">
+                        <span>Kệ gỗ treo tường</span>
+                    </td>
+                    <td>182</td>
+                    <td>47</td>
+                    <td>4.5⭐</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td class="product-cell">
+                        <img src="../img/dong_ho_go_treo_tuong.png" alt="Đồng hồ treo tường gỗ">
+                        <span>Đồng hồ gỗ treo tường</span>
+                    </td>
+                    <td>156</td>
+                    <td>20</td>
+                    <td>4.5⭐</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td class="product-cell">
+                        <img src="../img/dong_ho_go_treo_tuong.png" alt="Đồng hồ treo tường gỗ">
+                        <span>Đồng hồ gỗ treo tường</span>
+                    </td>
+                    <td>156</td>
+                    <td>20</td>
+                    <td>4.5⭐</td>
+                </tr><tr>
+                    <td>3</td>
+                    <td class="product-cell">
+                        <img src="../img/dong_ho_go_treo_tuong.png" alt="Đồng hồ treo tường gỗ">
+                        <span>Đồng hồ gỗ treo tường</span>
+                    </td>
+                    <td>156</td>
+                    <td>20</td>
+                    <td>4.5⭐</td>
+                </tr><tr>
+                    <td>3</td>
+                    <td class="product-cell">
+                        <img src="../img/dong_ho_go_treo_tuong.png" alt="Đồng hồ treo tường gỗ">
+                        <span>Đồng hồ gỗ treo tường</span>
+                    </td>
+                    <td>156</td>
+                    <td>20</td>
+                    <td>4.5⭐</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="table-section">
+            <h2>Đơn hàng gần đây</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Khách hàng</th>
+                    <th>Ngày</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td>#A001</td><td>Nguyễn Văn A</td><td>22/10/2025</td><td>2.100.000₫</td><td class="status done">Đã giao</td></tr>
+                <tr><td>#A002</td><td>Trần Thị B</td><td>22/10/2025</td><td>1.800.000₫</td><td class="status pending">Đang xử lý</td></tr>
+                <tr><td>#A003</td><td>Lê Văn C</td><td>21/10/2025</td><td>3.000.000₫</td><td class="status cancel">Đã hủy</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="activity">
+            <h2>Hoạt động gần đây</h2>
+            <ul>
+                <li>Admin <b>Ngọc</b> đã thêm sản phẩm mới: <i>“Tượng gỗ nghệ thuật”</i></li>
+                <li>Admin <b>Khang</b> xác nhận đơn hàng #A002</li>
+                <li>Admin <b>Linh</b> cập nhật giá sản phẩm “Kệ gỗ vintage”</li>
+            </ul>
+        </section>
+    </main>
+</div>
+</body>
 </html>
