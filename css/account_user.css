@@ -1,5 +1,14 @@
+:root {
+    --background-color: #FFFFFF;
+    --primary-color: #8B5E3C;
+    --text-color: #3b2f2f;
+    --text-color2:#6b5743;
+    --btn:#A56B43;
+
+}
+
 .profile-page {
-    background-color: #f8f9fb;
+    background-color: var(--background-color);
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -31,7 +40,7 @@
 
 .profile-header .info h2 {
     margin: 0;
-    color: #333;
+    color: var(--text-color);
     font-size: 22px;
 }
 
@@ -59,7 +68,7 @@
 }
 
 .edit-btn, .pass-btn {
-    background-color: #8B5E3C;
+    background-color: var(--primary-color);
     color: white;
     border: none;
     padding: 8px 14px;
@@ -70,15 +79,15 @@
 }
 
 .edit-btn:hover, .pass-btn:hover {
-    background-color: #704a2f;
+    background-color: var(--btn);
 }
 
 /* --- Thông tin cá nhân --- */
 .personal-info h3 {
     margin-bottom: 15px;
-    color: #222;
+    color: var(--text-color);
     font-size: 18px;
-    border-left: 4px solid #8B5E3C;
+    border-left: 4px solid var(--primary-color);
     padding-left: 8px;
 }
 
@@ -123,7 +132,7 @@
 
 .popup-content h3 {
     margin-bottom: 15px;
-    color: #8B5E3C;
+    color: var(--text-color);
 }
 
 .popup-content form {
@@ -166,10 +175,13 @@
 }
 
 .save-btn {
-    background-color: #8B5E3C;
+    background-color: var(--primary-color);
     color: #fff;
 }
 
 .save-btn:hover {
-    background-color: #704a2f;
+    background-color: var(--btn);
+}
+body{
+    color: var(--text-color);
 }
