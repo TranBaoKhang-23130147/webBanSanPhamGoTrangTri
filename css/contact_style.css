@@ -1,9 +1,12 @@
+
 :root {
-    --background-color: #FAF3E0;
+    --background-color: #FFFFFF;
     --primary-color: #8B5E3C;
-    --secondary-color: #7C8A5B;
-    --text-color: #3E2F1C;
-    --hover-btn:#a56b43;
+    /*--text-color: #3E2F1C;*/
+    --text-color: #3b2f2f;
+    --text-color2:#6b5743;
+    --btn:#A56B43;
+
 }
 
 * {
@@ -309,7 +312,7 @@ textarea {
     display: block;
     margin-bottom: 8px;
     font-size: 15px;
-    color: #333;
+    color: var(--text-color);
     text-decoration: none;
 }
 
@@ -328,11 +331,11 @@ textarea {
     font-size: 20px;
     margin-right: 10px;
 
-    color: #333;
+    color: var(--text-color);
     text-decoration: none;
 }
 
 .social-icons a:hover,
 .footer-col a:hover {
-    color: #8B5E3C;
+    color: var(--btn);
 }

@@ -1,9 +1,12 @@
 :root {
-    --background-color: #FAF3E0;
+    --background-color: #fff;
     --primary-color: #8B5E3C;
-    --secondary-color: #7C8A5B;
-    --text-color: #3E2F1C;
-    --hover-btn:#a56b43;
+    --accent-color: #A56B43;
+    --text-color: #3b2f2f;
+    --text-color2: #6b5743;
+    --light-bg: #f4ece2;
+    --soft-bg: #f9f7f4;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 * {
@@ -268,225 +271,182 @@ body {
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
-.intro-wood {
-    width: 90%;
-    margin: 80px auto;
+/* ===== BANNER ===== */
+.intro-banner {
+    background:
+    url('https://png.pngtree.com/thumb_back/fw800/background/20250726/pngtree-minimalist-beige-living-room-with-modern-sofa-wooden-table-and-pampas-image_17648661.webp') center/cover no-repeat;
+    height: 400px;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    gap: 50px;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.intro-banner h1 {
+    font-size: 52px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.intro-banner p {
+    font-size: 20px;
+    margin-top: 12px;
+    color: var(--text-color);
+}
+
+/* ===== STATS ===== */
+.stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+    background: var(--light-bg);
+    padding: 60px 10%;
     flex-wrap: wrap;
 }
 
-.intro-content {
-    flex: 1;
+.stat-item {
+    text-align: center;
+}
+.stat-item h2 {
+    font-size: 42px;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+.stat-item p {
     font-size: 17px;
-    color: var(--text-color);
-    line-height: 1.7;
-    text-align: justify;
+    color: var(--text-color2);
 }
 
-.intro-content h1 {
-    color: var(--primary-color);
-    font-size: 34px;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-.slogan {
-    font-size: 18px;
-    font-style: italic;
-    font-weight: 600;
-    color: var(--secondary-color);
-    margin-bottom: 20px;
-}
-
-.highlight-list {
-    margin-left: 25px;
-    margin-bottom: 15px;
-}
-
-.highlight-list li {
-    padding: 6px 0;
-}
-
-.intro-image {
-    flex: 1;
+/* ===== ABOUT ===== */
+.about-wood {
     text-align: center;
-}
-
-.intro-image img {
-    width: 100%;
-    max-width: 430px;
-    border-radius: 14px;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.15);
-}
-
-/********** TẦM NHÌN **********/
-.vision-wood {
-    width: 100%;
-    background: #F4ECE2;
-    padding: 60px 0;
-    display: flex;
-    justify-content: center;
-}
-
-.vision-box {
-    width: 85%;
-    text-align: center;
-}
-
-.vision-box h2 {
-    font-size: 28px;
-    font-weight: bold;
-    color: var(--primary-color);
-    margin-bottom: 18px;
-}
-
-.value-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 18px;
-    margin-top: 25px;
-}
-
-.value-item {
+    padding: 100px 10%;
     background: #fff;
-    padding: 14px 18px;
-    border-radius: 12px;
-    font-weight: 600;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-}
-.intro-banner {
-    background: url('https://png.pngtree.com/thumb_back/fw800/background/20250726/pngtree-minimalist-beige-living-room-with-modern-sofa-wooden-table-and-pampas-image_17648661.webp') center/cover no-repeat;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color:var(--primary-color);
-}
-.intro-banner h1 {
-    font-size: 45px;
-    font-weight: bold;
-    text-shadow: 0 3px 8px rgba(0,0,0,0.4);
-}
-.banner-content p {
-    text-align: center;
-    font-size: 18px;
 }
 
-.about-wood,
-.core-values,
+.about-wood h2 {
+    font-size: 32px;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+}
+
+.about-wood p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--text-color2);
+    max-width: 800px;
+    margin: 10px auto;
+}
+
+/* ===== GALLERY / HISTORY ===== */
+.wood-history {
+    text-align: center;
+    padding: 80px 8%;
+    background: var(--soft-bg);
+}
+
+.wood-history h2 {
+    font-size: 28px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.wood-collections {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.collection-item {
+    flex: 1;
+    min-width: 250px;
+    max-width: 380px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.35s ease;
+}
+.collection-item img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+}
+.collection-item:hover {
+    transform: translateY(-8px);
+}
+.container h2{
+    color: var(--text-color);
+}
+.container p{
+    line-height: 1.8;
+    color: var(--text-color2);
+}
+/* ===== VALUE CARDS ===== */
+.core-values {
+    text-align: center;
+    padding: 100px 10%;
+    background: #fff;
+}
+.core-values h2 {
+    color: var(--primary-color);
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+.value-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+.card {
+    background: var(--soft-bg);
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    font-weight: 600;
+    color: var(--text-color2);
+    transition: 0.3s;
+}
+.card:hover {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+/* ===== LIST SECTIONS ===== */
 .production-process,
 .best-seller,
 .vision-future,
 .commitment,
 .end-note {
     width: 85%;
-    margin: 60px auto;
+    margin: 80px auto;
     text-align: center;
+    color: var(--text-color2);
     line-height: 1.7;
-    color: var(--text-color);
-}
-.about-wood h2,
-.wood-history h2,
-.core-values h2,
-.production-process h2,
-.best-seller h2,
-.vision-future h2,
-.commitment h2,
-.end-note h2 {
-    color: var(--primary-color);
-    font-size: 30px;
-    margin-bottom: 18px;
 }
 
-
-.wood-history {
-    display: flex;
-    gap: 40px;
-    flex-wrap: wrap;
-    align-items: center;
-}
-.wood-history img {
-    width: 100%;
-    max-width: 450px;
-    border-radius: 12px;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.15);
-}
-.wood-history .text-box {
-    max-width: 1100px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.value-cards,
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-    margin-top: 20px;
-}
-.card,
-.gallery .item {
-    background: #fff;
-    padding: 16px;
-    border-radius: 12px;
-    font-weight: 600;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-}
-.wood-collections {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    margin: 60px auto;
-    width: 90%;
-}
-
-.wood-collections .collection-item {
-    width: 32%;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-    transition: transform .35s ease;
-}
-
-.wood-collections img {
-    width: 100%;
-    height: 380px; /* 👈 chiều cao cố định để hình thẳng hàng */
-    object-fit: cover;
-}
-
-.wood-collections .collection-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-}
-
-.process-list {
-    list-style: none;
-    margin-top: 18px;
-}
-.process-list li {
-    padding: 10px 0;
-    font-size: 17px;
-}
+.production-process ul,
 .commitment ul {
     list-style: none;
-    margin-top: 10px;
+    margin-top: 20px;
 }
+
+.production-process li,
 .commitment li {
-    padding: 6px 0;
+    margin: 10px 0;
     font-size: 17px;
-    font-weight: bold;
 }
 
 .end-note {
-    padding: 40px 0 60px;
-    font-size: 18px;
-    font-weight: 500;
-    background: #F4ECE2;
-    border-radius: 14px;
+    background: var(--light-bg);
+    border-radius: 16px;
+    padding: 60px 30px;
+    box-shadow: var(--shadow);
 }
 
 .footer {
@@ -544,4 +504,195 @@ body {
 .social-icons a:hover,
 .footer-col a:hover {
     color: #8B5E3C;
+}
+/**/
+.production-process {
+    background: #faf8f6;
+    padding: 60px 6%;
+    text-align: center;
+}
+
+.production-process h2 {
+    font-size: 28px;
+    color: #8B5E3C;
+    margin-bottom: 40px;
+}
+
+.timeline {
+    position: relative;
+    max-width: 850px;
+    margin: auto;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    background: #d8c0a8;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* ===== STEP ===== */
+.step {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.step img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.step .content {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+    font-size: 14px;
+    text-align: left;
+}
+
+.step .content h3 {
+    font-size: 16px;
+    color: #8B5E3C;
+    margin-bottom: 5px;
+}
+
+/* ===== LEFT / RIGHT ===== */
+.left {
+    left: 0;
+    justify-content: flex-end;
+}
+
+.right {
+    left: 50%;
+    justify-content: flex-start;
+}
+
+.left::before, .right::before {
+    content: '';
+    position: absolute;
+    top: 35px;
+    width: 14px;
+    height: 14px;
+    background: #8B5E3C;
+    border-radius: 50%;
+    border: 3px solid #fff;
+}
+
+.left::before { right: -8px; }
+.right::before { left: -8px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .timeline::after { left: 20px; }
+    .step {
+        width: 100%;
+        flex-direction: row;
+        margin-left: 40px;
+    }
+    .step img { width: 70px; height: 70px; }
+    .step .content { font-size: 13px; }
+    .left::before, .right::before { left: 0; }
+}
+/* --- Thiết lập chung cho phần Commitment --- */
+.commitment {
+    text-align: center; /* Căn giữa tiêu đề */
+    padding: 60px 20px;
+    background-color: #f7f3ed; /* Màu nền nhẹ nhàng, giống màu gỗ nhạt */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.commitment h2 {
+    font-size: 2.2em;
+    color: #4a2c16; /* Màu nâu đậm của gỗ */
+    margin-bottom: 40px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+/* Kẻ chân tinh tế cho tiêu đề */
+.commitment h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: #c78c06; /* Màu vàng gỗ/vàng đồng */
+    border-radius: 5px;
+}
+
+/* --- Thiết lập danh sách cam kết (Flexbox) --- */
+.commitment-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    display: flex; /* Bật Flexbox */
+    flex-wrap: wrap; /* Cho phép xuống hàng khi màn hình nhỏ */
+    justify-content: center; /* Căn giữa các mục */
+    gap: 30px; /* Khoảng cách giữa các card */
+    max-width: 1200px; /* Giới hạn chiều rộng tối đa */
+}
+
+.commitment-list ul li {
+    background-color: #ffffff; /* Nền trắng cho từng card */
+    border: 1px solid #e0d8c7;
+    border-radius: 10px;
+    padding: 30px 20px;
+    width: 100%; /* Mặc định 100% trên di động */
+    max-width: 250px; /* Giới hạn chiều rộng tối đa của mỗi card */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Bóng đổ nhẹ */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column; /* Xếp icon và chữ dọc theo cột */
+    align-items: center; /* Căn giữa nội dung bên trong */
+    text-align: center;
+    min-height: 150px; /* Đảm bảo chiều cao đồng đều */
+}
+
+/* Hiệu ứng khi di chuột (Hover) */
+.commitment-list ul li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Định dạng Icon --- */
+.commitment-list ul li i {
+    font-size: 2.5em; /* Kích thước icon lớn */
+    color: #c78c06; /* Màu vàng gỗ/vàng đồng */
+    margin-bottom: 15px;
+}
+
+/* Định dạng chữ */
+.commitment-list ul li span {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #5d4037; /* Màu chữ nâu ấm */
+    line-height: 1.4;
+}
+
+/* --- Responsive (tùy chỉnh cho màn hình lớn hơn) --- */
+@media (min-width: 768px) {
+    .commitment-list ul li {
+        width: calc(50% - 30px); /* 2 cột trên tablet */
+    }
+}
+
+@media (min-width: 1024px) {
+    .commitment-list ul li {
+        width: calc(25% - 30px); /* 4 cột trên desktop */
+        max-width: 250px;
+    }
 }
