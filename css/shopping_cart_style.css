@@ -477,7 +477,167 @@
     .continue-shopping-link:hover {
         color: var(--primary-color);
     }
+    .modal {
+        display: none; /* Ẩn mặc định */
+        position: fixed;
+        z-index: 1000; /* Đảm bảo nó nằm trên tất cả */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.6); /* Nền mờ */
+    }
 
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto; /* 5% từ trên và căn giữa */
+        padding: 30px;
+        border: 1px solid #888;
+        width: 90%;
+        max-width: 600px;
+        border-radius: 10px;
+        position: relative;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-content h2 {
+        text-align: center;
+        color: var(--primary-color);
+        margin-bottom: 30px;
+        font-size: 24px;
+        border-bottom: 2px solid var(--secondary-color);
+        padding-bottom: 10px;
+    }
+
+    /* Nút đóng */
+    .close-btn {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        position: absolute;
+        top: 15px;
+        right: 25px;
+    }
+
+    .close-btn:hover,
+    .close-btn:focus {
+        color: var(--primary-color);
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* Form Styling */
+    .checkout-form {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .form-section h3 {
+        color: var(--secondary-color);
+        margin-bottom: 15px;
+        font-size: 18px;
+        padding-bottom: 5px;
+        border-bottom: 1px dashed #e0e0e0;
+    }
+
+    .checkout-form input[type="text"],
+    .checkout-form input[type="tel"],
+    .checkout-form input[type="email"],
+    .checkout-form textarea,
+    .checkout-form select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 15px;
+        transition: border-color 0.3s;
+    }
+
+    .checkout-form input:focus,
+    .checkout-form textarea:focus,
+    .checkout-form select:focus {
+        border-color: var(--primary-color);
+        outline: none;
+    }
+
+    .address-select-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .address-select-group select {
+        flex: 1;
+    }
+
+    .payment-option {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .payment-option input[type="radio"] {
+        margin-right: 10px;
+        width: 18px;
+        height: 18px;
+        accent-color: var(--secondary-color);
+    }
+
+    .payment-option label {
+        font-weight: 500;
+        color: var(--text-color);
+    }
+
+    .order-summary-modal {
+        background-color: var(--background-color);
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .order-summary-modal p {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 15px;
+    }
+
+    .order-summary-modal .final-total {
+        border-top: 1px dashed var(--primary-color);
+        padding-top: 10px;
+        margin-top: 15px;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .order-summary-modal span {
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .place-order-btn {
+        padding: 15px;
+        background-color: var(--primary-color);
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 17px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .place-order-btn:hover {
+        background-color: #6a462b;
+    }
+
+    /* Ẩn scrollbar khi modal hiện ra */
+    .modal-open {
+        overflow: hidden;
+    }
     .footer {
         background: #F5F5F5;
         padding: 50px 0;
