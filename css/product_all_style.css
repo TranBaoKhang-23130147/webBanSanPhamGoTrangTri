@@ -281,7 +281,7 @@ body {
 }
 /*end*/
 .filter-sidebar {
-    width: 250px;
+    width: 800px;
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 12px;
@@ -309,15 +309,16 @@ body {
 }
 
 .filter-group label {
-    display: block;
+    display: flex;
+    align-items: center;
     margin-bottom: 8px;
     cursor: pointer;
     font-size: 14px;
     color: #333;
+    padding-left: 5px;
 }
-
 .filter-group input[type="checkbox"] {
-    accent-color: #8B5E3C; /* Màu nâu chủ đạo */
+    accent-color: #8B5E3C;
     margin-right: 8px;
     transform: scale(1.2);
 }

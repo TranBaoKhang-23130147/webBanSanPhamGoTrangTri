@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../css/shopping_cart_style.css">
 
+
 </head>
 <body>
 <div id="header">
@@ -122,13 +123,66 @@
                     <span>**TỔNG CỘNG**</span>
                     <span class="summary-total-amount">**280.000 VNĐ**</span>
                 </div>
-                <a href="checkout.html" class="checkout-btn">TIẾN HÀNH THANH TOÁN</a>
+                <a href="#" class="checkout-btn" id="openCheckoutModal">TIẾN HÀNH THANH TOÁN</a>
                 <a href="product_all_user.html" class="continue-shopping-link">
                     Tiếp tục mua sắm
                 </a>
             </div>
         </div>
     </div>
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>THÔNG TIN THANH TOÁN</h2>
+            <form class="checkout-form">
+                <div class="form-section">
+                    <h3>1. Thông tin giao hàng</h3>
+                    <input type="text" id="full-name" placeholder="Họ và tên*" required>
+                    <input type="tel" id="phone" placeholder="Số điện thoại*" required>
+                    <input type="email" id="email" placeholder="Địa chỉ Email (Tùy chọn)">
+                </div>
+
+                <div class="form-section">
+                    <h3>2. Địa chỉ nhận hàng</h3>
+                    <input type="text" id="address" placeholder="Địa chỉ chi tiết (Số nhà, Tên đường)*" required>
+                    <div class="address-select-group">
+                        <select id="province" required>
+                            <option value="">Chọn Tỉnh/Thành phố*</option>
+                        </select>
+                        <select id="district" required>
+                            <option value="">Chọn Quận/Huyện*</option>
+                        </select>
+                        <select id="ward" required>
+                            <option value="">Chọn Phường/Xã*</option>
+                        </select>
+                    </div>
+                    <textarea id="note" placeholder="Ghi chú cho đơn hàng (Tùy chọn)"></textarea>
+                </div>
+
+                <div class="form-section">
+                    <h3>3. Phương thức thanh toán</h3>
+                    <div class="payment-option">
+                        <input type="radio" id="cod" name="payment-method" value="cod" checked>
+                        <label for="cod">Thanh toán khi nhận hàng (COD)</label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" id="bank-transfer" name="payment-method" value="bank">
+                        <label for="bank-transfer">Chuyển khoản ngân hàng</label>
+                    </div>
+                </div>
+
+                <div class="form-section order-summary-modal">
+                    <h3>Tóm tắt đơn hàng</h3>
+                    <p>Tổng phụ: <span id="modal-subtotal">250.000 VNĐ</span></p>
+                    <p>Phí vận chuyển: <span id="modal-shipping">30.000 VNĐ</span></p>
+                    <p class="final-total">**TỔNG CỘNG:** <span id="modal-total">**280.000 VNĐ**</span></p>
+                </div>
+
+                <button type="submit" class="place-order-btn">HOÀN TẤT ĐẶT HÀNG</button>
+            </form>
+        </div>
+    </div>
+
 </div>
 <div class="footer">
     <div class="footer-container">
@@ -177,5 +231,7 @@
 
     </div>
 </div>
+<script src="../js/shopping_cart.js"></script>
 </body>
+
 </html>
