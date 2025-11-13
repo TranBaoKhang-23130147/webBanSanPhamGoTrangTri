@@ -1,59 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Đồ Trang Trí Gỗ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/admin_products.css">
+</head>
+<body>
 
-<div class="topbar">
-    <h2>Quản lý sản phẩm</h2>
-    <button class="btn-add">+ Thêm sản phẩm</button>
+<div class="admin-container">
+    <header class="header">
+        <div class="logo-placeholder">
+            <img src="../img/p.png" alt="Logo Modern Homes">
+            <p class="logo">HOME DECOR</p>
+        </div>
+
+        <div class="header-icons">
+            <i class="fa-solid fa-bell"></i>
+
+            <div class="user-dropdown">
+                <i class="fas fa-user-circle user-logo" ></i>
+
+                <div id="userMenuContent" class="dropdown-content">
+                    <a href="admin_thong_tin_tai_khoan.html"> Thông tin tài khoản</a>
+                    <a href="admin_doi_mat_khau.html"> Đổi mật khẩu</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="logout-link"> Đăng xuất</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="main-wrapper">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active"><a href="#">Tổng quan</a></li>
+                    <li><a href="admin_quan_ly_san_pham.html"> Sản phẩm</a></li>
+                    <li><a href="admin_quan_ly_don_hang.html"> Đơn hàng</a></li>
+                    <li><a href="admin_customer.html"> Khách hàng</a></li>
+                    <li><a href="admin_profile.html"> Hồ sơ</a></li>
+                    <li><a href="admin_quan_ly_danh_muc.html"> Danh mục</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="content">
+            <div class="product-management-container">
+                <h2 class="page-title">Quản Lý Sản Phẩm</h2>
+
+                <div class="search-filter-bar">
+                    <div class="search-input-group">
+                        <input type="text" placeholder="Tìm kiếm sản phẩm" class="search-input">
+                    </div>
+                    <select class="filter-select">
+                        <option value="">-- Danh mục --</option>
+                    </select>
+                    <select class="filter-select">
+                        <option value="">-- Ngày thêm --</option>
+                    </select>
+                    <select class="filter-select">
+                        <option value="">-- Trạng thái --</option>
+                    </select>
+                    <button class="export-product-btn">
+                        <i class="fa-solid fa-file-export"></i> Xuất
+                    </button>
+                    <button class="add-new-product-btn">
+                        <i class="fa-solid fa-plus"></i> Thêm Sản Phẩm Mới
+                    </button>
+                </div>
+
+                <div class="product-table-wrapper">
+                    <table class="product-table">
+                        <thead>
+                        <tr>
+                            <th class="col-image">Ảnh</th>
+                            <th class="col-name">Sản phẩm</th>
+                            <th class="col-category">Danh mục</th>
+                            <th class="col-date-added">Ngày thêm</th>
+                            <th class="col-price">Giá (VND)</th>
+                            <th class="col-stock">Số lượng</th>
+                            <th class="col-status">Trạng thái</th>
+                            <th class="col-actions">Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="col-image"><img src="path/to/product_1.png" alt="Lọ bút gỗ" class="product-icon"></td>
+                            <td class="col-name">Lọ để bút bằng gỗ</td>
+                            <td class="col-category">Trang trí</td>
+                            <td class="col-date-added">13/11/2025</td>
+                            <td class="col-price">250.000</td>
+                            <td class="col-stock highlight-low">8</td>
+                            <td class="col-status">
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                            <td class="col-actions">
+                                <i class="fa-solid fa-pen-to-square edit-icon"></i>
+                                <i class="fa-solid fa-trash-can delete-icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-image"><img src="path/to/product_2.png" alt="Quà lưu niệm gỗ" class="product-icon"></td>
+                            <td class="col-name">Bộ quà lưu niện khắc hình gỗ</td>
+                            <td class="col-category">Quà lưu niệm</td>
+                            <td class="col-date-added">10/11/2025</td>
+                            <td class="col-price">120.000</td>
+                            <td class="col-stock">15</td>
+                            <td class="col-status">
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                            <td class="col-actions">
+                                <i class="fa-solid fa-pen-to-square edit-icon"></i>
+                                <i class="fa-solid fa-trash-can delete-icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-image"><img src="path/to/product_3.png" alt="Đồng hồ gỗ" class="product-icon"></td>
+                            <td class="col-name">Đồng hồ treo tường vân gỗ</td>
+                            <td class="col-category">Trang trí</td>
+                            <td class="col-date-added">05/11/2025</td>
+                            <td class="col-price">450.000</td>
+                            <td class="col-stock">30</td>
+                            <td class="col-status">
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                            <td class="col-actions">
+                                <i class="fa-solid fa-pen-to-square edit-icon"></i>
+                                <i class="fa-solid fa-trash-can delete-icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-image"><img src="path/to/product_4.png" alt="Kệ sách mini" class="product-icon"></td>
+                            <td class="col-name">Kệ sách để bàn mini (Gỗ Sồi)</td>
+                            <td class="col-category">Nội thất nhỏ</td>
+                            <td class="col-date-added">01/11/2025</td>
+                            <td class="col-price">320.000</td>
+                            <td class="col-stock">12</td>
+                            <td class="col-status">
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                            <td class="col-actions">
+                                <i class="fa-solid fa-pen-to-square edit-icon"></i>
+                                <i class="fa-solid fa-trash-can delete-icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-image"><img src="path/to/product_5.png" alt="Khay trà gỗ" class="product-icon"></td>
+                            <td class="col-name">Khay trà gỗ tự nhiên</td>
+                            <td class="col-category">Phòng bếp</td>
+                            <td class="col-date-added">28/10/2025</td>
+                            <td class="col-price">180.000</td>
+                            <td class="col-stock highlight-low">5</td>
+                            <td class="col-status">
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                            <td class="col-actions">
+                                <i class="fa-solid fa-pen-to-square edit-icon"></i>
+                                <i class="fa-solid fa-trash-can delete-icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-image"><img src="path/to/product_6.png" alt="Móc khoá gỗ" class="product-icon"></td>
+                            <td class="col-name">Móc khóa gỗ khắc tên (Custom)</td>
+                            <td class="col-category">Quà lưu niệm</td>
+                            <td class="col-date-added">25/10/2025</td>
+                            <td class="col-price">50.000</td>
+                            <td class="col-stock">58</td>
+                            <td class="col-status">
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                            <td class="col-actions">
+                                <i class="fa-solid fa-pen-to-square edit-icon"></i>
+                                <i class="fa-solid fa-trash-can delete-icon"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-image"><img src="path/to/product_7.png" alt="Hộp đựng trang sức" class="product-icon"></td>
+                            <td class="col-name">Hộp đựng trang sức gỗ có khoá</td>
+                            <td class="col-category">Trang trí</td>
+                            <td class="col-date-added">20/10/2025</td>
+                            <td class="col-price">550.000</td>
+                            <td class="col-stock">20</td>
+                            <td class="col-status">
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                            </td>
+                            <td class="col-actions">
+                                <i class="fa-solid fa-pen-to-square edit-icon"></i>
+                                <i class="fa-solid fa-trash-can delete-icon"></i>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+    </div>
 </div>
 
-<div class="toolbar">
-
-    <input type="text" id="searchProduct"  placeholder= "  Tìm sản phẩm...">
-    <select id="filterCategory">
-    <option value="">Tất cả danh mục</option>
-    <option value="decor">Trang trí</option>
-    <option value="furniture">Nội thất</option>
-    <option value="gift">Quà tặng</option>
-    </select>
-</div>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Ảnh</th>
-            <th>Tên sản phẩm</th>
-            <th>Danh mục</th>
-            <th>Ngày thêm</th>
-            <th>Giá (VNĐ)</th>
-            <th>Tồn kho</th>
-            <th>Trạng thái</th>
-            <th>Hành động</th>
-        </tr>
-    </thead>
-    <tbody id="productTable">
-        <tr>
-            <td><img src="../img/den_go_decor.png" alt="Đèn gỗ decor" alt="Wood decor" class="thumb"></td>
-            <td>Đèn gỗ treo tường</td>
-            <td>Trang trí</td>
-            <td>28/10/2025</td>
-            <td>650,000</td>
-            <td>12</td>
-            <td><span class="status success">Còn hàng</span></td>
-            <td>
-            <button class="btn small edit">Sửa</button>
-            <button class="btn small delete">Xóa</button>
-            </td>
-        </tr>
-        <tr>
-            <td><img src="../img/den_go_decor.png" alt="Wood decor" class="thumb"></td>
-            <td>Kệ gỗ mini</td>
-            <td>Nội thất</td>
-            <td>28/10/2025</td>
-            <td>480,000</td>
-            <td>3</td>
-            <td><span class="status warning">Sắp hết</span></td>
-            <td>
-            <button class="btn small edit">Sửa</button>
-            <button class="btn small delete">Xóa</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+</body>
+</html>

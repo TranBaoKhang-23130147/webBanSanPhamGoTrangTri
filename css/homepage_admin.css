@@ -62,7 +62,7 @@ body {
 .logo {
     font-size: 1.2rem;
     font-weight: bold;
-    color: var(--primary-color);
+    color: var(--text-color);
     letter-spacing: 1px;
 }
 
@@ -307,7 +307,7 @@ body {
 /* Căn chỉnh cột Sản phẩm */
 .data-table-modern tbody tr td:nth-child(2) {
     font-weight: 600;
-    color: var(--primary-color);
+    color: var(--text-color);
 }
 
 /* Đánh giá sao */
