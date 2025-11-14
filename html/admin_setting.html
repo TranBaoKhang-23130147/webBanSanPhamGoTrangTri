@@ -175,7 +175,165 @@
 
                     ---
 
+                    <div class="settings-card" id="notification">
+                        <h2>Thông báo</h2>
 
+                        <div class="alert-box">
+                            Chúng tôi cần quyền từ trình duyệt của bạn để hiển thị thông báo. <a href="#">**Yêu cầu quyền**</a>
+                        </div>
+
+                        <div class="notification-table">
+                            <div class="notification-header">
+                                <div class="col-type">Loại</div>
+                                <div class="col-email">Email</div>
+                                <div class="col-browser">Trình duyệt</div>
+                                <div class="col-app">Ứng dụng</div>
+                            </div>
+
+                            <div class="notification-row">
+                                <div class="col-type">Mời dành cho bạn</div>
+                                <div class="col-email"><input type="checkbox"></div>
+                                <div class="col-browser"><input type="checkbox"></div>
+                                <div class="col-app"><input type="checkbox"></div>
+                            </div>
+
+                            <div class="notification-row">
+                                <div class="col-type">Hoạt động tài khoản</div>
+                                <div class="col-email"><input type="checkbox"></div>
+                                <div class="col-browser"><input type="checkbox"></div>
+                                <div class="col-app"><input type="checkbox"></div>
+                            </div>
+
+                            <div class="notification-row">
+                                <div class="col-type">Trình duyệt mới được sử dụng để đăng nhập</div>
+                                <div class="col-email"><input type="checkbox" checked></div>
+                                <div class="col-browser"><input type="checkbox" checked></div>
+                                <div class="col-app"><input type="checkbox" checked></div>
+                            </div>
+                        </div>
+
+                        <div class="schedule-select">
+                            <label for="schedule">Khi nào chúng tôi nên gửi thông báo cho bạn?</label>
+                            <select id="schedule">
+                                <option value="always">Luôn luôn</option>
+                                <option value="daily">Hàng ngày</option>
+                                <option value="weekly">Hàng tuần</option>
+                            </select>
+                            <button class="btn btn-primary">Lưu thay đổi</button>
+                        </div>
+                    </div>
+
+                    ---
+
+                    <div class="settings-card" id="connection">
+                        <h2>Tài khoản và Kết nối</h2>
+                        <p class="section-description">Quản lý các dịch vụ bên thứ ba được phép truy cập dữ liệu tài khoản của bạn.</p>
+
+                        <div class="connection-section">
+                            <h3>Tài khoản tích hợp</h3>
+                            <div class="connection-list">
+                                <div class="connection-item">
+                                    <div class="connection-details">
+                                        <i class="fab fa-google"></i>
+                                        <div>
+                                            <h4>Google</h4>
+                                            <p>Lịch và danh bạ</p>
+                                        </div>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <div class="connection-item">
+                                    <div class="connection-details">
+                                        <i class="fas fa-tasks"></i>
+                                        <div>
+                                            <h4>Spec</h4>
+                                            <p>Quản lý dự án</p>
+                                        </div>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <div class="connection-item">
+                                    <div class="connection-details">
+                                        <i class="fab fa-slack"></i>
+                                        <div>
+                                            <h4>Slack</h4>
+                                            <p>Liên lạc</p>
+                                        </div>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <div class="connection-item">
+                                    <div class="connection-details">
+                                        <i class="fas fa-envelope-open-text"></i>
+                                        <div>
+                                            <h4>Mailchimp</h4>
+                                            <p>Dịch vụ tiếp thị email</p>
+                                        </div>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="social-media-section">
+                            <h3>Tài khoản mạng xã hội </h3>
+                            <p class="section-description">Kết nối các tài khoản này giúp bạn dễ dàng kết nối với bạn bè và chia sẻ cập nhật.</p>
+                            <div class="connection-list">
+                                <div class="connection-item">
+                                    <div class="connection-details">
+                                        <i class="fab fa-twitter"></i>
+                                        <div>
+                                            <h4>Twitter</h4>
+                                            <p class="status-disconnected">Chưa kết nối</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-secondary">Kết nối</button>
+                                </div>
+                                <div class="connection-item">
+                                    <div class="connection-details">
+                                        <i class="fab fa-facebook"></i>
+                                        <div>
+                                            <h4>Facebook</h4>
+                                            <p class="status-disconnected">Chưa kết nối</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-secondary">Kết nối</button>
+                                </div>
+                                <div class="connection-item">
+                                    <div class="connection-details">
+                                        <i class="fab fa-linkedin-in"></i>
+                                        <div>
+                                            <h4>LinkedIn</h4>
+                                            <p class="status-disconnected">Chưa kết nối</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-secondary">Kết nối</button>
+                                </div>
+                                <div class="connection-item">
+                                    <div class="connection-details">
+                                        <i class="fab fa-google"></i>
+                                        <div>
+                                            <h4>Google</h4>
+                                            <p class="status-disconnected">Chưa kết nối</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-secondary">Kết nối</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     ---
 
