@@ -879,6 +879,7 @@ body {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transform: none;
+    margin: 25px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -1108,4 +1109,17 @@ body {
     .san-pham-moi {
         grid-template-columns: 1fr;
     }
+}
+/**/
+
+/* Đảm bảo .blog-slider không bị ảnh hưởng bởi các nút */
+.blog-slider {
+    /* Các thuộc tính hiện tại của bạn */
+    display: flex;
+    justify-content: flex-start; /* Thay đổi từ center sang flex-start */
+    align-items: stretch;
+    gap: 5px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 20px;
 }
