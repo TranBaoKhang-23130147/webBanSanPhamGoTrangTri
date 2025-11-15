@@ -124,3 +124,18 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+//
+const slider = document.querySelector('.blog-slider');
+const prevBtn = document.querySelector('.prev-btn');
+const nextBtn = document.querySelector('.next-btn');
+
+nextBtn.addEventListener('click', () => {
+    // Cuộn sang phải bằng chiều rộng của một thẻ + khoảng cách (250px + 25px)
+    slider.scrollLeft += 275;
+});
+
+prevBtn.addEventListener('click', () => {
+    // Cuộn sang trái
+    slider.scrollLeft -= 275;
+});

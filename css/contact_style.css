@@ -2,7 +2,6 @@
 :root {
     --background-color: #FFFFFF;
     --primary-color: #8B5E3C;
-    /*--text-color: #3E2F1C;*/
     --text-color: #3b2f2f;
     --text-color2:#6b5743;
     --btn:#A56B43;
@@ -32,7 +31,7 @@ body {
     align-items: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     justify-content: space-between;
-    background-color: #fff;
+    background-color: var(--background-color);
 
     z-index:999;
 }
@@ -76,8 +75,7 @@ body {
 }
 
 .user-login i {
-
-    color: #000000;
+    color: var(--text-color);
 
 }
 
@@ -222,7 +220,13 @@ body {
 .info-container {
     width: 50%;
 }
-
+.form-container {
+    width: 50%;
+    /* Thêm đường gạch phân cách */
+    border-right: 1px solid #e0e0e0;
+    /* Điều chỉnh padding để tạo khoảng cách với đường gạch */
+    padding-right: 40px;
+}
 .row {
     display: flex;
     gap: 20px;
@@ -252,6 +256,7 @@ input, textarea {
 textarea {
     height: 120px;
     resize: none;
+    font-family: sans-serif;
 }
 
 .btn-submit {
@@ -266,7 +271,7 @@ textarea {
 }
 
 .btn-submit:hover {
-    opacity: 0.85;
+    background: var(--btn);
 }
 
 .info-container {
@@ -281,7 +286,7 @@ textarea {
 .contact-info p,
 .follow-us p {
     font-size: 15px;
-    margin: 8px 0;
+    margin: 23px 0;
 }
 .footer {
     background: #F5F5F5;
