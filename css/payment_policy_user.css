@@ -1,6 +1,8 @@
+
 :root {
     --background-color: #FFFFFF;
     --primary-color: #8B5E3C;
+    /*--text-color: #3E2F1C;*/
     --text-color: #3b2f2f;
     --text-color2:#6b5743;
     --btn:#A56B43;
@@ -16,13 +18,8 @@
 body {
     font-family: sans-serif;
     margin: 0;
-    color: var(--text-color);
-    background: var(--background-color);
 
 }
-
-
-
 #header {
     position: sticky;
     top: 0;
@@ -76,6 +73,7 @@ body {
 }
 
 .user-login i {
+
     color: #000000;
 
 }
@@ -104,13 +102,13 @@ body {
     color: #333;
 }
 #cart-link:hover {
-    color:var(--primary-color);
+    color:var(--btn);
 }
 #search-link {
     color:#333;
 }
 #search-link:hover {
-    color: var(--primary-color);
+    color: var(--btn);
 }
 
 .user-login:hover .user {
@@ -141,8 +139,10 @@ body {
     font-weight: 600;
     transition: 0.3s;
 }
+
+/* Khi hover vào menu */
 .menu:hover {
-    color: var(--primary-color);
+    color: var(--btn);
 }
 .menu-bar {
     display: flex;
@@ -157,12 +157,12 @@ body {
     cursor: pointer;
 }
 #product{
-    color: #333;
+    color: var(--text-color);
     text-decoration: none;
 
 }
 #product:hover{
-    color: var(--primary-color);
+    color: var(--btn);
 }
 
 
@@ -196,9 +196,11 @@ body {
 }
 
 .submenu a:hover {
-    color: var(--primary-color);
+    color: var(--text-color2);
     background: rgba(139, 94, 60, 0.08);
 }
+/* --- CHÍNH SÁCH THANH TOÁN (PAYMENT POLICY) --- */
+
 /**/
 .banner {
     /* Đổi URL này thành hình ảnh banner chất lượng cao của bạn */
@@ -334,215 +336,6 @@ body {
         letter-spacing: 2px;
     }
 }
-.container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    /* BỎ min-height: 100vh để không kéo dài trang nếu nội dung ít */
-    box-shadow: 0px 5px 18px rgba(0, 0, 0, 0.1);
-    /* Tối ưu hóa chiều cao cố định */
-    height: auto; /* Thay thế cho 500px cố định */
-    margin: 40px auto;
-    max-width: 1100px;
-    border-radius: 10px;
-    overflow: hidden; /* Cần để border-radius hoạt động trên các cột */
-}
-
-/* --- CỘT TRÁI --- */
-.left-side {
-    background-color: #ffffff;
-    padding: 80px 60px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /* BỎ height: 500px cố định */
-    min-height: 400px; /* Đặt chiều cao tối thiểu để đẹp hơn */
-
-}
-
-.text-box h1 {
-    color: #2e2e2e;
-    font-size: 2.2rem;
-    margin-bottom: 15px;
-}
-
-.text-box p {
-    color: #555;
-    line-height: 1.6;
-    font-size: 1rem;
-}
-
-/* --- CỘT GIỮA (HÌNH DECOR) --- */
-.center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    /* BỎ height: 500px cố định */
-    padding: 20px;
-}
-
-.main-drink {
-    width: 100%; /* Dùng 100% thay vì 330px cố định */
-    max-width: 330px; /* Đặt max-width để kiểm soát kích thước */
-    height: auto;
-    border-radius: 12px; /* Giảm nhẹ border-radius */
-    /*box-shadow: #6E6E6E;*/
-    object-fit: cover;
-}
-
-/* --- CỘT PHẢI --- */
-.right-side {
-    background-color: var(--primary-color); /* Đổi màu nền tối thành màu chủ đạo */
-    color: #ffffff;
-    padding: 60px 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /* BỎ height: 500px cố định */
-    min-height: 400px;
-}
-
-
-.top-info h4 {
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-.sizes {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 25px;
-}
-
-.size {
-    background-color: rgba(255, 255, 255, 0.15); /* Tăng độ mờ */
-    padding: 7px 14px;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.size:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-}
-
-.price {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: var(--background-color); /* Tạo điểm nhấn cho giá */
-}
-
-.menu ul {
-    list-style: none;
-}
-
-.menu li {
-    margin: 8px 0;
-    font-size: 0.95rem;
-    border-left: 3px solid rgba(255,255,255,0.3);
-    padding-left: 10px;
-    transition: 0.3s;
-    color: rgba(255, 255, 255, 0.4);
-}
-
-.menu li:hover {
-    color: var(--background-color);
-    border-color: var(--background-color);
-}
-
-/* ========================================= */
-/* 5. RESPONSIVE */
-/* ========================================= */
-
-@media (max-width: 1200px) {
-    .banner {
-        padding: 40px 40px;
-    }
-}
-
-@media (max-width: 992px) {
-    .container {
-        grid-template-columns: 1fr;
-        text-align: center;
-        max-width: 90%;
-    }
-
-    .left-side, .right-side {
-        padding: 40px 25px;
-        min-height: auto; /* Bỏ min-height ở responsive */
-    }
-
-    .center {
-        order: -1; /* Đưa hình ảnh lên trên cùng */
-        padding: 40px 20px 20px;
-    }
-
-    .main-drink {
-        width: 80%;
-        margin: 0 auto;
-    }
-
-    .text-box h1 {
-        font-size: 2rem;
-    }
-
-    .price {
-        margin: 15px 0;
-    }
-
-    .sizes {
-        justify-content: center;
-    }
-
-    .menu li {
-        text-align: left;
-        display: inline-block;
-
-    }
-
-    .right-side .menu ul {
-        text-align: center;
-    }
-}
-
-@media (max-width: 768px) {
-    .banner {
-        padding: 30px 20px;
-    }
-
-    .setup-section {
-        grid-template-columns: 1fr;
-        padding: 40px 25px;
-        max-width: 90%;
-    }
-
-    .setup-left {
-        border-right: none;
-        border-bottom: 2px solid #e7dfd6;
-        padding-bottom: 10px;
-        margin-bottom: 20px;
-        justify-content: flex-start;
-    }
-
-    .setup-left h2 {
-        writing-mode: horizontal-tb;
-        transform: none;
-        letter-spacing: 2px;
-    }
-
-    .center-section h1 {
-        font-size: 2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .main-drink {
-        width: 100%;
-    }
-}
-
 .footer {
     background: #F5F5F5;
     padding: 50px 0;
@@ -597,5 +390,202 @@ body {
 
 .social-icons a:hover,
 .footer-col a:hover {
-    color: #8B5E3C;
+    color: var(--btn);
+}
+/* --- CÁC THIẾT LẬP CHUNG CHO SETUP SECTION --- */
+.setup-section {
+    width: 90%;
+    max-width: 1200px;
+    margin: 60px auto;
+    display: flex;
+    gap: 40px;
+}
+
+.setup-left {
+    flex: 0 0 250px; /* Giữ cột bên trái cố định */
+    padding-top: 15px;
+}
+
+.setup-left h2 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    padding-right: 20px;
+    text-align: right;
+}
+
+.setup-right {
+    flex: 1; /* Cột bên phải chiếm phần còn lại */
+}
+
+/* Thanh chia tách nội dung */
+.divider {
+    height: 1px;
+    background-color: #eee;
+    margin: 30px 0;
+}
+
+.setup-right h3 {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/* List chính (Bước 1, 2, 3...) */
+.online-process-list {
+    list-style: none; /* Bỏ bullet mặc định */
+    padding: 0;
+}
+
+.online-process-list li {
+    margin-bottom: 25px;
+    line-height: 1.6;
+    font-size: 1rem;
+    color: #333;
+}
+
+.step-number {
+    font-weight: 700;
+    color: var(--primary-color);
+    display: inline-block;
+    width: 80px; /* Chiều rộng cố định cho chữ "Bước X:" hoặc "X." */
+    min-width: 80px;
+}
+
+.online-process-list strong {
+    color: var(--text-color);
+    font-weight: 700;
+}
+
+/* List con (Nội dung chi tiết) */
+.sub-process-list {
+    list-style: disc; /* Dùng dấu chấm đen cho list con */
+    padding-left: 100px; /* Căn lề để nó thẳng hàng với nội dung bên trên */
+    margin-top: 10px;
+}
+
+.sub-process-list li {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+/* --- Media Query cho Mobile/Tablet --- */
+@media (max-width: 900px) {
+    .setup-section {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .setup-left {
+        flex: auto;
+        padding-top: 0;
+        text-align: left;
+    }
+
+    .setup-left h2 {
+        border-right: none;
+        border-left: 3px solid var(--primary-color); /* Chuyển border sang trái */
+        padding-left: 15px;
+        padding-right: 0;
+        text-align: left;
+    }
+
+    .sub-process-list {
+        padding-left: 20px; /* Giảm padding list con trên di động */
+    }
+}
+
+
+/* --- CSS CHO CÁC PHẦN TỬ ĐỘC LẬP (NẰM NGOÀI SECTION) --- */
+
+/* Đảm bảo các phần tử nằm ngoài section cũng có chiều rộng và căn giữa */
+.setup-section,
+.divider,
+.online-process-list,
+.setup-right h3,
+body > h3 { /* Căn chỉnh tiêu đề h3 bị tách ra */
+    width: 90%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Định dạng cho tiêu đề H3 độc lập */
+body > h3 {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin-bottom: 25px;
+    font-weight: 700;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #eee;
+    margin-top: 40px; /* Tăng khoảng cách phía trên */
+}
+
+/* --- TÁI ĐỊNH DẠNG CÁC LIST CON (sub-process-list) --- */
+
+/* Các style này áp dụng cho cả phần Cách thức mua hàng và Chi tiết quy định */
+
+.online-process-list {
+    list-style: none;
+    padding: 0;
+}
+
+.online-process-list > li {
+    margin-bottom: 30px;
+    line-height: 1.6;
+    font-size: 1.05rem;
+    border-left: 3px solid rgba(139, 94, 60, 0.1);
+    padding: 10px 0 10px 15px;
+    transition: background-color 0.3s;
+}
+
+.step-number {
+    color: var(--primary-color);
+    display: inline-block;
+    font-size: 1.1rem;
+}
+
+/* List con (Quy định chi tiết) */
+.sub-process-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 10px;
+    background: #fcfcfc;
+    padding: 15px 15px 5px 15px;
+    border-radius: 8px;
+    border: 1px solid #f0f0f0;
+    /* Đảm bảo chiều rộng list con không bị tràn ra ngoài */
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.sub-process-list li {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+    line-height: 1.5;
+}
+
+.sub-process-list li::before {
+    content: "\2713"; /* Dấu tick */
+    color: #4CAF50; /* Xanh lá cây */
+    font-weight: bold;
+    display: inline-block;
+    width: 25px;
+    flex-shrink: 0;
+}
+
+/* --- MEDIA QUERIES --- */
+@media (max-width: 900px) {
+    /* Đảm bảo phần tử độc lập co giãn đúng */
+    .divider,
+    .online-process-list,
+    body > h3 {
+        width: 95%; /* Hơi rộng hơn trên di động */
+    }
 }

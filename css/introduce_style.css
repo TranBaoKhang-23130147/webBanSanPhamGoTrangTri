@@ -630,7 +630,7 @@ body {
     transform: translateX(-50%);
     width: 80px;
     height: 3px;
-    background-color: #c78c06; /* Màu vàng gỗ/vàng đồng */
+    background-color: var(--primary-color); /* Màu vàng gỗ/vàng đồng */
     border-radius: 5px;
 }
 
@@ -671,7 +671,7 @@ body {
 /* --- Định dạng Icon --- */
 .commitment-list ul li i {
     font-size: 2.5em; /* Kích thước icon lớn */
-    color: #c78c06; /* Màu vàng gỗ/vàng đồng */
+    color: var(--primary-color); /* Màu vàng gỗ/vàng đồng */
     margin-bottom: 15px;
 }
 
@@ -695,4 +695,58 @@ body {
         width: calc(25% - 30px); /* 4 cột trên desktop */
         max-width: 250px;
     }
+}
+/* Styling cho phần Giá trị cốt lõi */
+.core-values {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #fff; /* Nền nhẹ nhàng */
+    font-family: Arial, sans-serif;
+}
+
+.core-values h2 {
+    font-size: 2.5em;
+    color: #4a3e36; /* Màu nâu đậm cho tiêu đề */
+    margin-bottom: 50px;
+    font-weight: bold;
+}
+
+.values-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px; /* Khoảng cách giữa các cột */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.value-item {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    flex: 1; /* Chia đều không gian */
+    transition: transform 0.3s ease-in-out;
+}
+
+.value-item:hover {
+    transform: translateY(-5px); /* Hiệu ứng nổi nhẹ khi rê chuột */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.value-item .icon {
+    font-size: 3em;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.value-item h3 {
+    font-size: 1.4em;
+    color: #795548; /* Màu nâu đất */
+    margin-bottom: 10px;
+}
+
+.value-item p {
+    font-size: 1em;
+    color: #666;
+    line-height: 1.6;
 }

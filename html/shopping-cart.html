@@ -18,7 +18,6 @@
     </div>
 
     <nav class="menu-bar">
-
         <a class="menu" id="home" href="homepage_user.html"> TRANG CHỦ</a>
         <div class="menu product-menu">
             <a id="product" href="product_all_user.html">SẢN PHẨM</a>
@@ -31,159 +30,208 @@
                 <a href="souvenirs_user.html">QUÀ LƯU NIỆM</a>
             </div>
         </div>
-        <a class="menu service" href="decor_user.html">DECOR THEO CHỦ ĐỀ
-
-        </a>
+        <a class="menu service" href="payment_policy_user.html">CHÍNH SÁCH THANH TOÁN</a>
         <a class="menu" id="introduce" href="introduce_user.html" >GIỚI THIỆU</a>
-        <a class="menu" id="blog" href="blog_user.html">BÀI VIẾT</a>
         <a class="menu" id="contact" href="contact_user.html">LIÊN HỆ</a>
-
-
     </nav>
     <div class="icons">
         <a class="nav_item" href="shopping-cart.html" id="cart-link" >
             <i class="fas fa-shopping-cart"></i>
         </a>
-
         <a class="nav-item" href="search.html" id="search-link">
             <i class="fas fa-search"></i>
         </a>
-
         <div class="user-login">
             <i class="fas fa-user"></i>
             <div class="user">
                 <a class="nav_item" href="mypage_user.html" id="login">Trang của tôi</a>
                 <a class="nav-item" href="homepage.html" id="register">Đăng xuất</a>
             </div>
-
         </div>
     </div>
 </div>
 <div class="main-content">
-    <div class="cart-title">
-        <h1>GIỎ HÀNG CỦA BẠN</h1>
-    </div>
-
-    <div class="cart-page-content">
-        <div class="shopping-cart-table">
-            <table>
-                <thead>
-                <tr>
-                    <th class="select-col-header">
-                        <input type="checkbox" id="select-all" class="select-all-checkbox">
-                    </th>
-                    <th class="image-col-header">Ảnh</th>
-                    <th>Sản phẩm</th>
-                    <th>Giá</th>
-                    <th>Số lượng</th>
-                    <th>Tổng cộng</th>
-                    <th></th> </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="select-col">
-                        <input type="checkbox" class="select-item-checkbox" checked>
-                    </td>
-                    <td class="product-image-col">
-                        <img src="https://th.bing.com/th/id/OIP.kPpFW25RuLhUleMeg8zmvQHaFT?w=210&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3" alt="Chậu cây Gốm Sứ Mini" class="product-image">
-                    </td>
-
-                    <td class="product-name-col">
-                        <span class="product-name">Chậu cây gỗ</span>
-                    </td>
-                    <td class="product-price">250.000 VNĐ</td>
-                    <td class="product-quantity">
-                        <div class="quantity-control">
-                            <button class="quantity-btn">-</button>
-                            <input type="number" value="1" min="1" class="quantity-input">
-                            <button class="quantity-btn">+</button>
+    <div class="cart-page-content-new">
+        <div class="shopping-cart-list">
+            <div class="cart-header-text">
+                Bạn đang có 4 sản phẩm trong giỏ hàng
+            </div>
+            <div class="cart-item">
+                <input type="checkbox" class="select-item-checkbox" checked>
+                <div class="product-details">
+                    <img src="https://i.pinimg.com/1200x/ad/0f/61/ad0f61d8c61d6aab4019f4270f28c61f.jpg" alt="kệ gỗ" class="product-image-list">
+                    <div class="product-info-list">
+                        <div class="product-name-list">Kệ lục giác gỗ treo tường</div>
+                        <div class="product-options">
+                            <span>Màu Sắc: Nâu hạt dẻ</span>
+                            <span class="stock-status">Còn hàng</span>
                         </div>
-                    </td>
-                    <td class="product-subtotal">250.000 VNĐ</td>
-                    <td class="product-remove">
-                        <i class="fas fa-trash-alt remove-icon"></i>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                    </div>
+                </div>
+                <div class="product-actions-price">
+                    <div class="product-price-list">79,000,000 VND</div>
+                    <div class="quantity-control-list">
+                        <button class="quantity-btn-list">-</button>
+                        <input type="number" value="1" min="1" class="quantity-input-list">
+                        <button class="quantity-btn-list">+</button>
+                    </div>
+                    <i class="fas fa-trash-alt remove-icon-list"></i>
+                </div>
+            </div>
+
+            <div class="cart-item">
+                <input type="checkbox" class="select-item-checkbox" checked>
+                <div class="product-details">
+                    <img src="https://i.pinimg.com/736x/c5/05/c4/c505c490e3f0d017d0099eac2d593aef.jpg" alt="tranh treo" class="product-image-list">
+                    <div class="product-info-list">
+                        <div class="product-name-list">Khung tranh gỗ đơn giản</div>
+                        <div class="product-options">
+                            <span>Màu Sắc: Đen óc chó</span>
+                            <span class="stock-status">Còn hàng</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-actions-price">
+                    <div class="product-price-list">79,000,000 VND</div>
+                    <div class="quantity-control-list">
+                        <button class="quantity-btn-list">-</button>
+                        <input type="number" value="1" min="1" class="quantity-input-list">
+                        <button class="quantity-btn-list">+</button>
+                    </div>
+                    <i class="fas fa-trash-alt remove-icon-list"></i>
+                </div>
+            </div>
+
+            <div class="cart-item">
+                <input type="checkbox" class="select-item-checkbox" checked>
+                <div class="product-details">
+                    <img src="https://i.pinimg.com/1200x/79/6d/cc/796dcc616082e19ad75bdeef4760d791.jpg" alt="chuong meo" class="product-image-list">
+                    <div class="product-info-list">
+                        <div class="product-name-list">Tủ lưu trữ đa năng, bàn cạnh giươờng</div>
+                        <div class="product-options">
+                            <span>Màu Sắc: Đen</span>
+                            <span class="stock-status">Còn hàng</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-actions-price">
+                    <div class="product-price-list">79,000,000 VND</div>
+                    <div class="quantity-control-list">
+                        <button class="quantity-btn-list">-</button>
+                        <input type="number" value="1" min="1" class="quantity-input-list">
+                        <button class="quantity-btn-list">+</button>
+                      </div>
+                    <i class="fas fa-trash-alt remove-icon-list"></i>
+                </div>
+            </div>
         </div>
 
         <div class="cart-summary-container">
-            <div class="cart-summary">
-                <h3>TÓM TẮT ĐƠN HÀNG</h3>
-                <div class="summary-line">
-                    <span>Tổng phụ</span>
-                    <span class="summary-amount">250.000 VNĐ</span>
+            <div class="cart-summary-new">
+
+                <div class="voucher-input">
+                    <div class="input-title">Nhập Mã Khuyến Mãi</div>
+                    <input type="text" placeholder="Voucher hoặc gift code">
+                    <button class="apply-btn">Áp Dụng</button>
                 </div>
-                <div class="summary-line">
-                    <span>Vận chuyển</span>
-                    <span class="summary-amount">30.000 VNĐ</span>
+
+                <div class="summary-title">Bản Tóm Tắt</div>
+                <div class="summary-line-new">
+                    <span>Tổng giá trước thuế</span>
+                    <span class="summary-amount-new">95,775,561 VND</span>
                 </div>
-                <div class="summary-line total">
-                    <span>**TỔNG CỘNG**</span>
-                    <span class="summary-total-amount">**280.000 VNĐ**</span>
+                <div class="summary-line-new">
+                    <span>Thuế GTGT</span>
+                    <span class="summary-amount-new">9,577,556 VND</span>
                 </div>
-                <a href="#" class="checkout-btn" id="openCheckoutModal">TIẾN HÀNH THANH TOÁN</a>
-                <a href="product_all_user.html" class="continue-shopping-link">
-                    Tiếp tục mua sắm
-                </a>
+
+                <div class="summary-line-new total-new">
+                    <span>Tổng cộng</span>
+                    <span class="summary-total-amount-new">105,353,117 VND</span>
+                </div>
+                <div class="tax-info">Đã bao gồm thuế GTGT</div>
+
+                <a href="#" class="checkout-btn-new" id="openCheckoutModalBtn">Thanh Toán</a>
+
+                <p class="terms-text">
+                    Bằng cách gói đơn đặt hàng, bạn đồng ý với
+                    <a href="#">Điều khoản & điều kiện</a> và chúng tôi sẽ sử dụng dữ liệu cá nhân của bạn theo
+                    <a href="#">Chính sách quyền riêng tư</a> của chúng tôi.
+                </p>
+
+                <div class="commitment">
+                    <div class="commitment-item">
+                        <i class="fas fa-check-circle"></i> Cam kết giá
+                    </div>
+                    <div class="commitment-item">
+                        <i class="fas fa-truck"></i> Giao hàng miễn phí toàn quốc
+                    </div>
+                    <div class="commitment-item">
+                        <i class="fas fa-percent"></i> Gói trả góp 0%
+                    </div>
+                    <div class="commitment-item">
+                        <i class="fas fa-sync-alt"></i> Đổi sản phẩm theo chính sách quy định trong vòng 14 ngày
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
-    <div id="checkoutModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>THÔNG TIN THANH TOÁN</h2>
-            <form class="checkout-form">
-                <div class="form-section">
-                    <h3>1. Thông tin giao hàng</h3>
-                    <input type="text" id="full-name" placeholder="Họ và tên*" required>
-                    <input type="tel" id="phone" placeholder="Số điện thoại*" required>
-                    <input type="email" id="email" placeholder="Địa chỉ Email (Tùy chọn)">
-                </div>
-
-                <div class="form-section">
-                    <h3>2. Địa chỉ nhận hàng</h3>
-                    <input type="text" id="address" placeholder="Địa chỉ chi tiết (Số nhà, Tên đường)*" required>
-                    <div class="address-select-group">
-                        <select id="province" required>
-                            <option value="">Chọn Tỉnh/Thành phố*</option>
-                        </select>
-                        <select id="district" required>
-                            <option value="">Chọn Quận/Huyện*</option>
-                        </select>
-                        <select id="ward" required>
-                            <option value="">Chọn Phường/Xã*</option>
-                        </select>
-                    </div>
-                    <textarea id="note" placeholder="Ghi chú cho đơn hàng (Tùy chọn)"></textarea>
-                </div>
-
-                <div class="form-section">
-                    <h3>3. Phương thức thanh toán</h3>
-                    <div class="payment-option">
-                        <input type="radio" id="cod" name="payment-method" value="cod" checked>
-                        <label for="cod">Thanh toán khi nhận hàng (COD)</label>
-                    </div>
-                    <div class="payment-option">
-                        <input type="radio" id="bank-transfer" name="payment-method" value="bank">
-                        <label for="bank-transfer">Chuyển khoản ngân hàng</label>
-                    </div>
-                </div>
-
-                <div class="form-section order-summary-modal">
-                    <h3>Tóm tắt đơn hàng</h3>
-                    <p>Tổng phụ: <span id="modal-subtotal">250.000 VNĐ</span></p>
-                    <p>Phí vận chuyển: <span id="modal-shipping">30.000 VNĐ</span></p>
-                    <p class="final-total">**TỔNG CỘNG:** <span id="modal-total">**280.000 VNĐ**</span></p>
-                </div>
-
-                <button type="submit" class="place-order-btn">HOÀN TẤT ĐẶT HÀNG</button>
-            </form>
-        </div>
-    </div>
-
 </div>
+
+<div id="checkoutModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>THÔNG TIN THANH TOÁN</h2>
+        <form class="checkout-form">
+            <div class="form-section">
+                <h3>1. Thông tin giao hàng</h3>
+                <input type="text" id="full-name" placeholder="Họ và tên*" required>
+                <input type="tel" id="phone" placeholder="Số điện thoại*" required>
+                <input type="email" id="email" placeholder="Địa chỉ Email (Tùy chọn)">
+            </div>
+
+            <div class="form-section">
+                <h3>2. Địa chỉ nhận hàng</h3>
+                <input type="text" id="address" placeholder="Địa chỉ chi tiết (Số nhà, Tên đường)*" required>
+                <div class="address-select-group">
+                    <select id="province" required>
+                        <option value="">Chọn Tỉnh/Thành phố*</option>
+                    </select>
+                    <select id="district" required>
+                        <option value="">Chọn Quận/Huyện*</option>
+                    </select>
+                    <select id="ward" required>
+                        <option value="">Chọn Phường/Xã*</option>
+                    </select>
+                </div>
+                <textarea id="note" placeholder="Ghi chú cho đơn hàng (Tùy chọn)"></textarea>
+            </div>
+
+            <div class="form-section">
+                <h3>3. Phương thức thanh toán</h3>
+                <div class="payment-option">
+                    <input type="radio" id="cod" name="payment-method" value="cod" checked>
+                    <label for="cod">Thanh toán khi nhận hàng (COD)</label>
+                </div>
+                <div class="payment-option">
+                    <input type="radio" id="bank-transfer" name="payment-method" value="bank">
+                    <label for="bank-transfer">Chuyển khoản ngân hàng</label>
+                </div>
+            </div>
+
+            <div class="form-section order-summary-modal">
+                <h3>Tóm tắt đơn hàng</h3>
+                <p>Tổng phụ: <span id="modal-subtotal">250.000 VNĐ</span></p>
+                <p>Phí vận chuyển: <span id="modal-shipping">30.000 VNĐ</span></p>
+                <p class="final-total">**TỔNG CỘNG:** <span id="modal-total">**280.000 VNĐ**</span></p>
+            </div>
+
+            <button type="submit" class="place-order-btn">HOÀN TẤT ĐẶT HÀNG</button>
+        </form>
+    </div>
+</div>
+
 <div class="footer">
     <div class="footer-container">
 
@@ -230,6 +278,7 @@
         </div>
 
     </div>
+
 </div>
 <script src="../js/shopping_cart.js"></script>
 </body>

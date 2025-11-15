@@ -6,7 +6,7 @@
     --text-color: #3b2f2f; /* Màu chữ chính */
     --text-color2: #6b5743; /* Màu chữ phụ/mờ */
     --btn: #A56B43; /* Màu hover của nút */
-    --delete-color: #f5222d; /* Màu đỏ cho hành động xóa */
+    --delete-color: #800000; /* Màu đỏ cho hành động xóa */
     --success-color: #52c41a; /* Màu xanh lá cho trạng thái thành công */
     --order-total-color: #007bff; /* Màu xanh dương cho Tổng thanh toán (theo mẫu) */
 }
@@ -132,11 +132,13 @@
 
 /* --- Main Content (Nội dung chính) --- */
 .main-content {
+
     flex-grow: 1;
     padding-left: 40px;
 }
 
 .tab-content {
+
     display: none;
     width: 100%;
 }
@@ -257,7 +259,7 @@
     margin-right: 10px;
     font-size: 1.2em;
     width: 20px;
-    color: var(--primary-color);
+    color: var(--text-color);
 }
 
 .update-btn, .link-btn, .delete-btn, .save-btn {
@@ -268,20 +270,31 @@
     font-size: 1em;
 }
 
-.update-btn, .link-btn, .save-btn {
-    background-color: var(--primary-color);
-    color: white;
+.update-btn, .link-btn {
+    background-color: var(--background-color);
+    color: var(--primary-color);
 }
+.save-btn{
+    background: var(--primary-color);
+    color: var(--background-color);
+    width: 100px;
 
-.update-btn:hover, .link-btn:hover, .save-btn:hover {
-    background-color: var(--btn);
+}
+.save-btn:hover{
+    background: var(--btn);
+    color: #fff;
+}
+.update-btn:hover, .link-btn:hover {
+color: var(--btn);
 }
 
 .delete-btn {
-    background-color: var(--delete-color);
-    color: white;
+    background-color: var(--background-color);
+    color: var(--primary-color);
 }
-
+.delete-btn:hover{
+    color: var(--btn);
+}
 /* --- Thanh toán (Payment) --- */
 .payment-management {
     margin-top: 20px;
@@ -359,6 +372,11 @@
 .float-right {
     float: right;
     margin-bottom: 20px;
+    background: var(--primary-color);
+    color: #fff;
+    width: 100px;
+    height: 30px;
+
 }
 
 .address-list {
@@ -631,7 +649,7 @@
 .order-total p {
     font-size: 1.1em;
     font-weight: bold;
-    color: var(--order-total-color);
+    color: #DC143C;
     margin-bottom: 15px;
     white-space: nowrap;
 }
@@ -680,3 +698,105 @@
 .product-name{
     margin-top: 7px;
 }
+/* --- Nội dung chính: Thêm đường kẻ dưới tiêu đề H2 --- */
+
+.main-content h2 {
+    font-size: 2em;
+    margin-top: 0; /* Đảm bảo không có margin trên quá lớn */
+    margin-bottom: 15px; /* Giảm margin dưới để sát với đường kẻ */
+    color: var(--text-color);
+
+    /* DÒNG CSS CẦN THÊM/CHỈNH SỬA: */
+    border-bottom: 1px solid #e0e0e0; /* Đường kẻ xám nhạt */
+    padding-bottom: 10px; /* Khoảng cách giữa chữ và đường kẻ */
+}
+/* Điều chỉnh cho đoạn mô tả (subtitle) trong Hồ sơ */
+.subtitle {
+    color: var(--text-color2);
+    /* Giảm khoảng cách để subtitle sát với nội dung form bên dưới */
+    margin-bottom: 20px;
+}
+/* --- CSS MỚI: Định dạng tiêu đề với nút "Thêm" --- */
+
+/* Wrapper chứa tiêu đề và nút */
+.header-with-button {
+    display: flex;
+    justify-content: space-between; /* Đẩy hai phần tử ra hai bên */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    margin-bottom: 20px; /* Khoảng cách với danh sách bên dưới */
+
+    /* Áp dụng đường kẻ ngang dưới header-with-button */
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+/* Tinh chỉnh tiêu đề H2 trong wrapper */
+.header-with-button h2 {
+    /* Hủy bỏ border-bottom cũ trên H2 để tránh 2 đường kẻ */
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0; /* Xóa margin dưới để căn giữa tốt hơn */
+}
+
+/* Loại bỏ class float-right không cần thiết và chỉnh lại nút thêm chung */
+.add-btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s;
+    /* Đảm bảo style chung cho nút Thêm */
+}
+
+.add-btn:hover {
+    background-color: var(--btn);
+}
+
+/* Xóa CSS cũ cho nút "Thêm" ở Địa chỉ */
+.float-right {
+    /* Hủy bỏ đoạn CSS cũ này nếu nó vẫn còn trong file mypage_style.css */
+    /* float: right;
+       margin-bottom: 20px;
+       background: var(--primary-color);
+       color: #fff;
+       width: 100px;
+       height: 30px;
+    */
+}
+
+/* --- Tinh chỉnh .payment-management (cần bỏ float: right) --- */
+/* Vì nút "Thêm" ở Thanh toán cũng sẽ dùng style mới này,
+   bạn nên kiểm tra lại .payment-management trong file CSS của mình: */
+.payment-management {
+    margin-top: 20px;
+    /* Xóa float: right và thay bằng header-with-button */
+}
+
+/* Sửa nút Thêm cũ trong payment-management để dùng style chung */
+.payment-management .add-btn {
+    /* Xóa float: right khỏi đây nếu có */
+    /* float: right; */
+    margin-bottom: 0; /* Đảm bảo không có margin dưới thừa */
+}
+button{
+    font-size: 14px;
+}
+/* --- Bảo mật (Security) --- */
+.password-change-form {
+    max-width: 500px;
+    /* DÒNG CSS CẦN THÊM/CHỈNH SỬA: */
+    margin: 0 auto; /* Căn giữa khối có giới hạn chiều rộng */
+}
+
+/* Các style khác giữ nguyên */
+.password-change-form .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+}
+
+/* ... các style khác của form ... */
