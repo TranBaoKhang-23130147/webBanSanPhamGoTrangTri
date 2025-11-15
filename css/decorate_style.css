@@ -4,9 +4,7 @@
     /*--text-color: #3E2F1C;*/
     --text-color: #3b2f2f;
     --text-color2:#6b5743;
-    --btn:#A56B43;
-
-}
+    --btn:#A56B43;}
 
 * {
     margin: 0;
@@ -204,7 +202,7 @@ body {
 }
 .banner-product {
     width: 100%;
-    height: 420px;
+    height: 500px;
     background-size: cover;
     background-position: center;
     display: flex;
@@ -242,7 +240,7 @@ body {
 
 .banner-content button {
     padding: 12px 26px;
-    background: #c28f44;
+    background: var(--primary-color);
     border: none;
     color: white;
     font-size: 17px;
@@ -252,7 +250,7 @@ body {
 }
 
 .banner-content button:hover {
-    background: #a57535;
+    background: var(--btn);
 }
 
 
@@ -595,4 +593,82 @@ body {
 }
 .set{
     padding: 20px;
+}
+/* --- BANNER ẢNH SẢN PHẨM (GIỮ THẺ IMG TRONG HTML) --- */
+
+.banner-product {
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* QUAN TRỌNG: Thiết lập ngữ cảnh định vị */
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.banner-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1; /* Lớp ảnh (nằm dưới cùng) */
+}
+
+/* 🖤 Lớp phủ đen trong suốt 40% (Overlay) */
+.banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Màu đen trong suốt */
+    background-color: rgba(0, 0, 0, 0.55);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5; /* Lớp phủ (nằm giữa) */
+}
+
+.banner-content {
+    color: #fff; /* Chữ trắng dễ đọc */
+    max-width: 800px;
+    padding: 20px;
+    text-align: center;
+
+    /* Đảm bảo nội dung nằm trên lớp phủ và ảnh */
+    position: relative;
+    z-index: 10; /* Lớp nội dung (nằm trên cùng) */
+}
+
+/* --- Style Nội dung (Giữ nguyên) --- */
+.banner-content h2 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.banner-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+#scrollToProducts {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#scrollToProducts:hover {
+    background-color: var(--btn);
 }

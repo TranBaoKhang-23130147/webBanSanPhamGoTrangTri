@@ -1,6 +1,7 @@
 // Lấy các phần tử modal
 var modal = document.getElementById("checkoutModal");
-var btn = document.getElementById("openCheckoutModal");
+// CHỈNH SỬA: Thay đổi ID để khớp với ID trong HTML đã cập nhật.
+var btn = document.getElementById("openCheckoutModalBtn");
 // Lấy nút đóng (x)
 var span = document.getElementsByClassName("close-btn")[0];
 
@@ -10,11 +11,14 @@ btn.onclick = function(e) {
     modal.style.display = "block";
     document.body.classList.add("modal-open"); // Thêm class để ẩn scrollbar
 
-    // Cập nhật Tổng tiền trong Modal từ bảng tóm tắt giỏ hàng
-    document.getElementById('modal-subtotal').textContent = document.querySelector('.summary-amount').textContent;
-    // Sử dụng regex để loại bỏ dấu ** và lấy giá trị tổng cộng
-    document.getElementById('modal-total').textContent = document.querySelector('.summary-total-amount').textContent.replace(/\*/g, '');
-    document.getElementById('modal-shipping').textContent = '30.000 VNĐ'; // Giữ cố định phí ship
+    // Cập nhật Tổng tiền trong Modal từ bảng tóm tắt giỏ hàng (sử dụng class mới)
+    // Dùng .summary-amount-new vì HTML tóm tắt đã được cập nhật
+    document.getElementById('modal-subtotal').textContent = document.querySelector('.summary-line-new:nth-child(2) .summary-amount-new').textContent;
+    // Lấy giá trị tổng cộng (dòng thứ 4 của .cart-summary-new)
+    document.getElementById('modal-total').textContent = document.querySelector('.summary-line-new.total-new .summary-total-amount-new').textContent;
+
+    // Giữ cố định phí ship (Nếu phí ship không hiển thị riêng trong HTML Tóm tắt mới)
+    document.getElementById('modal-shipping').textContent = '30.000 VNĐ';
 }
 
 // Khi người dùng nhấp vào (x), đóng modal
