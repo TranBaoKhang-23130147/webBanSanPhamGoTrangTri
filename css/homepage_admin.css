@@ -330,3 +330,33 @@ body {
     font-size: 0.8rem;
     font-weight: 500;
 }
+/* Trong phần "MAIN WRAPPER & SIDEBAR" */
+.main-wrapper {
+    display: flex;
+    padding-top: var(--header-height);
+    flex: 1;
+}
+
+/* 1. Thay đổi Padding của Content để nâng tiêu đề lên */
+.content {
+    flex-grow: 1;
+    /* Giảm padding-top từ 30px (hoặc giá trị hiện tại) xuống 20px */
+    padding: 20px 30px 30px 30px;
+    margin-left: var(--sidebar-width);
+}
+
+
+/* Chỉnh sửa style cho tiêu đề trang */
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--text-color);
+    /* Giảm margin-top và margin-bottom để nâng chữ lên */
+    margin-top: 0;
+    margin-bottom: 20px;
+
+    /* 2. Thêm đường kẻ ngang dưới nó */
+    padding-bottom: 15px; /* Khoảng cách giữa chữ và đường kẻ */
+    border-bottom: 1px solid var(--border-color); /* Đường kẻ ngang mỏng */
+}
+/**/

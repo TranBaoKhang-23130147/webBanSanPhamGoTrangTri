@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Quản lý Đồ Trang Trí Gỗ</title>
+    <title>HOME DECOR</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/homepage_admin.css">
+    <link rel="stylesheet" href="../css/admin_profile_style.css">
+
 </head>
 <body>
 
@@ -16,7 +18,31 @@
         </div>
 
         <div class="header-icons">
-            <i class="fa-solid fa-bell"></i>
+
+            <div class="gmail-dropdown">
+                <i class="fa-solid fa-envelope gmail-icon"></i>
+
+                <div id="gmailMenuContent" class="dropdown-content gmail-content">
+                    <div class="dropdown-header">Gmail</div>
+                    <p class="no-messages-text">Không có Gmail nào.</p>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="view-all-link">Mở Gmail</a>
+                </div>
+            </div>
+            <div class="notification-dropdown">
+                <i class="fa-solid fa-bell notification-icon"></i>
+
+                <div id="notificationMenuContent" class="dropdown-content notification-content">
+                    <div class="dropdown-header">Thông Báo Mới (5)</div>
+                    <a href="#">Đơn hàng mới #1001</a>
+                    <a href="#">Sản phẩm hết hàng</a>
+                    <a href="#">Khách hàng mới đăng ký</a>
+                    <a href="#">Đơn hàng #1005 vừa được hủy bỏ</a>
+                    <a href="#">Cần duyệt 3 đánh giá sản phẩm mới</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="view-all-link">Xem tất cả</a>
+                </div>
+            </div>
 
             <div class="user-dropdown">
                 <i class="fas fa-user-circle user-logo" ></i>
@@ -35,8 +61,8 @@
             <nav class="sidebar-nav">
                 <ul>
                     <li class="active"><a href="#">Tổng quan</a></li>
-                    <li><a href="products_admin.html"> Sản phẩm</a></li>
-                    <li><a href="order_admin.html"> Đơn hàng</a></li>
+                    <li><a href="admin_products.html"> Sản phẩm</a></li>
+                    <li><a href="admin_order.html"> Đơn hàng</a></li>
                     <li><a href="admin_customer.html"> Khách hàng</a></li>
                     <li><a href="admin_profile.html"> Hồ sơ</a></li>
                     <li><a href="admin_setting.html"> Cài đặt</a></li>

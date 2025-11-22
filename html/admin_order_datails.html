@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/homepage_admin.css">
     <link rel="stylesheet" href="../css/admin_order_datails.css">
+    <link rel="stylesheet" href="../css/admin_profile_style.css">
 </head>
 <body>
 
@@ -17,7 +18,31 @@
         </div>
 
         <div class="header-icons">
-            <i class="fa-solid fa-bell"></i>
+
+            <div class="gmail-dropdown">
+                <i class="fa-solid fa-envelope gmail-icon"></i>
+
+                <div id="gmailMenuContent" class="dropdown-content gmail-content">
+                    <div class="dropdown-header">Gmail</div>
+                    <p class="no-messages-text">Không có Gmail nào.</p>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="view-all-link">Mở Gmail</a>
+                </div>
+            </div>
+            <div class="notification-dropdown">
+                <i class="fa-solid fa-bell notification-icon"></i>
+
+                <div id="notificationMenuContent" class="dropdown-content notification-content">
+                    <div class="dropdown-header">Thông Báo Mới (5)</div>
+                    <a href="#">Đơn hàng mới #1001</a>
+                    <a href="#">Sản phẩm hết hàng</a>
+                    <a href="#">Khách hàng mới đăng ký</a>
+                    <a href="#">Đơn hàng #1005 vừa được hủy bỏ</a>
+                    <a href="#">Cần duyệt 3 đánh giá sản phẩm mới</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="view-all-link">Xem tất cả</a>
+                </div>
+            </div>
 
             <div class="user-dropdown">
                 <i class="fas fa-user-circle user-logo" ></i>
@@ -35,9 +60,9 @@
         <aside class="sidebar">
             <nav class="sidebar-nav">
                 <ul>
-                    <li ><a href="homepage_admin.html">Tổng quan</a></li>
-                    <li><a href="products_admin.html"> Sản phẩm</a></li>
-                    <li class="active"><a href="order_admin.html"> Đơn hàng</a></li>
+                    <li ><a href="admin_homepage.html">Tổng quan</a></li>
+                    <li><a href="admin_products.html"> Sản phẩm</a></li>
+                    <li class="active"><a href="admin_order.html"> Đơn hàng</a></li>
                     <li><a href="admin_customer.html"> Khách hàng</a></li>
                     <li><a href="admin_profile.html"> Hồ sơ</a></li>
                     <li><a href="admin_quan_ly_danh_muc.html"> Cài đặt</a></li>
@@ -77,25 +102,25 @@
                                 </thead>
                                 <tbody>
                                 <tr class="product-row">
-                                    <td class="product-name-col">Giày Nữ</td>
+                                    <td class="product-name-col">Kệ giày sang trọng, kinh tế</td>
                                     <td>SP 1</td>
                                     <td>1</td>
                                     <td class="amount">1,533,315 VNĐ</td>
                                 </tr>
                                 <tr class="product-row">
-                                    <td class="product-name-col">Kính Mát Tròn</td>
+                                    <td class="product-name-col">Tủ đựng đa năng làm bằng gỗ thông tự nhiên</td>
                                     <td>SP 1</td>
                                     <td>1</td>
                                     <td class="amount">375,965 VNĐ</td>
                                 </tr>
                                 <tr class="product-row">
-                                    <td class="product-name-col">Túi Đeo Vai</td>
+                                    <td class="product-name-col">Giường gỗ chạm khắc tinh tế</td>
                                     <td>SP 1</td>
                                     <td>1</td>
                                     <td class="amount">1,533,315 VNĐ</td>
                                 </tr>
                                 <tr class="product-row">
-                                    <td class="product-name-col">Nước Hoa Cổ Điển</td>
+                                    <td class="product-name-col">Bình hoa gỗ phong cách cổ điển</td>
                                     <td>SP 1</td>
                                     <td>1</td>
                                     <td class="amount">1,063,315 VNĐ</td>
@@ -149,7 +174,7 @@
                             </div>
                             <div class="detail-line">
                                 <span>Chủ Thẻ:</span>
-                                <span class="detail-value">Harold Gonzalez</span>
+                                <span class="detail-value">Baybi Kieu</span>
                             </div>
                             <div class="detail-line">
                                 <span>Số Thẻ:</span>

@@ -5,16 +5,27 @@
     <title>Quản lí khách hàng</title>
     <link rel="stylesheet" href="../css/admin_customer_style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/admin_profile_style.css">
 </head>
 <body>
 <div class="admin-container">
     <header class="header">
         <div class="logo-placeholder">
-            <img src="../img/p.png" alt="Logo Modern Homes">
+            <img src="../img/logo.png" alt="Logo Modern Homes">
             <p class="logo">HOME DECOR</p>
         </div>
-
         <div class="header-icons">
+
+            <div class="gmail-dropdown">
+                <i class="fa-solid fa-envelope gmail-icon"></i>
+
+                <div id="gmailMenuContent" class="dropdown-content gmail-content">
+                    <div class="dropdown-header">Gmail</div>
+                    <p class="no-messages-text">Không có Gmail nào.</p>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="view-all-link">Mở Gmail</a>
+                </div>
+            </div>
             <div class="notification-dropdown">
                 <i class="fa-solid fa-bell notification-icon"></i>
 
@@ -46,29 +57,35 @@
         <aside class="sidebar">
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="homepage_admin.html">Tổng quan</a></li>
-                    <li><a href="admin_product.html"> Sản phẩm</a></li>
+                    <li><a href="admin_homepage.html">Tổng quan</a></li>
+                    <li><a href="admin_products.html"> Sản phẩm</a></li>
                     <li><a href="admin_order.html"> Đơn hàng</a></li>
-                    <li class="active"><a href="admin_customer.html"> Khách hàng</a></li>
+                    <li class="active"><a href="#"> Khách hàng</a></li>
                     <li><a href="admin_profile.html"> Hồ sơ</a></li>
                     <li><a href="admin_setting.html"> Cài đặt</a></li>
                 </ul>
             </nav>
         </aside>
         <main class="content-area">
+
             <section class="admin-content-card">
-                <div class="content-header">
-                    <h1 class="page-title">Khách Hàng</h1>
+                <h2 class="page-title">Quản Lý Khách Hàng</h2>
+
+                <div class="controls-bar">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Tìm kiếm">
+                    </div>
                     <div class="header-actions">
                         <button class="action-btn export-btn"><i class="fas fa-file-export"></i> Xuất</button>
                         <button class="action-btn customize-btn"><i class="fas fa-cog"></i> Tùy Chọn</button>
                     </div>
                 </div>
                 <div class="customer-list-container">
-                    <div class="search-bar">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Tìm kiếm">
-                    </div>
+<!--                    <div class="search-bar">-->
+<!--                        <i class="fas fa-search"></i>-->
+<!--                        <input type="text" placeholder="Tìm kiếm">-->
+<!--                    </div>-->
                     <div class="table-responsive">
                         <table class="data-table">
                             <thead>

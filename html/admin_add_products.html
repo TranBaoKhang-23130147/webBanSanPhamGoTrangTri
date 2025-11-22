@@ -6,18 +6,44 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/user_admin.css">
     <link rel="stylesheet" href="../css/admin_add_products.css">
+    <link rel="stylesheet" href="../css/admin_profile_style.css">
+
 </head>
 <body>
 
 <div class="admin-container">
     <header class="header">
         <div class="logo-placeholder">
-            <img src="../img/p.png" alt="Logo Modern Homes">
+            <img src="../img/logo.png" alt="Logo">
             <p class="logo">HOME DECOR</p>
         </div>
 
         <div class="header-icons">
-            <i class="fa-solid fa-bell"></i>
+
+            <div class="gmail-dropdown">
+                <i class="fa-solid fa-envelope gmail-icon"></i>
+
+                <div id="gmailMenuContent" class="dropdown-content gmail-content">
+                    <div class="dropdown-header">Gmail</div>
+                    <p class="no-messages-text">Không có Gmail nào.</p>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="view-all-link">Mở Gmail</a>
+                </div>
+            </div>
+            <div class="notification-dropdown">
+                <i class="fa-solid fa-bell notification-icon"></i>
+
+                <div id="notificationMenuContent" class="dropdown-content notification-content">
+                    <div class="dropdown-header">Thông Báo Mới (5)</div>
+                    <a href="#">Đơn hàng mới #1001</a>
+                    <a href="#">Sản phẩm hết hàng</a>
+                    <a href="#">Khách hàng mới đăng ký</a>
+                    <a href="#">Đơn hàng #1005 vừa được hủy bỏ</a>
+                    <a href="#">Cần duyệt 3 đánh giá sản phẩm mới</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="view-all-link">Xem tất cả</a>
+                </div>
+            </div>
 
             <div class="user-dropdown">
                 <i class="fas fa-user-circle user-logo" ></i>
@@ -35,12 +61,12 @@
         <aside class="sidebar">
             <nav class="sidebar-nav">
                 <ul>
-                    <li ><a href="homepage_admin.html">Tổng quan</a></li>
-                    <li class="active"><a href="products_admin.html"> Sản phẩm</a></li>
-                    <li ><a href="order_admin.html"> Đơn hàng</a></li>
+                    <li ><a href="admin_homepage.html">Tổng quan</a></li>
+                    <li class="active"><a href="admin_products.html"> Sản phẩm</a></li>
+                    <li ><a href="admin_order.html"> Đơn hàng</a></li>
                     <li><a href="admin_customer.html"> Khách hàng</a></li>
                     <li><a href="admin_profile.html"> Hồ sơ</a></li>
-                    <li><a href="admin_quan_ly_danh_muc.html"> Danh mục</a></li>
+                    <li><a href="admin_setting.html"> Cài đặt</a></li>
                 </ul>
             </nav>
         </aside>
@@ -57,7 +83,7 @@
 
                             <div class="form-group">
                                 <label for="productName">Tên</label>
-                                <input type="text" id="productName" placeholder="Tủ lạnh, máy giặt, ect.">
+                                <input type="text" id="productName" placeholder="Giường, tủ, kệ,...">
                             </div>
 
                             <div class="form-row">
@@ -67,7 +93,7 @@
                                 </div>
                                 <div class="form-group half-width">
                                     <label for="category">Danh mục</label>
-                                    <input type="text" id="category" placeholder=" trang trí Phòng bếp">
+                                    <input type="text" id="category" placeholder=" TRANG TRÍ PHÒNG KHÁCH">
                                 </div>
                             </div>
 
@@ -145,12 +171,15 @@
                             <h2 class="card-title">Tổ chức</h2>
                             <div class="form-group">
                                 <label for="supplier">Nhà cung cấp</label>
-                                <input type="text" id="supplier" placeholder="eg. Nike">
+                                <input type="text" id="supplier" placeholder="Xưỡng gỗ XuanMai,..">
                             </div>
                             <div class="form-group">
                                 <label for="collection">Bộ sưu tập</label>
                                 <select id="collection">
-                                    <option> trang tris Nhà bếp</option>
+                                    <option> TRANG TRÍ PHÒNG KHÁCH</option>
+                                    <option> TRANG TRÍ PHÒNG LÀM VIỆC</option>
+                                    <option> TRANG TRÍ PHÒNG NGỦ</option>
+                                    <option> TRANG TRÍ PHÒNG BẾP</option>
                                 </select>
                             </div>
                             <div class="form-group">
