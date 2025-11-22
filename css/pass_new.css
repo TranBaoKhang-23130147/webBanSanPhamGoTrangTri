@@ -24,25 +24,20 @@ body {
     padding: 40px 50px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    text-align: center;
+    text-align: center; /* Căn giữa nội dung */
 }
 
 h1 {
     color: var(--grad-clr1);
     font-size: 26px;
-    margin-bottom: 10px;
-}
-
-p {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 25px;
+    margin-bottom: 25px; /* Thêm khoảng cách dưới tiêu đề */
 }
 
 .infield {
     position: relative;
     width: 100%;
     margin-bottom: 20px;
+    text-align: left; /* Đảm bảo input nằm đúng chỗ */
 }
 
 input {
@@ -90,48 +85,18 @@ button:hover {
     border: 1px solid var(--grad-clr1);
 }
 
-.back-login {
+/* Style mới cho liên kết quay lại ở dưới */
+.back-link-wrapper {
     margin-top: 20px;
 }
 
-.back-login a {
+.back-link-wrapper a {
     color: var(--grad-clr1);
     text-decoration: none;
     font-size: 14px;
     transition: 0.2s;
 }
 
-.back-login a:hover {
+.back-link-wrapper a:hover {
     color: var(--grad-clr2);
-}
-
-.back-login i {
-    margin-right: 5px;
-}
-/* Style cho liên kết (<a>) đóng vai trò là nút */
-.button-link {
-    /* Đảm bảo liên kết chiếm toàn bộ chiều rộng (như nút) */
-    display: block;
-    text-align: center;
-    text-decoration: none; /* Bỏ gạch chân mặc định của liên kết */
-
-    /* Copy style từ nút <button> */
-    width: 100%;
-    padding: 12px 0;
-    border: none;
-    border-radius: 20px;
-    background: var(--grad-clr2);
-    color: #fff;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-/* Hiệu ứng hover cho liên kết (giống nút) */
-.button-link:hover {
-    background: #fff;
-    color: var(--grad-clr1);
-    border: 1px solid var(--grad-clr1);
 }

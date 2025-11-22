@@ -439,3 +439,59 @@ body {
 .page-num:not(.active):hover {
     background-color: var(--light-bg);
 }
+/* ---------------- TIÊU ĐỀ CHÍNH (Gạch ngang) ---------------- */
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-top: 0;
+    /* Áp dụng gạch ngang qua */
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color); /* Đường gạch ngang */
+}
+
+/* ---------------- KHỐI TRẮNG LỚN (admin-content-card) ---------------- */
+.admin-content-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 25px 30px;
+}
+
+/* ---------------- DÒNG ĐIỀU KHIỂN (SEARCH + BUTTONS) ---------------- */
+/* Dùng class này để làm Flex container cho tìm kiếm và nút */
+.controls-bar {
+    display: flex;
+    justify-content: space-between; /* Đẩy hai phần tử ra xa nhau */
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* ---------------- THANH TÌM KIẾM ---------------- */
+.search-bar {
+    position: relative;
+    /* Bỏ max-width để nó tự co dãn nếu cần */
+    width: 300px; /* Đặt width cố định để nó không chiếm quá nhiều */
+    margin-bottom: 0; /* Bỏ margin-bottom */
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    font-size: 0.95rem;
+    padding: 0;
+}
+
+/* ---------------- HEADER ACTIONS (Nút Xuất/Tùy Chọn) ---------------- */
+.header-actions {
+    display: flex;
+    gap: 10px;
+}

@@ -274,9 +274,79 @@
     padding: 30px;
     background-color: var(--light-bg);
 
-    /* CHỈNH SỬA QUAN TRỌNG: margin-left phải bằng sidebar-width */
     margin-left: var(--sidebar-width);
 
-    /* Đảm bảo nó không bị trôi nếu header là fixed */
-    padding-top: calc(30px + var(--header-height));
+}
+/*.progress-step.current {*/
+/*    margin-top: 40px;*/
+/*}*/
+/*.progress-step.current::after{*/
+/* */
+/*}*/
+/* --- 1. Tiến trình Đơn hàng (Steps) --- */
+.order-progress-container {
+    display: flex;
+    justify-content: space-between;
+    /* CĂN CHỈNH: Đặt căn chỉnh theo top và đảm bảo chiều cao */
+    align-items: flex-start;
+    margin-bottom: 30px;
+    position: relative;
+    padding: 0 10px;
+    height: 50px; /* Đảm bảo đủ không gian cho text và chấm tròn */
+}
+
+/* Thanh ngang (đường kẻ) */
+.order-progress-container::before {
+    content: '';
+    position: absolute;
+    /* Đặt thanh ngang ở vị trí Y = 25px */
+    /*top: 40px;*/
+    /*left: 20px;*/
+    /*right: 20px;*/
+    /*height: 3px;*/
+    background-color: var(--border-color);
+    z-index: 1;
+
+}
+
+.progress-step {
+    position: relative;
+    z-index: 2;
+    background-color: var(--background-color);
+    color: var(--text-color-light);
+    font-size: 0.8rem;
+    text-align: center;
+    width: 25%;
+    /* CĂN CHỈNH: Đảm bảo text nằm phía trên */
+    padding-top: 40px; /* Đẩy text lên trên để tạo không gian cho chấm tròn */
+    display: block;
+}
+
+/* Chấm tròn */
+.progress-step::after {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: var(--border-color);
+    border-radius: 50%;
+    position: absolute;
+    /* CĂN CHỈNH: Đặt vị trí Y = 25px, trùng với thanh ngang */
+    top: 25px;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Đảm bảo tâm chấm tròn nằm trên thanh ngang */
+}
+
+/* Trạng thái hiện tại */
+.progress-step.current {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+.progress-step.current::after {
+    background-color: var(--primary-color);
+    width: 12px;
+    height: 12px;
+}
+.progress-step.completed::after {
+    background-color: var(--primary-color);
 }

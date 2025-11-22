@@ -750,3 +750,137 @@ body {
     color: #666;
     line-height: 1.6;
 }
+/**/
+/* ===== GALLERY / HISTORY (CHỈNH SỬA) ===== */
+.wood-history {
+    padding: 80px 8%;
+    background: var(--soft-bg);
+}
+
+.wood-history h2 {
+    font-size: 32px; /* Tăng kích thước tiêu đề chính */
+    color: var(--primary-color);
+    margin-bottom: 40px; /* Tăng khoảng cách dưới tiêu đề */
+    text-align: center;
+}
+
+/* Thiết lập Flexbox để chia nội dung và ảnh thành 2 cột (trên màn hình lớn) */
+.wood-history .container {
+    display: flex;
+    align-items: flex-start; /* Căn chỉnh nội dung lên trên */
+    gap: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.wood-history .text-box {
+    flex: 2; /* Phần chữ chiếm 2/3 không gian */
+    text-align: left;
+    padding: 20px 0;
+}
+
+.wood-history .image-box {
+    flex: 1; /* Phần ảnh chiếm 1/3 không gian */
+    padding-top: 20px;
+}
+
+/* Các thuộc tính Typography bên trong */
+.wood-history .text-box h2 {
+    font-size: 24px;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.wood-history .text-box p {
+    line-height: 1.8;
+    color: var(--text-color2);
+    margin-bottom: 15px;
+}
+
+/* Thiết lập lại Gallery ảnh (giữ nguyên Flexbox) */
+.wood-collections {
+    display: flex;
+    flex-direction: column; /* Xếp ảnh dọc trong cột bên phải */
+    gap: 20px;
+    margin-top: 0;
+}
+
+.collection-item {
+    width: 100%; /* Chiếm toàn bộ chiều rộng cột */
+    max-width: none;
+}
+.collection-item img {
+    height: 250px; /* Giảm chiều cao ảnh để dễ xem hơn */
+}
+
+/* Responsive cho phần Gallery/History */
+@media (max-width: 992px) {
+    .wood-history .container {
+        flex-direction: column; /* Xếp thành một cột trên tablet */
+    }
+    .wood-collections {
+        flex-direction: row; /* Xếp ảnh ngang trên tablet */
+        overflow-x: auto; /* Thêm cuộn ngang nếu quá nhiều ảnh */
+        padding-bottom: 15px;
+        justify-content: flex-start;
+    }
+    .collection-item {
+        min-width: 250px;
+    }
+}
+/* ===== VISION & END NOTE (CHỈNH SỬA) ===== */
+.vision-future h2,
+.end-note h2 {
+    font-size: 30px;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+}
+
+.vision-future {
+    max-width: 900px; /* Giới hạn chiều rộng để dễ đọc */
+}
+
+.end-note {
+    background: var(--light-bg);
+    border-radius: 16px;
+    padding: 60px 40px; /* Tăng padding trong khối */
+    margin-bottom: 100px; /* Tăng khoảng cách với footer */
+}
+
+.end-note p {
+    font-style: italic;
+    color: var(--text-color);
+    font-size: 19px; /* Tăng kích thước cho thông điệp cuối cùng */
+}
+/* Tối ưu hóa lại phần Responsive cho timeline */
+@media (max-width: 768px) {
+    .timeline::after {
+        left: 20px; /* Giữ đường kẻ bên trái */
+    }
+    .step {
+        width: 100%;
+        left: 0 !important; /* Đảm bảo cả left và right đều nằm bên trái */
+        justify-content: flex-start; /* Nội dung nằm bên trái */
+        padding-left: 50px; /* Tạo khoảng cách cho đường kẻ */
+    }
+    .step img {
+        position: absolute; /* Đặt ảnh ra bên ngoài để không ảnh hưởng đến nội dung */
+        left: 45px;
+        width: 70px;
+        height: 70px;
+        /* Cần chỉnh lại vị trí ảnh và chấm tròn */
+        display: none; /* Ẩn ảnh trong timeline trên di động để đơn giản hóa */
+    }
+    .step .content {
+        font-size: 14px;
+        width: 100%; /* Chiếm toàn bộ không gian còn lại */
+    }
+
+    /* Chỉnh lại chấm tròn cho cả left và right để nằm trên đường kẻ */
+    .left::before, .right::before {
+        left: 17px;
+        right: auto;
+    }
+}
+

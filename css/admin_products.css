@@ -180,41 +180,54 @@ body {
 }
 
 /* ---------------- CONTENT (Nội dung chính) ---------------- */
-.main-wrapper {
-    display: flex;
-    padding-top: var(--header-height); /* Đẩy nội dung xuống dưới header cố định */
-    flex-grow: 1;
-}
 
+/* Áp dụng padding và nền xám cho khu vực chứa khối nội dung trắng */
 .content {
     flex-grow: 1;
+    /* Giảm padding để khối trắng có thể gần các cạnh hơn */
     padding: 20px;
-    margin-left: var(--sidebar-width); /* Tạo khoảng trống cho sidebar */
+    margin-left: var(--sidebar-width);
     transition: margin-left 0.3s ease;
     background-color: var(--light-bg);
 }
 
-.page-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--text-color);
-    margin-bottom: 20px;
+/* KHỐI TRẮNG LỚN BAO QUANH TOÀN BỘ NỘI DUNG (Tìm kiếm + Bảng) */
+.product-management-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    /* Thêm padding cho nội dung bên trong khối trắng */
+    padding: 25px 30px;
 }
 
+/* Tiêu đề trang nằm trong khối trắng */
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 0;
+    border-bottom: none; /* Bỏ đường kẻ dưới tiêu đề */
+}
+
+
 /* ---------------- Thanh công cụ tìm kiếm và lọc ---------------- */
+
 .search-filter-bar {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 15px;
+    /* Loại bỏ style cũ (nền trắng, bóng đổ, padding) */
+    padding: 0;
     margin-bottom: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: var(--card-shadow);
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
 }
 
 .search-input-group {
-    flex-grow: 1; /* Cho phép ô tìm kiếm mở rộng */
+    flex-grow: 1;
 }
 
 .search-input {
@@ -236,11 +249,13 @@ body {
     color: var(--text-color);
 }
 
+/* Style nút Xuất và Thêm Sản Phẩm Mới (Màu Trắng/Xám, Hover Nâu) */
+.export-product-btn,
 .add-new-product-btn {
-    background-color: var(--primary-color);
-    color: white;
+    background-color: #fff;
+    color: var(--text-color);
     padding: 10px 15px;
-    border: none;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.95rem;
@@ -248,19 +263,32 @@ body {
     display: flex;
     align-items: center;
     gap: 5px;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
 }
 
+.export-product-btn:hover,
 .add-new-product-btn:hover {
-    background-color: var(--accent-color);
+    background-color: var(--light-bg);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
 }
+
+/* Đảm bảo link trong nút Thêm Sản Phẩm Mới không bị gạch chân và kế thừa màu */
+.add-new-product-btn a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+}
+
 
 /* ---------------- Bảng sản phẩm ---------------- */
+
 .product-table-wrapper {
-    background-color: #fff;
-    border-radius: 8px;
-    overflow: hidden; /* Quan trọng để tiêu đề không tràn */
-    box-shadow: var(--card-shadow);
+    /* Loại bỏ style cũ (nền trắng, bóng đổ) vì đã có product-management-container lo */
+    background-color: transparent;
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: none;
 }
 
 .product-table {
@@ -269,9 +297,10 @@ body {
     font-size: 0.9rem;
 }
 
+/* ĐỊNH DẠNG THEO HÌNH MẪU (Nền xám nhạt, chữ xám xanh) */
 .product-table thead {
-    background-color: var(--text-color); /* Nền tối cho tiêu đề */
-    color: white;
+    background-color: var(--light-bg);
+    color: var(--secondary-text-color);
 }
 
 .product-table th, .product-table td {
@@ -282,9 +311,24 @@ body {
 }
 
 .product-table th {
-    font-weight: 600;
-    white-space: nowrap; /* Ngăn tiêu đề bị xuống dòng */
+    font-weight: 500;
+    white-space: nowrap;
+    border-bottom: none; /* Bỏ viền dưới thừa */
 }
+
+/* Viền ngăn cách giữa header và body */
+.product-table thead tr {
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Đảm bảo hàng đầu tiên của tbody có viền trên mỏng (từ header) */
+.product-table tbody tr:first-child {
+    border-top: 1px solid var(--border-color);
+}
+.product-table tbody tr:first-child td {
+    border-top: 1px solid var(--border-color);
+}
+
 
 /* Kiểu cột đặc biệt */
 .col-image { width: 50px; text-align: center; }
@@ -384,38 +428,49 @@ input:checked + .slider:before {
 .delete-icon:hover {
     opacity: 0.8;
 }
-
-/* ---------------- Thanh công cụ tìm kiếm và lọc (Bổ sung nút Export) ---------------- */
-
-/* Định kiểu cho nút Xuất */
-.export-product-btn {
-    background-color: #3b2f2f; /* Màu nền tối hơn, hoặc màu khác biệt */
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    transition: background-color 0.2s;
+/* ---------------- CONTENT (Nội dung chính) ---------------- */
+.content {
+    flex-grow: 1;
+    /* Giảm padding để khối trắng có thể gần các cạnh hơn */
+    padding: 20px 30px; /* Giảm padding ngang/dọc */
+    margin-left: var(--sidebar-width);
+    transition: margin-left 0.3s ease;
+    background-color: var(--light-bg);
 }
 
-.export-product-btn:hover {
-    background-color: #5a4b4b; /* Màu hover tối hơn */
+/* ---------------- Tiêu đề trang (page-title) ---------------- */
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-top: 0;
+    /* Thêm đường kẻ ngang và nâng chữ lên */
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color); /* Thêm đường kẻ ngang */
 }
 
-/* Cập nhật thanh search-filter-bar để đảm bảo các nút hiển thị tốt */
+
+/* ---------------- KHỐI TRẮNG LỚN BAO QUANH ---------------- */
+.product-management-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    /* Giữ padding cho nội dung bên trong (Thanh tìm kiếm và Bảng) */
+    padding: 25px 30px;
+}
+
+
+/* ---------------- Thanh công cụ tìm kiếm và lọc ---------------- */
+/* Cần điều chỉnh lại margin-bottom nếu nó nằm ngay sau tiêu đề */
 .search-filter-bar {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 15px;
+    padding: 0;
+    /* Giữ margin-bottom để cách bảng */
     margin-bottom: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: var(--card-shadow);
-    /* Có thể thêm flex-wrap: wrap; nếu muốn responsive tốt hơn trên màn hình nhỏ */
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
 }

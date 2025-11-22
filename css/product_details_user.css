@@ -302,7 +302,12 @@ body {
     border: 2px solid #bbb;
     transition: 0.2s;
 }
-
+.color-select .denoccho{
+    background: #3b2f2f;
+}
+.color-select .nauhatde{
+    background: #6b5743;
+}
 .color-select .color:hover {
     border-color: var(--primary-color);
     transform: scale(1.1);
@@ -328,20 +333,20 @@ body {
 
 /* ---- PRICE ---- */
 .product-price {
-    font-size: 32px;
+    font-size: 23px;
     font-weight: bold;
     color: #e60000;
-    margin: 25px 0;
+    margin: 20px 0;
 }
 
 /* ---- ADD TO CART BUTTON ---- */
 .add-to-cart {
-    padding: 14px 32px;
+    padding: 14px 24px;
     background: var(--btn);
     border: none;
     color: #fff;
     border-radius: 10px;
-    font-size: 18px;
+    font-size: 14px;
     cursor: pointer;
     transition: 0.25s;
     box-shadow: 0 4px 12px rgba(165, 107, 67, 0.3);
@@ -541,4 +546,37 @@ body {
 .social-icons a:hover,
 .footer-col a:hover {
     color: #8B5E3C;
+}
+/* ---- LEFT: GALLERY ---- */
+.product-gallery {
+    width: 45%;
+}
+
+.main-image {
+    /* Thêm một chiều cao cố định cho khung ảnh chính */
+    height: 450px; /* Điều chỉnh chiều cao này theo ý muốn */
+    /* Để đảm bảo ảnh chính nằm trong vùng này */
+    overflow: hidden;
+}
+
+.main-image img {
+    width: 100%;
+    /* Đặt chiều cao 100% để lấp đầy khung cha */
+    height: 100%;
+
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.15);
+    transition: 0.3s;
+
+    /* Thuộc tính quan trọng để cố định kích thước ảnh */
+    object-fit: cover;
+    /* Dùng 'cover' để ảnh lấp đầy khung, có thể bị cắt.
+       Dùng 'contain' nếu bạn muốn thấy toàn bộ ảnh, sẽ có khoảng trắng. */
+}
+
+.main-image img:hover {
+    transform: scale(1.02);
+}
+.product-detail{
+    margin: 40px auto;
 }

@@ -439,3 +439,17 @@ textarea#description {
 .btn-primary:hover {
     background-color: var(--accent-color);
 }
+/* Chỉnh sửa style cho tiêu đề trang */
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--text-color);
+    /* Giảm margin-top và margin-bottom để nâng chữ lên */
+    margin-top: 0;
+    margin-bottom: 20px;
+
+    /* 2. Thêm đường kẻ ngang dưới nó */
+    padding-bottom: 15px; /* Khoảng cách giữa chữ và đường kẻ */
+    border-bottom: 1px solid var(--border-color); /* Đường kẻ ngang mỏng */
+}
+/**/
