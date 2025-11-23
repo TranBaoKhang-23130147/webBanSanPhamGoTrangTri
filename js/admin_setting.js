@@ -1,185 +1,102 @@
-// document.addEventListener('DOMContentLoaded', function () {
-//     const sections = document.querySelectorAll('.settings-card');
-//     const navItems = document.querySelectorAll('.settings-menu a');
-//
-//     // Hàm gỡ bỏ trạng thái active khỏi tất cả các mục
-//     function removeActiveClass() {
-//         navItems.forEach(item => {
-//             // Gỡ bỏ class 'active' khỏi thẻ <li>
-//             item.closest('li').classList.remove('active');
-//         });
-//     }
-//
-//     // Hàm theo dõi việc cuộn trang (Intersection Observer)
-//     const observer = new IntersectionObserver(entries => {
-//         entries.forEach(entry => {
-//             if (entry.isIntersecting) {
-//                 removeActiveClass();
-//                 const targetId = entry.target.getAttribute('id');
-//
-//                 // Tìm thẻ <a> có href khớp với ID
-//                 const activeLink = document.querySelector(`.settings-menu a[href="#${targetId}"]`);
-//
-//                 // Thêm class 'active' vào thẻ <li> chứa thẻ <a> đó
-//                 if (activeLink) {
-//                     activeLink.closest('li').classList.add('active');
-//                 }
-//             }
-//         });
-//     }, {
-//         rootMargin: "0px 0px -70% 0px", // Đánh dấu active khi mục đạt đến 30% từ đỉnh màn hình
-//         threshold: 0.1
-//     });
-//
-//     // Quan sát từng phần nội dung
-//     sections.forEach(section => {
-//         observer.observe(section);
-//     });
-//
-//     // Xử lý sự kiện nhấp chuột để cuộn mượt mà
-//     navItems.forEach(item => {
-//         item.addEventListener('click', function(e) {
-//             e.preventDefault();
-//             const targetId = this.getAttribute('href').substring(1);
-//             const targetElement = document.getElementById(targetId);
-//
-//             if (targetElement) {
-//                 // Cuộn mượt mà đến phần tử
-//                 window.scrollTo({
-//                     top: targetElement.offsetTop - 70, // Trừ 70px cho header cố định
-//                     behavior: 'smooth'
-//                 });
-//             }
-//         });
-//     });
-// });
-// document.addEventListener('DOMContentLoaded', function () {
-//     // Tự động tìm tất cả các thẻ settings-card còn lại
-//     const sections = document.querySelectorAll('.settings-card');
-//     // Tự động tìm tất cả các liên kết trong menu
-//     const navItems = document.querySelectorAll('.settings-menu a');
-//
-//     // Hàm gỡ bỏ trạng thái active khỏi tất cả các mục
-//     function removeActiveClass() {
-//         navItems.forEach(item => {
-//             item.closest('li').classList.remove('active');
-//         });
-//     }
-//
-//     // Khởi tạo trạng thái active đầu tiên
-//     if (navItems.length > 0) {
-//         navItems[0].closest('li').classList.add('active');
-//     }
-//
-//     // Hàm theo dõi việc cuộn trang (Intersection Observer)
-//     const observer = new IntersectionObserver(entries => {
-//         entries.forEach(entry => {
-//             // Kiểm tra xem phần tử có đang giao với viewport không
-//             if (entry.isIntersecting) {
-//                 removeActiveClass();
-//                 const targetId = entry.target.getAttribute('id');
-//
-//                 // Tìm thẻ <a> có href khớp với ID
-//                 const activeLink = document.querySelector(`.settings-menu a[href="#${targetId}"]`);
-//
-//                 // Thêm class 'active' vào thẻ <li> chứa thẻ <a> đó
-//                 if (activeLink) {
-//                     activeLink.closest('li').classList.add('active');
-//                 }
-//             }
-//         });
-//     }, {
-//         // Định nghĩa khu vực quan sát:
-//         // Đánh dấu active khi mục đạt đến 30% từ đỉnh màn hình, tránh header
-//         rootMargin: "0px 0px -70% 0px",
-//         threshold: 0.1
-//     });
-//
-//     // Quan sát từng phần nội dung
-//     sections.forEach(section => {
-//         observer.observe(section);
-//     });
-//
-//     // Xử lý sự kiện nhấp chuột để cuộn mượt mà
-//     navItems.forEach(item => {
-//         item.addEventListener('click', function(e) {
-//             e.preventDefault();
-//             const targetId = this.getAttribute('href').substring(1);
-//             const targetElement = document.getElementById(targetId);
-//
-//             if (targetElement) {
-//                 // Cuộn mượt mà đến phần tử, trừ đi chiều cao header cố định (60px)
-//                 window.scrollTo({
-//                     top: targetElement.offsetTop - 70, // Đảm bảo nội dung không bị header che
-//                     behavior: 'smooth'
-//                 });
-//             }
-//         });
-//     });
+// admin_setting.js - Phiên bản Tối Ưu Hóa Cuộn Đến Đáy Trang
 
-    document.addEventListener('DOMContentLoaded', function () {
-    // Tự động tìm tất cả các thẻ settings-card còn lại
+document.addEventListener('DOMContentLoaded', function () {
+    // Lấy các phần tử cần thiết
     const sections = document.querySelectorAll('.settings-card');
-    // Tự động tìm tất cả các liên kết trong menu
     const navItems = document.querySelectorAll('.settings-menu a');
+    const headerElement = document.querySelector('.header');
 
-    // Hàm gỡ bỏ trạng thái active khỏi tất cả các mục
+    // Tính toán chiều cao offset động (header cố định + khoảng cách an toàn)
+    const dynamicHeaderHeight = headerElement ? headerElement.offsetHeight + 10 : 70;
+
+    let isScrollingFrame;
+    let updateTimer;
+
+    // Hàm 1: Gỡ bỏ trạng thái active
     function removeActiveClass() {
+        navItems.forEach(item => {
+            item.closest('li').classList.remove('active');
+        });
+    }
+
+    // Hàm 2: Logic chính để cập nhật trạng thái active
+    function updateActiveSection() {
+        // --- Bắt đầu Kiểm tra Đáy Trang ---
+        // Độ cao cuộn hiện tại + Chiều cao màn hình phải bằng Chiều cao toàn bộ trang
+        const isScrolledToBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 5); // -5 là sai số nhỏ
+
+        if (isScrolledToBottom) {
+            // Nếu ở đáy trang, BẮT BUỘC mục cuối cùng phải active
+            removeActiveClass();
+            if (navItems.length > 0) {
+                navItems[navItems.length - 1].closest('li').classList.add('active');
+            }
+            return; // Thoát ngay, không cần kiểm tra các mục khác
+        }
+        // --- Kết thúc Kiểm tra Đáy Trang ---
+
+        // Mặc định là mục đầu tiên
+        let currentActiveSectionId = sections[0].getAttribute('id');
+
+        // Lặp ngược để ưu tiên mục gần đỉnh viewport nhất
+        for (let i = sections.length - 1; i >= 0; i--) {
+            const section = sections[i];
+            const rect = section.getBoundingClientRect();
+
+            // Mục active nếu đỉnh của nó đã vượt qua điểm offset (ngay dưới header)
+            if (rect.top <= dynamicHeaderHeight) {
+                currentActiveSectionId = section.getAttribute('id');
+                break; // Tìm thấy mục gần nhất, thoát vòng lặp
+            }
+        }
+
+        // Cập nhật menu nếu chưa ở đáy trang
+        removeActiveClass();
+        const activeLink = document.querySelector(`.settings-menu a[href="#${currentActiveSectionId}"]`);
+        if (activeLink) {
+            activeLink.closest('li').classList.add('active');
+        }
+    }
+
+    // --- Xử lý sự kiện Cuộn (Chỉ cập nhật khi cuộn dừng) ---
+    updateActiveSection(); // Khởi tạo lần đầu
+
+    window.addEventListener('scroll', function () {
+        // Tối ưu hóa hiệu suất bằng requestAnimationFrame
+        window.cancelAnimationFrame(isScrollingFrame);
+        isScrollingFrame = window.requestAnimationFrame(updateActiveSection);
+
+        // Logic "debounce" (chỉ cập nhật sau khi cuộn dừng)
+        clearTimeout(updateTimer);
+        updateTimer = setTimeout(function () {
+            updateActiveSection();
+        }, 100);
+    });
+
+
+    // --- Xử lý sự kiện Nhấp chuột ---
     navItems.forEach(item => {
-    item.closest('li').classList.remove('active');
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+                // Đảm bảo mục vừa nhấp được active ngay lập tức
+                removeActiveClass();
+                this.closest('li').classList.add('active');
+
+                // Cuộn mượt mà
+                window.scrollTo({
+                    top: targetElement.offsetTop - dynamicHeaderHeight,
+                    behavior: 'smooth'
+                });
+
+                // Sau khi cuộn kết thúc (500ms), buộc cập nhật lại trạng thái
+                setTimeout(() => {
+                    updateActiveSection();
+                }, 500);
+            }
+        });
+    });
 });
-}
-
-    // Khởi tạo trạng thái active đầu tiên
-    if (navItems.length > 0) {
-    navItems[0].closest('li').classList.add('active');
-}
-
-    // Hàm theo dõi việc cuộn trang (Intersection Observer)
-    const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-    // Kiểm tra xem phần tử có đang giao với viewport không
-    if (entry.isIntersecting) {
-    removeActiveClass();
-    const targetId = entry.target.getAttribute('id');
-
-    // Tìm thẻ <a> có href khớp với ID
-    const activeLink = document.querySelector(`.settings-menu a[href="#${targetId}"]`);
-
-    // Thêm class 'active' vào thẻ <li> chứa thẻ <a> đó
-    if (activeLink) {
-    activeLink.closest('li').classList.add('active');
-}
-}
-});
-}, {
-    // Định nghĩa khu vực quan sát:
-    // Đánh dấu active khi mục đạt đến 30% từ đỉnh màn hình, tránh header
-    rootMargin: "0px 0px -70% 0px",
-    threshold: 0.1
-});
-
-    // Quan sát từng phần nội dung
-    sections.forEach(section => {
-    observer.observe(section);
-});
-
-    // Xử lý sự kiện nhấp chuột để cuộn mượt mà
-    navItems.forEach(item => {
-    item.addEventListener('click', function(e) {
-    e.preventDefault();
-    const targetId = this.getAttribute('href').substring(1);
-    const targetElement = document.getElementById(targetId);
-
-    if (targetElement) {
-    // Cuộn mượt mà đến phần tử, trừ đi chiều cao header cố định (60px)
-    window.scrollTo({
-    top: targetElement.offsetTop - 70, // Đảm bảo nội dung không bị header che
-    behavior: 'smooth'
-});
-}
-});
-});
-});
-
-
