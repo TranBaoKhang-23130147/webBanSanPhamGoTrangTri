@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Cài đặt</title>
+    <title>HOME DECOR - CÀI ĐẶT</title>
+    <link rel="icon" type="image/png"  href="../img/logo.png" >
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../css/admin_seting_style.css">
 
@@ -11,7 +13,7 @@
 <div class="admin-container">
     <header class="header">
         <div class="logo-placeholder">
-            <img src="../img/p.png" alt="Logo Modern Homes">
+            <img src="../img/logo.png" alt="Logo Modern Homes">
             <p class="logo">HOME DECOR</p>
         </div>
 
@@ -46,8 +48,8 @@
                 <i class="fas fa-user-circle user-logo" ></i>
 
                 <div id="userMenuContent" class="dropdown-content">
-                    <a href="admin_thong_tin_tai_khoan.html"> Thông tin tài khoản</a>
-                    <a href="admin_doi_mat_khau.html"> Đổi mật khẩu</a>
+                    <a href="#"> Thông tin tài khoản</a>
+                    <a href="#"> Đổi mật khẩu</a>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="logout-link"> Đăng xuất</a>
                 </div>
@@ -74,9 +76,9 @@
                     <ul>
                         <li><a href="#basic-info">Thông tin cơ bản</a></li>
                         <li><a href="#password">Mật khẩu</a></li>
-                        <li class="active"><a href="#notification">Thông báo</a></li>
+                        <li><a href="#notification">Thông báo</a></li>
                         <li><a href="#connection">Tài khoản & Kết nối</a></li>
-                        <li><a href=" ">Xóa tài khoản</a></li>
+                        <li><a href="#delete-account">Xóa tài khoản</a></li>
 
                     </ul>
                 </div>
@@ -351,7 +353,20 @@
 <!--                    <div class="settings-card" id="connection2">-->
 <!--                        <h2>Xóa tài khoản</h2>-->
 
+                    <div class="settings-card" id="delete-account">
+                        <h2>Xóa tài khoản</h2>
+                        <p class="section-description">
+                            Hành động này sẽ xóa vĩnh viễn tất cả dữ liệu tài khoản, bao gồm hồ sơ, cài đặt, và lịch sử hoạt động. Không thể hoàn tác.
+                        </p>
 
+                        <div class="delete-account-section">
+                            <div class="delete-account-info">
+                                <h4>Bạn có chắc chắn muốn xóa tài khoản?</h4>
+                                <p>Sau khi xóa, bạn sẽ mất quyền truy cập vào tất cả các tính năng quản trị. Vui lòng sao lưu dữ liệu quan trọng trước khi tiếp tục.</p>
+                            </div>
+                            <button type="button" class="btn btn-danger">Xóa tài khoản</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>

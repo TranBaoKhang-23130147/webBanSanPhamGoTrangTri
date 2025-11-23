@@ -1,14 +1,14 @@
 :root {
-    --primary-color: #8B5E3C; /* Màu nâu đậm cho Modern Homes/Primary */
-    --accent-color: #A56B43; /* Màu nâu sáng hơn cho hover */
-    --text-color: #3b2f2f; /* Màu chữ chính */
-    --secondary-text-color: #6c757d; /* Màu chữ phụ */
-    --light-bg: #f4f6f9; /* Nền sáng */
-    --border-color: #e0e0e0; /* Màu đường viền */
+    --primary-color: #8B5E3C;
+    --accent-color: #A56B43;
+    --text-color: #3b2f2f;
+    --secondary-text-color: #6c757d;
+    --light-bg: #f4f6f9;
+    --border-color: #e0e0e0;
     --sidebar-width: 250px;
     --header-height: 60px;
-    --modern-green: #38c172; /* Icon verified */
-    --modern-red: #e3342f; /* Trend DOWN */
+    --modern-green: #38c172;
+    --modern-red: #e3342f;
     --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     --hover-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
 }
@@ -186,7 +186,7 @@ body {
     flex: 1;
 }
 
-/* ---------------- SIDEBAR ---------------- */
+
 .sidebar {
     width: var(--sidebar-width);
     background-color: #fff;
@@ -221,7 +221,7 @@ body {
     color: var(--primary-color);
 }
 
-/* Style cho mục đang được chọn (active) */
+
 .sidebar-nav li.active {
     background-color: #f4f6f9;
     border-left: 3px solid var(--primary-color);
@@ -243,19 +243,18 @@ body {
     margin-top: 15px;
 }
 
-/* ---------------- SETTINGS SUB-MENU (LEFT SIDE) ---------------- */
 .settings-menu {
     flex-shrink: 0;
     width: 200px;
     background-color: #fff;
     border-radius: 6px;
     box-shadow: var(--card-shadow);
-    /* Thay đổi: Dùng position: sticky và top */
-    position: sticky; /* Đảm bảo menu dính */
-    top: calc(var(--header-height) + 30px); /* Dính dưới header và cộng thêm padding */
+
+    position: sticky;
+    top: calc(var(--header-height) + 30px);
     height: fit-content;
     padding: 10px 0;
-    z-index: 100; /* Đảm bảo menu nằm trên nội dung khác khi cuộn */
+    z-index: 100;
 }
 
 .settings-menu ul {
@@ -385,12 +384,13 @@ select:focus {
 }
 
 .btn-primary {
-    background-color: var(--button-blue); /* Sử dụng màu xanh theo hình ảnh */
+
+    background-color: var(--primary-color) ;/* Sử dụng màu xanh theo hình ảnh */
     color: #fff;
 }
 
 .btn-primary:hover {
-    background-color: var(--button-blue-hover);
+    background-color: var(--accent-color);
 }
 
 .btn-secondary {
@@ -403,12 +403,12 @@ select:focus {
 }
 
 .btn-danger {
-    background-color: var(--button-red);
+    background-color: var(--primary-color);
     color: #fff;
 }
 
 .btn-danger:hover {
-    opacity: 0.9;
+    background: var(--accent-color);
 }
 
 /* ---------------- PASSWORD REQUIREMENTS ---------------- */
@@ -502,7 +502,7 @@ select:focus {
     margin-right: 15px;
 }
 
-/* ---------------- CONNECTION LIST (MERGED SECTION) ---------------- */
+
 .section-description {
     color: var(--secondary-text-color);
     font-size: 0.9rem;
@@ -563,10 +563,9 @@ select:focus {
 }
 
 .status-disconnected {
-    color: var(--button-red); /* Màu đỏ cho trạng thái chưa kết nối */
+    color: var(--accent-color);
 }
 
-/* Switch Toggle Styling (Dựa trên image_9643a9.png) */
 .switch {
     position: relative;
     display: inline-block;
@@ -620,4 +619,30 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+.delete-account-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-radius: 6px;
+    background-color: #fff0f0; /* Nền rất nhạt màu đỏ */
+    margin-top: 20px;
+}
+
+.delete-account-info {
+    max-width: 70%;
+}
+
+.delete-account-info h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+
+    font-size: 1rem;
+}
+
+.delete-account-info p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--secondary-text-color);
 }
