@@ -580,3 +580,65 @@ body {
 .product-detail{
     margin: 40px auto;
 }
+/* ===== PHẦN MÔ TẢ CHI TIẾT SẢN PHẨM MỚI ===== */
+.product-description-container {
+    width: 90%;
+    margin: 40px auto; /* Tạo khoảng cách với các phần khác */
+    padding: 35px 40px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.description-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary-color);
+    border-bottom: 2px solid #eaeaea;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.description-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+.description-content h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 20px 0 10px 0;
+}
+
+.description-content ul {
+    list-style: disc;
+    margin: 0 0 20px 20px;
+    padding-left: 10px;
+}
+
+.description-content li {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-color2);
+    margin-bottom: 5px;
+}
+
+.description-content .note {
+    font-size: 14px;
+    color: #999;
+    margin-top: 20px;
+    font-style: italic;
+}
+
+/* ===== REVIEW SECTION (Điều chỉnh margin top để phù hợp) ===== */
+.review-section {
+    width: 90%;
+    margin: 40px auto; /* Giảm khoảng cách để gần phần mô tả */
+    padding: 40px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+}

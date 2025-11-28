@@ -498,3 +498,17 @@ body {
 .set{
     padding: 20px;
 }
+/* Đảm bảo thẻ <a> bao phủ toàn bộ vùng 'set' */
+.product-card a.product-link {
+    text-decoration: none; /* Xóa gạch chân */
+    color: inherit; /* Giữ màu chữ (thường là màu đen/text-color) */
+    display: block; /* Quan trọng: làm cho thẻ <a> chiếm toàn bộ chiều rộng/cao của .set */
+}
+
+.product-card .set {
+    transition: transform 0.3s ease; /* Thêm hiệu ứng hover vào khối sản phẩm */
+}
+
+.product-card .set:hover {
+    transform: translateY(-5px); /* Hiệu ứng nhấc lên khi hover */
+}
