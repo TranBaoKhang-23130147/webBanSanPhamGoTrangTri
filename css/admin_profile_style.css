@@ -494,3 +494,59 @@ body {
     cursor: pointer;
     margin-left: 10px;
 }
+/* ... CSS Khối 1 của bạn ... */
+
+/* ---------------- HEADER ---------------- */
+/* ... */
+.header-icons i:hover {
+    color: var(--primary-color);
+}
+
+.user-logo {
+    font-size: 1.4rem !important;
+}
+
+/* Dropdown Menu - CÁC QUY TẮC BẠN ĐÃ CUNG CẤP */
+.user-dropdown, .notification-dropdown, .gmail-dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer; /* Thêm con trỏ cho dễ nhìn */
+}
+
+.dropdown-content {
+    display: none; /* Đảm bảo nó ẩn mặc định */
+    position: absolute;
+    /* ... các thuộc tính khác của dropdown-content ... */
+    z-index: 1050; /* Tăng z-index */
+    right: 0;
+    top: calc(100% + 5px);
+    border-radius: 6px;
+    overflow: hidden;
+    max-height: 500px; /* Thêm max-height */
+}
+
+/* Định nghĩa lại các thuộc tính đặc biệt cho Notification/Gmail */
+.gmail-content, .notification-content {
+    min-width: 250px;
+    right: -10px;
+}
+/* Thêm Header cho Dropdown */
+.dropdown-header {
+    padding: 10px 15px;
+    font-weight: bold;
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    display: block;
+    position: sticky; /* Để header dính khi cuộn */
+    top: 0;
+    background-color: #fff;
+    z-index: 2;
+}
+
+/* QUY TẮC HIỂN THỊ KHI HOVER */
+.user-dropdown:hover .dropdown-content,
+.notification-dropdown:hover .dropdown-content,
+.gmail-dropdown:hover .dropdown-content {
+    display: block;
+}
