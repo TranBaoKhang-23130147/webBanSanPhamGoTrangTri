@@ -509,3 +509,9 @@ textarea#description {
 .gmail-dropdown:hover .dropdown-content {
     display: block;
 }
+/*.form-group{*/
+/*    margin-top: 10px;*/
+/*}*/
+.mota{
+    margin-top: 20px;
+}
