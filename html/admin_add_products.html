@@ -82,24 +82,28 @@
                         <div class="card product-info-section">
                             <h2 class="card-title">Thông tin sản phẩm</h2>
 
+                            <div class="form-group ">
+                                <label for="skuCode">Mã SKU</label>
+                                <input type="text" id="skuCode" placeholder="Ví dụ: 348121032">
+                            </div>
                             <div class="form-group">
                                 <label for="productName">Tên</label>
                                 <input type="text" id="productName" placeholder="Giường, tủ, kệ,...">
                             </div>
 
-                            <div class="form-row">
-                                <div class="form-group half-width">
-                                    <label for="skuCode">Mã SKU</label>
-                                    <input type="text" id="skuCode" placeholder="Ví dụ: 348121032">
-                                </div>
-                                <div class="form-group half-width">
+
+
+                                <div class="form-group ">
                                     <label for="category">Danh mục</label>
                                     <input type="text" id="category" placeholder=" TRANG TRÍ PHÒNG KHÁCH">
                                 </div>
+                            <div class="form-group">
+                                <label for="productName">Loại sản phẩm</label>
+                                <input type="text" id=" " placeholder="Giường, tủ, kệ,...">
                             </div>
 
                             <div class="form-group">
-                                <label for="description">Mô tả (Tùy chọn)</label>
+                                <label for="description" class="mota">Mô tả (Tùy chọn)</label>
                                 <div class="richtext-toolbar">
                                     <button><i class="fas fa-bold"></i></button>
                                     <button><i class="fas fa-italic"></i></button>
@@ -124,26 +128,35 @@
                             </div>
                         </div>
 
-                        <div class="card variants-section">
-                            <h2 class="card-title">Biến thể</h2>
-                            <div class="variant-item form-row">
-                                <select>
-                                    <option>Kích thước</option>
-                                </select>
-                                <select>
-                                    <option>Kích thước</option>
-                                </select>
-                                <button class="remove-btn"><i class="fas fa-times"></i></button>
-                            </div>
-                            <button class="btn-link-add">+ Thêm biến thể</button>
-                        </div>
+<!--                        <div class="card variants-section">-->
+<!--                            <h2 class="card-title">Biến thể</h2>-->
+<!--                            <div class="variant-item form-row">-->
+<!--                                <select>-->
+<!--                                    <option>Kích thước</option>-->
+<!--                                </select>-->
+<!--                                <select>-->
+<!--                                    <option>Kích thước</option>-->
+<!--                                </select>-->
+<!--                                <button class="remove-btn"><i class="fas fa-times"></i></button>-->
+<!--                            </div>-->
+<!--                            <button class="btn-link-add">+ Thêm biến thể</button>-->
+<!--                        </div>-->
 
                     </div>
 
                     <div class="form-column-right">
 
                         <div class="card discount-section">
-                            <h2 class="card-title">Chiết khấu</h2>
+                            <h2 class="card-title">Biến thể</h2>
+                            <div class="attribute-item form-row">
+                                <select>
+                                    <option>Màu sắc</option>
+                                </select>
+                                <label for="discountPrice"></label>
+                                <select>
+                                    <option>Kích thước</option>
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <label for="discountPrice">Giá</label>
                                 <input type="text" id="discountPrice" placeholder="0.00">
@@ -152,39 +165,29 @@
                                 <label for="discountQuantity">Số lượng</label>
                                 <input type="text" id="discountQuantity" placeholder="0">
                             </div>
+
+                            <button class="btn-link-add">+ Thêm biến thể</button>
                         </div>
 
-                        <div class="card attributes-section">
-                            <h2 class="card-title">Thuộc tính</h2>
-                            <div class="attribute-item form-row">
-                                <select>
-                                    <option>Màu sắc</option>
-                                </select>
-                                <select>
-                                    <option>Kích thước</option>
-                                </select>
-                                <button class="remove-btn"><i class="fas fa-times"></i></button>
-                            </div>
-                            <button class="btn-link-add">+ Thêm thuộc tính</button>
-                        </div>
+
 
                         <div class="card organization-section">
-                            <h2 class="card-title">Tổ chức</h2>
+                            <h2 class="card-title">Nhà cung cấp</h2>
                             <div class="form-group">
-                                <label for="supplier">Nhà cung cấp</label>
+                                <label for="supplier">Tên</label>
                                 <input type="text" id="supplier" placeholder="Xưỡng gỗ XuanMai,..">
                             </div>
+<!--                            <div class="form-group">-->
+<!--                                <label for="collection">Bộ sưu tập</label>-->
+<!--                                <select id="collection">-->
+<!--                                    <option> TRANG TRÍ PHÒNG KHÁCH</option>-->
+<!--                                    <option> TRANG TRÍ PHÒNG LÀM VIỆC</option>-->
+<!--                                    <option> TRANG TRÍ PHÒNG NGỦ</option>-->
+<!--                                    <option> TRANG TRÍ PHÒNG BẾP</option>-->
+<!--                                </select>-->
+<!--                            </div>-->
                             <div class="form-group">
-                                <label for="collection">Bộ sưu tập</label>
-                                <select id="collection">
-                                    <option> TRANG TRÍ PHÒNG KHÁCH</option>
-                                    <option> TRANG TRÍ PHÒNG LÀM VIỆC</option>
-                                    <option> TRANG TRÍ PHÒNG NGỦ</option>
-                                    <option> TRANG TRÍ PHÒNG BẾP</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="tags">Thẻ</label>
+                                <label for="tags">Ngày sản xuất</label>
                                 <input type="text" id="tags" placeholder="Nhập thẻ tại đây">
                             </div>
                         </div>
