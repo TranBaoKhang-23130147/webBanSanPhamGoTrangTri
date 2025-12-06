@@ -200,7 +200,7 @@ body {
     color: var(--primary-color);
     background: rgba(139, 94, 60, 0.08);
 }
-/* ---- PRODUCT DETAIL ---- */
+
 .product-detail {
     width: 90%;
     margin: 60px auto;
@@ -252,8 +252,6 @@ body {
     border-color: var(--primary-color);
     transform: scale(1.05);
 }
-
-/* ---- RIGHT: INFO ---- */
 .product-info {
     width: 50%;
     padding-right: 20px;
@@ -339,7 +337,6 @@ body {
     margin: 20px 0;
 }
 
-/* ---- ADD TO CART BUTTON ---- */
 .add-to-cart {
     padding: 14px 24px;
     background: var(--btn);
@@ -356,7 +353,6 @@ body {
     background: #8B5E3C;
     transform: translateY(-2px);
 }
-/* ===== REVIEW SECTION ===== */
 .review-section {
     width: 90%;
     margin: 50px auto;
@@ -547,31 +543,26 @@ body {
 .footer-col a:hover {
     color: #8B5E3C;
 }
-/* ---- LEFT: GALLERY ---- */
+
 .product-gallery {
     width: 45%;
 }
 
 .main-image {
-    /* Thêm một chiều cao cố định cho khung ảnh chính */
-    height: 450px; /* Điều chỉnh chiều cao này theo ý muốn */
-    /* Để đảm bảo ảnh chính nằm trong vùng này */
+    height: 450px;
+
     overflow: hidden;
 }
 
 .main-image img {
     width: 100%;
-    /* Đặt chiều cao 100% để lấp đầy khung cha */
     height: 100%;
 
     border-radius: 14px;
     box-shadow: 0 4px 18px rgba(0,0,0,0.15);
     transition: 0.3s;
-
-    /* Thuộc tính quan trọng để cố định kích thước ảnh */
     object-fit: cover;
-    /* Dùng 'cover' để ảnh lấp đầy khung, có thể bị cắt.
-       Dùng 'contain' nếu bạn muốn thấy toàn bộ ảnh, sẽ có khoảng trắng. */
+
 }
 
 .main-image img:hover {
@@ -580,10 +571,10 @@ body {
 .product-detail{
     margin: 40px auto;
 }
-/* ===== PHẦN MÔ TẢ CHI TIẾT SẢN PHẨM MỚI ===== */
+
 .product-description-container {
     width: 90%;
-    margin: 40px auto; /* Tạo khoảng cách với các phần khác */
+    margin: 40px auto;
     padding: 35px 40px;
     background: #fff;
     border-radius: 18px;
@@ -633,12 +624,67 @@ body {
     font-style: italic;
 }
 
-/* ===== REVIEW SECTION (Điều chỉnh margin top để phù hợp) ===== */
 .review-section {
     width: 90%;
-    margin: 40px auto; /* Giảm khoảng cách để gần phần mô tả */
+    margin: 40px auto;
     padding: 40px;
     background: #fff;
     border-radius: 18px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+}
+
+.write-review-box {
+    margin: 40px auto;
+    max-width: 700px;
+    padding: 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background-color: #fcfcfc;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+
+.rating-selection {
+    font-size: 32px;
+    color: #ccc;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.write-review-box textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    resize: vertical;
+    font-family: 'sans-serif';
+    font-size: 16px;
+    line-height: 1.5;
+    transition: border-color 0.3s;
+}
+
+.write-review-box textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.submit-review-button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 35px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s;
+    letter-spacing: 0.8px;
+    box-shadow: 0 4px 10px rgba(139, 94, 60, 0.4);
 }
