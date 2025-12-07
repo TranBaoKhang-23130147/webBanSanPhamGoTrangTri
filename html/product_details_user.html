@@ -74,50 +74,68 @@
             <img src="https://i.pinimg.com/1200x/da/74/77/da74771683b0e1afb6113fea76d4af0f.jpg">
             <img src="https://i.pinimg.com/736x/cd/d1/a8/cdd1a8fed48dac2856c8079f8281aa00.jpg">
             <img src="https://i.pinimg.com/1200x/75/d8/88/75d8889ffb9b46da19eebf0d55b50c1b.jpg">
-            <img src="https://i.pinimg.com/736x/cd/d1/a8/cdd1a8fed48dac2856c8079f8281aa00.jpg">
+            <img src="https://i.pinimg.com/736n/cd/d1/a8/cdd1a8fed48dac2856c8079f8281aa00.jpg">
         </div>
     </div>
 
     <div class="product-info">
         <h2 class="product-title">Kệ treo tường</h2>
-        <div class="rating">
-            <i class="ri-star-s-fill"></i>
-            <i class="ri-star-s-fill"></i>
-            <i class="ri-star-s-fill"></i>
-            <i class="ri-star-s-fill"></i>
-            <i class="ri-star-s-line"></i>
-            <!--            <i class="ri-star-half-line"></i>-->
-            <span>(4.0 / 23 đánh giá)</span></div>
+
+        <div class="rating-price-wrapper">
+            <div class="rating">
+                <i class="ri-star-s-fill"></i>
+                <i class="ri-star-s-fill"></i>
+                <i class="ri-star-s-fill"></i>
+                <i class="ri-star-s-fill"></i>
+                <i class="ri-star-s-line"></i>
+                <span class="rating-text">4.0</span>
+                <span class="review-count">| 23 đánh giá</span>
+            </div>
+            <div class="product-price-section">
+                <div class="product-price">99.000 VND</div>
+            </div>
+        </div>
 
         <ul class="benefit-list">
-            <li>Thanh toán tiện lợi: Giảm thêm 2% khi thanh toán online.</li>
-            <li>Khả năng chịu lực tuyệt vời, chống cong vênh và mối mọt.</li>
-            <li>Có nhiều kích thước để lựa chọn, phù hợp với mọi không gian nội thất của bạn.</li>
-            <li>Mang lại sự gọn gàng, ngăn nắp tối đa cho căn phòng của bạn.</li>
-            <li>Hoàn hảo để trưng bày sách, cây cảnh, và vật dụng trang trí, thể hiện gu thẩm mỹ riêng.</li>
-            <li>Dễ dàng lắp đặt tại phòng khách, phòng ngủ, hoặc khu vực làm việc.</li>
+            <li><span class="label">Voucher Shop:</span> Giảm 30K, Giảm 50K</li>
+            <li><span class="label">Vận Chuyển:</span> Nhận từ 9 Th12 - 12 Th12, phí giao 0₫</li>
+            <li><span class="label">An Tâm Mua Sắm:</span> Trả hàng miễn phí 15 ngày</li>
         </ul>
 
         <div class="product-options">
             <div class="color-select">
-                <p>Chọn Màu Sắc</p>
-                <span class="color denoccho"></span>
-                <span class="color nauhatde"></span>
-
+                <p>Màu Sắc:</p>
+                <button class="color-btn active" data-color="denoccho">Đen Óc Chó</button>
+                <button class="color-btn" data-color="nauhatde">Nâu Hạt Dẻ</button>
             </div>
 
-            <div class="capacity-select">
-                <p>Chọn kích thước</p>
-                <button>60 x 20 cm</button>
+            <div class="capacity-select option-group">
+                <p>Kích thước:</p>
+                <button class="active">60 x 20 cm</button>
                 <button>80 x 20 cm</button>
                 <button>100 x 20 cm</button>
             </div>
         </div>
 
-        <div class="product-price">99.000 VND</div>
+        <div class="purchase-actions">
+            <div class="quantity-select">
+                <div class=" quantity-row">
+                    <p>Số Lượng:</p>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                        <input type="number" value="1" min="1" max="100" />
+                        <button class="qty-btn" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                    </div>
+                </div>
+            </div>
 
-        <button class="add-to-cart">Thêm vào giỏ hàng</button>
+            <div class="button-group">
+                <button class="add-to-cart">Thêm vào giỏ hàng</button>
+                <button class="buy-now">Mua Ngay</button>
+            </div>
+        </div>
     </div>
+</div>
 </div>
 <div class="product-description-container">
     <h2 class="description-title">Mô tả chi tiết sản phẩm</h2>
@@ -141,6 +159,11 @@
             <li><strong>Màu sắc:</strong> Vân gỗ Óc Chó (denoccho), Nâu Hạt Dẻ (nauhatde)</li>
             <li><strong>Độ dày:</strong> 1.7 cm</li>
             <li><strong>Bảo hành:</strong> 12 tháng về lỗi kỹ thuật</li>
+        </ul>
+        <h3>Nguồn gốc & ngày sản xuất:</h3>
+        <ul>
+            <li><strong>Nơi cung cấp:</strong> Xưởng mộc Linh Chi</li>
+            <li><strong>Ngày sản xuất:</strong> 22/12/2023</li>
         </ul>
         <p class="note"><em>Lưu ý: Màu sắc sản phẩm có thể chênh lệch 3-5% do điều kiện ánh sáng khi chụp.</em></p>
     </div>
