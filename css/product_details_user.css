@@ -758,3 +758,79 @@ body {
     box-shadow: 0 0 0 2px #fff,  /* Viền trắng mỏng bên trong */
     0 0 0 3px var(--primary-color); /* Viền nâu dày bên ngoài */
 }
+/* --- 1. ĐỊNH DẠNG FORM NHẬP LIỆU TRONG LIST (WRITE-REVIEW-FORM) --- */
+
+.review-item.write-review-form {
+    padding: 25px; /* Tăng padding để tạo khoảng trống */
+    margin-bottom: 30px; /* Tạo khoảng cách với review item tiếp theo */
+    border: 2px solid var(--primary-color); /* Viền màu nâu để nổi bật */
+    border-radius: 12px;
+    background-color: var(--light-bg); /* Màu nền nhẹ */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Ẩn timestamp (3 tuần trước) vì đây là form nhập liệu */
+.review-item.write-review-form .time {
+    display: none;
+}
+
+/* Định dạng ngôi sao trong form */
+.review-item.write-review-form .rating-selection {
+    justify-content: flex-start; /* Căn lề trái */
+    font-size: 24px; /* Kích thước sao lớn hơn */
+    margin-bottom: 0;
+}
+
+/* 2. STYLE CHO TEXTAREA (THAY CHO review-text) */
+.review-input {
+    width: 100%;
+    min-height: 80px; /* Chiều cao vừa phải */
+    padding: 10px;
+    margin: 15px 0; /* Khoảng cách trên và dưới */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    resize: vertical;
+    font-size: 15px;
+    font-family: inherit; /* Kế thừa font chữ của body */
+}
+.review-input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+/* 3. STYLE CHO NÚT GỬI */
+.review-item.write-review-form .submit-review-button {
+    /* Đảm bảo nút được căn lề phải */
+    display: block;
+    margin-left: auto;
+
+    /* Style nút gửi (giữ nguyên style từ trước) */
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+/* --- DÒNG NOTE DƯỚI FORM ĐÁNH GIÁ --- */
+
+.review-note {
+    font-size: 13px;
+    color: #cc3300; /* Màu đỏ hoặc màu cam để cảnh báo/nhấn mạnh */
+    margin-top: 5px;
+    margin-bottom: 0;
+    font-style: italic; /* In nghiêng cho dễ đọc */
+}
+
+/* Đảm bảo nó không bị lỗi khi nằm trong div nhỏ */
+.review-item.write-review-form .review-user > div {
+    /* Đã thiết lập block ở câu trả lời trước, nên style này đã ổn */
+    display: block;
+}
+.buy-now:hover{
+    background: var(--primary-color);
+}
