@@ -1,24 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="model.User" %>
-<%
-    // 1. Kiểm tra session
-    User user = (User) session.getAttribute("LOGGED_USER");
-
-    // 2. Nếu chưa đăng nhập hoặc không phải Admin -> Đuổi về trang login
-    if (user == null || !"Admin".equalsIgnoreCase(user.getRole())) {
-        response.sendRedirect(request.getContextPath() + "/login.jsp");
-        return;
-    }
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>HOME DECOR - TỔNG QUAN</title>
-    <link rel="icon" type="image/png"  href="img/logo.png" >
+    <link rel="icon" type="image/png"  href="../img/logo.png" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/homepage_admin.css">
-    <link rel="stylesheet" href="css/admin_profile_style.css">
+    <link rel="stylesheet" href="../css/homepage_admin.css">
+    <link rel="stylesheet" href="../css/admin_profile_style.css">
 
 </head>
 <body>
@@ -26,7 +14,7 @@
 <div class="admin-container">
     <header class="header">
         <div class="logo-placeholder">
-            <img src="img/logo.png" alt="Logo Modern Homes">
+            <img src="../img/logo.png" alt="Logo Modern Homes">
             <p class="logo">HOME DECOR</p>
         </div>
 
@@ -59,15 +47,12 @@
 
             <div class="user-dropdown">
                 <i class="fas fa-user-circle user-logo" ></i>
-                <span style="color: #333; font-weight: bold; margin-left: 5px;">
-        <%= user.getUsername() %>
-    </span>
 
                 <div id="userMenuContent" class="dropdown-content">
                     <a href="admin_thong_tin_tai_khoan.html"> Thông tin tài khoản</a>
                     <a href="admin_doi_mat_khau.html"> Đổi mật khẩu</a>
                     <div class="dropdown-divider"></div>
-                    <a href="${pageContext.request.contextPath}/LogoutServlet" class="logout-link"> Đăng xuất</a>
+                    <a href="#" class="logout-link"> Đăng xuất</a>
                 </div>
             </div>
         </div>
@@ -77,11 +62,11 @@
             <nav class="sidebar-nav">
                 <ul>
                     <li class="active"><a href="#">Tổng quan</a></li>
-                    <li><a href="html/admin_products.html"> Sản phẩm</a></li>
-                    <li><a href="html/admin_order.html"> Đơn hàng</a></li>
-                    <li><a href="html/admin_customer.html"> Khách hàng</a></li>
-                    <li><a href="html/admin_profile.html"> Hồ sơ</a></li>
-                    <li><a href="html/admin_setting.html"> Cài đặt</a></li>
+                    <li><a href="admin_products.html"> Sản phẩm</a></li>
+                    <li><a href="admin_order.html"> Đơn hàng</a></li>
+                    <li><a href="admin_customer.html"> Khách hàng</a></li>
+                    <li><a href="admin_profile.html"> Hồ sơ</a></li>
+                    <li><a href="admin_setting.html"> Cài đặt</a></li>
                 </ul>
             </nav>
         </aside>
@@ -168,6 +153,6 @@
     </div>
 </div>
 
-<script src="js/homepage_admin.js"></script>
+<script src="../js/homepage_admin.js"></script>
 </body>
 </html>
