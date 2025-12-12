@@ -63,7 +63,6 @@
                 <ul>
                     <li class="active"><a href="#">Tổng quan</a></li>
                     <li><a href="admin_products.html"> Sản phẩm</a></li>
-                    <li><a href="admin_category.html"> Danh mục</a></li>
                     <li><a href="admin_order.html"> Đơn hàng</a></li>
                     <li><a href="admin_customer.html"> Khách hàng</a></li>
                     <li><a href="admin_profile.html"> Hồ sơ</a></li>

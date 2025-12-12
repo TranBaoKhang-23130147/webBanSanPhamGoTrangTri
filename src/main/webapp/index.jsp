@@ -1,11 +1,12 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>HOME DECOR - TRANG CHỦ</title>
-    <link rel="icon" type="image/png"  href="../img/logo.png" >
+    <link rel="icon" type="image/png"  href="img/logo.png" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="../css/homepage_style.css">
+    <link rel="stylesheet" href="css/homepage_style.css">
     <link
             href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
             rel="stylesheet"
@@ -16,14 +17,14 @@
 </head>
 <body>
 <div id="header">
-    <div id="logo"><img src="../img/logo.png" class="image"/>
+    <div id="logo"><img src="img/logo.png" class="image" alt=""/>
         <div class="brand"> <div id="name-web">HOME DECOR</div>
             <div id="sub-slogan">Nét mộc trong từng góc nhỏ</div></div>
     </div>
 
     <nav class="menu-bar">
 
-        <a class="menu" id="home" href="homepage_user.html"> TRANG CHỦ</a>
+        <a class="menu" id="home" href="homepage_user.jsp"> TRANG CHỦ</a>
         <div class="menu product-menu">
             <a id="product" href="product_all_user.html">SẢN PHẨM</a>
             <div class="submenu">
@@ -53,7 +54,7 @@
             <i class="fas fa-user"></i>
             <div class="user">
                 <a class="nav_item" href="mypage_user.html" id="myPage">Trang của tôi</a>
-                <a class="nav-item" href="login.html" id="login-register">Đăng nhập/Đăng ký</a>
+                <a class="nav-item" href="login.jsp" id="login-register">Đăng nhập/Đăng ký</a>
             </div>
 
         </div>
@@ -114,7 +115,7 @@
 
     <section class="products">
         <div class="product-card">
-<!--            <span class="badge">NEW</span>-->
+            <!--            <span class="badge">NEW</span>-->
             <a href="product_details_user.html">
                 <img src="https://i.pinimg.com/736x/0b/e6/ab/0be6ab843569781d6a78bd3786e736de.jpg" alt="ke treo tuong">
                 <h2>Kệ treo tường</h2>
@@ -129,7 +130,7 @@
         </div>
 
         <div class="product-card">
-<!--            <span class="badge">NEW</span>-->
+            <!--            <span class="badge">NEW</span>-->
             <img src="https://i.pinimg.com/736x/68/1c/46/681c469884d60a1a27b0b3686c589f3e.jpg" alt="Bộ bàn ghế gỗ tự nhiên">
             <h2>Bộ bàn ghế gỗ tự nhiên</h2>
             <div class="rating">
@@ -147,7 +148,7 @@
         </div>
 
         <div class="product-card">
-<!--            <span class="badge">NEW</span>-->
+            <!--            <span class="badge">NEW</span>-->
             <img src="https://i.pinimg.com/736x/29/1c/81/291c814c237f586afa66fb1700800563.jpg" alt="Đồ trang trí tường">
             <h2>Đồ trang trí tường bằng gỗ</h2>
             <div class="rating">
@@ -175,7 +176,7 @@
 
             <div class="intro-image">
                 <img src="https://i.pinimg.com/1200x/f3/01/41/f3014120ee3158232a4285f3695663c1.jpg" alt="sp">
-<!--                <div class="image-number">1</div>-->
+                <!--                <div class="image-number">1</div>-->
             </div>
         </div>
     </section>
@@ -190,121 +191,121 @@
     <p class="section-desc">Khám phá những thiết kế tinh tế và hiện đại, mang đến vẻ đẹp mộc mạc cho không gian sống của bạn.</p>
     <div class="section-btn">
         <a href="#" class="view-all-btn">Xem tất cả</a>
+    </div>
+    <div class="san-pham-nb">
+        <div class="product-card">
+            <!--                <span class="badge">HOT</span>-->
+            <a href="product_details_user.html">
+                <img src="https://i.pinimg.com/736x/0b/e6/ab/0be6ab843569781d6a78bd3786e736de.jpg" alt="ke treo tuong">
+                <h2>Kệ treo tường</h2>
+            </a>
+            <div class="rating">
+            </div>
+            <div class="price">129.000 VNĐ</div>
+            <div class="action-buttons">
+                <button class="add-cart">Thêm giỏ hàng</button>
+                <button class="buy-now">Mua hàng</button>
+            </div>
         </div>
-        <div class="san-pham-nb">
-            <div class="product-card">
-<!--                <span class="badge">HOT</span>-->
-                <a href="product_details_user.html">
-                    <img src="https://i.pinimg.com/736x/0b/e6/ab/0be6ab843569781d6a78bd3786e736de.jpg" alt="ke treo tuong">
-                    <h2>Kệ treo tường</h2>
-                </a>
-                <div class="rating">
-                </div>
-                <div class="price">129.000 VNĐ</div>
-                <div class="action-buttons">
-                    <button class="add-cart">Thêm giỏ hàng</button>
-                    <button class="buy-now">Mua hàng</button>
-                </div>
+
+        <div class="product-card">
+            <!--                <span class="badge">HOT</span>-->
+            <img src="https://i.pinimg.com/736x/68/1c/46/681c469884d60a1a27b0b3686c589f3e.jpg" alt="Bộ bàn ghế gỗ tự nhiên">
+            <h2>Bộ bàn ghế gỗ tự nhiên</h2>
+            <div class="rating">
+                <i class="ri-star-s-fill"></i>
+                <i class="ri-star-s-fill"></i>
+                <i class="ri-star-s-fill"></i>
+                <i class="ri-star-s-fill"></i>
+                <i class="ri-star-s-fill"></i>
+                <span>(5.0)</span></div>
+            <div class="price">99.000 VNĐ</div>
+            <div class="action-buttons">
+                <button class="add-cart">Thêm giỏ hàng</button>
+                <button class="buy-now">Mua hàng</button>
             </div>
-
-            <div class="product-card">
-<!--                <span class="badge">HOT</span>-->
-                <img src="https://i.pinimg.com/736x/68/1c/46/681c469884d60a1a27b0b3686c589f3e.jpg" alt="Bộ bàn ghế gỗ tự nhiên">
-                <h2>Bộ bàn ghế gỗ tự nhiên</h2>
-                <div class="rating">
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <span>(5.0)</span></div>
-                <div class="price">99.000 VNĐ</div>
-                <div class="action-buttons">
-                    <button class="add-cart">Thêm giỏ hàng</button>
-                    <button class="buy-now">Mua hàng</button>
-                </div>
-            </div>
-
-            <div class="product-card">
-<!--                <span class="badge">HOT</span>-->
-                <img src="https://i.pinimg.com/736x/29/1c/81/291c814c237f586afa66fb1700800563.jpg" alt="Đồ trang trí tường">
-                <h2>Đồ trang trí tường bằng gỗ</h2>
-                <div class="rating">
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-half-line"></i>
-                    <span>(4.5)</span></div>
-                <div class="price">159.000 VNĐ</div>
-                <div class="action-buttons">
-                    <button class="add-cart">Thêm giỏ hàng</button>
-                    <button class="buy-now">Mua hàng</button>
-                </div>
-            </div>
-                <div class="product-card">
-                    <img src="https://i.pinimg.com/1200x/e2/98/df/e298df4cc098f4e33e0a69337a313ca6.jpg" alt="Đèn ngủ gỗ mộc">
-                    <h2>Đèn ngủ gỗ mộc</h2>
-                    <div class="rating">
-                        <i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><span>(4.0)</span>
-                    </div>
-                    <div class="price">289.000 VNĐ</div>
-                    <div class="action-buttons">
-                        <button class="add-cart">Thêm giỏ hàng</button><button class="buy-now">Mua hàng</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="https://i.pinimg.com/1200x/f4/64/92/f46492b39a263ce310e55a97b7f6842d.jpg" alt="Tủ gỗ nhỏ mini">
-                    <h2>Tủ gỗ nhỏ mini</h2>
-                    <div class="rating">
-                        <i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-half-line"></i><span>(4.5)</span>
-                    </div>
-                    <div class="price">499.000 VNĐ</div>
-                    <div class="action-buttons">
-                        <button class="add-cart">Thêm giỏ hàng</button><button class="buy-now">Mua hàng</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-<!--                    <span class="badge">SALE</span>-->
-                    <img src="https://i.pinimg.com/1200x/60/bf/2c/60bf2c1fa64232cdffef2be1d3f6d4cc.jpg" alt="Giá để cây gỗ">
-                    <h2>Giá để cây gỗ</h2>
-                    <div class="rating">
-                        <i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-half-line"></i><span>(4.5)</span>
-                    </div>
-                    <div class="price">259.000 VNĐ</div>
-                    <div class="action-buttons">
-                        <button class="add-cart">Thêm giỏ hàng</button><button class="buy-now">Mua hàng</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="https://i.pinimg.com/736x/d7/81/8b/d7818b9a2ec984047cb13b4f49ed5514.jpg" alt="Khung ảnh gỗ decor">
-                    <h2>Khung ảnh gỗ decor</h2>
-                    <div class="rating">
-                        <i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><span>(4.0)</span>
-                    </div>
-                    <div class="price">89.000 VNĐ</div>
-                    <div class="action-buttons">
-                        <button class="add-cart">Thêm giỏ hàng</button><button class="buy-now">Mua hàng</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-<!--                    <span class="badge">SALE</span>-->
-                    <img src="https://i.pinimg.com/1200x/39/15/f4/3915f401ae9ec92742b570155b9a8cfe.jpg" alt="Khay gỗ trang trí">
-                    <h2>Khay gỗ trang trí</h2>
-                    <div class="rating">
-                        <i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-half-line"></i><span>(4.5)</span>
-                    </div>
-                    <div class="price">179.000 VNĐ</div>
-                    <div class="action-buttons">
-                        <button class="add-cart">Thêm giỏ hàng</button><button class="buy-now">Mua hàng</button>
-                    </div>
-                </div>
-
         </div>
+
+        <div class="product-card">
+            <!--                <span class="badge">HOT</span>-->
+            <img src="https://i.pinimg.com/736x/29/1c/81/291c814c237f586afa66fb1700800563.jpg" alt="Đồ trang trí tường">
+            <h2>Đồ trang trí tường bằng gỗ</h2>
+            <div class="rating">
+                <i class="ri-star-s-fill"></i>
+                <i class="ri-star-s-fill"></i>
+                <i class="ri-star-s-fill"></i>
+                <i class="ri-star-s-fill"></i>
+                <i class="ri-star-half-line"></i>
+                <span>(4.5)</span></div>
+            <div class="price">159.000 VNĐ</div>
+            <div class="action-buttons">
+                <button class="add-cart">Thêm giỏ hàng</button>
+                <button class="buy-now">Mua hàng</button>
+            </div>
+        </div>
+        <div class="product-card">
+            <img src="https://i.pinimg.com/1200x/e2/98/df/e298df4cc098f4e33e0a69337a313ca6.jpg" alt="Đèn ngủ gỗ mộc">
+            <h2>Đèn ngủ gỗ mộc</h2>
+            <div class="rating">
+                <i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><span>(4.0)</span>
+            </div>
+            <div class="price">289.000 VNĐ</div>
+            <div class="action-buttons">
+                <button class="add-cart">Thêm giỏ hàng</button><button class="buy-now">Mua hàng</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://i.pinimg.com/1200x/f4/64/92/f46492b39a263ce310e55a97b7f6842d.jpg" alt="Tủ gỗ nhỏ mini">
+            <h2>Tủ gỗ nhỏ mini</h2>
+            <div class="rating">
+                <i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-half-line"></i><span>(4.5)</span>
+            </div>
+            <div class="price">499.000 VNĐ</div>
+            <div class="action-buttons">
+                <button class="add-cart">Thêm giỏ hàng</button><button class="buy-now">Mua hàng</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <!--                    <span class="badge">SALE</span>-->
+            <img src="https://i.pinimg.com/1200x/60/bf/2c/60bf2c1fa64232cdffef2be1d3f6d4cc.jpg" alt="Giá để cây gỗ">
+            <h2>Giá để cây gỗ</h2>
+            <div class="rating">
+                <i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-half-line"></i><span>(4.5)</span>
+            </div>
+            <div class="price">259.000 VNĐ</div>
+            <div class="action-buttons">
+                <button class="add-cart">Thêm giỏ hàng</button><button class="buy-now">Mua hàng</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://i.pinimg.com/736x/d7/81/8b/d7818b9a2ec984047cb13b4f49ed5514.jpg" alt="Khung ảnh gỗ decor">
+            <h2>Khung ảnh gỗ decor</h2>
+            <div class="rating">
+                <i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><span>(4.0)</span>
+            </div>
+            <div class="price">89.000 VNĐ</div>
+            <div class="action-buttons">
+                <button class="add-cart">Thêm giỏ hàng</button><button class="buy-now">Mua hàng</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <!--                    <span class="badge">SALE</span>-->
+            <img src="https://i.pinimg.com/1200x/39/15/f4/3915f401ae9ec92742b570155b9a8cfe.jpg" alt="Khay gỗ trang trí">
+            <h2>Khay gỗ trang trí</h2>
+            <div class="rating">
+                <i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-s-fill"></i><i class="ri-star-half-line"></i><span>(4.5)</span>
+            </div>
+            <div class="price">179.000 VNĐ</div>
+            <div class="action-buttons">
+                <button class="add-cart">Thêm giỏ hàng</button><button class="buy-now">Mua hàng</button>
+            </div>
+        </div>
+
+    </div>
 </section>
 
 <!--<section class="blog-section">-->
@@ -378,7 +379,7 @@
                         <p>Khách hàng thân thiết</p>
                     </div>
 
-                        <i class="ri-star-s-fill rating"></i><span>(4.9) </span>
+                    <i class="ri-star-s-fill rating"></i><span>(4.9) </span>
                 </div>
                 <p>
                     “Tôi thật sự ấn tượng với sự tinh tế trong từng chi tiết.
@@ -427,7 +428,7 @@
 
         <div class="footer-col">
             <h3>Liên kiết nhanh</h3>
-            <a href="homepage_user.html">Trang chủ</a>
+            <a href="homepage_user.jsp">Trang chủ</a>
             <a href="purchasing_policy_user.html">Chính sách mua hàng</a>
             <a href="introduce_user.html">Giới thiệu</a>
             <a href="contact_user.html">Liên hệ</a>
@@ -436,5 +437,5 @@
 </div>
 
 </body>
-<script src="../js/homepage.js"></script>
+<script src="js/homepage.js"></script>
 </html>
