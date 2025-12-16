@@ -61,7 +61,7 @@
                 <span style="display:block; padding: 5px 10px; font-weight:bold; color:#8B4513;">
                 Chào, <%= user.getUsername() %>
             </span>
-                <a class="nav_item" href="html/mypage_user.html" id="myPage">Trang của tôi</a>
+                <a class="nav_item" href="mypage_user.jsp" id="myPage">Trang của tôi</a>
                 <a class="nav-item" href="LogoutServlet" id="login-register">Đăng xuất</a>
                 <% } else { %>
                 <a class="nav-item" href="login.jsp" id="login-register">Đăng nhập</a>
@@ -448,5 +448,8 @@
 </div>
 
 </body>
-<script src="js/homepage.js"></script>
+<script type="text/javascript">
+    var isLoggedIn = <%= (session.getAttribute("LOGGED_USER") != null) ? "true" : "false" %>;
+</script>
+<script src="${pageContext.request.contextPath}/js/homepage.js"></script>
 </html>
