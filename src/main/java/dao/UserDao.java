@@ -1,9 +1,12 @@
 package dao;
 
 import model.User;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
+import static dao.DBContext.getConnection;
 
 public class UserDao {
 
@@ -61,7 +64,7 @@ public class UserDao {
      * Mặc định set role='User' và status='Active'.
      */
     public void signup(String username, String email, String password) {
-        String SQL = "INSERT INTO users (full_name, email, password, role, status) VALUES (?, ?, ?, 'User', 'Active')";
+        String SQL = "INSERT INTO users (full_name, email, password, role, status,createAt) VALUES (?, ?, ?, 'User', 'Active',?)";
 
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL)) {
@@ -74,4 +77,23 @@ public class UserDao {
             e.printStackTrace();
         }
     }
-}
+    public int countNewUsersLast30DaysIncludingNulls() {
+        String sql = "SELECT COUNT(*) FROM users WHERE (createAt IS NULL OR createAt >= ?)";
+        LocalDateTime since = LocalDateTime.now(ZoneId.systemDefault()).minusDays(30);
+        Timestamp sinceTs = Timestamp.valueOf(since);
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setTimestamp(1, sinceTs);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
+    }
+    }

@@ -114,15 +114,14 @@ let isLoggedIn = false;
 
 document.addEventListener("DOMContentLoaded", function() {
     const myPage = document.getElementById("myPage");
-
-    myPage.addEventListener("click", function(e) {
-        if (!isLoggedIn) {
-            e.preventDefault();
-            alert("Vui lòng đăng nhập"); // << Giờ sẽ chạy
-        } else {
-            window.location.href = "profile.html";
-        }
-    });
+    if (myPage) {
+        myPage.addEventListener("click", function(e) {
+            if (!isLoggedIn) {
+                e.preventDefault();
+                alert("Vui lòng đăng nhập");
+            } // else link will navigate normally
+        });
+    }
 });
 
 //

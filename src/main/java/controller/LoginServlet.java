@@ -40,8 +40,8 @@ public class LoginServlet extends HttpServlet {
 
             // TRƯỜNG HỢP: Đăng nhập thành công
             HttpSession session = request.getSession();
-            session.setAttribute("LOGGED_USER", user); // Lưu phiên làm việc
-
+//            session.setAttribute("LOGGED_USER", user); // Lưu phiên làm việc
+            session.setAttribute("LOGGED_USER", user);
             // Phân quyền: Admin về trang Admin, User về trang chủ User
             if ("Admin".equalsIgnoreCase(user.getRole())) {
                 // redirect to the admin homepage at the webapp root

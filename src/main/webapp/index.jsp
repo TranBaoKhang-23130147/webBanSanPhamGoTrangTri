@@ -53,7 +53,7 @@
         <div class="user-login">
             <i class="fas fa-user"></i>
             <div class="user">
-                <a class="nav_item" href="mypage_user.html" id="myPage">Trang của tôi</a>
+                <a class="nav_item" href="mypage_user.jsp" id="myPage">Trang của tôi</a>
                 <a class="nav-item" href="login.jsp" id="login-register">Đăng nhập/Đăng ký</a>
             </div>
 

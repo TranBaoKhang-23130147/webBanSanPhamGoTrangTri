@@ -9,6 +9,8 @@
         response.sendRedirect(request.getContextPath() + "/login.jsp");
         return;
     }
+    dao.UserDao userDao = new dao.UserDao();
+    int newUsersLast30Days = userDao.countNewUsersLast30Days();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -105,7 +107,7 @@
                 </div>
                 <div class="kpi-card-modern">
                     <div class="kpi-label-modern">Khách Hàng Mới <span class="trend up">▲ 10.0%</span></div>
-                    <div class="kpi-value-modern">231</div>
+                    <div class="kpi-value-modern"><%= newUsersLast30Days %></div>
                 </div>
             </div>
 
