@@ -67,7 +67,7 @@
                     <li ><a href="admin_homepage.html">Tổng quan</a></li>
                     <li class="active"><a href="#"> Sản phẩm</a></li>
                     <li><a href="admin_product_type.html">Loại sản phẩm</a></li>
-                    <li><a href="admin_category.html"> Danh mục</a></li>
+                    <li><a href="${pageContext.request.contextPath}/category-manager"> Danh mục</a></li>
                     <li><a href="admin_order.html"> Đơn hàng</a></li>
                     <li><a href="admin_customer.html"> Khách hàng</a></li>
                     <li><a href="admin_profile.html"> Hồ sơ</a></li>
