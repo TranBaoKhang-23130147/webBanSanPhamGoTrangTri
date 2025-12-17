@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,9 +7,9 @@
     <title>HOME DECOR - QUẢN LÝ SẢN PHẨM</title>
     <link rel="icon" type="image/png"  href="../img/logo.png" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../css/admin_products.css">
-    <link rel="stylesheet" href="../css/admin_profile_style.css">
-    <link rel="stylesheet" href="../css/admin_category.css">
+    <link rel="stylesheet" href="css/admin_products.css">
+    <link rel="stylesheet" href="css/admin_profile_style.css">
+    <link rel="stylesheet" href="css/admin_category.css">
 
 </head>
 <body>
@@ -62,12 +64,14 @@
         <aside class="sidebar">
             <nav class="sidebar-nav">
                 <ul>
-                    <li ><a href="../admin_homepage.jsp">Tổng quan</a></li>
+                    <li ><a href="admin_homepage.html">Tổng quan</a></li>
                     <li class="active"><a href="#"> Sản phẩm</a></li>
+                    <li><a href="admin_product_type.html">Loại sản phẩm</a></li>
+                    <li><a href="admin_category.html"> Danh mục</a></li>
                     <li><a href="admin_order.html"> Đơn hàng</a></li>
                     <li><a href="admin_customer.html"> Khách hàng</a></li>
                     <li><a href="admin_profile.html"> Hồ sơ</a></li>
-                    <li><a href="../admin_setting.jsp"> Cài đặt</a></li>
+                    <li><a href="admin_setting.html"> Cài đặt</a></li>
                 </ul>
             </nav>
         </aside>
@@ -80,9 +84,10 @@
                     <div class="search-input-group" style="flex-grow: 1;">
                         <input type="text" placeholder="Tìm kiếm danh mục" class="search-input">
                     </div>
-                <button class="add-new-category-btn" onclick="openCategoryModel()">
-                    <i class="fa-sold fa-plus"></i>Thêm danh mục mới
-                </button>
+                    <button class="add-new-category-btn" onclick="openCategoryModal()">
+                        <i class="fa-solid fa-plus"></i> Thêm Danh Mục Mới
+                    </button>
+
                 </div>
 
                 <div class="category-table-wrapper">
@@ -172,15 +177,15 @@
                 <div class="modal-content">
                     <span class="close-btn" onclick="closeCategoryModal()">&times;</span>
                     <h3 id="modalTitle">Thêm Danh Mục Mới</h3>
-                    <form id="categoryForm">
-                        <div class="form-group">
+                    <form id="categoryForm" action="add-category" method="POST">                        <div class="form-group">
                             <label for="categoryName">Tên Danh Mục:</label>
-                            <input type="text" id="categoryName" name="categoryName" required>
+                        <input type="text" name="categoryName" id="categoryName" required>
                         </div>
 
                         <input type="hidden" id="categoryId">
                         <button type="submit" class="submit-btn">Lưu Danh Mục</button>
                     </form>
+
                 </div>
             </div>
 
@@ -190,6 +195,7 @@
     </div>
 </div>
 
-<script src="../js/admin_category.js"></script>
+<script src="js/admin_category.js"></script>
 </body>
 </html>
+
