@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Thêm trình lắng nghe sự kiện 'click' vào nút
         addProductButton.addEventListener('click', function() {
             // Thực hiện chuyển hướng đến trang thêm sản phẩm
-            window.location.href = 'admin_add_products.html';
+            window.location.href = 'admin_add_products.jsp';
         });
     }
 });
