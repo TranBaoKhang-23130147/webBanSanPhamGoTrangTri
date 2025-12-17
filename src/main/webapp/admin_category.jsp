@@ -82,7 +82,7 @@
 
                 <div class="search-filter-bar">
                     <div class="search-input-group" style="flex-grow: 1;">
-                        <input type="text" placeholder="Tìm kiếm danh mục" class="search-input">
+                        <input type="text" placeholder="Tìm kiếm danh mục" class="search-input" id="searchInput" value="${keyword}">
                     </div>
                     <button class="add-new-category-btn" onclick="openCategoryModal()">
                         <i class="fa-solid fa-plus"></i> Thêm Danh Mục Mới
@@ -103,72 +103,25 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td class="col-id">1</td>
-                            <td class="col-name">Trang trí phòng khách</td>
-
-                            <td class="col-product-count">45</td>
-
-                            <td class="col-actions">
-                                <i class="fa-solid fa-pen-to-square edit-icon" onclick="openCategoryModal('edit', 1, 'Trang trí phòng khách')"></i>
-                                <i class="fa-solid fa-trash-can delete-icon" onclick="confirmDelete(1, 'Trang trí phòng khách')"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-id">2</td>
-                            <td class="col-name">Trang trí phòng ngủ</td>
-
-                            <td class="col-product-count">30</td>
-
-                            <td class="col-actions">
-                                <i class="fa-solid fa-pen-to-square edit-icon" onclick="openCategoryModal('edit', 2, 'Trang trí phòng ngủ')"></i>
-                                <i class="fa-solid fa-trash-can delete-icon" onclick="confirmDelete(2, 'Trang trí phòng ngủ')"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-id">3</td>
-                            <td class="col-name">Trang trí phòng làm việc</td>
-
-                            <td class="col-product-count">15</td>
-
-                            <td class="col-actions">
-                                <i class="fa-solid fa-pen-to-square edit-icon" onclick="openCategoryModal('edit', 3, 'Quà lưu niệm')"></i>
-                                <i class="fa-solid fa-trash-can delete-icon" onclick="confirmDelete(3, 'Quà lưu niệm')"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-id">4</td>
-                            <td class="col-name">Trang trí phòng bếp</td>
-
-                            <td class="col-product-count">12</td>
-
-                            <td class="col-actions">
-                                <i class="fa-solid fa-pen-to-square edit-icon" onclick="openCategoryModal('edit', 4, 'Nội thất nhỏ')"></i>
-                                <i class="fa-solid fa-trash-can delete-icon" onclick="confirmDelete(4, 'Nội thất nhỏ')"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-id">5</td>
-                            <td class="col-name">Đồ trang trí mini</td>
-
-                            <td class="col-product-count">8</td>
-
-                            <td class="col-actions">
-                                <i class="fa-solid fa-pen-to-square edit-icon" onclick="openCategoryModal('edit', 5, 'Phòng bếp')"></i>
-                                <i class="fa-solid fa-trash-can delete-icon" onclick="confirmDelete(5, 'Phòng bếp')"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-id">6</td>
-                            <td class="col-name">Quà lưu niệm</td>
-
-                            <td class="col-product-count">22</td>
-                            <td class="col-actions">
-                                <i class="fa-solid fa-pen-to-square edit-icon" onclick="openCategoryModal('edit', 6, 'Sản phẩm khuyến mãi')"></i>
-                                <i class="fa-solid fa-trash-can delete-icon" onclick="confirmDelete(6, 'Sản phẩm khuyến mãi')"></i>
-                            </td>
-                        </tr>
+                        <c:forEach items="${listC}" var="c">
+                            <tr>
+                                <td class="col-id">${c.id}</td>
+                                <td class="col-name">${c.categoryName}</td>.
+                                <td class="col-product-count">0</td>
+                                <td class="col-actions">
+                                    <i class="fa-solid fa-pen-to-square" onclick="openCategoryModal('edit', '${c.id}', '${c.categoryName}')"></i>
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
+
+                        <c:if test="${not empty sessionScope.msg}">
+                            <script>
+                                alert("${sessionScope.msg}");
+                            </script>
+                            <c:remove var="msg" scope="session" />
+                        </c:if>
                     </table>
                 </div>
             </div>
@@ -178,9 +131,9 @@
                     <span class="close-btn" onclick="closeCategoryModal()">&times;</span>
                     <h3 id="modalTitle">Thêm Danh Mục Mới</h3>
                     <form id="categoryForm" action="add-category" method="POST">                        <div class="form-group">
-                            <label for="categoryName">Tên Danh Mục:</label>
+                        <label for="categoryName">Tên Danh Mục:</label>
                         <input type="text" name="categoryName" id="categoryName" required>
-                        </div>
+                    </div>
 
                         <input type="hidden" id="categoryId">
                         <button type="submit" class="submit-btn">Lưu Danh Mục</button>
@@ -198,4 +151,3 @@
 <script src="js/admin_category.js"></script>
 </body>
 </html>
-
