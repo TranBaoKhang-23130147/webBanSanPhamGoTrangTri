@@ -69,6 +69,8 @@
                 <ul>
                     <li><a href="admin_homepage.jsp">Tổng quan</a></li>
                     <li><a href="html/admin_products.html"> Sản phẩm</a></li>
+                    <li><a href="admin_product_type.html">Loại sản phẩm</a></li>
+                    <li><a href="admin_category.html"> Danh mục</a></li>
                     <li><a href="html/admin_order.html"> Đơn hàng</a></li>
                     <li ><a href="html/admin_customer.html"> Khách hàng</a></li>
                     <li><a href="html/admin_profile.html"> Hồ sơ</a></li>
