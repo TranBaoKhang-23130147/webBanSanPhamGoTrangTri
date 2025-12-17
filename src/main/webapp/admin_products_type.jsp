@@ -42,6 +42,8 @@
                     <li><a href="${pageContext.request.contextPath}/category-manager">Danh mục</a></li>
                     <li><a href="admin_order.html">Đơn hàng</a></li>
                     <li><a href="admin_customer.html">Khách hàng</a></li>
+                    <li><a href="admin_profile.html"> Hồ sơ</a></li>
+                    <li><a href="admin_setting.html"> Cài đặt</a></li>
                 </ul>
             </nav>
         </aside>
@@ -88,29 +90,31 @@
                     </table>
                 </div>
             </div>
-
             <div id="productTypeModal" class="modal">
                 <div class="modal-content">
                     <span class="close-btn" onclick="closeProductTypeModal()">&times;</span>
                     <h3 id="modalTitle">Thêm Loại Sản Phẩm Mới</h3>
 
-                    <form id="productTypeForm"
-                          action="${pageContext.request.contextPath}/add-product-type"
-                          method="post">
-
+                    <form id="productTypeForm" action="${pageContext.request.contextPath}/add-product-type" method="post">
                         <div class="form-group">
                             <label for="productTypeName">Tên Loại Sản Phẩm:</label>
                             <input type="text" name="productTypeName" id="productTypeName" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="categoryId">Thuộc Danh Mục (ID):</label>
-                            <input type="number" name="categoryId" id="categoryId" required>
+                            <label for="categoryId">Thuộc Danh Mục:</label>
+                            <select name="categoryId" id="categoryId" required
+                                    style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                                <option value="">-- Chọn danh mục --</option>
+                                <c:forEach items="${listC}" var="c">
+                                    <%-- value gửi về Servlet là ID, nhưng hiển thị cho người dùng là Tên --%>
+                                    <option value="${c.id}">ID: ${c.id} - ${c.categoryName}</option>
+                                </c:forEach>
+                            </select>
                         </div>
 
                         <button type="submit" class="submit-btn">Lưu Thông Tin</button>
                     </form>
-
                 </div>
             </div>
         </main>

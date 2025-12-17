@@ -15,27 +15,25 @@
         @Override
         protected void doGet(HttpServletRequest request, HttpServletResponse response)
                 throws ServletException, IOException {
-            // Lấy từ khóa search từ thanh URL (nếu có)
+
+            // 1. Lấy danh sách Category để đổ vào Dropdown
+            dao.CategoryDao cDao = new dao.CategoryDao();
+            List<model.Category> listC = cDao.getAllCategory();
+            request.setAttribute("listC", listC); // Tên "listC" phải khớp với JSP
+
+            // 2. Logic lấy danh sách ProductType hiện tại
             String keyword = request.getParameter("search");
+            ProductTypeDao ptDao = new ProductTypeDao();
+            List<model.ProductType> listPT = (keyword != null && !keyword.trim().isEmpty())
+                    ? ptDao.searchProductTypeByName(keyword)
+                    : ptDao.getAllProductType();
 
-            ProductTypeDao dao = new ProductTypeDao();
-            List<ProductType> list;
+            request.setAttribute("listPT", listPT);
+            request.setAttribute("keyword", keyword);
 
-            if (keyword != null && !keyword.trim().isEmpty()) {
-                // Thực hiện tìm kiếm
-                list = dao.searchProductTypeByName(keyword);
-            } else {
-                // Lấy toàn bộ danh sách
-                list = dao.getAllProductType();
-            }
-
-            // Đẩy dữ liệu lên request để trang JSP nhận được
-            request.setAttribute("listPT", list);
-            request.setAttribute("keyword", keyword); // Để giữ lại chữ trong ô tìm kiếm
-
-            // Forward sang trang admin_product_type.jsp
             request.getRequestDispatcher("admin_products_type.jsp").forward(request, response);
         }
+
 
         @Override
         protected void doPost(HttpServletRequest request, HttpServletResponse response)
