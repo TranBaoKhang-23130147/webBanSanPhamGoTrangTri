@@ -8,6 +8,8 @@ public class User {
     private String status;
     private String role;
     private String email;
+    private String fullName;
+    private String phone;
 
     // Constructor đầy đủ
     public User(String username, String password, String status, String role, String email, int id) {
@@ -78,5 +80,21 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public void setFullname(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 }
