@@ -12,7 +12,8 @@ public class UserDao {
 
     /**
      * Kiểm tra thông tin đăng nhập trong DB.
-     * @param email Email người dùng
+     *
+     * @param email    Email người dùng
      * @param password Mật khẩu người dùng
      * @return Đối tượng User nếu đăng nhập thành công, ngược lại trả về null.
      */
@@ -42,6 +43,7 @@ public class UserDao {
 
     /**
      * Kiểm tra xem một email đã tồn tại trong DB chưa.
+     *
      * @param email Email cần kiểm tra
      * @return true nếu tồn tại, false nếu chưa.
      */
@@ -77,8 +79,9 @@ public class UserDao {
             e.printStackTrace();
         }
     }
-    public int countNewUsersLast30DaysIncludingNulls() {
-        String sql = "SELECT COUNT(*) FROM users WHERE (createAt IS NULL OR createAt >= ?)";
+
+    public int countNewUsersLast30Days() {
+        String sql = "SELECT COUNT(*) FROM users WHERE (role = 'User') and (createAt IS NULL OR createAt >= ?)";
         LocalDateTime since = LocalDateTime.now(ZoneId.systemDefault()).minusDays(30);
         Timestamp sinceTs = Timestamp.valueOf(since);
 
@@ -96,4 +99,47 @@ public class UserDao {
         }
         return 0;
     }
+
+    public User getById(int id) {
+        String sql = "SELECT id, full_name, display_name, birth_date, email, phone, gender, avatar_id, role, status FROM users WHERE id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    User user = new User();
+                    user.setId(rs.getInt("id"));
+                    user.setUsername(rs.getString("full_name"));
+                    Date bd = rs.getDate("birth_date");
+
+                    user.setEmail(rs.getString("email"));
+                    user.setPhone(rs.getString("phone"));
+
+                    int avatar = rs.getInt("avatar_id");
+
+                    user.setRole(rs.getString("role"));
+                    user.setStatus(rs.getString("status"));
+                    return user;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
+    public boolean updateUserInfo(int id, String fullName, String phone) {
+        String sql = "UPDATE users SET full_name = ?, phone = ? WHERE id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, fullName);
+            ps.setString(2, phone);
+            ps.setInt(3, id);
+
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+}

@@ -83,7 +83,7 @@
                     <li><a href="html/admin_order.html"> Đơn hàng</a></li>
                     <li><a href="html/admin_customer.html"> Khách hàng</a></li>
                     <li><a href="html/admin_profile.html"> Hồ sơ</a></li>
-                    <li><a href="html/admin_setting.html"> Cài đặt</a></li>
+                    <li><a href="admin_setting.jsp"> Cài đặt</a></li>
                 </ul>
             </nav>
         </aside>

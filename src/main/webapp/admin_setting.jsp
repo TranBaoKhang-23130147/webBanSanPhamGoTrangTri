@@ -1,19 +1,26 @@
+<%@ page import="model.User" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%-- 1. Khai báo thư viện JSTL trước --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%-- 2. Lấy user từ session (LoginServlet đã lưu với tên LOGGED_USER) --%>
+<c:set var="user" value="${sessionScope.LOGGED_USER}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>HOME DECOR - CÀI ĐẶT</title>
-    <link rel="icon" type="image/png"  href="../img/logo.png" >
+    <link rel="icon" type="image/png"  href="img/logo.png" >
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../css/admin_seting_style.css">
+    <link rel="stylesheet" href="css/admin_seting_style.css">
 
 </head>
 <body>
 <div class="admin-container">
     <header class="header">
         <div class="logo-placeholder">
-            <img src="../img/logo.png" alt="Logo Modern Homes">
+            <img src="img/logo.png" alt="Logo Modern Homes">
             <p class="logo">HOME DECOR</p>
         </div>
 
@@ -60,12 +67,12 @@
         <aside class="sidebar">
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="../admin_homepage.jsp">Tổng quan</a></li>
-                    <li><a href="admin_products.html"> Sản phẩm</a></li>
-                    <li><a href="admin_order.html"> Đơn hàng</a></li>
-                    <li ><a href="admin_customer.html"> Khách hàng</a></li>
-                    <li><a href="admin_profile.html"> Hồ sơ</a></li>
-                    <li class="active"><a href="admin_setting.html"> Cài đặt</a></li>
+                    <li><a href="admin_homepage.jsp">Tổng quan</a></li>
+                    <li><a href="html/admin_products.html"> Sản phẩm</a></li>
+                    <li><a href="html/admin_order.html"> Đơn hàng</a></li>
+                    <li ><a href="html/admin_customer.html"> Khách hàng</a></li>
+                    <li><a href="html/admin_profile.html"> Hồ sơ</a></li>
+                    <li class="active"><a href="admin_setting.jsp"> Cài đặt</a></li>
                 </ul>
             </nav>
         </aside>
@@ -87,22 +94,24 @@
 
                     <div class="settings-card" id="basic-info">
                         <h2>Thông tin cơ bản</h2>
-                        <form>
+                        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+                        <form action="${pageContext.request.contextPath}/UpdateSettingServlet" method="post">
                             <div class="form-row">
                                 <div class="form-group half-width">
                                     <label for="name">Họ và Tên</label>
-                                    <input type="text" id="name" value="Nguyễn Văn A">
+                                    <input type="text" name="full_name" value="${user.username}" />
+
                                 </div>
                                 <div class="form-group half-width">
                                     <label for="email">Email</label>
-                                    <input type="email" id="email" value="nguyenvana@example.com" readonly>
+                                    <input type="email" id="email" value="${user.email}" readonly>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group half-width">
                                     <label for="phone">Số điện thoại (Tùy chọn)</label>
-                                    <input type="text" id="phone" value="+84 912345678">
+                                    <input type="text" id="phone" name="phone" value="${user.phone}">
                                 </div>
                                 <div class="form-group half-width avatar-group">
                                     <label>Ảnh đại diện</label>
@@ -133,20 +142,20 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="address1">Địa chỉ 1</label>
+                                <label for="address1">Địa chỉ </label>
                                 <input type="text" id="address1" value="Trường Đại học Nông Lâm Tp.Hồ Chí Minh">
                             </div>
 
-                            <div class="form-row">
-                                <div class="form-group half-width">
-                                    <label for="address2">Địa chỉ 2 (Tùy chọn)</label>
-                                    <input type="text" id="address2" placeholder="Địa chỉ thêm của bạn (nếu có)">
-                                </div>
-                                <div class="form-group half-width">
-                                    <label for="zip-code">Mã bưu chính</label>
-                                    <input type="text" id="zip-code" value="100000">
-                                </div>
-                            </div>
+<%--                            <div class="form-row">--%>
+<%--                                <div class="form-group half-width">--%>
+<%--                                    <label for="address2">Địa chỉ 2 (Tùy chọn)</label>--%>
+<%--                                    <input type="text" id="address2" placeholder="Địa chỉ thêm của bạn (nếu có)">--%>
+<%--                                </div>--%>
+<%--                                <div class="form-group half-width">--%>
+<%--                                    <label for="zip-code">Mã bưu chính</label>--%>
+<%--                                    <input type="text" id="zip-code" value="100000">--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
 
                             <div class="form-actions">
                                 <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
@@ -372,7 +381,7 @@
         </main>
     </div>
 </div>
-<script src="../js/admin_setting.js"></script>
+<script src="js/admin_setting.js"></script>
 </body>
 
 </html>
