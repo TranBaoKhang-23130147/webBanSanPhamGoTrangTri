@@ -1,9 +1,6 @@
 <%@ page import="model.User" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%-- 1. Khai báo thư viện JSTL trước --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<%-- 2. Lấy user từ session (LoginServlet đã lưu với tên LOGGED_USER) --%>
 <c:set var="user" value="${sessionScope.LOGGED_USER}" />
 <!DOCTYPE html>
 <html lang="en">
@@ -96,7 +93,7 @@
 
                     <div class="settings-card" id="basic-info">
                         <h2>Thông tin cơ bản</h2>
-                        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%--                        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>--%>
                         <form action="${pageContext.request.contextPath}/UpdateSettingServlet" method="post">
                             <div class="form-row">
                                 <div class="form-group half-width">
@@ -168,19 +165,34 @@
 
 
                     <div class="settings-card" id="password">
+                        <%
+                            // Lấy thông báo từ request
+                            String successMessage = (String) request.getAttribute("successMessage");
+                            String errorMessage = (String) request.getAttribute("errorMessage");
+                        %>
                         <h2>Đổi mật khẩu</h2>
-                        <form>
+                        <% if (successMessage != null) { %>
+                        <div class="alert alert-success" style="color: green; border: 1px solid green; padding: 10px; margin: 10px 0;">
+                            <strong>Thành công:</strong> <%= successMessage %>
+                        </div>
+                        <% } %>
+                        <% if (errorMessage != null) { %>
+                        <div class="alert alert-danger" style="color: red; border: 1px solid red; padding: 10px; margin: 10px 0;">
+                            <strong>Lỗi:</strong> <%= errorMessage %>
+                        </div>
+                        <% } %>
+                        <form action="${pageContext.request.contextPath}/ChangePasswordServlet" method="post">
                             <div class="form-group">
                                 <label for="current-password">Mật khẩu hiện tại</label>
-                                <input type="password" id="current-password">
+                                <input type="password" id="current-password" name="currentPassword">
                             </div>
                             <div class="form-group">
                                 <label for="new-password">Mật khẩu mới</label>
-                                <input type="password" id="new-password">
+                                <input type="password" id="new-password" name="newPassword">
                             </div>
                             <div class="form-group">
                                 <label for="confirm-password">Nhập lại mật khẩu mới</label>
-                                <input type="password" id="confirm-password">
+                                <input type="password" id="confirm-password" name="confirmPassword">
                             </div>
 
                             <div class="password-requirements">
