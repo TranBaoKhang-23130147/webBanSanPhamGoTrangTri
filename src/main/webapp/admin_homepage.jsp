@@ -1,16 +1,39 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="model.User" %>
+<%@ page import="dao.UserDao" %>
+<%@ page import="dao.OrderDao" %>
+
 <%
     // 1. Kiểm tra session
     User user = (User) session.getAttribute("LOGGED_USER");
 
-    // 2. Nếu chưa đăng nhập hoặc không phải Admin -> Đuổi về trang login
+// 2. Nếu chưa đăng nhập hoặc không phải Admin -> Đuổi về trang login
     if (user == null || !"Admin".equalsIgnoreCase(user.getRole())) {
         response.sendRedirect(request.getContextPath() + "/login.jsp");
         return;
     }
-    dao.UserDao userDao = new dao.UserDao();
+
+// 3. Lấy dữ liệu từ request attributes (được set bởi servlet)
+    UserDao userDao = new UserDao();
     int newUsersLast30Days = userDao.countNewUsersLast30Days();
+
+// Lấy orderCount từ request attribute
+    Integer orderCountObj = (Integer) request.getAttribute("orderCount");
+    int orderCount = 0;
+
+// Nếu không có từ servlet (truy cập trực tiếp JSP), lấy từ database
+    if (orderCountObj == null) {
+        OrderDao orderDao = new OrderDao();
+        try {
+            orderCount = orderDao.getOrderCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+            orderCount = 0;
+        }
+    } else {
+        orderCount = orderCountObj;
+    }
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -103,9 +126,15 @@
                 <!--                    <div class="kpi-label-modern">Tổng Lượt Truy Cập <span class="trend down">▼ 8.2%</span></div>-->
                 <!--                    <div class="kpi-value-modern">320</div>-->
                 <!--                </div>-->
+                <%
+                    System.out.println("Order Count (JSP): " + request.getAttribute("orderCount"));
+                %>
                 <div class="kpi-card-modern">
-                    <div class="kpi-label-modern">Số Lượng Đơn Hàng <span class="trend up">▲ 4.5%</span></div>
-                    <div class="kpi-value-modern">57</div>
+                    <div class="kpi-label-modern">Số Lượng Đơn Hàng</div>
+                    <div class="kpi-value-modern">
+
+                        <%= orderCount %>
+                    </div>
                 </div>
                 <div class="kpi-card-modern">
                     <div class="kpi-label-modern">Khách Hàng Mới <span class="trend up">▲ 10.0%</span></div>
