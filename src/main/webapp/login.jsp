@@ -84,7 +84,7 @@
                      <input type="checkbox" name="remember">
                      Ghi nhớ đăng nhập
                  </label>
-                 <a href="html/login_forgot_password.html" class="forgot">Quên mật khẩu?</a>
+                 <a href="login_forgot_password.jsp" class="forgot">Quên mật khẩu?</a>
              </div>
 
              <button>Đăng nhập</button>

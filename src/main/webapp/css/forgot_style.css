@@ -135,3 +135,12 @@ button:hover {
     color: var(--grad-clr1);
     border: 1px solid var(--grad-clr1);
 }
+.error-msg {
+    color: #d93025;
+    background: #fdecea;
+    border: 1px solid #f5c2c7;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
