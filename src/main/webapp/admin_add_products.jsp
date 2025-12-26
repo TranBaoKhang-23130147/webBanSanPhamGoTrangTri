@@ -7,9 +7,9 @@
     <title>HOME DECOR</title>
     <link rel="icon" type="image/png"  href="../img/logo.png" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../css/user_admin.css">
-    <link rel="stylesheet" href="../css/admin_add_products.css">
-    <link rel="stylesheet" href="../css/admin_profile_style.css">
+    <link rel="stylesheet" href="css/user_admin.css">
+    <link rel="stylesheet" href="css/admin_add_products.css">
+    <link rel="stylesheet" href="css/admin_profile_style.css">
 
 </head>
 <body>
@@ -171,7 +171,7 @@
 
     </div>
 </div>
-<script src="../js/order_admin.js"></script>
+<script src="js/order_admin.js"></script>
 
 </body>
 </html>

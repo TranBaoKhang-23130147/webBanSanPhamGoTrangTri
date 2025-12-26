@@ -1,3 +1,8 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,10 +38,10 @@
                 <a href="souvenirs_user.html">QUÀ LƯU NIỆM</a>
             </div>
         </div>
-        <a class="menu" id=" " href="purchasing_policy_user.html" >CHÍNH SÁCH MUA HÀNG</a>
+        <a class="menu" id=" " href="../purchasing_policy_user.jsp" >CHÍNH SÁCH MUA HÀNG</a>
 
-        <a class="menu" id="introduce" href="introduce_user.html" >GIỚI THIỆU</a>
-        <a class="menu" id="contact" href="contact_user.html">LIÊN HỆ</a>
+        <a class="menu" id="introduce" href="../introduce_user.jsp" >GIỚI THIỆU</a>
+        <a class="menu" id="contact" href="../contact_user.jsp">LIÊN HỆ</a>
 
 
     </nav>
@@ -143,155 +148,35 @@
         </aside>
 
         <div class="products">
+            <c:forEach items="${listP}" var="p">
+                <div class="product-card">
+                    <a href="product-detail?id=${p.id}" class="product-link">
+                        <div class="set">
+                            <img src="${p.imageUrl}" alt="${p.nameProduct}">
+                            <h2>${p.nameProduct}</h2>
+                            <div class="rating">
+                                <c:forEach begin="1" end="5" var="i">
+                                    <i class="${i <= p.rating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
+                                </c:forEach>
+                                <span>(${p.rating})</span>
+                            </div>
 
-            <div class="product-card">
-                <a href="product_details_user.html" class="product-link">
-                    <div class="set">
-                        <img src="https://i.pinimg.com/736x/0b/e6/ab/0be6ab843569781d6a78bd3786e736de.jpg" alt="ke treo tuong">
-                        <h2>Kệ treo tường</h2>
-                        <div class="rating">
-                            <i class="ri-star-s-fill"></i>
-                            <i class="ri-star-s-fill"></i>
-                            <i class="ri-star-s-fill"></i>
-                            <i class="ri-star-s-fill"></i>
-                            <i class="ri-star-s-line"></i>
-                            <span>(4.0)</span>
+                            <div class="price">
+                                <fmt:formatNumber value="${p.price}" type="number"/> VNĐ                            </div>
                         </div>
-                        <div class="price">129.000 VNĐ</div>
+                    </a>
+
+                    <div class="action-buttons">
+                        <button class="add-cart" onclick="addToCart(${p.id})">Thêm giỏ hàng</button>
+                        <button class="buy-now">Mua hàng</button>
                     </div>
-                </a>
-                <div class="action-buttons">
-                    <button class="add-cart">Thêm giỏ hàng</button>
-                    <button class="buy-now">Mua hàng</button>
                 </div>
-            </div>
-            <div class="product-card">
-                <div class="set">
-                <img src="https://i.pinimg.com/736x/68/1c/46/681c469884d60a1a27b0b3686c589f3e.jpg" alt="Bộ bàn ghế gỗ tự nhiên">
-                <h2>Bộ bàn ghế gỗ tự nhiên</h2>
-                <div class="rating">
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <span>(5.0)</span></div>
-                <div class="price">99.000 VNĐ</div>
-                <div class="action-buttons">
-                    <button class="add-cart">Thêm giỏ hàng</button>
-                    <button class="buy-now">Mua hàng</button>
-                </div>
-                </div>
-            </div>
+            </c:forEach>
 
-            <div class="product-card">
-                <div class="set">
-<!--                    <span class="badge">SALE</span>-->
-
-                    <img src="https://i.pinimg.com/1200x/9b/81/7e/9b817e378dc66a4c57a75c9072c98f7e.jpg" alt="Bình hoa gỗ">
-                <h2>Bình hoa bằng gỗ</h2>
-                <div class="rating">
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-half-line"></i>
-                    <span>(4.5)</span></div>
-                <div class="price">453.000 VNĐ</div>
-                <div class="action-buttons">
-                    <button class="add-cart">Thêm giỏ hàng</button>
-                    <button class="buy-now">Mua hàng</button>
-                </div>
-                </div>
-            </div>
-            <div class="product-card">
-                <div class="set">
-                <img src="https://i.pinimg.com/736x/23/15/a0/2315a0ec69375b795b3736ef05f59b40.jpg" alt="Kệ đựng gia vị">
-                <h2>Kệ đựng gia vị</h2>
-                <div class="rating">
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-half-line"></i>
-                    <span>(4.5)</span></div>
-                <div class="price">300.000 VNĐ</div>
-                <div class="action-buttons">
-                    <button class="add-cart">Thêm giỏ hàng</button>
-                    <button class="buy-now">Mua hàng</button>
-                </div>
-                </div>
-            </div> <div class="product-card">
-            <div class="set">
-            <img src="https://i.pinimg.com/736x/29/1c/81/291c814c237f586afa66fb1700800563.jpg" alt="Đồ trang trí tường">
-            <h2>Đồ trang trí tường</h2>
-            <div class="rating">
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-half-line"></i>
-                <span>(4.5)</span></div>
-            <div class="price">159.000 VNĐ</div>
-            <div class="action-buttons">
-                <button class="add-cart">Thêm giỏ hàng</button>
-                <button class="buy-now">Mua hàng</button>
-            </div>
-
-            </div>
-        </div>  <div class="product-card">
-            <div class="set">
-<!--            <span class="badge">SALE</span>-->
-            <img src="https://i.pinimg.com/736x/5d/d0/72/5dd0725cffcf48cfe3163c8858de8427.jpg" alt="Hợp đựng bút ">
-            <h2>Hợp đựng bút bằng gỗ</h2>
-            <div class="rating">
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-line"></i>
-                <span>(4.0)</span></div>
-            <div class="price">159.000 VNĐ</div>
-            <div class="action-buttons">
-                <button class="add-cart">Thêm giỏ hàng</button>
-                <button class="buy-now">Mua hàng</button>
-            </div>
-            </div>
-        </div> <div class="product-card">
-            <div class="set">
-<!--            <span class="badge">SALE</span>-->
-            <img src="https://i.pinimg.com/736x/42/d0/2f/42d02fdfb92367172617e26c4ade21fd.jpg" alt=" bộ lót ly">
-            <h2>Bộ lót ly uống</h2>
-            <div class="rating">
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-half-line"></i>
-                <span>(4.5)</span></div>
-            <div class="price">159.000 VNĐ</div>
-            <div class="action-buttons">
-                <button class="add-cart">Thêm giỏ hàng</button>
-                <button class="buy-now">Mua hàng</button>
-            </div>
-                </div>
-        </div> <div class="product-card">
-            <div class="set">
-            <img src="https://i.pinimg.com/1200x/0f/94/a9/0f94a9bed2184ddc9c7a6d16f6e27203.jpg" alt="đế lót ly con rùa">
-            <h2>Đế lót ly con rùa</h2>
-            <div class="rating">
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-half-line"></i>
-                <span>(4.5)</span></div>
-            <div class="price">159.000 VNĐ</div>
-            <div class="action-buttons">
-                <button class="add-cart">Thêm giỏ hàng</button>
-                <button class="buy-now">Mua hàng</button>
-            </div></div>
-        </div>
+            <%-- Hiển thị thông báo nếu không có sản phẩm nào --%>
+            <c:if test="${empty listP}">
+                <p style="text-align: center; width: 100%;">Không tìm thấy sản phẩm nào phù hợp.</p>
+            </c:if>
         </div>
     </div>
 </section>
@@ -319,10 +204,10 @@
 
         <div class="footer-col">
             <h3>Chính sách</h3>
-            <a href="introduce_user.html">Về tụi mình</a>
-            <a href="purchasing_policy_user.html">Chính sách Thanh toán</a>
-            <a href="purchasing_policy_user.html">Chính sách Giao hàng</a>
-            <a href="purchasing_policy_user.html">Chính sách Đổi trả</a>
+            <a href="../introduce_user.jsp">Về tụi mình</a>
+            <a href="../purchasing_policy_user.jsp">Chính sách Thanh toán</a>
+            <a href="../purchasing_policy_user.jsp">Chính sách Giao hàng</a>
+            <a href="../purchasing_policy_user.jsp">Chính sách Đổi trả</a>
         </div>
 
 
@@ -335,9 +220,9 @@
         <div class="footer-col">
             <h3>Liên kiết nhanh</h3>
             <a href="../homepage_user.jsp">Trang chủ</a>
-            <a href="purchasing_policy_user.html">Chính sách mua hàng</a>
-            <a href="introduce_user.html">Giới thiệu</a>
-            <a href="contact_user.html">Liên hệ</a>
+            <a href="../purchasing_policy_user.jsp">Chính sách mua hàng</a>
+            <a href="../introduce_user.jsp">Giới thiệu</a>
+            <a href="../contact_user.jsp">Liên hệ</a>
         </div>
 
     </div>

@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,8 +35,8 @@
         <div class="menu service">CHÍNH SÁCH MUA HÀNG
 
         </div>
-        <a class="menu" id="introduce" href="introduce_user.html" >GIỚI THIỆU</a>
-        <a class="menu" id="contact" href="contact_user.html">LIÊN HỆ</a>
+        <a class="menu" id="introduce" href="../introduce_user.jsp" >GIỚI THIỆU</a>
+        <a class="menu" id="contact" href="../contact_user.jsp">LIÊN HỆ</a>
 
 
 
@@ -232,7 +233,7 @@
 
         <div class="footer-col">
             <h3>Chính sách</h3>
-            <a href="introduce_user.html">Về tụi mình</a>
+            <a href="../introduce_user.jsp">Về tụi mình</a>
             <a href="purchasing_policy_user.html">Chính sách Thanh toán</a>
             <a href="purchasing_policy_user.html">Chính sách Giao hàng</a>
             <a href="purchasing_policy_user.html">Chính sách Đổi trả</a>
@@ -248,8 +249,8 @@
             <h3>Liên kiết nhanh</h3>
             <a href="../homepage_user.jsp">Trang chủ</a>
             <a href="purchasing_policy_user.html">Chính sách mua hàng</a>
-            <a href="introduce_user.html">Giới thiệu</a>
-            <a href="contact_user.html">Liên hệ</a>
+            <a href="../introduce_user.jsp">Giới thiệu</a>
+            <a href="../contact_user.jsp">Liên hệ</a>
         </div>
     </div>
 </div>

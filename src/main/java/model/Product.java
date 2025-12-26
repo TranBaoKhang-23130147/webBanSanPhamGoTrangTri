@@ -13,9 +13,20 @@ public class Product {
     private int primaryImageId;
     private int isActive;
     private Date mfgDate;
+    private String imageUrl;
 
     public Product() {}
+    public Product(int id, String nameProduct, double price, String imageUrl, int isActive) {
+        this.id = id;
+        this.nameProduct = nameProduct;
+        this.price = price;
+        this.imageUrl = imageUrl;
+        this.isActive = isActive;
+    }
 
+    // Giữ nguyên các Getter/Setter cũ của bạn và thêm Getter/Setter cho imageUrl
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
     // Getter và Setter
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
