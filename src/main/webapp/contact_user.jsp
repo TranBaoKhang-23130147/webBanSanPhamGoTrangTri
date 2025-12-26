@@ -1,3 +1,4 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,7 @@
     <title>HOME DECOR - LIÊN HỆ</title>
     <link rel="icon" type="image/png" sizes="9992x9992" href="../img/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="../css/contact_style.css">
+    <link rel="stylesheet" href="css/contact_style.css">
 
 </head>
 <body>
