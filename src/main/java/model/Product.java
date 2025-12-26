@@ -16,13 +16,13 @@ public class Product {
     private String imageUrl;
 
     public Product() {}
-    public Product(int id, String nameProduct, double price, String imageUrl, int isActive) {
-        this.id = id;
-        this.nameProduct = nameProduct;
-        this.price = price;
-        this.imageUrl = imageUrl;
-        this.isActive = isActive;
-    }
+//    public Product(int id, String nameProduct, double price, String imageUrl, int isActive) {
+//        this.id = id;
+//        this.nameProduct = nameProduct;
+//        this.price = price;
+//        this.imageUrl = imageUrl;
+//        this.isActive = isActive;
+//    }
 
     // Giữ nguyên các Getter/Setter cũ của bạn và thêm Getter/Setter cho imageUrl
     public String getImageUrl() { return imageUrl; }

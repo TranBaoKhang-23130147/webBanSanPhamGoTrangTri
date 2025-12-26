@@ -28,7 +28,7 @@
 
         <a class="menu" id="home" href="homepage_user.jsp"> TRANG CHỦ</a>
         <div class="menu product-menu">
-            <a id="product" href="html/product_all_user.jsp">SẢN PHẨM</a>
+            <a id="product" href="product_all_user.jsp">SẢN PHẨM</a>
             <div class="submenu">
                 <a href="html/decorate_livingroom_user.html">TRANG TRÍ PHÒNG KHÁCH</a>
                 <a href="html/decorate_bedroom_user.html">TRANG TRÍ PHÒNG NGỦ</a>
@@ -374,7 +374,7 @@
 
         <div class="footer-col">
             <h3>Hỗ trợ khách hàng</h3>
-            <a href="html/product_all_user.jsp">Tất cả sản phẩm</a>
+            <a href="product_all_user.jsp">Tất cả sản phẩm</a>
         </div>
 
         <div class="footer-col">
