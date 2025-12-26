@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,7 +107,26 @@
      </div>
 </div>
 
+
+
+
 <script src="js/login_JS.js"></script>
+<div id="otpModal" class="otp-modal ${SHOW_OTP ? 'show' : ''}">
+    <div class="otp-box">
+        <h3>Nhập mã OTP</h3>
+
+        <c:if test="${not empty ERROR}">
+            <div class="error">${ERROR}</div>
+        </c:if>
+
+        <form action="${pageContext.request.contextPath}/VerifyOtpServlet" method="post">
+            <input type="text" name="otp" placeholder="Nhập mã OTP" required>
+            <button type="submit">XÁC NHẬN</button>
+        </form>
+
+        <p class="note">Mã OTP đã được gửi về email của bạn</p>
+    </div>
+</div>
 
 
 </body>

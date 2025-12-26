@@ -70,10 +70,10 @@ public class UserDao {
 
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL)) {
-            ps.setString(1, username); // full_name
-            ps.setString(2, email);    // email
-            ps.setString(3, password); // password
-
+            ps.setString(1, username);
+            ps.setString(2, email);
+            ps.setString(3, password);
+            ps.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // 👈 THÊM DÒNG NÀY
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
