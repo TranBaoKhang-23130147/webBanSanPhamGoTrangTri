@@ -38,7 +38,14 @@ public class RegisterServlet extends HttpServlet {
             request.getRequestDispatcher("/login.jsp").forward(request, response);
             return;
         }
+        String passwordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
+        if (!password.matches(passwordRegex)) {
+            request.setAttribute("ERROR_MESSAGE",
+                    "Mật khẩu phải có ít nhất 8 ký tự, gồm chữ in hoa, chữ thường, số và ký tự đặc biệt!");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            return;
+        }
         /* ================== TẠO OTP ================== */
         String otp = String.valueOf((int) (Math.random() * 900000 + 100000));
 
