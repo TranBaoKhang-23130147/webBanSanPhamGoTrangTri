@@ -162,4 +162,22 @@ public class UserDao {
             return ps.executeUpdate() == 1;
         }
     }
+
+    public boolean updateUser(User user) {
+        String sql = "UPDATE users SET full_name = ?, phone = ?, email = ? WHERE id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, user.getFullName());
+            ps.setString(2, user.getPhone());
+            ps.setString(3, user.getEmail());
+            ps.setInt(4, user.getId());
+
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

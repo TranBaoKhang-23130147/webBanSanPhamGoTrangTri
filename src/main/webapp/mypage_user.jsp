@@ -18,55 +18,7 @@
 </head>
 <body>
 
-<div id="header">
-    <div id="logo"><img src="img/logo.png" class="image"/>
-        <div class="brand"> <div id="name-web">HOME DECOR</div>
-            <div id="sub-slogan">Nét mộc trong từng góc nhỏ</div></div>
-    </div>
-
-    <nav class="menu-bar">
-
-        <a class="menu" id="home" href="homepage_user.jsp"> TRANG CHỦ</a>
-        <div class="menu product-menu">
-            <a id="product" href="product_all_user.jsp">SẢN PHẨM</a>
-            <div class="submenu">
-                <a href="html/decorate_livingroom_user.html">TRANG TRÍ PHÒNG KHÁCH</a>
-                <a href="html/decorate_bedroom_user.html">TRANG TRÍ PHÒNG NGỦ</a>
-                <a href="html/decorate_kitchen_user.html">TRANG TRÍ PHÒNG BẾP</a>
-                <a href="html/decorate_homeoffice_user.html">TRANG TRÍ PHÒNG LÀM VIỆC</a>
-                <a href="html/decorate_miniitem_user.html">ĐỒ TRANG TRÍ MINI</a>
-                <a href="html/souvenirs_user.html">QUÀ LƯU NIỆM</a>
-            </div>
-        </div>
-        <a class="menu" id=" " href="purchasing_policy_user.jsp" >CHÍNH SÁCH MUA HÀNG</a>
-
-        <a class="menu" id="introduce" href="introduce_user.jsp" >GIỚI THIỆU</a>
-        <a class="menu" id="contact" href="contact_user.jsp">LIÊN HỆ</a>
-
-
-    </nav>
-    <div class="icons">
-        <a class="nav_item" href="html/shopping-cart.html" id="cart-link" >
-            <i class="fas fa-shopping-cart"></i>
-        </a>
-
-        <a class="nav-item" href="html/search.html" id="search-link">
-            <i class="fas fa-search"></i>
-        </a>
-
-        <div class="user-login">
-            <i class="fas fa-user"></i>
-            <div class="user">
-                <a class="nav_item" href="mypage_user.jsp" id="login">Trang của tôi</a>
-                <a class="nav-item" href="index.jsp" id="register">Đăng xuất</a>
-            </div>
-
-        </div>
-    </div>
-
-
-
-</div>
+<jsp:include page="header.jsp"></jsp:include>
 
 <div class="dashboard-container">
 
@@ -75,7 +27,7 @@
             <div class="avatar-container">
                 <img src="https://i.pinimg.com/474x/f1/7a/28/f17a28e82524a427ea89fd3c1b5f9266.jpg" alt="Avatar" class="avatar-img"/>
             </div>
-            <div class="user-name">Trần Thị Thúy Kiều</div>
+            <div class="user-name"><%= user.getFullName() != null ? user.getFullName() : user.getUsername() %></div>
         </div>
 
         <div class="menu-list">
@@ -109,11 +61,11 @@
                     </div>
                     <div class="form-group">
                         <label for="ho-ten">Họ và Tên :</label>
-                        <input type="text" id="ho-ten" value="Trần Thị Thúy Kiều">
+                        <input type="text" name="fullName" value="<%= user.getFullName() != null ? user.getFullName() : "" %>">
                     </div>
                     <div class="form-group">
                         <label for="ten-hien-thi">Tên hiển thị :</label>
-                        <input type="text" id="ten-hien-thi" value="Baby cute">
+                        <input type="text" id="ten-hien-thi" value="<%= user.getUsername() %>">
                     </div>
                     <div class="form-group">
                         <label>Giới tính :</label>
@@ -139,11 +91,10 @@
                 <div class="profile-right">
                     <h3>Thông tin liên hệ</h3>
                     <div class="contact-item">
-                        <span>0399989979</span>
-                        <button class="update-btn">Cập nhật</button>
+                        <span><%= user.getPhone() != null ? user.getPhone() : "Chưa cập nhật" %></span>                        <button class="update-btn">Cập nhật</button>
                     </div>
                     <div class="contact-item">
-                        <span>babycute1234@gmail.com</span>
+                        <span><%= user.getEmail() != null ? user.getEmail() : "Chưa cập nhật" %></span>
                         <button class="update-btn">Cập nhật</button>
                     </div>
 
