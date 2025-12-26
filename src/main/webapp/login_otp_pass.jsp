@@ -1,36 +1,33 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOME DECOR - NHẬP MÃ XÁC NHẬP</title>
-    <link rel="icon" type="image/png"  href="../img/logo.png" >
+    <link rel="icon" type="image/png"  href="img/logo.png" >
 
-    <link rel="stylesheet" href="../css/otp_pass.css">
+    <link rel="stylesheet" href="css/otp_pass.css">
 </head>
 <body>
 
 <div class="container">
-    <form action="login_pass_new.html" class="otp-form">
+    <form action="${pageContext.request.contextPath}/VerifyOtpResetServlet" method="post" class="otp-form">
         <h1>Nhập mã xác nhận</h1>
-        <p>Mã xác minh của bạn sẽ được gửi qua email. Vui lòng kiểm tra hộp thư đến.</p>
 
-        <div class="otp-inputs">
-            <input type="text" maxlength="1" class="otp-input" required>
-            <input type="text" maxlength="1" class="otp-input" required>
-            <input type="text" maxlength="1" class="otp-input" required>
-            <input type="text" maxlength="1" class="otp-input" required>
-        </div>
+        <c:if test="${not empty ERROR_MESSAGE}">
+            <div class="error-msg">
+                    ${ERROR_MESSAGE}
+            </div>
+        </c:if>
 
-        <p class="resend-info">
-            Vui lòng chờ <span id="countdown">60 giây</span> để gửi lại.
-        </p>
+        <input type="text" name="otp" placeholder="Nhập mã OTP" required>
 
-        <a href="login_pass_new.html" class="button-link">Tiếp tục</a>
+        <button type="submit">Tiếp tục</button>
 
-        <div class="back-link-wrapper">
-            <a href="login_forgot_password.html">Quay lại</a>
-        </div>
+        <a href="login_forgot_password.jsp">Quay lại</a>
     </form>
 </div>
 
