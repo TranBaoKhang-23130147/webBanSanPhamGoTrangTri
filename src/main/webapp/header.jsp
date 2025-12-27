@@ -33,7 +33,7 @@
             <i class="fas fa-shopping-cart"></i>
         </a>
 
-        <a class="nav-item" href="html/search.html" id="search-link">
+        <a class="nav-item" href="search.jsp" id="search-link">
             <i class="fas fa-search"></i>
         </a>
 
