@@ -86,4 +86,49 @@ public List<Product> getAllProducts() {
     }
     return list;
 }
+// tim kim sp
+public List<Product> searchProducts(String txtSearch, String category) {
+    List<Product> list = new ArrayList<>();
+    // Đảm bảo tên cột trong SQL khớp với tên cột trong Database của bạn
+    String query = "SELECT * FROM Product WHERE nameProduct LIKE ?";
+
+    if (category != null && !category.equals("all")) {
+        query += " AND categoryId = ?"; // Giả sử bạn lọc theo ID của category
+    }
+
+    try {
+        conn = new DBContext().getConnection();
+        ps = conn.prepareStatement(query);
+        ps.setString(1, "%" + txtSearch + "%");
+
+        if (category != null && !category.equals("all")) {
+            ps.setInt(2, Integer.parseInt(category)); // Chuyển category sang Int nếu nó là ID
+        }
+
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            Product p = new Product();
+            // Gán dữ liệu dựa trên các hàm Setter bạn đã cung cấp
+            p.setId(rs.getInt("id"));
+            p.setNameProduct(rs.getString("nameProduct"));
+            p.setDescription(rs.getString("description"));
+            p.setCategoryId(rs.getInt("categoryId"));
+            p.setSourceId(rs.getInt("sourceId"));
+            p.setProductTypeId(rs.getInt("productTypeId"));
+            p.setPrice(rs.getDouble("price"));
+            p.setPrimaryImageId(rs.getInt("primaryImageId"));
+            p.setIsActive(rs.getInt("isActive"));
+            p.setMfgDate(rs.getDate("mfgDate"));
+            p.setImageUrl(rs.getString("imageUrl")); // Trường này bạn vừa thêm
+
+            // Nếu trong JSP bạn có dùng ${p.rating}, hãy đảm bảo có cột rating trong DB
+            // và thêm p.setRating(rs.getInt("rating")) nếu class Product có thuộc tính này.
+
+            list.add(p);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return list;
+}
 }

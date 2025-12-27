@@ -27,7 +27,7 @@
             <div class="avatar-container">
                 <img src="https://i.pinimg.com/474x/f1/7a/28/f17a28e82524a427ea89fd3c1b5f9266.jpg" alt="Avatar" class="avatar-img"/>
             </div>
-            <div class="user-name"><%= user.getFullName() != null ? user.getFullName() : user.getUsername() %></div>
+            <div class="user-name"><%= user.getUsername() %></div>
         </div>
 
         <div class="menu-list">
@@ -54,43 +54,68 @@
             <h2>Hồ sơ</h2>
             <p class="subtitle">Quản lý thông tin hồ sơ để giữ an toàn cho tài khoản của bạn</p>
 
-            <form action="UpdateProfileController" method="post">
-                <div class="profile-container">
-                    <div class="profile-left">
-                        <div class="avatar-edit">
-                            <img src="https://i.pinimg.com/474x/f1/7a/28/f17a28e82524a427ea89fd3c1b5f9266.jpg" alt="Avatar" class="main-avatar"/>
-                            <button type="button" class="camera-btn"><i class="fas fa-camera"></i></button>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="ho-ten">Họ và Tên :</label>
-                            <input type="text" name="fullName" id="ho-ten" value="<%= user.getFullName() != null ? user.getFullName() : "" %>">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="sdt">Số điện thoại :</label>
-                            <input type="text" name="phone" id="sdt" value="<%= user.getPhone() != null ? user.getPhone() : "" %>">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email :</label>
-                            <input type="email" name="email" id="email" value="<%= user.getEmail() != null ? user.getEmail() : "" %>">
-                        </div>
-
-                        <button type="submit" class="save-btn">Lưu thay đổi</button>
+            <div class="profile-container">
+                <div class="profile-left">
+                    <div class="avatar-edit">
+                        <img src="https://i.pinimg.com/474x/f1/7a/28/f17a28e82524a427ea89fd3c1b5f9266.jpg" alt="Avatar" class="main-avatar"/>
+                        <button class="camera-btn"><i class="fas fa-camera"></i></button>
                     </div>
-
-                    <div class="profile-right">
-                        <h3>Thông báo hệ thống</h3>
-                        <% if(request.getAttribute("message") != null) { %>
-                        <p style="color: green;"><%= request.getAttribute("message") %></p>
-                        <% } %>
-                        <% if(request.getAttribute("error") != null) { %>
-                        <p style="color: red;"><%= request.getAttribute("error") %></p>
-                        <% } %>
+                    <div class="form-group">
+                        <label for="ho-ten">Họ và Tên :</label>
+                        <input type="text" name="fullName" value="<%= user.getFullName() != null ? user.getFullName() : "" %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="ten-hien-thi">Tên hiển thị :</label>
+                        <input type="text" id="ten-hien-thi" value="<%= user.getUsername() %>">
+                    </div>
+                    <div class="form-group">
+                        <label>Giới tính :</label>
+                        <div class="radio-group">
+                            <input type="radio" id="nam" name="gioi-tinh" value="Nam" >
+                            <label for="nam">Nam</label>
+                            <input type="radio" id="nu" name="gioi-tinh" value="Nữ" checked>
+                            <label for="nu">Nữ</label>
+                            <input type="radio" id="khac" name="gioi-tinh" value="Khác">
+                            <label for="khac">Khác</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày sinh :</label>
+                        <div class="date-select">
+                            <select><option>Ngày</option></select>
+                            <select><option>Tháng</option></select>
+                            <select><option>Năm</option></select>
+                        </div>
+                    </div>
+                    <button class="save-btn">Lưu</button>
+                </div>
+                <div class="profile-right">
+                    <h3>Thông tin liên hệ</h3>
+                    <div class="contact-item">
+                        <span><%= user.getPhone() != null ? user.getPhone() : "Chưa cập nhật" %></span>                        <button class="update-btn">Cập nhật</button>
+                    </div>
+                    <div class="contact-item">
+                        <span><%= user.getEmail() != null ? user.getEmail() : "Chưa cập nhật" %></span>
+                        <button class="update-btn">Cập nhật</button>
+                    </div>
+                    <h3>Liên kết</h3>
+                    <div class="contact-item link-item">
+                        <i class="fab fa-facebook-square"></i>
+                        <span>Facebook</span>
+                        <button class="link-btn">Liên kết</button>
+                    </div>
+                    <div class="contact-item link-item">
+                        <i class="fab fa-google"></i>
+                        <span>Google</span>
+                        <button class="delete-btn">Xóa</button>
+                    </div>
+                    <div class="contact-item link-item">
+                        <i class="fas fa-comments"></i>
+                        <span>Zalo</span>
+                        <button class="delete-btn">Xóa</button>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
         <div id="thanh-toan" class="tab-content">
             <div class="header-with-button">
