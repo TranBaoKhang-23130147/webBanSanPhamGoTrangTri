@@ -62,4 +62,28 @@ public class ProductDao {
 //    }
 //    return list;
 //}
+
+public List<Product> getAllProducts() {
+    List<Product> list = new ArrayList<>();
+    String sql = "SELECT * FROM products";
+
+    try (Connection conn = DBContext.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        while (rs.next()) {
+            Product p = new Product(
+                    rs.getInt("id"),
+                    rs.getString("name_product"),
+                    rs.getDouble("price"),
+                    rs.getString("image_url"),
+                    rs.getInt("rating")
+            );
+            list.add(p);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return list;
+}
 }

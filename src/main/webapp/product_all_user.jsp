@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,9 +9,9 @@
     <meta charset="UTF-8">
 
     <title>HOME DECOR - SẢN PHẨM</title>
-    <link rel="icon" type="image/png" sizes="9992x9992" href="../img/p.png" class="lo">
+    <link rel="icon" type="image/png" sizes="9992x9992" href="img/p.png" class="lo">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="../css/product_all_style.css">
+    <link rel="stylesheet" href="css/product_all_style.css">
     <link
             href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
             rel="stylesheet"
@@ -26,9 +26,9 @@
 
     <nav class="menu-bar">
 
-        <a class="menu" id="home" href="../homepage_user.jsp"> TRANG CHỦ</a>
+        <a class="menu" id="home" href="homepage_user.jsp"> TRANG CHỦ</a>
         <div class="menu product-menu">
-            <a id="product" href="product_all_user.html">SẢN PHẨM</a>
+            <a id="product" href="product_all_user.jsp">SẢN PHẨM</a>
             <div class="submenu">
                 <a href="decorate_livingroom_user.html">TRANG TRÍ PHÒNG KHÁCH</a>
                 <a href="decorate_bedroom_user.html">TRANG TRÍ PHÒNG NGỦ</a>
@@ -57,8 +57,8 @@
         <div class="user-login">
             <i class="fas fa-user"></i>
             <div class="user">
-                <a class="nav_item" href="../mypage_user.jsp" id="login">Trang của tôi</a>
-                <a class="nav-item" href="homepage.html" id="register">Đăng xuất</a>
+                <a class="nav_item" href="mypage_user.jsp" id="login">Trang của tôi</a>
+                <a class="nav-item" href="index.jsp" id="register">Đăng xuất</a>
             </div>
 
         </div>
