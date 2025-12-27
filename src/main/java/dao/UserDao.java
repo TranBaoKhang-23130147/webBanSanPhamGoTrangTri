@@ -164,6 +164,7 @@ public class UserDao {
     }
 
     public boolean updateUser(User user) {
+        // Lưu ý: Tên cột phải chính xác như trong DB (ví dụ: full_name hay fullName)
         String sql = "UPDATE users SET full_name = ?, phone = ?, email = ? WHERE id = ?";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
