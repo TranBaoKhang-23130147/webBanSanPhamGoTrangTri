@@ -29,12 +29,12 @@ public class UpdateProfileController extends HttpServlet {
         }
 
         // 1. Lấy dữ liệu từ các thẻ <input name="..."> trong JSP
-        String fullName = request.getParameter("fullName");
+        String displayName = request.getParameter("displayName");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
 
         // 2. Cập nhật dữ liệu vào đối tượng user hiện tại (trong bộ nhớ RAM)
-        user.setFullname(fullName);
+        user.setDisplayName(displayName);
         user.setPhone(phone);
         user.setEmail(email);
 

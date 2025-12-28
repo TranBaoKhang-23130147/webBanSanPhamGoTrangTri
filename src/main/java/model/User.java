@@ -1,6 +1,8 @@
 
 package model;
 
+import java.util.Date;
+
 public class User {
     private int id;
     private String username;
@@ -8,8 +10,12 @@ public class User {
     private String status;
     private String role;
     private String email;
-    private String fullName;
+    private String displayName;
     private String phone;
+    private Date birthDate;
+    private String gender;
+    private int avatarId;       // ID ảnh đại diện (khóa ngoại)
+    private Date createAt;// Giới tính// Ngày sinh
 
     // Constructor đầy đủ
     public User(String username, String password, String status, String role, String email, int id) {
@@ -28,7 +34,23 @@ public class User {
         this.status = status;
         this.password = password;
     }
-
+    // 2. Constructor đầy đủ (Cho việc lấy dữ liệu từ DB)
+    public User(int id, String username, String displayName, Date birthDate, String email,
+                String password, String phone, String gender, int avatarId, Date createAt,
+                String role, String status) {
+        this.id = id;
+        this.username = username;
+        this.displayName = displayName;
+        this.birthDate = birthDate;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.gender = gender;
+        this.avatarId = avatarId;
+        this.createAt = createAt;
+        this.role = role;
+        this.status = status;
+    }
     // Constructor rỗng
     public User() {
     }
@@ -82,8 +104,8 @@ public class User {
         this.role = role;
     }
 
-    public void setFullname(String fullName) {
-        this.fullName = fullName;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getPhone() {
@@ -94,7 +116,19 @@ public class User {
         this.phone = phone;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getDisplayName() {
+        return displayName;
+    }
+    public String getGender() { return gender; }
+    public void setGender(String gender) { this.gender = gender; }
+    public Date getCreateAt() { return createAt; }
+    public void setCreateAt(Date createAt) { this.createAt = createAt; }
+    public int getAvatarId() { return avatarId; }
+    public void setAvatarId(int avatarId) { this.avatarId = avatarId; }
+
+    public Date getBirthDate() {
+        return birthDate; }
+    public void setBirthDate(Date birthDate) { // Tham số phải là birthDate
+        this.birthDate = birthDate;
     }
 }
