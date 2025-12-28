@@ -5,6 +5,8 @@ import model.User;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 
 import static dao.DBContext.getConnection;
 
@@ -169,7 +171,7 @@ public class UserDao {
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, user.getFullName());
+            ps.setString(1, user.getDisplayName());
             ps.setString(2, user.getPhone());
             ps.setString(3, user.getEmail());
             ps.setInt(4, user.getId());
@@ -194,4 +196,30 @@ public class UserDao {
         }
         return false;
     }
+//    hien thi ng dung admin
+public List<User> getAllCustomers() {
+    List<User> list = new ArrayList<>();
+    String sql = "SELECT * FROM users WHERE role = 'User'"; // Dùng * để lấy hết các cột bao gồm createAt
+    try (Connection conn = DBContext.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+            User u = new User();
+            u.setId(rs.getInt("id"));
+            u.setUsername(rs.getString("full_name"));
+            u.setDisplayName(rs.getString("display_name"));
+            u.setEmail(rs.getString("email"));
+            u.setPhone(rs.getString("phone"));
+            u.setStatus(rs.getString("status"));
+
+            // QUAN TRỌNG: Phải có dòng này thì JSP mới nhận được ngày
+            u.setCreateAt(rs.getDate("createAt"));
+
+            list.add(u);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return list;
+}
 }

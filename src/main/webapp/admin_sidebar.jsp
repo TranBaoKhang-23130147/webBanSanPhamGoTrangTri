@@ -11,7 +11,7 @@
                 <a href="${pageContext.request.contextPath}/category-manager"> Danh mục</a>
             </li>
             <li><a href="admin_order.html"> Đơn hàng</a></li>
-            <li><a href="admin_customer.html"> Khách hàng</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin/customers"> Khách hàng</a></li>
             <li><a href="admin_profile.html"> Hồ sơ</a></li>
             <li><a href="admin_setting.html"> Cài đặt</a></li>
         </ul>
