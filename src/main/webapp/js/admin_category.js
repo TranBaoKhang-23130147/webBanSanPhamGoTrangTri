@@ -1,74 +1,31 @@
-/**
- * File:
- */
-
-// Hàm mở Modal để thêm mới
-function openProductTypeModal() {
-    const modal = document.getElementById('productTypeModal');
-
-    // Reset các trường input trong form
-    const nameInput = document.getElementById('productTypeName');
-    const categorySelect = document.getElementById('categoryId');
-    const idInput = document.getElementById('productTypeId');
-
-    if(nameInput) nameInput.value = '';
-    if(idInput) idInput.value = '';
-    if(categorySelect) categorySelect.selectedIndex = 0; // Reset dropdown về mặc định
-
-    // Đổi tiêu đề và action form
-    document.getElementById('modalTitle').innerText = "Thêm Loại Sản Phẩm Mới";
-    document.getElementById('productTypeForm').action = "add-product-type";
-
+function openCategoryModal() {
+    const modal = document.getElementById('categoryModal');
+    // Chú ý ID này phải khớp với id="categoryName" trong thẻ <input>
+    const input = document.getElementById('categoryName');
+    if(input) input.value = '';
     modal.style.display = 'block';
 }
 
-// Hàm mở Modal để chỉnh sửa (Edit)
-function editProductType(id, name, parentCategoryId) {
-    const modal = document.getElementById('productTypeModal');
-
-    document.getElementById('modalTitle').innerText = "Chỉnh Sửa Loại Sản Phẩm";
-    document.getElementById('productTypeForm').action = "update-product-type";
-
-    // Điền dữ liệu cũ vào form
-    document.getElementById('productTypeId').value = id;
-    document.getElementById('productTypeName').value = name;
-    document.getElementById('categoryId').value = parentCategoryId;
-
-    modal.style.display = 'block';
+function closeCategoryModal() {
+    document.getElementById('categoryModal').style.display = 'none';
 }
-
-// Hàm đóng Modal
-function closeProductTypeModal() {
-    document.getElementById('productTypeModal').style.display = 'none';
-}
-
-// Xử lý Tìm kiếm
 const searchInput = document.getElementById('searchInput');
 
-function searchProductTypeByName() {
+function searchCategoryByName() {
     const keyword = searchInput.value.trim();
 
     const params = new URLSearchParams();
     if (keyword) params.append('search', keyword);
 
-    // Chuyển hướng về servlet quản lý loại sản phẩm (ví dụ: product-type-manager)
-    window.location.href = 'product-type-manager?' + params.toString();
+    window.location.href = 'category-manager?' + params.toString();
 }
 
-// Lắng nghe sự kiện phím Enter trên ô tìm kiếm
 if (searchInput) {
     searchInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            searchProductTypeByName();
+            searchCategoryByName();
         }
     });
 }
-
-// Đóng modal khi click ra ngoài vùng nội dung
-window.onclick = function(event) {
-    const modal = document.getElementById('productTypeModal');
-    if (event.target === modal) {
-        closeProductTypeModal();
-    }
-}
+//2

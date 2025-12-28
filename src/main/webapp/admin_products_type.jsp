@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,43 +11,16 @@
     <link rel="stylesheet" href="css/admin_products.css">
     <link rel="stylesheet" href="css/admin_profile_style.css">
     <link rel="stylesheet" href="css/admin_category.css">
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bootstrap-4/bootstrap-4.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
 <div class="admin-container">
-    <header class="header">
-        <div class="logo-placeholder">
-            <img src="../img/logo.png" alt="Logo Modern Homes">
-            <p class="logo">HOME DECOR</p>
-        </div>
-
-        <div class="header-icons">
-            <div class="user-dropdown">
-                <i class="fas fa-user-circle user-logo"></i>
-                <div id="userMenuContent" class="dropdown-content">
-                    <a href="admin_thong_tin_tai_khoan.html">Thông tin tài khoản</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="logout-link">Đăng xuất</a>
-                </div>
-            </div>
-        </div>
-    </header>
+    <%@ include file="admin_header.jsp" %>
 
     <div class="main-wrapper">
-        <aside class="sidebar">
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="admin_homepage.html">Tổng quan</a></li>
-                    <li><a href="admin_product.jsp">Sản phẩm</a></li>
-                    <li class="active"><a href="${pageContext.request.contextPath}/product-type-manager">Loại sản phẩm</a></li>
-                    <li><a href="${pageContext.request.contextPath}/category-manager">Danh mục</a></li>
-                    <li><a href="admin_order.html">Đơn hàng</a></li>
-                    <li><a href="admin_customer.html">Khách hàng</a></li>
-                    <li><a href="admin_profile.html"> Hồ sơ</a></li>
-                    <li><a href="admin_setting.html"> Cài đặt</a></li>
-                </ul>
-            </nav>
-        </aside>
+        <%@ include file="admin_sidebar.jsp" %>
 
         <main class="content">
             <div class="category-management-container">
@@ -54,7 +28,7 @@
 
                 <div class="search-filter-bar">
                     <div class="search-input-group" style="flex-grow: 1;">
-                        <input type="text" placeholder="Tìm kiếm loại sản phẩm..."
+                        <input type="text" placeholder="Tìm kiếm loại sản phẩm"
                                class="search-input" id="searchInput" value="${keyword}">
                     </div>
                     <button class="add-new-category-btn" onclick="openProductTypeModal()">
@@ -68,7 +42,7 @@
                         <tr>
                             <th class="col-id">ID</th>
                             <th class="col-name">Tên Loại Sản Phẩm</th>
-                            <th class="col-id">ID Danh Mục</th>
+                            <th class="col-product-count">Số Sản Phẩm</th>
                             <th class="col-actions">Thao tác</th>
                         </tr>
                         </thead>
@@ -78,11 +52,15 @@
                             <tr>
                                 <td class="col-id">${pt.id}</td>
                                 <td class="col-name">${pt.productTypeName}</td>
-                                <td class="col-id">${pt.categoryId}</td>
+                                <td class="col-product-count">0</td>
+
                                 <td class="col-actions">
                                     <i class="fa-solid fa-pen-to-square"
-                                       onclick="editProductType('${pt.id}', '${pt.productTypeName}', '${pt.categoryId}')"></i>
-                                    <i class="fa-solid fa-trash-can"></i>
+                                       onclick="editProductType('${pt.id}', '${pt.productTypeName}')"></i>
+
+                                    <i class="fa-solid fa-trash-can"
+                                       onclick="deleteProductType('${pt.id}', '${pt.productTypeName}')"
+                                       style="cursor: pointer; color: #e74c3c; margin-left: 10px;"></i>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -100,19 +78,6 @@
                             <label for="productTypeName">Tên Loại Sản Phẩm:</label>
                             <input type="text" name="productTypeName" id="productTypeName" required>
                         </div>
-
-                        <div class="form-group">
-                            <label for="categoryId">Thuộc Danh Mục:</label>
-                            <select name="categoryId" id="categoryId" required
-                                    style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-                                <option value="">-- Chọn danh mục --</option>
-                                <c:forEach items="${listC}" var="c">
-                                    <%-- value gửi về Servlet là ID, nhưng hiển thị cho người dùng là Tên --%>
-                                    <option value="${c.id}">ID: ${c.id} - ${c.categoryName}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
                         <button type="submit" class="submit-btn">Lưu Thông Tin</button>
                     </form>
                 </div>
@@ -120,7 +85,25 @@
         </main>
     </div>
 </div>
+<%-- Kiểm tra và hiển thị thông báo từ Servlet --%>
+<c:if test="${not empty sessionScope.msg}">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const message = "${sessionScope.msg}";
+            const type = ("${sessionScope.msgType}").trim().toLowerCase();
 
+            Swal.fire({
+                title: type === 'success' ? 'Thành công!' : 'Thông báo lỗi',
+                text: message,
+                icon: type === 'success' ? 'success' : 'error',
+                confirmButtonColor: type === 'success' ? '#28a745' : '#d33',
+                confirmButtonText: 'Đồng ý'
+            });
+        });
+    </script>
+    <c:remove var="msg" scope="session" />
+    <c:remove var="msgType" scope="session" />
+</c:if>
 <script src="js/admin_product_type.js"></script>
 </body>
 </html>

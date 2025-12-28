@@ -10,10 +10,9 @@ public class ProductTypeDao {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    // 1. Lấy tất cả loại sản phẩm
     public List<ProductType> getAllProductType() {
         List<ProductType> list = new ArrayList<>();
-        String sql = "SELECT * FROM product_types"; // Thay bằng tên bảng thực tế của bạn
+        String sql = "SELECT * FROM product_types";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -22,7 +21,7 @@ public class ProductTypeDao {
                 ProductType pt = new ProductType();
                 pt.setId(rs.getInt("id"));
                 pt.setProductTypeName(rs.getString("product_type_name"));
-                pt.setCategoryId(rs.getInt("category_id"));
+                // Đã bỏ categoryId
                 list.add(pt);
             }
         } catch (Exception e) {
@@ -31,7 +30,6 @@ public class ProductTypeDao {
         return list;
     }
 
-    // 2. Tìm kiếm theo tên
     public List<ProductType> searchProductTypeByName(String keyword) {
         List<ProductType> list = new ArrayList<>();
         String sql = "SELECT * FROM product_types WHERE product_type_name LIKE ?";
@@ -44,7 +42,6 @@ public class ProductTypeDao {
                 ProductType pt = new ProductType();
                 pt.setId(rs.getInt("id"));
                 pt.setProductTypeName(rs.getString("product_type_name"));
-                pt.setCategoryId(rs.getInt("category_id"));
                 list.add(pt);
             }
         } catch (Exception e) {
@@ -53,18 +50,33 @@ public class ProductTypeDao {
         return list;
     }
 
-    // 3. Thêm loại sản phẩm mới
-    public boolean insertProductType(String name, int categoryId) {
-        String sql = "INSERT INTO product_types (product_type_name, category_id) VALUES (?, ?)";
+    public boolean insertProductType(String name) {
+        // Chỉ insert tên loại sản phẩm
+        String sql = "INSERT INTO product_types (product_type_name) VALUES (?)";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, name);
-            ps.setInt(2, categoryId);
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
+    }
+    public boolean deleteProductType(int id) {
+        String sql = "DELETE FROM product_types WHERE id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            // Lỗi 1451 thường là lỗi vi phạm ràng buộc khóa ngoại (không thể xóa)
+            System.out.println("Lỗi xóa: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

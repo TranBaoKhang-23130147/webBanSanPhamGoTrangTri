@@ -8,24 +8,22 @@ import model.Category;
 
 import java.io.IOException;
 import java.util.List;
-
-@WebServlet(name = "CategoryServlet", urlPatterns = {"/category-manager", "/add-category"})
+@WebServlet(name = "CategoryServlet", urlPatterns = {"/category-manager", "/add-category", "/delete-category"})
 public class CategoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String keyword = request.getParameter("search");
+        String action = request.getServletPath();
         CategoryDao dao = new CategoryDao();
-        List<Category> list;
 
-        if (keyword != null && !keyword.trim().isEmpty()) {
-            // Nếu có từ khóa, gọi hàm search
-            list = dao.searchCategoryByName(keyword);
-        } else {
-            // Nếu không có, hiển thị tất cả
-            list = dao.getAllCategory();
-        }
+//4
+
+        // Logic tìm kiếm và hiển thị danh sách (giữ nguyên)
+        String keyword = request.getParameter("search");
+        List<Category> list = (keyword != null && !keyword.trim().isEmpty())
+                ? dao.searchCategoryByName(keyword)
+                : dao.getAllCategory();
 
         request.setAttribute("listC", list);
         request.setAttribute("keyword", keyword);
@@ -37,14 +35,15 @@ public class CategoryServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String name = request.getParameter("categoryName");
-
         CategoryDao dao = new CategoryDao();
-        if (dao.insertCategory(name)) {
-            // Dùng Session để lưu thông báo (tránh mất khi redirect)
-            request.getSession().setAttribute("msg", "Đã thêm danh mục: " + name);
-        }
 
-        // Sau khi thêm xong, quay về link hiển thị danh sách
+        if (dao.insertCategory(name)) {
+            request.getSession().setAttribute("msg", "Đã thêm danh mục: " + name);
+            request.getSession().setAttribute("msgType", "success"); // Quan trọng: Thêm type success
+        } else {
+            request.getSession().setAttribute("msg", "Thêm danh mục thất bại!");
+            request.getSession().setAttribute("msgType", "error");
+        }
         response.sendRedirect("category-manager");
     }
 }
