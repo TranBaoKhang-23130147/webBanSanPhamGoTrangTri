@@ -94,3 +94,4 @@ function deleteProductType(id, name) {
         }
     })
 }
+

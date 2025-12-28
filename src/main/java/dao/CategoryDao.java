@@ -57,5 +57,20 @@ public class CategoryDao {
         }
         return list;
     }
-//3
+    public boolean deleteCategory(int id) {
+        String sql = "DELETE FROM categories WHERE id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            // Lỗi thường gặp: Danh mục đang được dùng bởi sản phẩm khác
+            System.out.println("Lỗi xóa danh mục: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

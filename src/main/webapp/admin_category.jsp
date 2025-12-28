@@ -94,7 +94,24 @@
 
     </div>
 </div>
-<%--1--%>
+<c:if test="${not empty sessionScope.msg}">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const message = "${sessionScope.msg}";
+            const type = ("${sessionScope.msgType}").trim().toLowerCase();
+
+            Swal.fire({
+                title: type === 'success' ? 'Thành công!' : 'Thông báo lỗi',
+                text: message,
+                icon: type === 'success' ? 'success' : 'error',
+                confirmButtonColor: type === 'success' ? '#28a745' : '#d33',
+                confirmButtonText: 'Đồng ý'
+            });
+        });
+    </script>
+    <c:remove var="msg" scope="session" />
+    <c:remove var="msgType" scope="session" />
+</c:if>
 <script src="js/admin_category.js"></script>
 </body>
 </html>
