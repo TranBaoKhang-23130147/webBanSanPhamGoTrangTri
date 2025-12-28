@@ -75,4 +75,22 @@ window.onclick = function(event) {
     if (event.target === modal) {
         closeProductTypeModal();
     }
+
+}
+function deleteProductType(id, name) {
+    Swal.fire({
+        title: 'Xác nhận xóa?',
+        text: "Bạn có chắc muốn xóa loại sản phẩm: " + name + " không?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Xóa ngay',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Nếu người dùng bấm "Xóa ngay", chuyển hướng đến Servlet xóa
+            window.location.href = "delete-product-type?id=" + id;
+        }
+    })
 }
