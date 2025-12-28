@@ -28,4 +28,20 @@ if (searchInput) {
         }
     });
 }
-//2
+function deleteCategory(id, name) {
+    Swal.fire({
+        title: 'Xác nhận xóa?',
+        text: "Bạn có chắc muốn xóa danh mục: " + name + "?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Xóa ngay',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Chuyển hướng đến servlet xóa
+            window.location.href = "delete-category?id=" + id;
+        }
+    })
+}

@@ -17,7 +17,18 @@ public class CategoryServlet extends HttpServlet {
         String action = request.getServletPath();
         CategoryDao dao = new CategoryDao();
 
-//4
+        if (action.equals("/delete-category")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            if (dao.deleteCategory(id)) {
+                request.getSession().setAttribute("msg", "Đã xóa danh mục thành công!");
+                request.getSession().setAttribute("msgType", "success");
+            } else {
+                request.getSession().setAttribute("msg", "Không thể xóa! Danh mục này đang chứa sản phẩm.");
+                request.getSession().setAttribute("msgType", "error");
+            }
+            response.sendRedirect("category-manager");
+            return;
+        }
 
         // Logic tìm kiếm và hiển thị danh sách (giữ nguyên)
         String keyword = request.getParameter("search");
