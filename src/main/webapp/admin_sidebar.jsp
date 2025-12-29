@@ -10,6 +10,10 @@
             <li class="${activePage == 'category' ? 'active' : ''}">
                 <a href="${pageContext.request.contextPath}/category-manager"> Danh mục</a>
             </li>
+
+            <li class="${activePage == 'source' ? 'active' : ''}">
+                <a href="${pageContext.request.contextPath}/source-manager"> Nhà cung cấp</a>
+            </li>
             <li><a href="admin_order.html"> Đơn hàng</a></li>
             <li><a href="${pageContext.request.contextPath}/admin/customers"> Khách hàng</a></li>
             <li><a href="admin_profile.html"> Hồ sơ</a></li>
