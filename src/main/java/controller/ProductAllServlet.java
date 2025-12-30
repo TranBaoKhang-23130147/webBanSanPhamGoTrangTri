@@ -18,9 +18,11 @@ public class ProductAllServlet extends HttpServlet {
         ProductDao dao = new ProductDao();
         List<Product> list = dao.getAllProducts();
 
+        // Dòng này để kiểm tra trên Console của IDE
+        System.out.println("DEBUG: So luong san pham lay duoc = " + (list != null ? list.size() : "NULL"));
+
         request.setAttribute("listP", list);
-        request.getRequestDispatcher("product_all_user.jsp")
-                .forward(request, response);
+        request.getRequestDispatcher("product_all_user.jsp").forward(request, response);
     }
 
     @Override

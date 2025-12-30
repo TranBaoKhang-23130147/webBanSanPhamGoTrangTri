@@ -7,17 +7,14 @@ import java.util.List;
 import model.Product;
 
 public class ProductDao {
-    Connection conn = null;
-    PreparedStatement ps = null;
-    ResultSet rs = null;
 
     public boolean insertProduct(Product p) {
-        String sql = "INSERT INTO products (name_product, description, category_id, source_id, " +
-                "product_type_id, price, primary_image_id, isActive, mfg_date) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try {
-            conn = new DBContext().getConnection();
-            ps = conn.prepareStatement(sql);
+        String sql = "INSERT INTO products (name_product, description, category_id, source_id, "
+                + "product_type_id, price, primary_image_id, isActive, mfg_date) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setString(1, p.getNameProduct());
             ps.setString(2, p.getDescription());
             ps.setInt(3, p.getCategoryId());
@@ -35,100 +32,108 @@ public class ProductDao {
         return false;
     }
 
-//
-////    hien thi sp
-//public List<Product> getAllProducts() {
-//    List<Product> list = new ArrayList<>();
-//    // Truy vấn JOIN: p.primary_image_id khớp với i.id để lấy i.urlImage
-//    String query = "SELECT p.id, p.name_product, p.price, i.urlImage, p.isActive " +
-//            "FROM products p " +
-//            "LEFT JOIN images i ON p.primary_image_id = i.id " +
-//            "WHERE p.isActive = 1";
-//    try {
-//        conn = new DBContext().getConnection();
-//        ps = conn.prepareStatement(query);
-//        rs = ps.executeQuery();
-//        while (rs.next()) {
-//            list.add(new Product(
-//                    rs.getInt("id"),
-//                    rs.getString("name_product"),
-//                    rs.getDouble("price"),
-//                    rs.getString("image_url"),
-//                    rs.getInt("isActive")
-//            ));
-//        }
-//    } catch (Exception e) {
-//        e.printStackTrace();
-//    }
-//    return list;
-//}
+    // ĐÃ SỬA: Thêm p.isActive vào SELECT và GROUP BY, HOẶC xóa dòng setIsActive (ở đây mình chọn cách thêm để an toàn)
+    public List<Product> getAllProducts() {
+        List<Product> list = new ArrayList<>();
+        // Sử dụng COALESCE để tránh lỗi NULL khi chưa có review
+        String sql = """
+        SELECT
+            p.id,
+            p.name_product,
+            p.price,
+            p.isActive,
+            i.urlImage,
+            COALESCE(AVG(r.rate), 0) AS avgRating
+        FROM products p
+        LEFT JOIN images i ON p.primary_image_id = i.id
+        LEFT JOIN reviews r ON p.id = r.product_id
+        WHERE p.isActive = 1
+        GROUP BY p.id, p.name_product, p.price, p.isActive, i.urlImage
+        """;
 
-public List<Product> getAllProducts() {
-    List<Product> list = new ArrayList<>();
-    String sql = "SELECT * FROM products";
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
-    try (Connection conn = DBContext.getConnection();
-         PreparedStatement ps = conn.prepareStatement(sql);
-         ResultSet rs = ps.executeQuery()) {
-
-        while (rs.next()) {
-            Product p = new Product(
-                    rs.getInt("id"),
-                    rs.getString("name_product"),
-                    rs.getDouble("price"),
-                    rs.getString("image_url"),
-                    rs.getInt("rating")
-            );
-            list.add(p);
+            while (rs.next()) {
+                Product p = new Product();
+                p.setId(rs.getInt("id"));
+                p.setNameProduct(rs.getString("name_product"));
+                p.setPrice(rs.getDouble("price"));
+                p.setIsActive(rs.getInt("isActive"));
+                p.setImageUrl(rs.getString("urlImage")); // Sẽ lấy được "img/products/..."
+                p.setAverageRating(rs.getDouble("avgRating"));
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return list;
     }
-    return list;
-}
-// tim kim sp
-public List<Product> searchProducts(String txtSearch, String category) {
-    List<Product> list = new ArrayList<>();
-    // Đảm bảo tên cột trong SQL khớp với tên cột trong Database của bạn
-    String query = "SELECT * FROM Product WHERE nameProduct LIKE ?";
+    // Phương thức searchProducts giữ nguyên vì đã SELECT đầy đủ các field cần thiết
+    public List<Product> searchProducts(String txtSearch, String category) {
+        List<Product> list = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        sb.append("""
+            SELECT
+               p.id,
+               p.name_product,
+               p.description,
+               p.category_id,
+               p.source_id,
+               p.product_type_id,
+               p.price,
+               p.primary_image_id,
+               p.isActive,
+               p.mfg_date,
+               i.urlImage,
+               COALESCE(AVG(r.rate), 0) AS avgRating
+            FROM products p
+            LEFT JOIN images i ON p.primary_image_id = i.id
+            LEFT JOIN reviews r ON p.id = r.product_id
+            WHERE p.name_product LIKE ?
+            """);
 
-    if (category != null && !category.equals("all")) {
-        query += " AND categoryId = ?"; // Giả sử bạn lọc theo ID của category
-    }
-
-    try {
-        conn = new DBContext().getConnection();
-        ps = conn.prepareStatement(query);
-        ps.setString(1, "%" + txtSearch + "%");
-
-        if (category != null && !category.equals("all")) {
-            ps.setInt(2, Integer.parseInt(category)); // Chuyển category sang Int nếu nó là ID
+        if (category != null && !category.equals("all") && !category.isBlank()) {
+            sb.append(" AND p.category_id = ?");
         }
 
-        rs = ps.executeQuery();
-        while (rs.next()) {
-            Product p = new Product();
-            // Gán dữ liệu dựa trên các hàm Setter bạn đã cung cấp
-            p.setId(rs.getInt("id"));
-            p.setNameProduct(rs.getString("nameProduct"));
-            p.setDescription(rs.getString("description"));
-            p.setCategoryId(rs.getInt("categoryId"));
-            p.setSourceId(rs.getInt("sourceId"));
-            p.setProductTypeId(rs.getInt("productTypeId"));
-            p.setPrice(rs.getDouble("price"));
-            p.setPrimaryImageId(rs.getInt("primaryImageId"));
-            p.setIsActive(rs.getInt("isActive"));
-            p.setMfgDate(rs.getDate("mfgDate"));
-            p.setImageUrl(rs.getString("imageUrl")); // Trường này bạn vừa thêm
+        sb.append(" GROUP BY p.id, p.name_product, p.description, p.category_id, p.source_id, p.product_type_id, p.price, p.primary_image_id, p.isActive, p.mfg_date, i.urlImage");
 
-            // Nếu trong JSP bạn có dùng ${p.rating}, hãy đảm bảo có cột rating trong DB
-            // và thêm p.setRating(rs.getInt("rating")) nếu class Product có thuộc tính này.
+        String query = sb.toString();
 
-            list.add(p);
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            int idx = 1;
+            ps.setString(idx++, "%" + txtSearch + "%");
+
+            if (category != null && !category.equals("all") && !category.isBlank()) {
+                ps.setInt(idx++, Integer.parseInt(category));
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Product p = new Product();
+                    p.setId(rs.getInt("id"));
+                    p.setNameProduct(rs.getString("name_product"));
+                    p.setDescription(rs.getString("description"));
+                    p.setCategoryId(rs.getInt("category_id"));
+                    p.setSourceId(rs.getInt("source_id"));
+                    p.setProductTypeId(rs.getInt("product_type_id"));
+                    p.setPrice(rs.getDouble("price"));
+                    p.setPrimaryImageId(rs.getInt("primary_image_id"));
+                    p.setIsActive(rs.getInt("isActive"));
+                    p.setMfgDate(rs.getDate("mfg_date"));
+                    p.setImageUrl(rs.getString("urlImage"));
+                    p.setAverageRating(rs.getDouble("avgRating"));
+                    list.add(p);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return list;
     }
-    return list;
-}
 }

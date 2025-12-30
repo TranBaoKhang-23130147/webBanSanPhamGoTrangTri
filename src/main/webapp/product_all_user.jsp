@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -18,6 +19,7 @@
     />
 </head>
 <body>
+<p>Số lượng sản phẩm lấy được: ${listP.size()}</p>
 <div id="header">
     <div id="logo"><img src="../img/logo.png" class="image"/>
         <div class="brand"> <div id="name-web">HOME DECOR</div>
@@ -28,8 +30,10 @@
 
         <a class="menu" id="home" href="homepage_user.jsp"> TRANG CHỦ</a>
         <div class="menu product-menu">
-            <a id="product" href="product_all_user.jsp">SẢN PHẨM</a>
-            <div class="submenu">
+<%--            <a id="product" href="product_all_user.jsp">SẢN PHẨM</a>--%>
+    <a id="product" href="ProductAllServlet">SẢN PHẨM</a>
+
+    <div class="submenu">
                 <a href="decorate_livingroom_user.html">TRANG TRÍ PHÒNG KHÁCH</a>
                 <a href="decorate_bedroom_user.html">TRANG TRÍ PHÒNG NGỦ</a>
                 <a href="decorate_kitchen_user.html">TRANG TRÍ PHÒNG BẾP</a>
@@ -152,17 +156,20 @@
                 <div class="product-card">
                     <a href="product-detail?id=${p.id}" class="product-link">
                         <div class="set">
-                            <img src="${p.imageUrl}" alt="${p.nameProduct}">
+                            <img src="${pageContext.request.contextPath}/${p.imageUrl}" alt="${p.nameProduct}">
                             <h2>${p.nameProduct}</h2>
+
                             <div class="rating">
+                                    <%-- Sửa logic hiển thị sao dựa trên số thực --%>
                                 <c:forEach begin="1" end="5" var="i">
-                                    <i class="${i <= p.rating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
+                                    <i class="${i <= p.averageRating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
                                 </c:forEach>
-                                <span>(${p.rating})</span>
+                                <span>(<fmt:formatNumber value="${p.averageRating}" maxFractionDigits="1"/>)</span>
                             </div>
 
                             <div class="price">
-                                <fmt:formatNumber value="${p.price}" type="number"/> VNĐ                            </div>
+                                <fmt:formatNumber value="${p.price}" type="number"/> VNĐ
+                            </div>
                         </div>
                     </a>
 
