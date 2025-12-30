@@ -20,95 +20,101 @@
         <%@ include file="admin_sidebar.jsp" %>
         <main class="page-content-wrapper">
             <div class="add-product-container">
-                <h1 class="page-title">Thêm sản phẩm mới</h1>
+                <h1 class="page-title">Thêm sản phẩm</h1>
 
-                <form action="${pageContext.request.contextPath}/add-product" method="POST" enctype="multipart/form-data">
-                    <div class="product-form-layout">
-                        <div class="form-column-left">
-                            <div class="card product-info-section">
-                                <h2 class="card-title">Thông tin cơ bản</h2>
+                <div class="product-form-layout">
 
-                                <div class="form-group">
-                                    <label for="productName">Tên sản phẩm</label>
-                                    <input type="text" name="productName" id="productName" placeholder="Giường, tủ, kệ,..." required>
-                                </div>
+                    <div class="form-column-left">
 
-                                <div class="form-group">
-                                    <label for="categoryId">Danh mục</label>
-                                    <select name="categoryId" id="categoryId" required>
-                                        <option value="">-- Chọn danh mục --</option>
-                                        <c:forEach items="${listC}" var="c">
-                                            <option value="${c.id}">${c.categoryName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
+                        <div class="card product-info-section">
+                            <h2 class="card-title">Thông tin sản phẩm</h2>
 
-                                <div class="form-group">
-                                    <label for="productTypeId">Loại sản phẩm</label>
-                                    <select name="productTypeId" id="productTypeId" required>
-                                        <option value="">-- Chọn loại sản phẩm --</option>
-                                        <c:forEach items="${listPT}" var="pt">
-                                            <option value="${pt.id}">${pt.productTypeName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
 
-                                <div class="form-group">
-                                    <label for="description">Mô tả chi tiết</label>
-                                    <textarea name="description" id="description" rows="5" placeholder="Nhập mô tả sản phẩm..."></textarea>
-                                </div>
+                            <div class="form-group">
+                                <label for="productName">Tên</label>
+                                <input type="text" id="productName" placeholder="Giường, tủ, kệ,...">
                             </div>
 
-                            <div class="card image-upload-section">
-                                <h2 class="card-title">Hình ảnh (primary_image_id)</h2>
-                                <div class="drop-area">
-                                    <i class="fas fa-box-open"></i>
-                                    <p>Kéo thả hoặc tải ảnh sản phẩm lên</p>
-                                    <input type="file" name="productImage" accept="image/*">
+
+
+                            <div class="form-group ">
+                                <label for="category">Danh mục</label>
+                                <input type="text" id="category" placeholder=" TRANG TRÍ PHÒNG KHÁCH">
+                            </div>
+                            <div class="form-group">
+                                <label for="productName">Loại sản phẩm</label>
+                                <input type="text" id=" " placeholder="Giường, tủ, kệ,...">
+                            </div>
+                            <div class="form-group">
+                                <label for="supplier">Tên</label>
+                                <input type="text" id="source" placeholder="Xưỡng gỗ XuanMai,..">
+                            </div>
+                            <div class="form-group">
+                                <label for="supplier">Ngày sản xất</label>
+                                <input type="text" id="" placeholder="...">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description" class="mota">Mô tả (Tùy chọn)</label>
+                                <div class="richtext-toolbar">
+                                    <button><i class="fas fa-bold"></i></button>
+                                    <button><i class="fas fa-italic"></i></button>
+                                    <button><i class="fas fa-underline"></i></button>
+                                    <button><i class="fas fa-strikethrough"></i></button>
+                                    <button><i class="fas fa-link"></i></button>
+                                    <button><i class="fas fa-quote-left"></i></button>
+                                    <button><i class="fas fa-list-ul"></i></button>
+                                    <button><i class="fas fa-list-ol"></i></button>
+                                    <button><i class="fas fa-code"></i></button>
                                 </div>
+                                <textarea id="description" rows="5" placeholder="Nhập mô tả của bạn..."></textarea>
                             </div>
                         </div>
 
-                        <div class="form-column-right">
-                            <div class="card pricing-section">
-                                <h2 class="card-title">Giá & Tồn kho</h2>
-
-                                <div class="form-group">
-                                    <label for="price">Giá bán (VNĐ)</label>
-                                    <input type="number" step="0.01" name="price" id="price" placeholder="0.00" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Trạng thái kinh doanh</label>
-                                    <select name="isActive">
-                                        <option value="1">Đang kinh doanh</option>
-                                        <option value="0">Ngừng kinh doanh</option>
-                                    </select>
-                                </div>
+                        <div class="card image-upload-section">
+                            <h2 class="card-title">Hình ảnh</h2>
+                            <div class="drop-area">
+                                <i class="fas fa-box-open"></i>
+                                <p>Kéo và thả tệp của bạn vào đây hoặc</p>
+                                <button class="btn-secondary">Tải ảnh lên</button>
                             </div>
-
-                            <div class="card organization-section">
-                                <h2 class="card-title">Thông tin bổ sung</h2>
-
-                                <div class="form-group">
-                                    <label for="sourceId">Nhà cung cấp</label>
-                                    <select name="sourceId" id="sourceId">
-                                        <c:forEach items="${listSource}" var="s">
-                                            <option value="${s.id}">${s.sourceName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="mfgDate">Ngày sản xuất</label>
-                                    <input type="date" name="mfgDate" id="mfgDate" required>
-                                </div>
-                            </div>
-
-                            <button type="submit" class="btn-primary btn-save">Lưu sản phẩm</button>
                         </div>
+
                     </div>
-                </form>
+
+                    <div class="form-column-right">
+
+                        <div class="card discount-section">
+                            <h2 class="card-title">Biến thể</h2>
+                            <div class="form-group ">
+                                <label for="skuCode">Mã SKU</label>
+                                <input type="text" id="skuCode" placeholder="Ví dụ: 348121032">
+                            </div>
+                            <div class="attribute-item form-row">
+                                <select>
+                                    <option>Màu sắc</option>
+                                </select>
+                                <label for="discountPrice"></label>
+                                <select>
+                                    <option>Kích thước</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="discountPrice">Giá</label>
+                                <input type="text" id="discountPrice" placeholder="0.00">
+                            </div>
+                            <div class="form-group">
+                                <label for="discountQuantity">Số lượng</label>
+                                <input type="text" id="discountQuantity" placeholder="0">
+                            </div>
+
+                            <button class="btn-link-add">+ Thêm biến thể</button>
+                        </div>
+
+                        <button class="btn-primary btn-save">Lưu</button>
+                    </div>
+
+                </div>
             </div>
         </main>
 

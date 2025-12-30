@@ -46,16 +46,17 @@ public class SourceServlet extends HttpServlet {
                 request.getSession().setAttribute("msg", "Thêm thất bại!");
                 request.getSession().setAttribute("msgType", "error");
             }
-        } else if (action.equals("/edit-source")) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            if (dao.updateSource(id, name)) {
-                request.getSession().setAttribute("msg", "Cập nhật thành công!");
-                request.getSession().setAttribute("msgType", "success");
-            } else {
-                request.getSession().setAttribute("msg", "Cập nhật thất bại!");
-                request.getSession().setAttribute("msgType", "error");
-            }
         }
+//        else if (action.equals("/edit-source")) {
+//            int id = Integer.parseInt(request.getParameter("id"));
+//            if (dao.updateSource(id, name)) {
+//                request.getSession().setAttribute("msg", "Cập nhật thành công!");
+//                request.getSession().setAttribute("msgType", "success");
+//            } else {
+//                request.getSession().setAttribute("msg", "Cập nhật thất bại!");
+//                request.getSession().setAttribute("msgType", "error");
+//            }
+//        }
         response.sendRedirect("source-manager");
     }
 }

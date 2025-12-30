@@ -1,5 +1,6 @@
 package dao;
 
+import model.Address;
 import model.User;
 
 import java.sql.*;
@@ -222,4 +223,41 @@ public List<User> getAllCustomers() {
     }
     return list;
 }
+    public User getAdminProfile(int adminId) {
+        // JOIN bảng users và addresses để lấy địa chỉ mặc định (isDefault = 1)
+        String sql = "SELECT u.*, a.province, a.district, a.commune, a.detail " +
+                "FROM users u " +
+                "LEFT JOIN addresses a ON u.id = a.user_id " +
+                "WHERE u.id = ? AND (a.isDefault = 1 OR a.isDefault IS NULL)";
+
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, adminId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    User u = new User();
+                    u.setId(rs.getInt("id"));
+                    u.setUsername(rs.getString("full_name"));
+                    u.setEmail(rs.getString("email"));
+                    u.setPhone(rs.getString("phone"));
+                    u.setRole(rs.getString("role"));
+                    u.setCreateAt(rs.getDate("createAt"));
+
+                    // Tạo đối tượng Address riêng
+                    if (rs.getString("province") != null) {
+                        Address addr = new Address();
+                        addr.setProvince(rs.getString("province"));
+                        addr.setDistrict(rs.getString("district"));
+                        addr.setCommune(rs.getString("commune"));
+                        addr.setDetail(rs.getString("detail"));
+                        u.setAddress(addr); // Gán vào model User
+                    }
+                    return u;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
