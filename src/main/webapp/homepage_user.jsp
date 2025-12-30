@@ -128,7 +128,7 @@
     <section class="products">
         <div class="product-card">
             <!--            <span class="badge">NEW</span>-->
-            <a href="html/product_details_user.html">
+            <a href="product_details_user.jsp">
                 <img src="https://i.pinimg.com/736x/0b/e6/ab/0be6ab843569781d6a78bd3786e736de.jpg" alt="ke treo tuong">
                 <h2>Kệ treo tường</h2>
             </a>
@@ -207,7 +207,7 @@
     <div class="san-pham-nb">
         <div class="product-card">
             <!--                <span class="badge">HOT</span>-->
-            <a href="html/product_details_user.html">
+            <a href="product_details_user.jsp">
                 <img src="https://i.pinimg.com/736x/0b/e6/ab/0be6ab843569781d6a78bd3786e736de.jpg" alt="ke treo tuong">
                 <h2>Kệ treo tường</h2>
             </a>

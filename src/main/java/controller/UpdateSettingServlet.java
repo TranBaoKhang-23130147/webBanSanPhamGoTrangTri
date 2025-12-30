@@ -12,7 +12,9 @@ import java.io.IOException;
 public class UpdateSettingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("activePage", "setting"); // Để active menu
 
+        request.getRequestDispatcher("admin_setting.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

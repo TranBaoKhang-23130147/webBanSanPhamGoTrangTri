@@ -13,7 +13,8 @@
 
         <a class="menu" id="home" href="homepage_user.jsp"> TRANG CHỦ</a>
         <div class="menu product-menu">
-            <a id="product" href="product_all_user.jsp">SẢN PHẨM</a>
+
+            <a id="product" href="${pageContext.request.contextPath}/ProductAllServlet">SẢN PHẨM</a>
             <div class="submenu">
                 <a href="html/decorate_livingroom_user.html">TRANG TRÍ PHÒNG KHÁCH</a>
                 <a href="html/decorate_bedroom_user.html">TRANG TRÍ PHÒNG NGỦ</a>
