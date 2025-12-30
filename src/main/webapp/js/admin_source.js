@@ -57,4 +57,28 @@ if (searchInput) {
 /**
  * Xóa Nguồn Hàng
  */
-//3
+function deleteSource(id, name) {
+    Swal.fire({
+        title: 'Xác nhận xóa?',
+        text: "Bạn có chắc muốn xóa nguồn hàng: " + name + "?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Xóa ngay',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Chuyển hướng đến servlet xóa nguồn hàng
+            window.location.href = "delete-source?id=" + id;
+        }
+    })
+}
+
+// Đóng modal khi click ra ngoài vùng modal-content
+window.onclick = function(event) {
+    const modal = document.getElementById('sourceModal');
+    if (event.target == modal) {
+        closeSourceModal();
+    }
+}

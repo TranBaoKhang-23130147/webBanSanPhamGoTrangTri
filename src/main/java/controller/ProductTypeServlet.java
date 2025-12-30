@@ -38,6 +38,8 @@
 
             request.setAttribute("listPT", listPT);
             request.setAttribute("keyword", keyword);
+            request.setAttribute("activePage", "productType"); // Để active menu
+
             request.getRequestDispatcher("admin_products_type.jsp").forward(request, response);
         }
         @Override
