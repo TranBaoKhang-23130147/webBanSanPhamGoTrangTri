@@ -1,3 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +8,7 @@
     <title>HOME DECOR - HỒ SƠ</title>
     <link rel="icon" type="image/png"  href="../img/logo.png" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../css/admin_profile_style.css">
+    <link rel="stylesheet" href="css/admin_profile_style.css">
 
 </head>
 <body>
@@ -60,7 +63,7 @@
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="../admin_homepage.jsp">Tổng quan</a></li>
-                    <li><a href="admin_products.html"> Sản phẩm</a></li>
+                    <li><a href="../admin_products.jsp"> Sản phẩm</a></li>
                     <li><a href="../admin_product_type.jsp">Loại sản phẩm</a></li>
                     <li><a href="admin_category.html"> Danh mục</a></li>
                     <li><a href="admin_order.html"> Đơn hàng</a></li>
@@ -83,8 +86,16 @@
                         <img src="https://i.pinimg.com/736x/df/9c/29/df9c295c536ad53c490e02c99c73f8c3.jpg" alt="Company Logo" class="profile-avatar">
                     </div>
                     <div class="user-details">
-                        <h1 class="user-name">HOME DECOR Admin <i class="fas fa-check-circle verified-icon"></i></h1>
-                        <p class="user-meta"><i class="fas fa-map-marker-alt"></i> Việt Nam | <i class="fas fa-calendar-alt"></i> Tham gia tháng 3 năm 2013</p>
+                        <h1 class="user-name">
+                            <c:out value="${admin.username}" default="Admin Name" />
+                            <i class="fas fa-check-circle verified-icon"></i>
+                        </h1>
+                        <p class="user-meta">
+                            <i class="fas fa-map-marker-alt"></i>
+                            ${not empty admin.address ? admin.address.province : "Việt Nam"} |
+                            <i class="fas fa-calendar-alt"></i>
+                            Tham gia <fmt:formatDate value="${admin.createAt}" pattern="MMMM 'năm' yyyy" />
+                        </p>
                     </div>
                 </div>
             </div>
@@ -101,34 +112,47 @@
 
                     <div class="profile-details-left">
                         <h3 class="section-title">Giới Thiệu</h3>
+
                         <div class="info-group">
-                            <label>Tiểu sử</label>
-                            <p class="info-text">Đây là tài khoản quản trị chính của hệ thống HOME DECOR, chuyên cung cấp các sản phẩm nội thất và trang trí nhà cửa thông minh.</p>
+                            <label>Họ và tên:</label>
+                            <p class="info-text">${admin.username}</p>
                         </div>
 
                         <div class="info-group">
-                            <label>Vị trí</label>
-                            <p class="info-text">Chủ cửa hàng/Quản lý cấp cao</p>
+                            <label>Chức vụ: </label>
+                            <p class="info-text">${admin.role}</p>
                         </div>
 
                         <div class="info-group">
                             <label>Điện thoại</label>
-                            <p class="info-text">0944459364</p>
-                        </div>
-
-                        <div class="info-group">
-                            <label>Ngày thành lập</label>
-                            <p class="info-text">01.03.2013</p>
+                            <p class="info-text">${admin.phone}</p>
                         </div>
 
                         <div class="info-group">
                             <label>Email</label>
-                            <p class="info-text">admin@homedecor.com</p>
+                            <p class="info-text">${admin.email}</p>
                         </div>
 
                         <div class="info-group">
-                            <label>Địa chỉ công ty</label>
-                            <p class="info-text">Đại học Nông Lâm TP.Hồ Chí Minh</p>
+                            <label>Ngày tạo tài khoản</label>
+                            <p class="info-text">
+                                <fmt:formatDate value="${admin.createAt}" pattern="dd.MM.yyyy" />
+                            </p>
+                        </div>
+
+                        <div class="info-group">
+                            <label>Địa chỉ</label>
+                            <p class="info-text">
+                                <c:choose>
+                                    <c:when test="${not empty admin.address}">
+                                        <%-- Gọi hàm getFullAddress() từ model Address --%>
+                                        ${admin.address.fullAddress}
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span style="color: #999;">Chưa cập nhật địa chỉ</span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </p>
                         </div>
                     </div>
 

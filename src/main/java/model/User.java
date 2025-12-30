@@ -16,6 +16,7 @@ public class User {
     private String gender;
     private int avatarId;       // ID ảnh đại diện (khóa ngoại)
     private Date createAt;// Giới tính// Ngày sinh
+    private Address address;
 
     // Constructor đầy đủ
     public User(String username, String password, String status, String role, String email, int id) {
@@ -130,5 +131,12 @@ public class User {
         return birthDate; }
     public void setBirthDate(Date birthDate) { // Tham số phải là birthDate
         this.birthDate = birthDate;
+    }
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
