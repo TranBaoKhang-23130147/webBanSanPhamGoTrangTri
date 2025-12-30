@@ -16,7 +16,7 @@
 
             <a id="product" href="${pageContext.request.contextPath}/ProductAllServlet">SẢN PHẨM</a>
             <div class="submenu">
-                <a href="html/decorate_livingroom_user.html">TRANG TRÍ PHÒNG KHÁCH</a>
+                <a href="decorate_livingroom_user.jsp">TRANG TRÍ PHÒNG KHÁCH</a>
                 <a href="html/decorate_bedroom_user.html">TRANG TRÍ PHÒNG NGỦ</a>
                 <a href="html/decorate_kitchen_user.html">TRANG TRÍ PHÒNG BẾP</a>
                 <a href="html/decorate_homeoffice_user.html">TRANG TRÍ PHÒNG LÀM VIỆC</a>
