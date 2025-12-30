@@ -26,12 +26,12 @@ public class Product {
     private int totalReviews;
 
     public Product() {}
-    public Product(int id, String nameProduct, double price, String imageUrl, int isActive) {
+    public Product(int id, String nameProduct, double price, String imageUrl, double averageRating) {
         this.id = id;
         this.nameProduct = nameProduct;
         this.price = price;
         this.imageUrl = imageUrl;
-        this.isActive = isActive;
+        this.averageRating = averageRating;
     }
 
     // Giữ nguyên các Getter/Setter cũ của bạn và thêm Getter/Setter cho imageUrl

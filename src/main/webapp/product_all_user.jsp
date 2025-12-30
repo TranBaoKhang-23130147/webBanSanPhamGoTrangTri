@@ -20,7 +20,6 @@
     />
 </head>
 <body>
-<p>Số lượng sản phẩm lấy được: ${listP.size()}</p>
 <jsp:include page="header.jsp"></jsp:include>
 
 <section class="overlay-section">
@@ -52,27 +51,27 @@
 <section class="product-all">
     <h2 class="titleProduct">TẤT CẢ SẢN PHẨM</h2>
     <div class="product-container">
-
+    <form action="ProductFilterServlet" method="get">
         <aside class="filter-sidebar">
             <h3>Bộ lọc</h3>
 
             <div class="filter-group">
                 <h4>Loại</h4>
-                <label><input type="checkbox" name="type" value="ban"> Bàn</label>
-                <label><input type="checkbox" name="type" value="ghe"> Ghế</label>
-                <label><input type="checkbox" name="type" value="tu"> Tủ</label>
-                <label><input type="checkbox" name="type" value="giuong"> Giường</label>
-                <label><input type="checkbox" name="type" value="ke"> Kệ</label>
-                <label><input type="checkbox" name="type" value="khac"> Khác</label>
+                <label><input type="checkbox" name="type" value="8"> Bàn</label>
+                <label><input type="checkbox" name="type" value="2"> Ghế</label>
+                <label><input type="checkbox" name="type" value="4"> Tủ</label>
+                <label><input type="checkbox" name="type" value="7"> Giường</label>
+                <label><input type="checkbox" name="type" value="9"> Kệ</label>
+                <label><input type="checkbox" name="type" value=""> Khác</label>
             </div>
 
             <div class="filter-group">
                 <h4>Giá tiền</h4>
-                <label><input type="checkbox" name="price" value="duoi1"> Dưới 1 triệu</label>
-                <label><input type="checkbox" name="price" value="1-3"> 1 - 3 triệu</label>
-                <label><input type="checkbox" name="price" value="3-5"> 3 - 5 triệu</label>
-                <label><input type="checkbox" name="price" value="5-10"> 5 - 10 triệu</label>
-                <label><input type="checkbox" name="price" value="tren10"> Trên 10 triệu</label>
+                <label><input type="checkbox" name="price" value="1"> Dưới 1 triệu</label>
+                <label><input type="checkbox" name="price" value="2"> 1 - 3 triệu</label>
+                <label><input type="checkbox" name="price" value="3"> 3 - 5 triệu</label>
+                <label><input type="checkbox" name="price" value="4"> 5 - 10 triệu</label>
+                <label><input type="checkbox" name="price" value="5"> Trên 10 triệu</label>
             </div>
 
 
@@ -104,8 +103,11 @@
                     <i class="ri-star-s-fill rating"></i>
                 </label>
             </div>`
+            <br><br>
+            <!-- 🔥 NÚT LỌC BẮT BUỘC -->
+            <button type="submit">LỌC SẢN PHẨM</button>
         </aside>
-
+    </form>
         <div class="products">
             <c:forEach items="${listP}" var="p">
                 <div class="product-card">
@@ -192,5 +194,5 @@
 </div>
 
 </body>
-<script src="../js/decorate.js"></script>
+<script src="js/decorate.js"></script>
 </html>

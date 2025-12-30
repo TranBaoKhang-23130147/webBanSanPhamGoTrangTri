@@ -267,13 +267,15 @@ body {
 /*them*/
 
 .filter-sidebar {
-    width: 800px;
+    width: 260px;
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 12px;
     padding: 8px;
     height: fit-content;
     left: 0px;
+    flex-shrink: 0;
+
 }
 
 .filter-sidebar h3 {
