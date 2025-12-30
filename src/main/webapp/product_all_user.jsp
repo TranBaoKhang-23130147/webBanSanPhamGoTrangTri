@@ -25,7 +25,7 @@
 <section class="overlay-section">
     <div class="overlay-card " style="background-image: url('https://i.pinimg.com/1200x/4d/16/07/4d16076bd71f77a7b5f69963e875cac6.jpg');">
         <h3>TRANG TRÍ PHÒNG KHÁCH</h3>
-        <a href="decorate_livingroom_user.html"><button >Xem chi tiết</button></a>
+        <a href="LivingroomDecorateServlet"><button >Xem chi tiết</button></a>
     </div>
     <div class="overlay-card" style="background-image: url('https://i.pinimg.com/736x/22/bc/ce/22bcce5d6c7b7412d817bb51a6daaf23.jpg');">
         <h3>TRANG TRÍ PHÒNG NGỦ</h3>
