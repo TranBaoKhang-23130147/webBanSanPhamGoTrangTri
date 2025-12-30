@@ -38,6 +38,7 @@ public class CategoryServlet extends HttpServlet {
 
         request.setAttribute("listC", list);
         request.setAttribute("keyword", keyword);
+        request.setAttribute("activePage", "category"); // Để active menu
         request.getRequestDispatcher("admin_category.jsp").forward(request, response);
     }
 

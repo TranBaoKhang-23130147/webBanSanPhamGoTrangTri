@@ -59,5 +59,32 @@ public class SourceDao {
         return list;
     }
 
-    // 2
+    public boolean deleteSource(int id) {
+        String sql = "DELETE FROM sources WHERE id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // 5. Cập nhật nhà cung cấp (Dùng cho chức năng Edit)
+    public boolean updateSource(int id, String name) {
+        String sql = "UPDATE sources SET source_name = ? WHERE id = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setInt(2, id);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

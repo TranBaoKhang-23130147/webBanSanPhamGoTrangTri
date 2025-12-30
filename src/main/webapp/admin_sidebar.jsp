@@ -22,7 +22,10 @@
             <li><a href="admin_order.html"> Đơn hàng</a></li>
             <li><a href="${pageContext.request.contextPath}/admin/customers"> Khách hàng</a></li>
             <li><a href="${pageContext.request.contextPath}/AdminProfileServlet"> Hồ sơ</a></li>
-            <li><a href="admin_setting.html"> Cài đặt</a></li>
+
+            <li class="${activePage == 'setting' ? 'active' : ''}">
+                <a href="${pageContext.request.contextPath}/SaveSettingServlet"> Cài đặt</a>
+            </li>
         </ul>
     </nav>
 </aside>

@@ -40,48 +40,17 @@
             <button type="submit"><i class="fas fa-search"></i></button>
         </form>
 
-        <div class="recent-searches">
-            <span>Tìm kiếm gần đây:</span>
-            <a href="#">đèn gỗ treo trần</a>
-            <a href="#">bàn ăn gỗ óc chó</a>
-            <a href="#">ghế sofa vải nhung</a>
-        </div>
-
-        <div class="popular-searches">
-            <span>Tìm kiếm nổi bật:</span>
-            <a href="#">#phongkhach</a>
-            <a href="#">#phongan</a>
-            <a href="#">#noithatgo</a>
-            <a href="#">#decor</a>
-            <a href="#">#handmade</a>
-        </div>
     </div>
 
     <div class="hero-image">
         <img src="https://images.unsplash.com/photo-1615874959474-d609969a20ed" alt="Trang trí nội thất">
         <div class="decor-stats">
-            <p><strong>512</strong> sản phẩm<br><span>Phòng khách</span></p>
-            <p><strong>341</strong> sản phẩm<br><span>Phòng ngủ</span></p>
-            <p><strong>218</strong> sản phẩm<br><span>Đèn & trang trí</span></p>
+            <p><strong>Với đa dạng</strong> sản phẩm<br></p>
+            <p><strong>Phù hợp</strong> cho <br><span>ngôi nhà của bạn</span></p>
+            <p><strong>Home Decor</strong> rất vui<br><span>khi bạn tin chọn</span></p>
         </div>
     </div>
 </section>
-
-<section class="categories">
-    <h2>Danh mục nổi bật</h2>
-    <p>Khám phá không gian nội thất theo từng phong cách</p>
-
-    <div class="category-list">
-        <div class="category-card"><i class="fas fa-couch"></i><p>Phòng khách</p><span>124 sản phẩm</span></div>
-        <div class="category-card"><i class="fas fa-bed"></i><p>Phòng ngủ</p><span>89 sản phẩm</span></div>
-        <div class="category-card"><i class="fas fa-utensils"></i><p>Phòng bếp</p><span>56 sản phẩm</span></div>
-        <div class="category-card"><i class="fas fa-lightbulb"></i><p>Phòng làm việc</p><span>77 sản phẩm</span></div>
-        <div class="category-card"><i class="fas fa-paint-brush"></i><p>Đồ trang trí mini</p><span>102 sản phẩm</span></div>
-        <div class="category-card"><i class="fas fa-chair"></i><p>Quà lưu niệm</p><span>65 sản phẩm</span></div>
-    </div>
-</section>
-
-
 <section class="featured">
     <h2>Sản phẩm gợi ý cho bạn</h2>
     <p>Khám phá những sản phẩm được yêu thích nhất hiện nay</p>
@@ -165,54 +134,24 @@
         </div>
     </div>
 
-    <button class="all-products">Xem thêm</button>
 </section>
-<div class="footer">
-    <div class="footer-container">
+<section class="categories">
+    <h2>Danh mục nổi bật</h2>
+    <p>Khám phá không gian nội thất theo từng phong cách</p>
 
-
-        <div class="footer-col">
-            <h3>Về chúng tôi</h3>
-
-
-            <p>HOME DECOR</p>
-
-            <p><i class="fa-solid"></i> Địa chỉ: Trường Đại học Nông Lâm Thành phố Hồ Chí Minh</p>
-            <p><i class="fa-solid"></i> Số điện thoại: 0944459364</p>
-            <p><i class="fa-solid"></i> Email: 23130082@st.hcmuaf.edu.vn</p>
-
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-tiktok"></i></a>
-            </div>
-        </div>
-
-
-        <div class="footer-col">
-            <h3>Chính sách</h3>
-            <a href="../introduce_user.jsp">Về tụi mình</a>
-            <a href="../purchasing_policy_user.jsp">Chính sách Thanh toán</a>
-            <a href="../purchasing_policy_user.jsp">Chính sách Giao hàng</a>
-            <a href="../purchasing_policy_user.jsp">Chính sách Đổi trả</a>
-        </div>
-
-
-        <div class="footer-col">
-            <h3>Hỗ trợ khách hàng</h3>
-            <a href="../product_all_user.jsp">Tất cả sản phẩm</a>
-        </div>
-
-
-        <div class="footer-col">
-            <h3>Liên kiết nhanh</h3>
-            <a href="../homepage_user.jsp">Trang chủ</a>
-            <a href="../purchasing_policy_user.jsp">Chính sách mua hàng</a>
-            <a href="../introduce_user.jsp">Giới thiệu</a>
-            <a href="../contact_user.jsp">Liên hệ</a>
-        </div>
-
+    <div class="category-list">
+        <div class="category-card"><i class="fas fa-couch"></i><p>Phòng khách</p><span>124 sản phẩm</span></div>
+        <div class="category-card"><i class="fas fa-bed"></i><p>Phòng ngủ</p><span>89 sản phẩm</span></div>
+        <div class="category-card"><i class="fas fa-utensils"></i><p>Phòng bếp</p><span>56 sản phẩm</span></div>
+        <div class="category-card"><i class="fas fa-lightbulb"></i><p>Phòng làm việc</p><span>77 sản phẩm</span></div>
+        <div class="category-card"><i class="fas fa-paint-brush"></i><p>Đồ trang trí mini</p><span>102 sản phẩm</span></div>
+        <div class="category-card"><i class="fas fa-chair"></i><p>Quà lưu niệm</p><span>65 sản phẩm</span></div>
     </div>
-</div>
+</section>
+
+
+
+<jsp:include page="footer.jsp"></jsp:include>
+
 </body>
 </html>

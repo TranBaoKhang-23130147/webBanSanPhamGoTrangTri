@@ -17,7 +17,19 @@ public class SourceServlet extends HttpServlet {
         String action = request.getServletPath();
         SourceDao dao = new SourceDao();
 
-//       1. delete
+        if (action.equals("/delete-source")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            if (dao.deleteSource(id)) {
+                request.getSession().setAttribute("msg", "Đã xóa nguồn hàng thành công!");
+                request.getSession().setAttribute("msgType", "success");
+            } else {
+                request.getSession().setAttribute("msg", "Lỗi xóa nguồn hàng!");
+                request.getSession().setAttribute("msgType", "error");
+            }
+            response.sendRedirect("source-manager");
+            return;
+        }
+
 
         String keyword = request.getParameter("search");
         List<Source> list = (keyword != null && !keyword.trim().isEmpty())
@@ -47,16 +59,16 @@ public class SourceServlet extends HttpServlet {
                 request.getSession().setAttribute("msgType", "error");
             }
         }
-//        else if (action.equals("/edit-source")) {
-//            int id = Integer.parseInt(request.getParameter("id"));
-//            if (dao.updateSource(id, name)) {
-//                request.getSession().setAttribute("msg", "Cập nhật thành công!");
-//                request.getSession().setAttribute("msgType", "success");
-//            } else {
-//                request.getSession().setAttribute("msg", "Cập nhật thất bại!");
-//                request.getSession().setAttribute("msgType", "error");
-//            }
-//        }
+        else if (action.equals("/edit-source")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            if (dao.updateSource(id, name)) {
+                request.getSession().setAttribute("msg", "Cập nhật thành công!");
+                request.getSession().setAttribute("msgType", "success");
+            } else {
+                request.getSession().setAttribute("msg", "Cập nhật thất bại!");
+                request.getSession().setAttribute("msgType", "error");
+            }
+        }
         response.sendRedirect("source-manager");
     }
 }
