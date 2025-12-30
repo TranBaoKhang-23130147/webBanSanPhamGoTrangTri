@@ -12,9 +12,7 @@ import java.io.IOException;
 public class SaveSettingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("activePage", "setting"); // Để active menu
 
-        request.getRequestDispatcher("admin_setting.jsp").forward(request, response);
 
     }
 

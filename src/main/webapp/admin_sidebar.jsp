@@ -24,7 +24,7 @@
             <li><a href="${pageContext.request.contextPath}/AdminProfileServlet"> Hồ sơ</a></li>
 
             <li class="${activePage == 'setting' ? 'active' : ''}">
-                <a href="${pageContext.request.contextPath}/SaveSettingServlet"> Cài đặt</a>
+                <a href="${pageContext.request.contextPath}/UpdateSettingServlet"> Cài đặt</a>
             </li>
         </ul>
     </nav>
