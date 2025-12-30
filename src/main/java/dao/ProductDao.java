@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import model.Images;
@@ -9,6 +10,8 @@ import model.Product;
 import model.Reviews;
 import java.sql.*;
 import model.*;
+
+import static dao.DBContext.getConnection;
 
 public class ProductDao {
 
@@ -212,7 +215,7 @@ public class ProductDao {
             String sql = """
         SELECT i.id, i.urlImage 
         FROM images i 
-        JOIN product_image pi ON i.id = pi.image_id 
+        JOIN product_images pi ON i.id = pi.image_id 
         WHERE pi.product_id = ?
     """;
             try (Connection conn = new DBContext().getConnection();
@@ -295,5 +298,77 @@ public class ProductDao {
             }
             return list;
         }
+    public List<Product> filterProducts(String[] types,
+                                        String[] prices,
+                                        String[] ratings) {
+
+        List<Product> list = new ArrayList<>();
+
+        StringBuilder sql = new StringBuilder(
+                "SELECT p.id, p.name_product, p.price, img.urlImage, " +
+                        "IFNULL(AVG(r.rate),0) AS avg_rate " +
+                        "FROM products p " +
+                        "LEFT JOIN images img ON p.primary_image_id = img.id " +
+                        "LEFT JOIN reviews r ON p.id = r.product_id " +
+                        "WHERE p.isActive = 1 "
+        );
+
+        /* LỌC LOẠI */
+        if (types != null && types.length > 0) {
+            sql.append(" AND p.product_type_id IN (")
+                    .append(String.join(",", types))
+                    .append(")");
+        }
+
+        /* ===== LỌC GIÁ ===== */
+        if (prices != null && prices.length > 0) {
+            List<String> cond = new ArrayList<>();
+            for (String p : prices) {
+                switch (p) {
+                    case "1": cond.add("p.price < 1000000"); break;
+                    case "2": cond.add("p.price BETWEEN 1000000 AND 3000000"); break;
+                    case "3": cond.add("p.price BETWEEN 3000000 AND 5000000"); break;
+                    case "4": cond.add("p.price BETWEEN 5000000 AND 10000000"); break;
+                    case "5": cond.add("p.price > 10000000"); break;
+                }
+            }
+            if (!cond.isEmpty()) {
+                sql.append(" AND (").append(String.join(" OR ", cond)).append(")");
+            }
+        }
+
+        sql.append(" GROUP BY p.id ");
+
+        /* ===== LỌC ĐÁNH GIÁ ===== */
+        if (ratings != null && ratings.length > 0) {
+            int minRate = Arrays.stream(ratings)
+                    .mapToInt(Integer::parseInt)
+                    .min()
+                    .getAsInt();
+            sql.append(" HAVING avg_rate >= ").append(minRate);
+        }
+
+        System.out.println("FILTER SQL = " + sql); // 🔥 DEBUG
+
+        try (Connection con = getConnection();
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql.toString())) {
+
+            while (rs.next()) {
+                list.add(new Product(
+                        rs.getInt("id"),
+                        rs.getString("name_product"),
+                        rs.getDouble("price"),
+                        rs.getString("urlImage"),
+                        rs.getDouble("avg_rate")
+                ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 
 }
