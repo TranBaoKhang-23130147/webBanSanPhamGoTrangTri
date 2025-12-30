@@ -14,6 +14,8 @@ public class Product {
     private int isActive;
     private Date mfgDate;
     private String imageUrl;
+    private Reviews reviews;
+    private double averageRating;
 
     public Product() {}
     public Product(int id, String nameProduct, double price, String imageUrl, int isActive) {
@@ -48,4 +50,8 @@ public class Product {
     public void setIsActive(int isActive) { this.isActive = isActive; }
     public Date getMfgDate() { return mfgDate; }
     public void setMfgDate(Date mfgDate) { this.mfgDate = mfgDate; }
+    public Reviews getReviews() { return reviews; }
+    public void setReviews(Reviews reviews) { this.reviews = reviews; }
+    public double getAverageRating() { return averageRating; }
+    public void setAverageRating(double averageRating) { this.averageRating = averageRating; }
 }
