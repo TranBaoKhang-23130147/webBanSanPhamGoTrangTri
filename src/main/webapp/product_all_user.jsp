@@ -5,7 +5,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -119,6 +118,7 @@
                     <i class="ri-star-s-fill rating"></i>
                 </label>
             </div>`
+
         </aside>
 
         <div class="products">
@@ -207,5 +207,5 @@
 </div>
 
 </body>
-<script src="../js/decorate.js"></script>
+<script src="js/decorate.js"></script>
 </html>

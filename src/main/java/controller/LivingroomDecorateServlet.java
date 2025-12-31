@@ -9,20 +9,19 @@ import model.Product;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "ProductAllServlet", value = "/ProductAllServlet")
-public class ProductAllServlet extends HttpServlet {
+@WebServlet(name = "LivingroomDecorateServlet", value = "/LivingroomDecorateServlet")
+public class LivingroomDecorateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         ProductDao dao = new ProductDao();
-        List<Product> list = dao.getAllProducts();
+        List<Product> listP = dao.getLivingRoomProducts();
 
-
-        request.setAttribute("listP", list);
-        request.getRequestDispatcher("product_all_user.jsp").forward(request, response);
+        request.setAttribute("listP", listP);
+        request.getRequestDispatcher("decorate_livingroom_user.jsp")
+                .forward(request, response);
     }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
