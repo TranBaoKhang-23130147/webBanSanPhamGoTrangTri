@@ -16,8 +16,10 @@
 
             <a id="product" href="${pageContext.request.contextPath}/ProductAllServlet">SẢN PHẨM</a>
             <div class="submenu">
-                <a href="LivingroomDecorateServlet">TRANG TRÍ PHÒNG KHÁCH</a>
-                <a href="html/decorate_bedroom_user.html">TRANG TRÍ PHÒNG NGỦ</a>
+                <a href="LivingroomDecorateServlet?category=trang-tri-phong-khach">
+                    TRANG TRÍ PHÒNG KHÁCH
+                </a>
+                <a href="BedroomDecorateServlet?category=trang-tri-phong-ngu">TRANG TRÍ PHÒNG NGỦ</a>
                 <a href="html/decorate_kitchen_user.html">TRANG TRÍ PHÒNG BẾP</a>
                 <a href="html/decorate_homeoffice_user.html">TRANG TRÍ PHÒNG LÀM VIỆC</a>
                 <a href="html/decorate_miniitem_user.html">ĐỒ TRANG TRÍ MINI</a>

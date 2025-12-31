@@ -24,12 +24,12 @@ public class ProductFilterServlet extends HttpServlet {
             String categoryParam = request.getParameter("category");
             String page = request.getParameter("page");
 
+            ProductDao dao = new ProductDao();
             Integer categoryId = null;
             if (categoryParam != null && !categoryParam.isBlank()) {
-                categoryId = Integer.parseInt(categoryParam);
+                categoryId =  dao.getCategoryIdByName(categoryParam);;
             }
 
-            ProductDao dao = new ProductDao();
             List<Product> listP;
 
             if (types == null && prices == null && ratings == null) {
@@ -48,7 +48,9 @@ public class ProductFilterServlet extends HttpServlet {
             if ("livingroom".equals(page)) {
                 targetJsp = "decorate_livingroom_user.jsp";
             }
-
+            if ("bedroom".equals(page)) {
+                targetJsp = "decorate_bedroom_user.jsp";
+            }
             request.getRequestDispatcher(targetJsp)
                     .forward(request, response);
         }
