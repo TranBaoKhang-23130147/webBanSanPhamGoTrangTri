@@ -85,6 +85,8 @@
     <div class="product-container">
 
         <form action="ProductFilterServlet" method="get">
+            <input type="hidden" name="page" value="livingroom">
+            <input type="hidden" name="category" value="7">
             <aside class="filter-sidebar">
                 <h3>Bộ lọc</h3>
 

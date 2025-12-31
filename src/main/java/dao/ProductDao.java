@@ -300,7 +300,8 @@ public class ProductDao {
     }
     public List<Product> filterProducts(String[] types,
                                         String[] prices,
-                                        String[] ratings) {
+                                        String[] ratings,
+                                        Integer categoryId) {
 
         List<Product> list = new ArrayList<>();
 
@@ -313,6 +314,11 @@ public class ProductDao {
                         "WHERE p.isActive = 1 "
         );
 
+        /* 🔥 LỌC CATEGORY */
+        if (categoryId != null) {
+            sql.append(" AND p.category_id = ").append(categoryId);
+        }
+
         /* LỌC LOẠI */
         if (types != null && types.length > 0) {
             sql.append(" AND p.product_type_id IN (")
@@ -320,7 +326,7 @@ public class ProductDao {
                     .append(")");
         }
 
-        /* ===== LỌC GIÁ ===== */
+        /* LỌC GIÁ */
         if (prices != null && prices.length > 0) {
             List<String> cond = new ArrayList<>();
             for (String p : prices) {
@@ -339,7 +345,7 @@ public class ProductDao {
 
         sql.append(" GROUP BY p.id ");
 
-        /* ===== LỌC ĐÁNH GIÁ ===== */
+        /* LỌC ĐÁNH GIÁ */
         if (ratings != null && ratings.length > 0) {
             int minRate = Arrays.stream(ratings)
                     .mapToInt(Integer::parseInt)
@@ -348,7 +354,8 @@ public class ProductDao {
             sql.append(" HAVING avg_rate >= ").append(minRate);
         }
 
-        System.out.println("FILTER SQL = " + sql); // 🔥 DEBUG
+
+
 
         try (Connection con = getConnection();
              Statement st = con.createStatement();
@@ -403,4 +410,37 @@ public class ProductDao {
         }
         return list;
     }
+    public List<Product> getProductsByCategory(int categoryId) {
+        List<Product> list = new ArrayList<>();
+        String sql = """
+        SELECT p.id, p.name_product, p.price, img.urlImage,
+               IFNULL(AVG(r.rate),0) AS avg_rate
+        FROM products p
+        LEFT JOIN images img ON p.primary_image_id = img.id
+        LEFT JOIN reviews r ON p.id = r.product_id
+        WHERE p.isActive = 1 AND p.category_id = ?
+        GROUP BY p.id
+    """;
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(new Product(
+                        rs.getInt("id"),
+                        rs.getString("name_product"),
+                        rs.getDouble("price"),
+                        rs.getString("urlImage"),
+                        rs.getDouble("avg_rate")
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 }

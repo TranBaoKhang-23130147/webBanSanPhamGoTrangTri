@@ -12,29 +12,48 @@ import java.util.List;
 
 @WebServlet(name = "ProductFilterServlet", value = "/ProductFilterServlet")
 public class ProductFilterServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
 
-        String[] types = request.getParameterValues("type");
-        String[] prices = request.getParameterValues("price");
-        String[] ratings = request.getParameterValues("rating");
+        @Override
+        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException {
 
-        ProductDao dao = new ProductDao();
+            String[] types = request.getParameterValues("type");
+            String[] prices = request.getParameterValues("price");
+            String[] ratings = request.getParameterValues("rating");
 
-        List<Product> listP;
+            String categoryParam = request.getParameter("category");
+            String page = request.getParameter("page");
 
-        // 🔥 NẾU CHƯA LỌC → LOAD TẤT CẢ
-        if (types == null && prices == null && ratings == null) {
-            listP = dao.getAllProducts();
-        } else {
-            listP = dao.filterProducts(types, prices, ratings);
+            Integer categoryId = null;
+            if (categoryParam != null && !categoryParam.isBlank()) {
+                categoryId = Integer.parseInt(categoryParam);
+            }
+
+            ProductDao dao = new ProductDao();
+            List<Product> listP;
+
+            if (types == null && prices == null && ratings == null) {
+                if (categoryId != null) {
+                    listP = dao.getProductsByCategory(categoryId);
+                } else {
+                    listP = dao.getAllProducts();
+                }
+            } else {
+                listP = dao.filterProducts(types, prices, ratings, categoryId);
+            }
+
+            request.setAttribute("listP", listP);
+
+            String targetJsp = "product_all_user.jsp";
+            if ("livingroom".equals(page)) {
+                targetJsp = "decorate_livingroom_user.jsp";
+            }
+
+            request.getRequestDispatcher(targetJsp)
+                    .forward(request, response);
         }
 
-        request.setAttribute("listP", listP);
-        request.getRequestDispatcher("product_all_user.jsp")
-                .forward(request, response);
-    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
