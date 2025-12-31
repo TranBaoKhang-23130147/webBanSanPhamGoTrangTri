@@ -35,7 +35,7 @@
 <%--            <div class="submenu">--%>
 <%--                <a href="html/decorate_livingroom_user.jsp">TRANG TRÍ PHÒNG KHÁCH</a>--%>
 <%--                <a href="html/decorate_bedroom_user.jsp">TRANG TRÍ PHÒNG NGỦ</a>--%>
-<%--                <a href="html/decorate_kitchen_user.html">TRANG TRÍ PHÒNG BẾP</a>--%>
+<%--                <a href="html/decorate_kitchen_user.jsp">TRANG TRÍ PHÒNG BẾP</a>--%>
 <%--                <a href="html/decorate_homeoffice_user.html">TRANG TRÍ PHÒNG LÀM VIỆC</a>--%>
 <%--                <a href="html/decorate_miniitem_user.html">ĐỒ TRANG TRÍ MINI</a>--%>
 <%--                <a href="html/souvenirs_user.html">QUÀ LƯU NIỆM</a>--%>
