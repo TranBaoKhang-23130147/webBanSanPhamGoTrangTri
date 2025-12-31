@@ -151,9 +151,9 @@ public class ProductDao {
     }
     // Trong class ProductDao, thêm/sửa phương thức getProductById
 
-        // 1. Lấy chi tiết 1 sản phẩm (JOIN tất cả các bảng liên quan: Source, Description, Information)
-        public Product getProductById(int id) {
-            String sql = """
+    // 1. Lấy chi tiết 1 sản phẩm (JOIN tất cả các bảng liên quan: Source, Description, Information)
+    public Product getProductById(int id) {
+        String sql = """
         SELECT 
             p.*, 
             s.sourceName, 
@@ -167,137 +167,137 @@ public class ProductDao {
         LEFT JOIN informations inf ON d.information_id = inf.id
         WHERE p.id = ?
     """;
-            try (Connection conn = new DBContext().getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setInt(1, id);
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        Product p = new Product();
-                        p.setId(rs.getInt("id"));
-                        p.setNameProduct(rs.getString("name_product"));
-                        p.setPrice(rs.getDouble("price"));
-                        p.setMfgDate(rs.getDate("mfg_date"));
-                        p.setImageUrl(rs.getString("urlImage"));
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Product p = new Product();
+                    p.setId(rs.getInt("id"));
+                    p.setNameProduct(rs.getString("name_product"));
+                    p.setPrice(rs.getDouble("price"));
+                    p.setMfgDate(rs.getDate("mfg_date"));
+                    p.setImageUrl(rs.getString("urlImage"));
 
-                        // Mapping Source
-                        Source source = new Source();
-                        source.setSourceName(rs.getString("sourceName"));
-                        p.setSource(source);
+                    // Mapping Source
+                    Source source = new Source();
+                    source.setSourceName(rs.getString("sourceName"));
+                    p.setSource(source);
 
-                        // Mapping Information
-                        Information info = new Information();
-                        info.setMaterial(rs.getString("material"));
-                        info.setSize(rs.getString("size"));
-                        info.setColor(rs.getString("color"));
-                        info.setGuarantee(rs.getString("guarantee"));
+                    // Mapping Information
+                    Information info = new Information();
+                    info.setMaterial(rs.getString("material"));
+                    info.setSize(rs.getString("size"));
+                    info.setColor(rs.getString("color"));
+                    info.setGuarantee(rs.getString("guarantee"));
 
-                        // Mapping Description
-                        Description desc = new Description();
-                        desc.setIntroduce(rs.getString("introduce"));
-                        desc.setHighlights(rs.getString("highlights"));
-                        desc.setInformation(info); // Đảm bảo Model Description có setter này
-                        p.setDetailDescription(desc);
+                    // Mapping Description
+                    Description desc = new Description();
+                    desc.setIntroduce(rs.getString("introduce"));
+                    desc.setHighlights(rs.getString("highlights"));
+                    desc.setInformation(info); // Đảm bảo Model Description có setter này
+                    p.setDetailDescription(desc);
 
-                        return p;
-                    }
+                    return p;
                 }
-            } catch (Exception e) {
-                System.out.println("Lỗi tại getProductById: " + e.getMessage());
-                e.printStackTrace();
             }
-            return null;
+        } catch (Exception e) {
+            System.out.println("Lỗi tại getProductById: " + e.getMessage());
+            e.printStackTrace();
         }
+        return null;
+    }
 
-        // 2. Lấy danh sách ảnh biến thể cho Gallery
-        public List<Images> getProductImages(int productId) {
-            List<Images> list = new ArrayList<>();
-            // Phải JOIN qua bảng trung gian product_image mà bạn đã chụp
-            String sql = """
+    // 2. Lấy danh sách ảnh biến thể cho Gallery
+    public List<Images> getProductImages(int productId) {
+        List<Images> list = new ArrayList<>();
+        // Phải JOIN qua bảng trung gian product_image mà bạn đã chụp
+        String sql = """
         SELECT i.id, i.urlImage 
         FROM images i 
         JOIN product_images pi ON i.id = pi.image_id 
         WHERE pi.product_id = ?
     """;
-            try (Connection conn = new DBContext().getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setInt(1, productId);
-                try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) {
-                        list.add(new Images(rs.getInt("id"), rs.getString("urlImage")));
-                    }
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(new Images(rs.getInt("id"), rs.getString("urlImage")));
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return list;
+    }
 
-        // 3. Lấy danh sách biến thể (Màu sắc & Kích thước) kèm tên từ bảng Color/Size
-        // 3. Lấy danh sách biến thể (Màu sắc & Kích thước) kèm tên và MÃ MÀU
-        public List<ProductVariants> getProductVariants(int productId) {
-            List<ProductVariants> list = new ArrayList<>();
-            String sql = """
+    // 3. Lấy danh sách biến thể (Màu sắc & Kích thước) kèm tên từ bảng Color/Size
+    // 3. Lấy danh sách biến thể (Màu sắc & Kích thước) kèm tên và MÃ MÀU
+    public List<ProductVariants> getProductVariants(int productId) {
+        List<ProductVariants> list = new ArrayList<>();
+        String sql = """
         SELECT pv.*, c.colorName, c.color_code, s.size_name  -- THÊM c.color_code VÀO ĐÂY
         FROM product_variants pv
         LEFT JOIN colors c ON pv.color_id = c.id
         LEFT JOIN sizes s ON pv.size_id = s.id
         WHERE pv.product_id = ?
     """;
-            try (Connection conn = new DBContext().getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setInt(1, productId);
-                try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) {
-                        ProductVariants v = new ProductVariants();
-                        v.setId(rs.getInt("id"));
-                        v.setVariant_price(rs.getBigDecimal("variant_price"));
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ProductVariants v = new ProductVariants();
+                    v.setId(rs.getInt("id"));
+                    v.setVariant_price(rs.getBigDecimal("variant_price"));
 
-                        // Khởi tạo đối tượng Color và gán giá trị
-                        ProductColor c = new ProductColor();
-                        c.setId(rs.getInt("color_id"));
-                        c.setColorName(rs.getString("colorName"));
+                    // Khởi tạo đối tượng Color và gán giá trị
+                    ProductColor c = new ProductColor();
+                    c.setId(rs.getInt("color_id"));
+                    c.setColorName(rs.getString("colorName"));
 
-                        // --- DÒNG THÊM MỚI ---
-                        c.setColorCode(rs.getString("color_code")); // Lấy mã màu từ cột mới trong DB
-                        // ---------------------
+                    // --- DÒNG THÊM MỚI ---
+                    c.setColorCode(rs.getString("color_code")); // Lấy mã màu từ cột mới trong DB
+                    // ---------------------
 
-                        v.setColor(c);
+                    v.setColor(c);
 
-                        // Khởi tạo đối tượng Size
-                        ProductSize sz = new ProductSize();
-                        sz.setId(rs.getInt("size_id"));
-                        sz.setSize_name(rs.getString("size_name"));
-                        v.setSize(sz);
+                    // Khởi tạo đối tượng Size
+                    ProductSize sz = new ProductSize();
+                    sz.setId(rs.getInt("size_id"));
+                    sz.setSize_name(rs.getString("size_name"));
+                    v.setSize(sz);
 
-                        list.add(v);
-                    }
+                    list.add(v);
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return list;
+    }
 
-        // 4. Lấy danh sách đánh giá của sản phẩm
-        public List<Reviews> getProductReviews(int productId) {
-            List<Reviews> list = new ArrayList<>();
-            String sql = "SELECT * FROM reviews WHERE product_id = ? ORDER BY id DESC";
-            try (Connection conn = new DBContext().getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setInt(1, productId);
-                try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) {
-                        Reviews r = new Reviews();
-                        r.setRating(rs.getInt("rate"));
-                        r.setComment(rs.getString("content"));
-                        list.add(r);
-                    }
+    // 4. Lấy danh sách đánh giá của sản phẩm
+    public List<Reviews> getProductReviews(int productId) {
+        List<Reviews> list = new ArrayList<>();
+        String sql = "SELECT * FROM reviews WHERE product_id = ? ORDER BY id DESC";
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Reviews r = new Reviews();
+                    r.setRating(rs.getInt("rate"));
+                    r.setComment(rs.getString("content"));
+                    list.add(r);
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return list;
+    }
     public List<Product> filterProducts(String[] types,
                                         String[] prices,
                                         String[] ratings) {
@@ -401,6 +401,6 @@ public class ProductDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    return list;
-}
+        return list;
+    }
 }

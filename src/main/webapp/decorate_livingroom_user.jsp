@@ -25,7 +25,7 @@
 
     <nav class="menu-bar">
 
-         <a class="menu" id="home" href="homepage_user.jsp"> TRANG CHỦ</a>
+        <a class="menu" id="home" href="homepage_user.jsp"> TRANG CHỦ</a>
         <div class="menu product-menu">
             <a id="product" href="product_all_user.jsp">SẢN PHẨM</a>
             <div class="submenu">
@@ -81,66 +81,66 @@
     </div>
 </section>
 <section id="productSection">
-<!--    <h3 class="titleProduct">Sản phẩm dành cho phòng khách</h3>-->
+    <!--    <h3 class="titleProduct">Sản phẩm dành cho phòng khách</h3>-->
     <div class="product-container">
 
-            <form action="ProductFilterServlet" method="get">
-                <aside class="filter-sidebar">
-                    <h3>Bộ lọc</h3>
+        <form action="ProductFilterServlet" method="get">
+            <aside class="filter-sidebar">
+                <h3>Bộ lọc</h3>
 
-                    <div class="filter-group">
-                        <h4>Loại</h4>
-                        <label><input type="checkbox" name="type" value="8"> Bàn</label>
-                        <label><input type="checkbox" name="type" value="2"> Ghế</label>
-                        <label><input type="checkbox" name="type" value="4"> Tủ</label>
-                        <label><input type="checkbox" name="type" value="7"> Giường</label>
-                        <label><input type="checkbox" name="type" value="9"> Kệ</label>
-                        <label><input type="checkbox" name="type" value=""> Khác</label>
-                    </div>
+                <div class="filter-group">
+                    <h4>Loại</h4>
+                    <label><input type="checkbox" name="type" value="8"> Bàn</label>
+                    <label><input type="checkbox" name="type" value="2"> Ghế</label>
+                    <label><input type="checkbox" name="type" value="4"> Tủ</label>
+                    <label><input type="checkbox" name="type" value="7"> Giường</label>
+                    <label><input type="checkbox" name="type" value="9"> Kệ</label>
+                    <label><input type="checkbox" name="type" value=""> Khác</label>
+                </div>
 
-                    <div class="filter-group">
-                        <h4>Giá tiền</h4>
-                        <label><input type="checkbox" name="price" value="1"> Dưới 1 triệu</label>
-                        <label><input type="checkbox" name="price" value="2"> 1 - 3 triệu</label>
-                        <label><input type="checkbox" name="price" value="3"> 3 - 5 triệu</label>
-                        <label><input type="checkbox" name="price" value="4"> 5 - 10 triệu</label>
-                        <label><input type="checkbox" name="price" value="5"> Trên 10 triệu</label>
-                    </div>
+                <div class="filter-group">
+                    <h4>Giá tiền</h4>
+                    <label><input type="checkbox" name="price" value="1"> Dưới 1 triệu</label>
+                    <label><input type="checkbox" name="price" value="2"> 1 - 3 triệu</label>
+                    <label><input type="checkbox" name="price" value="3"> 3 - 5 triệu</label>
+                    <label><input type="checkbox" name="price" value="4"> 5 - 10 triệu</label>
+                    <label><input type="checkbox" name="price" value="5"> Trên 10 triệu</label>
+                </div>
 
 
-                    <div class="filter-group">
-                        <h4>Đánh giá</h4>
-                        <label><input type="checkbox" name="rating" value="5">
-                            <i class="ri-star-s-fill rating"></i>
-                            <i class="ri-star-s-fill rating"></i>
-                            <i class="ri-star-s-fill rating"></i>
-                            <i class="ri-star-s-fill rating"></i>
-                            <i class="ri-star-s-fill rating"></i>
-                        </label>
-                        <label><input type="checkbox" name="rating" value="4">
-                            <i class="ri-star-s-fill rating"></i>
-                            <i class="ri-star-s-fill rating"></i>
-                            <i class="ri-star-s-fill rating"></i>
-                            <i class="ri-star-s-fill rating"></i>
-                        </label>
-                        <label><input type="checkbox" name="rating" value="3">
-                            <i class="ri-star-s-fill rating"></i>
-                            <i class="ri-star-s-fill rating"></i>
-                            <i class="ri-star-s-fill rating"></i>
-                        </label>
-                        <label><input type="checkbox" name="rating" value="2">
-                            <i class="ri-star-s-fill rating"></i>
-                            <i class="ri-star-s-fill rating"></i>
-                        </label>
-                        <label><input type="checkbox" name="rating" value="1">
-                            <i class="ri-star-s-fill rating"></i>
-                        </label>
-                    </div>`
-                    <br><br>
-                    <!-- 🔥 NÚT LỌC BẮT BUỘC -->
-                    <button type="submit">LỌC SẢN PHẨM</button>
-                </aside>
-            </form>
+                <div class="filter-group">
+                    <h4>Đánh giá</h4>
+                    <label><input type="checkbox" name="rating" value="5">
+                        <i class="ri-star-s-fill rating"></i>
+                        <i class="ri-star-s-fill rating"></i>
+                        <i class="ri-star-s-fill rating"></i>
+                        <i class="ri-star-s-fill rating"></i>
+                        <i class="ri-star-s-fill rating"></i>
+                    </label>
+                    <label><input type="checkbox" name="rating" value="4">
+                        <i class="ri-star-s-fill rating"></i>
+                        <i class="ri-star-s-fill rating"></i>
+                        <i class="ri-star-s-fill rating"></i>
+                        <i class="ri-star-s-fill rating"></i>
+                    </label>
+                    <label><input type="checkbox" name="rating" value="3">
+                        <i class="ri-star-s-fill rating"></i>
+                        <i class="ri-star-s-fill rating"></i>
+                        <i class="ri-star-s-fill rating"></i>
+                    </label>
+                    <label><input type="checkbox" name="rating" value="2">
+                        <i class="ri-star-s-fill rating"></i>
+                        <i class="ri-star-s-fill rating"></i>
+                    </label>
+                    <label><input type="checkbox" name="rating" value="1">
+                        <i class="ri-star-s-fill rating"></i>
+                    </label>
+                </div>`
+                <br><br>
+                <!-- 🔥 NÚT LỌC BẮT BUỘC -->
+                <button type="submit">LỌC SẢN PHẨM</button>
+            </aside>
+        </form>
 
         <div class="product">
             <c:forEach items="${listP}" var="p">
@@ -178,7 +178,7 @@
                 <p style="text-align: center; width: 100%;">Không tìm thấy sản phẩm nào phù hợp.</p>
             </c:if>
         </div>
-        </div>
+    </div>
 
 
 </section>

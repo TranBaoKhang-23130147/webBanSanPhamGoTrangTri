@@ -23,17 +23,26 @@ public class ProductDetailServlet extends HttpServlet {
                 ProductDao dao = new ProductDao();
 
                 // 2. Lấy thông tin cơ bản + mô tả + thông số (JOIN 3 bảng)
+                // Giả sử productId lấy từ request.getParameter("id")
                 Product p = dao.getProductById(productId);
+
                 if (p != null) {
-                    // Phải gán các danh sách phụ vào p
-                    p.setSubImages(dao.getProductImages(productId));
-                    p.setVariants(dao.getProductVariants(productId));
-                    p.setReviewList(dao.getProductReviews(productId));
+                    // GỌI CÁC HÀM NÀY ĐỂ ĐỔ DỮ LIỆU VÀO LIST
+                    List<Images> subImages = dao.getProductImages(productId);
+                    List<ProductVariants> variants = dao.getProductVariants(productId);
+                    List<Reviews> reviews = dao.getProductReviews(productId);
+
+                    // Gán ngược lại vào đối tượng p
+                    p.setSubImages(subImages);
+                    p.setVariants(variants);
+                    p.setReviewList(reviews); // Biến này khớp với c:forEach items="${p.reviewList}" ở JSP
+
+                    // Tính toán sơ bộ tổng số review và trung bình sao nếu cần
+                    p.setTotalReviews(reviews.size());
 
                     request.setAttribute("p", p);
                     request.getRequestDispatcher("product_details_user.jsp").forward(request, response);
                 } else {
-                    // Nếu bị văng về đây, hãy nhìn vào màn hình Console của IntelliJ xem lỗi SQL gì
                     response.sendRedirect("homepage_user.jsp");
                 }
             } else {

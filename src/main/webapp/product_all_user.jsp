@@ -18,60 +18,75 @@
             href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
             rel="stylesheet"
     />
+    <link rel="stylesheet" href="css/search_style.css">
+
 </head>
 <body>
+<p>Số lượng sản phẩm lấy được: ${listP.size()}</p>
 <jsp:include page="header.jsp"></jsp:include>
 
-<section class="overlay-section">
-    <div class="overlay-card " style="background-image: url('https://i.pinimg.com/1200x/4d/16/07/4d16076bd71f77a7b5f69963e875cac6.jpg');">
-        <h3>TRANG TRÍ PHÒNG KHÁCH</h3>
-        <a href="LivingroomDecorateServlet"><button >Xem chi tiết</button></a>
+<section class="categories">
+<%--    <h2>Danh mục nổi bật</h2>--%>
+    <h2 class="titleProduct">DANH MUC SAN PHAM</h2>
+
+    <div class="category-list">
+        <div class="category-card"><i class="fas fa-couch"></i><p>Phòng khách</p><span>124 sản phẩm</span></div>
+        <div class="category-card"><i class="fas fa-bed"></i><p>Phòng ngủ</p><span>89 sản phẩm</span></div>
+        <div class="category-card"><i class="fas fa-utensils"></i><p>Phòng bếp</p><span>56 sản phẩm</span></div>
+        <div class="category-card"><i class="fas fa-lightbulb"></i><p>Phòng làm việc</p><span>77 sản phẩm</span></div>
+        <div class="category-card"><i class="fas fa-paint-brush"></i><p>Đồ trang trí mini</p><span>102 sản phẩm</span></div>
+        <div class="category-card"><i class="fas fa-chair"></i><p>Quà lưu niệm</p><span>65 sản phẩm</span></div>
     </div>
-    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/736x/22/bc/ce/22bcce5d6c7b7412d817bb51a6daaf23.jpg');">
-        <h3>TRANG TRÍ PHÒNG NGỦ</h3>
-        <a href="decorate_bedroom_user.html"><button>Xem chi tiết</button></a>
-    </div>
-    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/1200x/dc/29/25/dc2925db1bfab4c46a2c1392247fa682.jpg');">
-        <h3>TRANG TRÍ PHÒNG BẾP</h3>
-        <a href="decorate_kitchen_user.html"><button>Xem chi tiết</button></a>
-    </div>
-    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/1200x/53/82/9a/53829ac906f0539b852666eb726f7278.jpg');">
-        <h3>TRANG TRÍ PHÒNG LÀM VIỆC</h3>
-        <a href="decorate_homeoffice_user.html"><button>Xem chi tiết</button></a>
-    </div>
-    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/1200x/b7/f1/eb/b7f1eb1afde268f136926ca69c3b53fd.jpg');">
-        <h3>ĐỒ TRANG TRÍ MINI</h3>
-        <a href="decorate_miniitem_user.html"><button>Xem chi tiết</button></a>
-    </div>
-    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/1200x/b2/84/fa/b284fab9541221dff3b9e5f9b49af1ad.jpg');">
-        <h3>QUÀ LƯU NIỆM</h3>
-        <a href="souvenirs_user.html"><button>Xem chi tiết</button></a>
-    </div>
+
+<%--    <div class="overlay-card " style="background-image: url('https://i.pinimg.com/1200x/4d/16/07/4d16076bd71f77a7b5f69963e875cac6.jpg');">--%>
+<%--        <h3>TRANG TRÍ PHÒNG KHÁCH</h3>--%>
+<%--        <a href="decorate_livingroom_user.html"><button >Xem chi tiết</button></a>--%>
+<%--    </div>--%>
+<%--    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/736x/22/bc/ce/22bcce5d6c7b7412d817bb51a6daaf23.jpg');">--%>
+<%--        <h3>TRANG TRÍ PHÒNG NGỦ</h3>--%>
+<%--        <a href="decorate_bedroom_user.html"><button>Xem chi tiết</button></a>--%>
+<%--    </div>--%>
+<%--    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/1200x/dc/29/25/dc2925db1bfab4c46a2c1392247fa682.jpg');">--%>
+<%--        <h3>TRANG TRÍ PHÒNG BẾP</h3>--%>
+<%--        <a href="decorate_kitchen_user.html"><button>Xem chi tiết</button></a>--%>
+<%--    </div>--%>
+<%--    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/1200x/53/82/9a/53829ac906f0539b852666eb726f7278.jpg');">--%>
+<%--        <h3>TRANG TRÍ PHÒNG LÀM VIỆC</h3>--%>
+<%--        <a href="decorate_homeoffice_user.html"><button>Xem chi tiết</button></a>--%>
+<%--    </div>--%>
+<%--    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/1200x/b7/f1/eb/b7f1eb1afde268f136926ca69c3b53fd.jpg');">--%>
+<%--        <h3>ĐỒ TRANG TRÍ MINI</h3>--%>
+<%--        <a href="decorate_miniitem_user.html"><button>Xem chi tiết</button></a>--%>
+<%--    </div>--%>
+<%--    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/1200x/b2/84/fa/b284fab9541221dff3b9e5f9b49af1ad.jpg');">--%>
+<%--        <h3>QUÀ LƯU NIỆM</h3>--%>
+<%--        <a href="souvenirs_user.html"><button>Xem chi tiết</button></a>--%>
+<%--    </div>--%>
 </section>
 <section class="product-all">
     <h2 class="titleProduct">TẤT CẢ SẢN PHẨM</h2>
     <div class="product-container">
-    <form action="ProductFilterServlet" method="get">
+
         <aside class="filter-sidebar">
             <h3>Bộ lọc</h3>
 
             <div class="filter-group">
                 <h4>Loại</h4>
-                <label><input type="checkbox" name="type" value="8"> Bàn</label>
-                <label><input type="checkbox" name="type" value="2"> Ghế</label>
-                <label><input type="checkbox" name="type" value="4"> Tủ</label>
-                <label><input type="checkbox" name="type" value="7"> Giường</label>
-                <label><input type="checkbox" name="type" value="9"> Kệ</label>
-                <label><input type="checkbox" name="type" value=""> Khác</label>
+                <label><input type="checkbox" name="type" value="ban"> Bàn</label>
+                <label><input type="checkbox" name="type" value="ghe"> Ghế</label>
+                <label><input type="checkbox" name="type" value="tu"> Tủ</label>
+                <label><input type="checkbox" name="type" value="giuong"> Giường</label>
+                <label><input type="checkbox" name="type" value="ke"> Kệ</label>
+                <label><input type="checkbox" name="type" value="khac"> Khác</label>
             </div>
 
             <div class="filter-group">
                 <h4>Giá tiền</h4>
-                <label><input type="checkbox" name="price" value="1"> Dưới 1 triệu</label>
-                <label><input type="checkbox" name="price" value="2"> 1 - 3 triệu</label>
-                <label><input type="checkbox" name="price" value="3"> 3 - 5 triệu</label>
-                <label><input type="checkbox" name="price" value="4"> 5 - 10 triệu</label>
-                <label><input type="checkbox" name="price" value="5"> Trên 10 triệu</label>
+                <label><input type="checkbox" name="price" value="duoi1"> Dưới 1 triệu</label>
+                <label><input type="checkbox" name="price" value="1-3"> 1 - 3 triệu</label>
+                <label><input type="checkbox" name="price" value="3-5"> 3 - 5 triệu</label>
+                <label><input type="checkbox" name="price" value="5-10"> 5 - 10 triệu</label>
+                <label><input type="checkbox" name="price" value="tren10"> Trên 10 triệu</label>
             </div>
 
 
@@ -103,11 +118,9 @@
                     <i class="ri-star-s-fill rating"></i>
                 </label>
             </div>`
-            <br><br>
-            <!-- 🔥 NÚT LỌC BẮT BUỘC -->
-            <button type="submit">LỌC SẢN PHẨM</button>
+
         </aside>
-    </form>
+
         <div class="products">
             <c:forEach items="${listP}" var="p">
                 <div class="product-card">
