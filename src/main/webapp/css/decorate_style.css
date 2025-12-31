@@ -769,7 +769,7 @@ body {
     letter-spacing: 1px;
 }
 
-.products {
+.product {
     justify-content: center;
     flex-wrap: wrap;
     display: grid;
