@@ -51,7 +51,7 @@
 <%--    </div>--%>
 <%--    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/1200x/53/82/9a/53829ac906f0539b852666eb726f7278.jpg');">--%>
 <%--        <h3>TRANG TRÍ PHÒNG LÀM VIỆC</h3>--%>
-<%--        <a href="decorate_homeoffice_user.html"><button>Xem chi tiết</button></a>--%>
+<%--        <a href="decorate_homeoffice_user.jsp"><button>Xem chi tiết</button></a>--%>
 <%--    </div>--%>
 <%--    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/1200x/b7/f1/eb/b7f1eb1afde268f136926ca69c3b53fd.jpg');">--%>
 <%--        <h3>ĐỒ TRANG TRÍ MINI</h3>--%>
