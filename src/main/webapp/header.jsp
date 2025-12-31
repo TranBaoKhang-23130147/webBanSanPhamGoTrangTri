@@ -21,7 +21,7 @@
                 </a>
                 <a href="BedroomDecorateServlet?category=trang-tri-phong-ngu">TRANG TRÍ PHÒNG NGỦ</a>
                 <a href="KitchenDecorateServlet?category=trang-tri-phong-bep">TRANG TRÍ PHÒNG BẾP</a>
-                <a href="html/decorate_homeoffice_user.html">TRANG TRÍ PHÒNG LÀM VIỆC</a>
+                <a href="HomeofficeDecorateServlet?category=trang-tri-phong-lam-viec">TRANG TRÍ PHÒNG LÀM VIỆC</a>
                 <a href="html/decorate_miniitem_user.html">ĐỒ TRANG TRÍ MINI</a>
                 <a href="html/souvenirs_user.html">QUÀ LƯU NIỆM</a>
             </div>
