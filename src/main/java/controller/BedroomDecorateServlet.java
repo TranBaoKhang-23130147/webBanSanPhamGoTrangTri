@@ -9,13 +9,13 @@ import model.Product;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "LivingroomDecorateServlet", value = "/LivingroomDecorateServlet")
-public class LivingroomDecorateServlet extends HttpServlet {
+@WebServlet(name = "BedroomDecorateServlet", value = "/BedroomDecorateServlet")
+public class BedroomDecorateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String categoryKey = request.getParameter("category"); // phong-khach
+        String categoryKey = request.getParameter("category");
 
         ProductDao dao = new ProductDao();
 
@@ -31,7 +31,7 @@ public class LivingroomDecorateServlet extends HttpServlet {
         }
 
         request.setAttribute("listP", listP);
-        request.getRequestDispatcher("decorate_livingroom_user.jsp")
+        request.getRequestDispatcher("decorate_bedroom_user.jsp")
                 .forward(request, response);
         System.out.println("categoryKey = " + categoryKey);
         System.out.println("categoryId = " + categoryId);

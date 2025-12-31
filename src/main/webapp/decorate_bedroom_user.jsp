@@ -1,13 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>HOME DECOR - SẢN PHẨM</title>
-    <link rel="icon" type="image/png"  href="img/logo.png" >
+    <link rel="icon" type="image/png" href="img/logo.png" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="css/decorate_style.css">
     <link
@@ -39,6 +38,8 @@
                 <a href="html/souvenirs_user.html">QUÀ LƯU NIỆM</a>
             </div>
         </div>
+<!--        <a class="menu service" href="decor_user.html">DECOR THEO CHỦ ĐỀ-->
+
         <a class="menu" id=" " href="purchasing_policy_user.jsp" >CHÍNH SÁCH MUA HÀNG</a>
 
         <a class="menu" id="introduce" href="introduce_user.jsp" >GIỚI THIỆU</a>
@@ -65,30 +66,29 @@
         </div>
     </div>
 </div>
-<!--banner-->
-
 <section class="banner-product">
 
     <img
-            src="https://i.pinimg.com/1200x/4d/16/07/4d16076bd71f77a7b5f69963e875cac6.jpg"
-            alt="Ảnh trang trí phòng khách"
+            src="https://i.pinimg.com/736x/22/bc/ce/22bcce5d6c7b7412d817bb51a6daaf23.jpg"
+            alt="Ảnh trang trí phòng ngủ"
             class="banner-image"
     />
     <div class="banner-overlay">
         <div class="banner-content">
-            <h2>TRANG TRÍ PHÒNG KHÁCH</h2>
-            <p>Nâng tầm không gian sống với những sản phẩm decor tinh tế và hiện đại.</p>
+            <h2>TRANG TRÍ PHÒNG NGỦ</h2>
+            <p>Biến không gian nghỉ ngơi thành nơi thư giãn đầy cảm hứng với sản phẩm decor tinh tế và ấm áp.</p>
             <button id="scrollToProducts">Khám Phá Ngay</button>
         </div>
     </div>
 </section>
-<section id="productSection">
-    <!--    <h3 class="titleProduct">Sản phẩm dành cho phòng khách</h3>-->
-    <div class="product-container">
 
+
+<section id="productSection">
+<!--    <h3 class="titleProduct">Sản phẩm dành cho phòng ngủ</h3>-->
+    <div class="product-container">
         <form action="ProductFilterServlet" method="get">
-            <input type="hidden" name="page" value="livingroom">
-            <input type="hidden" name="category" value="trang-tri-phong-khach">
+            <input type="hidden" name="page" value="bedroom">
+            <input type="hidden" name="category" value="trang-tri-phong-ngu">
             <aside class="filter-sidebar">
                 <h3>Bộ lọc</h3>
 
@@ -146,6 +146,7 @@
             </aside>
         </form>
 
+
         <div class="product">
             <c:forEach items="${listP}" var="p">
                 <div class="product-card">
@@ -189,6 +190,7 @@
 <div class="footer">
     <div class="footer-container">
 
+
         <div class="footer-col">
             <h3>Về chúng tôi</h3>
 
@@ -206,6 +208,7 @@
             </div>
         </div>
 
+
         <div class="footer-col">
             <h3>Chính sách</h3>
             <a href="introduce_user.jsp">Về tụi mình</a>
@@ -213,6 +216,7 @@
             <a href="purchasing_policy_user.jsp">Chính sách Giao hàng</a>
             <a href="purchasing_policy_user.jsp">Chính sách Đổi trả</a>
         </div>
+
 
         <div class="footer-col">
             <h3>Hỗ trợ khách hàng</h3>
@@ -230,7 +234,6 @@
 
     </div>
 </div>
-
 </body>
 <script src="js/decorate.js"></script>
 </html>

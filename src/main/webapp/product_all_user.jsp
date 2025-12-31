@@ -43,7 +43,7 @@
 <%--    </div>--%>
 <%--    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/736x/22/bc/ce/22bcce5d6c7b7412d817bb51a6daaf23.jpg');">--%>
 <%--        <h3>TRANG TRÍ PHÒNG NGỦ</h3>--%>
-<%--        <a href="decorate_bedroom_user.html"><button>Xem chi tiết</button></a>--%>
+<%--        <a href="decorate_bedroom_user.jsp"><button>Xem chi tiết</button></a>--%>
 <%--    </div>--%>
 <%--    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/1200x/dc/29/25/dc2925db1bfab4c46a2c1392247fa682.jpg');">--%>
 <%--        <h3>TRANG TRÍ PHÒNG BẾP</h3>--%>
