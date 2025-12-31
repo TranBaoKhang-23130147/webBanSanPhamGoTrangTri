@@ -154,9 +154,11 @@
                 <i class="ri-star-s-fill"></i>
                 <i class="ri-star-s-fill"></i>
                 <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-line"></i>
-                <span>(4.0)</span></div>
-            <p>Tổng 23 đánh giá của khách hàng</p>
+                <i class="ri-star-s-fill"></i>
+
+                <span>(${p.averageRating})</span>
+            </div>
+            <p>Tổng ${p.reviewList.size()} đánh giá của khách hàng</p>
         </div>
 
         <div class="score-bars">

@@ -52,88 +52,68 @@
     </div>
 </section>
 <section class="featured">
-    <h2>Sản phẩm gợi ý cho bạn</h2>
-    <p>Khám phá những sản phẩm được yêu thích nhất hiện nay</p>
+    <c:choose>
+        <%-- TRƯỜNG HỢP CÓ KẾT QUẢ TÌM KIẾM --%>
+        <c:when test="${not empty listSearch}">
+            <h2>Sản phẩm tìm được cho: "${keyword}"</h2>
+            <p>Kết quả dựa trên tên sản phẩm và phân loại bạn đã chọn</p>
 
-    <div class="products">
-        <div class="product-card">
-            <!--            <span class="badge">HOT</span>-->
-            <div class="set">
-                <img src="https://i.pinimg.com/736x/0b/e6/ab/0be6ab843569781d6a78bd3786e736de.jpg" alt="ke treo tuong">
-                <h2>Kệ treo tường</h2>
-                <div class="rating">
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <span>(4.0)</span></div>
-                <div class="price">129.000₫</div>
-                <div class="action-buttons">
-                    <button class="add-cart">Thêm giỏ hàng</button>
-                    <button class="buy-now">Mua hàng</button>
-                </div>
+            <div class="products">
+                <c:forEach var="p" items="${listSearch}">
+                    <div class="product-card">
+                        <div class="set">
+                            <a href="detail?id=${p.id}" style="text-decoration: none; color: inherit;">
+                                <img src="${p.imageUrl}" alt="${p.nameProduct}">
+                                <h2>${p.nameProduct}</h2>
+                            </a>
+                            <div class="rating">
+                                <c:forEach begin="1" end="5" var="i">
+                                    <i class="${i <= p.averageRating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
+                                </c:forEach>
+                                <span>(${p.averageRating})</span>
+                            </div>
+                            <div class="price"><fmt:formatNumber value="${p.price}" pattern="#,###"/>₫</div>
+                            <div class="action-buttons">
+                                <button class="add-cart">Thêm giỏ hàng</button>
+                                <button class="buy-now">Mua hàng</button>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
-        </div>
+        </c:when>
 
-        <div class="product-card">
-            <div class="set">
-                <img src="https://i.pinimg.com/736x/68/1c/46/681c469884d60a1a27b0b3686c589f3e.jpg" alt="Bộ bàn ghế gỗ tự nhiên">
-                <h2>Bộ bàn ghế gỗ tự nhiên</h2>
-                <div class="rating">
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <span>(5.0)</span></div>
-                <div class="price">99.000₫</div>
-                <div class="action-buttons">
-                    <button class="add-cart">Thêm giỏ hàng</button>
-                    <button class="buy-now">Mua hàng</button>
-                </div>
+        <%-- TRƯỜNG HỢP MẶC ĐỊNH: HIỆN SẢN PHẨM GỢI Ý (BÁN CHẠY) --%>
+        <c:otherwise>
+            <h2>Sản phẩm gợi ý cho bạn</h2>
+            <p>Khám phá những sản phẩm bán chạy nhất hiện nay</p>
+
+            <div class="products">
+                    <%-- listBestSeller này bạn sẽ lấy từ DAO với câu lệnh ORDER BY lượt bán --%>
+                <c:forEach var="p" items="${listBestSeller}">
+                    <div class="product-card">
+                        <div class="set">
+                            <a href="detail?id=${p.id}" style="text-decoration: none; color: inherit;">
+                                <img src="${p.imageUrl}" alt="${p.nameProduct}">
+                                <h2>${p.nameProduct}</h2>
+                            </a>
+                            <div class="rating">
+                                <c:forEach begin="1" end="5" var="i">
+                                    <i class="${i <= p.averageRating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
+                                </c:forEach>
+                                <span>(${p.averageRating})</span>
+                            </div>
+                            <div class="price"><fmt:formatNumber value="${p.price}" pattern="#,###"/>₫</div>
+                            <div class="action-buttons">
+                                <button class="add-cart">Thêm giỏ hàng</button>
+                                <button class="buy-now">Mua hàng</button>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
-        </div>
-
-        <div class="product-card">
-            <div class="set">
-                <!--                <span class="badge">SALE</span>-->
-
-                <img src="https://i.pinimg.com/1200x/9b/81/7e/9b817e378dc66a4c57a75c9072c98f7e.jpg" alt="Bình hoa gỗ">
-                <h2>Bình hoa bằng gỗ</h2>
-                <div class="rating">
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-half-line"></i>
-                    <span>(4.5)</span></div>
-                <div class="price">453.000₫</div>
-                <div class="action-buttons">
-                    <button class="add-cart">Thêm giỏ hàng</button>
-                    <button class="buy-now">Mua hàng</button>
-                </div>
-            </div>
-        </div>
-        <div class="product-card">
-            <div class="set">
-                <img src="https://i.pinimg.com/736x/23/15/a0/2315a0ec69375b795b3736ef05f59b40.jpg" alt="Kệ đựng gia vị">
-                <h2>Kệ đựng gia vị</h2>
-                <div class="rating">
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-s-fill"></i>
-                    <i class="ri-star-half-line"></i>
-                    <span>(4.5)</span></div>
-                <div class="price">300.000₫</div>
-                <div class="action-buttons">
-                    <button class="add-cart">Thêm giỏ hàng</button>
-                    <button class="buy-now">Mua hàng</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+        </c:otherwise>
+    </c:choose>
 </section>
 <section class="categories">
     <h2>Danh mục nổi bật</h2>
