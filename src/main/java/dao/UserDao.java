@@ -21,27 +21,42 @@ public class UserDao {
      * @return Đối tượng User nếu đăng nhập thành công, ngược lại trả về null.
      */
     public User checkLogin(String email, String password) {
-        // Lưu ý: Tên cột full_name trong DB được map vào thuộc tính username trong Java
-        String SQL = "SELECT id, full_name, email, role, status FROM users WHERE email = ? AND password = ?";
-        User user = null;
+
+        String sql = """
+        SELECT id, full_name, display_name, birth_date,
+               email, phone, gender, avatar_id,
+               role, status, createAt
+        FROM users
+        WHERE email = ? AND password = ?
+    """;
+
         try (Connection conn = DBContext.getConnection();
-             PreparedStatement ps = conn.prepareStatement(SQL)) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setString(1, email);
             ps.setString(2, password);
+
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    user = new User();
-                    user.setId(rs.getInt("id"));
-                    user.setUsername(rs.getString("full_name")); // full_name từ DB
-                    user.setEmail(rs.getString("email"));
-                    user.setRole(rs.getString("role"));
-                    user.setStatus(rs.getString("status"));
+                    User u = new User();
+                    u.setId(rs.getInt("id"));
+                    u.setUsername(rs.getString("full_name"));
+                    u.setDisplayName(rs.getString("display_name"));
+                    u.setBirthDate(rs.getDate("birth_date"));
+                    u.setEmail(rs.getString("email"));
+                    u.setPhone(rs.getString("phone"));
+                    u.setGender(rs.getString("gender"));
+                    u.setAvatarId(rs.getObject("avatar_id", Integer.class));
+                    u.setRole(rs.getString("role"));
+                    u.setStatus(rs.getString("status"));
+                    u.setCreateAt(rs.getDate("createAt"));
+                    return u;
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return user;
+        return null;
     }
 
     /**
@@ -102,34 +117,92 @@ public class UserDao {
         }
         return 0;
     }
-
     public User getById(int id) {
-        String sql = "SELECT id, full_name, display_name, birth_date, email, phone, gender, avatar_id, role, status FROM users WHERE id = ?";
+        String sql = """
+        SELECT u.*, i.urlImage,
+               a.id AS addr_id, a.name AS addr_name, a.phone AS addr_phone,
+               a.detail AS addr_detail, a.commune AS addr_commune,
+               a.district AS addr_district, a.province AS addr_province
+        FROM users u
+        LEFT JOIN images i ON u.avatar_id = i.id
+        LEFT JOIN addresses a ON a.user_id = u.id AND a.isDefault = 1
+        WHERE u.id = ?
+    """;
+
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setInt(1, id);
+
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    User user = new User();
-                    user.setId(rs.getInt("id"));
-                    user.setUsername(rs.getString("full_name"));
-                    Date bd = rs.getDate("birth_date");
+                    User u = new User();
+                    u.setId(rs.getInt("id"));
+                    u.setUsername(rs.getString("full_name"));
+                    u.setDisplayName(rs.getString("display_name"));
+                    u.setBirthDate(rs.getDate("birth_date"));
+                    u.setEmail(rs.getString("email"));
+                    u.setPhone(rs.getString("phone"));
+                    u.setGender(rs.getString("gender"));
+                    u.setAvatarId(rs.getObject("avatar_id", Integer.class));
+                    u.setAvatarUrl(rs.getString("urlImage"));
+                    u.setRole(rs.getString("role"));
+                    u.setStatus(rs.getString("status"));
+                    u.setCreateAt(rs.getDate("createAt"));
 
-                    user.setEmail(rs.getString("email"));
-                    user.setPhone(rs.getString("phone"));
+                    // --- LẤY ADDRESS NẾU CÓ ---
+                    if (rs.getObject("addr_id") != null) {
+                        Address addr = new Address();
+                        addr.setId(rs.getInt("addr_id"));
+                        addr.setUserId(u.getId());
+                        addr.setName(rs.getString("addr_name"));
+                        addr.setPhone(rs.getString("addr_phone"));
+                        addr.setDetail(rs.getString("addr_detail"));
+                        addr.setCommune(rs.getString("addr_commune"));
+                        addr.setDistrict(rs.getString("addr_district"));
+                        addr.setProvince(rs.getString("addr_province"));
+                        u.setAddress(addr);
+                    }
 
-                    int avatar = rs.getInt("avatar_id");
-
-                    user.setRole(rs.getString("role"));
-                    user.setStatus(rs.getString("status"));
-                    return user;
+                    return u;
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return null;
     }
+
+
+    public boolean updateUserProfile(User u) throws Exception {
+        String sql = """
+        UPDATE users
+        SET full_name = ?,
+            display_name = ?,
+            phone = ?,
+            gender = ?,
+            birth_date = ?,
+            avatar_id = ?
+        WHERE id = ?
+    """;
+
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, u.getUsername());
+            ps.setString(2, u.getDisplayName());
+            ps.setString(3, u.getPhone());
+            ps.setString(4, u.getGender());
+            ps.setDate(5, (Date) u.getBirthDate());
+            ps.setObject(6, u.getAvatarId());
+            ps.setInt(7, u.getId());
+
+            return ps.executeUpdate() > 0;
+        }
+    }
+
     public boolean updateUserInfo(int id, String fullName, String phone) {
         String sql = "UPDATE users SET full_name = ?, phone = ? WHERE id = ?";
         try (Connection conn = DBContext.getConnection();
@@ -223,41 +296,40 @@ public List<User> getAllCustomers() {
     }
     return list;
 }
-    public User getAdminProfile(int adminId) {
-        // JOIN bảng users và addresses để lấy địa chỉ mặc định (isDefault = 1)
-        String sql = "SELECT u.*, a.province, a.district, a.commune, a.detail " +
-                "FROM users u " +
-                "LEFT JOIN addresses a ON u.id = a.user_id " +
-                "WHERE u.id = ? AND (a.isDefault = 1 OR a.isDefault IS NULL)";
+    public User getAdminProfile(int userId) {
+        String sql = """
+        SELECT u.*, i.urlImage
+        FROM users u
+        LEFT JOIN images i ON u.avatar_id = i.id
+        WHERE u.id = ?
+    """;
 
-        try (Connection conn = DBContext.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, adminId);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    User u = new User();
-                    u.setId(rs.getInt("id"));
-                    u.setUsername(rs.getString("full_name"));
-                    u.setEmail(rs.getString("email"));
-                    u.setPhone(rs.getString("phone"));
-                    u.setRole(rs.getString("role"));
-                    u.setCreateAt(rs.getDate("createAt"));
+        try (Connection con = DBContext.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-                    // Tạo đối tượng Address riêng
-                    if (rs.getString("province") != null) {
-                        Address addr = new Address();
-                        addr.setProvince(rs.getString("province"));
-                        addr.setDistrict(rs.getString("district"));
-                        addr.setCommune(rs.getString("commune"));
-                        addr.setDetail(rs.getString("detail"));
-                        u.setAddress(addr); // Gán vào model User
-                    }
-                    return u;
-                }
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setUsername(rs.getString("full_name")); // ✅ SỬA Ở ĐÂY
+                u.setEmail(rs.getString("email"));
+                u.setDisplayName(rs.getString("display_name"));
+                u.setPhone(rs.getString("phone"));
+                u.setGender(rs.getString("gender")); // ✅ CỰC QUAN TRỌNG
+                u.setBirthDate(rs.getDate("birth_date"));
+                u.setAvatarId(rs.getInt("avatar_id"));
+                u.setAvatarUrl(rs.getString("urlImage"));
+                return u;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
+
+
+
 }

@@ -14,7 +14,10 @@ public class User {
     private String phone;
     private Date birthDate;
     private String gender;
-    private int avatarId;       // ID ảnh đại diện (khóa ngoại)
+    private String avatarUrl;
+
+
+    private Integer avatarId;       // ID ảnh đại diện (khóa ngoại)
     private Date createAt;// Giới tính// Ngày sinh
     private Address address;
 
@@ -57,6 +60,14 @@ public class User {
     }
 
     // Getters and Setters
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
     public String getEmail() {
         return email;
     }
@@ -124,8 +135,8 @@ public class User {
     public void setGender(String gender) { this.gender = gender; }
     public Date getCreateAt() { return createAt; }
     public void setCreateAt(Date createAt) { this.createAt = createAt; }
-    public int getAvatarId() { return avatarId; }
-    public void setAvatarId(int avatarId) { this.avatarId = avatarId; }
+    public Integer getAvatarId() { return avatarId; }
+    public void setAvatarId(Integer avatarId) { this.avatarId = avatarId; }
 
     public Date getBirthDate() {
         return birthDate; }

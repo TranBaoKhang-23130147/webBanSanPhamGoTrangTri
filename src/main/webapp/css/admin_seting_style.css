@@ -702,3 +702,39 @@ input:checked + .slider:before {
 .gmail-dropdown:hover .dropdown-content {
     display: block;
 }
+#address-info {
+    margin-bottom: 30px;
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+#address-info h2 {
+    margin-top: 0;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.address-form .form-group input {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 10px 12px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.address-form .form-group input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 1px var(--primary-color);
+}
+
+.address-form .form-actions {
+    text-align: right;
+    margin-top: 15px;
+}

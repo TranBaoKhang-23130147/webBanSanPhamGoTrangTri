@@ -1,344 +1,321 @@
-<%@ page import="model.User" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="user" value="${sessionScope.LOGGED_USER}" />
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>HOME DECOR - CÀI ĐẶT</title>
-    <link rel="icon" type="image/png"  href="img/logo.png" >
+    <%@ page import="model.User" %>
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    <c:set var="user" value="${sessionScope.LOGGED_USER}" />
+    <c:set var="address" value="${user.address}" />
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>HOME DECOR - CÀI ĐẶT</title>
+        <link rel="icon" type="image/png"  href="img/logo.png" >
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/admin_seting_style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="css/admin_seting_style.css">
 
-</head>
-<body>
-<div class="admin-container">
-    <%@ include file="admin_header.jsp" %>
-    <div class="main-wrapper">
-        <%@ include file="admin_sidebar.jsp" %>
+    </head>
+    <body>
+    <div class="admin-container">
+        <%@ include file="admin_header.jsp" %>
+        <div class="main-wrapper">
+            <%@ include file="admin_sidebar.jsp" %>
 
-        <main class="main-content">
-            <div class="settings-layout">
-                <div class="settings-menu">
-                    <ul>
-                        <li><a href="#basic-info">Thông tin cơ bản</a></li>
-                        <li><a href="#password">Mật khẩu</a></li>
-                        <li><a href="#notification">Thông báo</a></li>
-                        <li><a href="#connection">Tài khoản & Kết nối</a></li>
-                        <li><a href="#delete-account">Xóa tài khoản</a></li>
+            <main class="main-content">
+                <div class="settings-layout">
+                    <div class="settings-menu">
+                        <ul>
+                            <li><a href="#basic-info">Thông tin cơ bản</a></li>
+                            <li><a href="#password">Mật khẩu</a></li>
+                            <li><a href="#notification">Thông báo</a></li>
+                            <li><a href="#connection">Tài khoản & Kết nối</a></li>
+                            <li><a href="#delete-account">Xóa tài khoản</a></li>
 
-                    </ul>
-                </div>
-
-                <div class="settings-content">
-
-                    <div class="settings-card" id="basic-info">
-                        <h2>Thông tin cơ bản</h2>
-<%--                        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>--%>
-                        <form action="${pageContext.request.contextPath}/UpdateSettingServlet" method="post">
-                            <div class="form-row">
-                                <div class="form-group half-width">
-                                    <label for="name">Họ và Tên</label>
-                                    <input type="text" name="full_name" value="${user.username}" />
-
-                                </div>
-                                <div class="form-group half-width">
-                                    <label for="email">Email</label>
-                                    <input type="email" id="email" value="${user.email}" readonly>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group half-width">
-                                    <label for="phone">Số điện thoại (Tùy chọn)</label>
-                                    <input type="text" id="phone" name="phone" value="${user.phone}">
-                                </div>
-                                <div class="form-group half-width avatar-group">
-                                    <label>Ảnh đại diện</label>
-                                    <div class="avatar-upload">
-                                        <img src="https://tse4.mm.bing.net/th/id/OIP.JPIlFuxH-s3C3BFPjD3n2wHaHa?w=148&h=180&c=7&r=0&o=7&cb=ucfimgc2&dpr=1.3&pid=1.7&rm=3" alt="Avatar" class="profile-avatar">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="job-title">Chức danh công việc</label>
-                                <input type="text" id="job-title" value="Admin">
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group third-width">
-                                    <label for="country">Địa điểm</label>
-                                    <input type="text" id="country" value="Việt Nam">
-                                </div>
-                                <div class="form-group third-width">
-                                    <label for="city">Thành phố</label>
-                                    <input type="text" id="city" value="Thành phố Hồ Chí Minh">
-                                </div>
-                                <div class="form-group third-width">
-                                    <label for="district">Khu vực</label>
-                                    <input type="text" id="district" value="Thủ Đức">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="address1">Địa chỉ </label>
-                                <input type="text" id="address1" value="Trường Đại học Nông Lâm Tp.Hồ Chí Minh">
-                            </div>
-
-<%--                            <div class="form-row">--%>
-<%--                                <div class="form-group half-width">--%>
-<%--                                    <label for="address2">Địa chỉ 2 (Tùy chọn)</label>--%>
-<%--                                    <input type="text" id="address2" placeholder="Địa chỉ thêm của bạn (nếu có)">--%>
-<%--                                </div>--%>
-<%--                                <div class="form-group half-width">--%>
-<%--                                    <label for="zip-code">Mã bưu chính</label>--%>
-<%--                                    <input type="text" id="zip-code" value="100000">--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                            </div>
-                        </form>
+                        </ul>
                     </div>
 
+                    <div class="settings-content">
 
+                        <div class="settings-card" id="basic-info">
+                            <h2>Thông tin cơ bản</h2>
+                            <form action="${pageContext.request.contextPath}/UpdateSettingServlet" method="post" class="basic-info-form">
 
-                    <div class="settings-card" id="password">
-                        <%
-                            // Lấy thông báo từ request
-                            String successMessage = (String) request.getAttribute("successMessage");
-                            String errorMessage = (String) request.getAttribute("errorMessage");
-                        %>
-                        <h2>Đổi mật khẩu</h2>
-                        <% if (successMessage != null) { %>
-                        <div class="alert alert-success" style="color: green; border: 1px solid green; padding: 10px; margin: 10px 0;">
-                            <strong>Thành công:</strong> <%= successMessage %>
-                        </div>
-                        <% } %>
-                        <% if (errorMessage != null) { %>
-                        <div class="alert alert-danger" style="color: red; border: 1px solid red; padding: 10px; margin: 10px 0;">
-                            <strong>Lỗi:</strong> <%= errorMessage %>
-                        </div>
-                        <% } %>
-                        <form action="${pageContext.request.contextPath}/ChangePasswordServlet" method="post">
-                            <div class="form-group">
-                                <label for="current-password">Mật khẩu hiện tại</label>
-                                <input type="password" id="current-password" name="currentPassword">
-                            </div>
-                            <div class="form-group">
-                                <label for="new-password">Mật khẩu mới</label>
-                                <input type="password" id="new-password" name="newPassword">
-                            </div>
-                            <div class="form-group">
-                                <label for="confirm-password">Nhập lại mật khẩu mới</label>
-                                <input type="password" id="confirm-password" name="confirmPassword">
-                            </div>
+                                <!-- Avatar -->
+                                <c:choose>
+                                    <c:when test="${not empty user.avatarUrl}">
+                                        <img src="${user.avatarUrl}" alt="Avatar" class="profile-avatar">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="img/default-avatar.png" alt="Default Avatar" class="profile-avatar">
+                                    </c:otherwise>
+                                </c:choose>
 
-                            <div class="password-requirements">
-                                <h4>Yêu cầu bảo mật:</h4>
-                                <ul>
-                                    <li>Ít nhất 8 ký tự — càng dài càng tốt</li>
-                                    <li>Ít nhất một ký tự viết thường</li>
-                                    <li>Ít nhất một ký tự viết hoa</li>
-                                    <li>Ít nhất một số, ký hiệu hoặc khoảng trắng</li>
-                                </ul>
-                            </div>
-
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                            </div>
-                        </form>
-                    </div>
-
-
-
-                    <div class="settings-card" id="notification">
-                        <h2>Thông báo</h2>
-
-                        <div class="alert-box">
-                            Chúng tôi cần quyền từ trình duyệt của bạn để hiển thị thông báo. <a href="#">**Yêu cầu quyền**</a>
-                        </div>
-
-                        <div class="notification-table">
-                            <div class="notification-header">
-                                <div class="col-type">Loại</div>
-                                <div class="col-email">Email</div>
-                                <div class="col-browser">Trình duyệt</div>
-                                <div class="col-app">Ứng dụng</div>
-                            </div>
-
-                            <div class="notification-row">
-                                <div class="col-type">Mời dành cho bạn</div>
-                                <div class="col-email"><input type="checkbox"></div>
-                                <div class="col-browser"><input type="checkbox"></div>
-                                <div class="col-app"><input type="checkbox"></div>
-                            </div>
-
-                            <div class="notification-row">
-                                <div class="col-type">Hoạt động tài khoản</div>
-                                <div class="col-email"><input type="checkbox"></div>
-                                <div class="col-browser"><input type="checkbox"></div>
-                                <div class="col-app"><input type="checkbox"></div>
-                            </div>
-
-                            <div class="notification-row">
-                                <div class="col-type">Trình duyệt mới được sử dụng để đăng nhập</div>
-                                <div class="col-email"><input type="checkbox" checked></div>
-                                <div class="col-browser"><input type="checkbox" checked></div>
-                                <div class="col-app"><input type="checkbox" checked></div>
-                            </div>
-                        </div>
-
-                        <div class="schedule-select">
-                            <label for="schedule">Khi nào chúng tôi nên gửi thông báo cho bạn?</label>
-                            <select id="schedule">
-                                <option value="always">Luôn luôn</option>
-                                <option value="daily">Hàng ngày</option>
-                                <option value="weekly">Hàng tuần</option>
-                            </select>
-                            <button class="btn btn-primary">Lưu thay đổi</button>
-                        </div>
-                    </div>
-
-
-
-                    <div class="settings-card" id="connection">
-                        <h2>Tài khoản và Kết nối</h2>
-                        <p class="section-description">Quản lý các dịch vụ bên thứ ba được phép truy cập dữ liệu tài khoản của bạn.</p>
-
-                        <div class="connection-section">
-                            <h3>Tài khoản tích hợp</h3>
-                            <div class="connection-list">
-                                <div class="connection-item">
-                                    <div class="connection-details">
-                                        <i class="fab fa-google"></i>
-                                        <div>
-                                            <h4>Google</h4>
-                                            <p>Lịch và danh bạ</p>
-                                        </div>
+                                <!-- Họ tên & Tên hiển thị -->
+                                <div class="form-row">
+                                    <div class="form-group half-width">
+                                        <label>Họ và tên</label>
+                                        <input type="text" name="full_name" value="${user.username}">
                                     </div>
-                                    <label class="switch">
-                                        <input type="checkbox">
-                                        <span class="slider round"></span>
-                                    </label>
-                                </div>
-                                <div class="connection-item">
-                                    <div class="connection-details">
-                                        <i class="fas fa-tasks"></i>
-                                        <div>
-                                            <h4>Spec</h4>
-                                            <p>Quản lý dự án</p>
-                                        </div>
+                                    <div class="form-group half-width">
+                                        <label>Tên hiển thị</label>
+                                        <input type="text" name="display_name" value="${user.displayName}">
                                     </div>
-                                    <label class="switch">
-                                        <input type="checkbox">
-                                        <span class="slider round"></span>
-                                    </label>
                                 </div>
-                                <div class="connection-item">
-                                    <div class="connection-details">
-                                        <i class="fab fa-slack"></i>
-                                        <div>
-                                            <h4>Slack</h4>
-                                            <p>Liên lạc</p>
-                                        </div>
+
+                                <!-- Email & SĐT -->
+                                <div class="form-row">
+                                    <div class="form-group half-width">
+                                        <label>Email</label>
+                                        <input type="email" value="${user.email}" readonly>
                                     </div>
-                                    <label class="switch">
-                                        <input type="checkbox">
-                                        <span class="slider round"></span>
-                                    </label>
-                                </div>
-                                <div class="connection-item">
-                                    <div class="connection-details">
-                                        <i class="fas fa-envelope-open-text"></i>
-                                        <div>
-                                            <h4>Mailchimp</h4>
-                                            <p>Dịch vụ tiếp thị email</p>
-                                        </div>
+                                    <div class="form-group half-width">
+                                        <label>Số điện thoại</label>
+                                        <input type="text" name="phone" value="${user.phone}">
                                     </div>
-                                    <label class="switch">
-                                        <input type="checkbox">
-                                        <span class="slider round"></span>
-                                    </label>
                                 </div>
+
+                                <!-- Giới tính & Ngày sinh -->
+                                <div class="form-row">
+                                    <div class="form-group half-width">
+                                        <label>Giới tính</label>
+                                        <select name="gender">
+                                            <option value="">-- Chọn --</option>
+                                            <option value="Male"   ${user.gender == 'Male' ? 'selected' : ''}>Nam</option>
+                                            <option value="Female" ${user.gender == 'Female' ? 'selected' : ''}>Nữ</option>
+                                            <option value="Other"  ${user.gender == 'Other' ? 'selected' : ''}>Khác</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group half-width">
+                                        <label>Ngày sinh</label>
+                                        <fmt:formatDate value="${user.birthDate}" pattern="yyyy-MM-dd" var="birth"/>
+                                        <input type="date" name="birth_date" value="${birth}">
+                                    </div>
+                                </div>
+
+                                <!-- ------------------- ĐỊA CHỈ ------------------- -->
+                                <h3>Địa chỉ</h3>
+                                <div class="form-row">
+                                    <div class="form-group full-width">
+                                        <label>Địa chỉ chi tiết</label>
+                                        <input type="text" name="detail"
+                                               value="${address != null ? address.detail : ''}"
+                                               placeholder="Địa chỉ chi tiết" />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group third-width">
+                                        <label>Phường / Xã</label>
+                                        <input type="text" name="commune"
+                                               value="${address != null ? address.commune : ''}"
+                                               placeholder="Phường / Xã" />
+                                    </div>
+                                    <div class="form-group third-width">
+                                        <label>Quận / Huyện</label>
+                                        <input type="text" name="district"
+                                               value="${address != null ? address.district : ''}"
+                                               placeholder="Quận / Huyện" />
+                                    </div>
+                                    <div class="form-group third-width">
+                                        <label>Tỉnh / Thành phố</label>
+                                        <input type="text" name="province"
+                                               value="${address != null ? address.province : ''}"
+                                               placeholder="Tỉnh / Thành phố" />
+                                    </div>
+                                </div>
+
+                                <!-- Nút Lưu -->
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+
+
+                        <div class="settings-card" id="notification">
+                            <h2>Thông báo</h2>
+
+                            <div class="alert-box">
+                                Chúng tôi cần quyền từ trình duyệt của bạn để hiển thị thông báo. <a href="#">**Yêu cầu quyền**</a>
+                            </div>
+
+                            <div class="notification-table">
+                                <div class="notification-header">
+                                    <div class="col-type">Loại</div>
+                                    <div class="col-email">Email</div>
+                                    <div class="col-browser">Trình duyệt</div>
+                                    <div class="col-app">Ứng dụng</div>
+                                </div>
+
+                                <div class="notification-row">
+                                    <div class="col-type">Mời dành cho bạn</div>
+                                    <div class="col-email"><input type="checkbox"></div>
+                                    <div class="col-browser"><input type="checkbox"></div>
+                                    <div class="col-app"><input type="checkbox"></div>
+                                </div>
+
+                                <div class="notification-row">
+                                    <div class="col-type">Hoạt động tài khoản</div>
+                                    <div class="col-email"><input type="checkbox"></div>
+                                    <div class="col-browser"><input type="checkbox"></div>
+                                    <div class="col-app"><input type="checkbox"></div>
+                                </div>
+
+                                <div class="notification-row">
+                                    <div class="col-type">Trình duyệt mới được sử dụng để đăng nhập</div>
+                                    <div class="col-email"><input type="checkbox" checked></div>
+                                    <div class="col-browser"><input type="checkbox" checked></div>
+                                    <div class="col-app"><input type="checkbox" checked></div>
+                                </div>
+                            </div>
+
+                            <div class="schedule-select">
+                                <label for="schedule">Khi nào chúng tôi nên gửi thông báo cho bạn?</label>
+                                <select id="schedule">
+                                    <option value="always">Luôn luôn</option>
+                                    <option value="daily">Hàng ngày</option>
+                                    <option value="weekly">Hàng tuần</option>
+                                </select>
+                                <button class="btn btn-primary">Lưu thay đổi</button>
                             </div>
                         </div>
 
-                        <div class="social-media-section">
-                            <h3>Tài khoản mạng xã hội </h3>
-                            <p class="section-description">Kết nối các tài khoản này giúp bạn dễ dàng kết nối với bạn bè và chia sẻ cập nhật.</p>
-                            <div class="connection-list">
-                                <div class="connection-item">
-                                    <div class="connection-details">
-                                        <i class="fab fa-twitter"></i>
-                                        <div>
-                                            <h4>Twitter</h4>
-                                            <p class="status-disconnected">Chưa kết nối</p>
+
+
+                        <div class="settings-card" id="connection">
+                            <h2>Tài khoản và Kết nối</h2>
+                            <p class="section-description">Quản lý các dịch vụ bên thứ ba được phép truy cập dữ liệu tài khoản của bạn.</p>
+
+                            <div class="connection-section">
+                                <h3>Tài khoản tích hợp</h3>
+                                <div class="connection-list">
+                                    <div class="connection-item">
+                                        <div class="connection-details">
+                                            <i class="fab fa-google"></i>
+                                            <div>
+                                                <h4>Google</h4>
+                                                <p>Lịch và danh bạ</p>
+                                            </div>
                                         </div>
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round"></span>
+                                        </label>
                                     </div>
-                                    <button class="btn btn-secondary">Kết nối</button>
+                                    <div class="connection-item">
+                                        <div class="connection-details">
+                                            <i class="fas fa-tasks"></i>
+                                            <div>
+                                                <h4>Spec</h4>
+                                                <p>Quản lý dự án</p>
+                                            </div>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                    <div class="connection-item">
+                                        <div class="connection-details">
+                                            <i class="fab fa-slack"></i>
+                                            <div>
+                                                <h4>Slack</h4>
+                                                <p>Liên lạc</p>
+                                            </div>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                    <div class="connection-item">
+                                        <div class="connection-details">
+                                            <i class="fas fa-envelope-open-text"></i>
+                                            <div>
+                                                <h4>Mailchimp</h4>
+                                                <p>Dịch vụ tiếp thị email</p>
+                                            </div>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="connection-item">
-                                    <div class="connection-details">
-                                        <i class="fab fa-facebook"></i>
-                                        <div>
-                                            <h4>Facebook</h4>
-                                            <p class="status-disconnected">Chưa kết nối</p>
+                            </div>
+
+                            <div class="social-media-section">
+                                <h3>Tài khoản mạng xã hội </h3>
+                                <p class="section-description">Kết nối các tài khoản này giúp bạn dễ dàng kết nối với bạn bè và chia sẻ cập nhật.</p>
+                                <div class="connection-list">
+                                    <div class="connection-item">
+                                        <div class="connection-details">
+                                            <i class="fab fa-twitter"></i>
+                                            <div>
+                                                <h4>Twitter</h4>
+                                                <p class="status-disconnected">Chưa kết nối</p>
+                                            </div>
                                         </div>
+                                        <button class="btn btn-secondary">Kết nối</button>
                                     </div>
-                                    <button class="btn btn-secondary">Kết nối</button>
-                                </div>
-                                <div class="connection-item">
-                                    <div class="connection-details">
-                                        <i class="fab fa-linkedin-in"></i>
-                                        <div>
-                                            <h4>LinkedIn</h4>
-                                            <p class="status-disconnected">Chưa kết nối</p>
+                                    <div class="connection-item">
+                                        <div class="connection-details">
+                                            <i class="fab fa-facebook"></i>
+                                            <div>
+                                                <h4>Facebook</h4>
+                                                <p class="status-disconnected">Chưa kết nối</p>
+                                            </div>
                                         </div>
+                                        <button class="btn btn-secondary">Kết nối</button>
                                     </div>
-                                    <button class="btn btn-secondary">Kết nối</button>
-                                </div>
-                                <div class="connection-item">
-                                    <div class="connection-details">
-                                        <i class="fab fa-google"></i>
-                                        <div>
-                                            <h4>Google</h4>
-                                            <p class="status-disconnected">Chưa kết nối</p>
+                                    <div class="connection-item">
+                                        <div class="connection-details">
+                                            <i class="fab fa-linkedin-in"></i>
+                                            <div>
+                                                <h4>LinkedIn</h4>
+                                                <p class="status-disconnected">Chưa kết nối</p>
+                                            </div>
                                         </div>
+                                        <button class="btn btn-secondary">Kết nối</button>
                                     </div>
-                                    <button class="btn btn-secondary">Kết nối</button>
+                                    <div class="connection-item">
+                                        <div class="connection-details">
+                                            <i class="fab fa-google"></i>
+                                            <div>
+                                                <h4>Google</h4>
+                                                <p class="status-disconnected">Chưa kết nối</p>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-secondary">Kết nối</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-<!--                    <div class="settings-card" id="connection2">-->
-<!--                        <h2>Xóa tài khoản</h2>-->
+    <!--                    <div class="settings-card" id="connection2">-->
+    <!--                        <h2>Xóa tài khoản</h2>-->
 
-                    <div class="settings-card" id="delete-account">
-                        <h2>Xóa tài khoản</h2>
-                        <p class="section-description">
-                            Hành động này sẽ xóa vĩnh viễn tất cả dữ liệu tài khoản, bao gồm hồ sơ, cài đặt, và lịch sử hoạt động. Không thể hoàn tác.
-                        </p>
+                        <div class="settings-card" id="delete-account">
+                            <h2>Xóa tài khoản</h2>
+                            <p class="section-description">
+                                Hành động này sẽ xóa vĩnh viễn tất cả dữ liệu tài khoản, bao gồm hồ sơ, cài đặt, và lịch sử hoạt động. Không thể hoàn tác.
+                            </p>
 
-                        <div class="delete-account-section">
-                            <div class="delete-account-info">
-                                <h4>Bạn có chắc chắn muốn xóa tài khoản?</h4>
-                                <p>Sau khi xóa, bạn sẽ mất quyền truy cập vào tất cả các tính năng quản trị. Vui lòng sao lưu dữ liệu quan trọng trước khi tiếp tục.</p>
+                            <div class="delete-account-section">
+                                <div class="delete-account-info">
+                                    <h4>Bạn có chắc chắn muốn xóa tài khoản?</h4>
+                                    <p>Sau khi xóa, bạn sẽ mất quyền truy cập vào tất cả các tính năng quản trị. Vui lòng sao lưu dữ liệu quan trọng trước khi tiếp tục.</p>
+                                </div>
+                                <button type="button" class="btn btn-danger">Xóa tài khoản</button>
                             </div>
-                            <button type="button" class="btn btn-danger">Xóa tài khoản</button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
-</div>
-<script src="js/admin_setting.js"></script>
-</body>
+    <script src="js/admin_setting.js"></script>
+    </body>
 
-</html>
+    </html>
