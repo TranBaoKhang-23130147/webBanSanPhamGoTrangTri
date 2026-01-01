@@ -379,20 +379,17 @@ public class ProductDao {
 
     public Integer getCategoryIdByName(String key) {
         String sql = """
-        SELECT id
-        FROM categories
-        WHERE LOWER(REPLACE(category_name,'đ','d'))
-              LIKE ?
-        LIMIT 1
+    SELECT id
+    FROM categories
+    WHERE LOWER(REPLACE(REPLACE(category_name,'Đ','D'),'đ','d'))
+          LIKE ?
+    LIMIT 1
     """;
 
         try (Connection con = getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            String name = key
-                    .replace("-", " ")
-                    .toLowerCase();
-
+            String name = key.replace("-", " ").toLowerCase();
             ps.setString(1, "%" + name + "%");
 
             ResultSet rs = ps.executeQuery();

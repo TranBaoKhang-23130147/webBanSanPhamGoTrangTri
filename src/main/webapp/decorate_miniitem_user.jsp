@@ -1,73 +1,93 @@
-
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
     <title>HOME DECOR - SẢN PHẨM</title>
-    <link rel="icon" type="image/png" sizes="9992x9992" href="img/p.png" class="lo">
+    <link rel="icon" type="image/png" href="img/logo.png" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="css/product_all_style.css">
+    <link rel="stylesheet" href="css/decorate_style.css">
     <link
             href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
             rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/search_style.css">
 
 </head>
 <body>
-<jsp:include page="header.jsp"></jsp:include>
-
-<section class="categories">
-<%--    <h2>Danh mục nổi bật</h2>--%>
-    <h2 class="titleProduct">DANH MUC SAN PHAM</h2>
-
-    <div class="category-list">
-        <div class="category-card"><i class="fas fa-couch"></i><p>Phòng khách</p><span>124 sản phẩm</span></div>
-        <div class="category-card"><i class="fas fa-bed"></i><p>Phòng ngủ</p><span>89 sản phẩm</span></div>
-        <div class="category-card"><i class="fas fa-utensils"></i><p>Phòng bếp</p><span>56 sản phẩm</span></div>
-        <div class="category-card"><i class="fas fa-lightbulb"></i><p>Phòng làm việc</p><span>77 sản phẩm</span></div>
-        <div class="category-card"><i class="fas fa-paint-brush"></i><p>Đồ trang trí mini</p><span>102 sản phẩm</span></div>
-        <div class="category-card"><i class="fas fa-chair"></i><p>Quà lưu niệm</p><span>65 sản phẩm</span></div>
+<div id="header">
+    <div id="logo"><img src="img/logo.png" class="image"/>
+        <div class="brand"> <div id="name-web">HOME DECOR</div>
+            <div id="sub-slogan">Nét mộc trong từng góc nhỏ</div></div>
     </div>
 
-<%--    <div class="overlay-card " style="background-image: url('https://i.pinimg.com/1200x/4d/16/07/4d16076bd71f77a7b5f69963e875cac6.jpg');">--%>
-<%--        <h3>TRANG TRÍ PHÒNG KHÁCH</h3>--%>
-<%--        <a href="decorate_livingroom_user.html"><button >Xem chi tiết</button></a>--%>
-<%--    </div>--%>
-<%--    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/736x/22/bc/ce/22bcce5d6c7b7412d817bb51a6daaf23.jpg');">--%>
-<%--        <h3>TRANG TRÍ PHÒNG NGỦ</h3>--%>
-<%--        <a href="decorate_bedroom_user.jsp"><button>Xem chi tiết</button></a>--%>
-<%--    </div>--%>
-<%--    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/1200x/dc/29/25/dc2925db1bfab4c46a2c1392247fa682.jpg');">--%>
-<%--        <h3>TRANG TRÍ PHÒNG BẾP</h3>--%>
-<%--        <a href="decorate_kitchen_user.jsp"><button>Xem chi tiết</button></a>--%>
-<%--    </div>--%>
-<%--    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/1200x/53/82/9a/53829ac906f0539b852666eb726f7278.jpg');">--%>
-<%--        <h3>TRANG TRÍ PHÒNG LÀM VIỆC</h3>--%>
-<%--        <a href="decorate_homeoffice_user.jsp"><button>Xem chi tiết</button></a>--%>
-<%--    </div>--%>
-<%--    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/1200x/b7/f1/eb/b7f1eb1afde268f136926ca69c3b53fd.jpg');">--%>
-<%--        <h3>ĐỒ TRANG TRÍ MINI</h3>--%>
-<%--        <a href="decorate_miniitem_user.jsp"><button>Xem chi tiết</button></a>--%>
-<%--    </div>--%>
-<%--    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/1200x/b2/84/fa/b284fab9541221dff3b9e5f9b49af1ad.jpg');">--%>
-<%--        <h3>QUÀ LƯU NIỆM</h3>--%>
-<%--        <a href="souvenirs_user.html"><button>Xem chi tiết</button></a>--%>
-<%--    </div>--%>
-</section>
-<section class="product-all">
-    <h2 class="titleProduct">TẤT CẢ SẢN PHẨM</h2>
-    <div class="product-container">
-        <form action="ProductFilterServlet" method="get">
-            <input type="hidden" name="page" value="all">
+    <nav class="menu-bar">
 
+        <a class="menu" id="home" href="homepage_user.jsp"> TRANG CHỦ</a>
+        <div class="menu product-menu">
+            <a id="product" href="product_all_user.jsp">SẢN PHẨM</a>
+            <div class="submenu">
+                <a href="LivingroomDecorateServlet?category=trang-tri-phong-khach">
+                    TRANG TRÍ PHÒNG KHÁCH
+                </a>
+                <a href="BedroomDecorateServlet?category=trang-tri-phong-ngu">TRANG TRÍ PHÒNG NGỦ</a>
+                <a href="KitchenDecorateServlet?category=trang-tri-phong-bep">TRANG TRÍ PHÒNG BẾP</a>
+                <a href="HomeofficeDecorateServlet?category=trang-tri-phong-lam-viec">TRANG TRÍ PHÒNG LÀM VIỆC</a>
+                <a href="MiniitemDecorateServlet?category=do-trang-tri-mini">ĐỒ TRANG TRÍ MINI</a>
+                <a href="html/souvenirs_user.html">QUÀ LƯU NIỆM</a>
+            </div>
+        </div>
+        <a class="menu" id=" " href="purchasing_policy_user.jsp" >CHÍNH SÁCH MUA HÀNG</a>
+
+        <a class="menu" id="introduce" href="introduce_user.jsp" >GIỚI THIỆU</a>
+        <a class="menu" id="contact" href="contact_user.jsp">LIÊN HỆ</a>
+
+
+    </nav>
+    <div class="icons">
+        <a class="nav_item" href="html/shopping-cart.html" id="cart-link" >
+            <i class="fas fa-shopping-cart"></i>
+        </a>
+
+        <a class="nav-item" href="html/search.html" id="search-link">
+            <i class="fas fa-search"></i>
+        </a>
+
+        <div class="user-login">
+            <i class="fas fa-user"></i>
+            <div class="user">
+                <a class="nav_item" href="mypage_user.jsp" id="login">Trang của tôi</a>
+                <a class="nav-item" href="homepage.html" id="register">Đăng xuất</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<section class="banner-product">
+
+    <img
+            src="https://i.pinimg.com/1200x/b7/f1/eb/b7f1eb1afde268f136926ca69c3b53fd.jpg"
+            alt="Ảnh trang trí MINI"
+            class="banner-image"
+    />
+    <div class="banner-overlay">
+        <div class="banner-content">
+            <h2>ĐỒ TRANG TRÍ MINI</h2>
+            <p>Những món decor nhỏ xinh làm bừng sáng mọi không gian sống.</p>
+            <button id="scrollToProducts">Khám Phá Ngay</button>
+        </div>
+    </div>
+</section>
+<section id="productSection">
+<!--    <h3 class="titleProduct">Sản phẩm trang trí nhỏ</h3>-->
+    <div class="product-container">
+
+        <form action="ProductFilterServlet" method="get">
+            <input type="hidden" name="page" value="miniitem">
+            <input type="hidden" name="category" value="do-trang-tri-mini">
             <aside class="filter-sidebar">
                 <h3>Bộ lọc</h3>
 
@@ -89,6 +109,7 @@
                     <label><input type="checkbox" name="price" value="4"> 5 - 10 triệu</label>
                     <label><input type="checkbox" name="price" value="5"> Trên 10 triệu</label>
                 </div>
+
 
                 <div class="filter-group">
                     <h4>Đánh giá</h4>
@@ -118,13 +139,13 @@
                         <i class="ri-star-s-fill rating"></i>
                     </label>
                 </div>
-
                 <br><br>
                 <!-- 🔥 NÚT LỌC BẮT BUỘC -->
                 <button type="submit">LỌC SẢN PHẨM</button>
             </aside>
         </form>
-        <div class="products">
+
+        <div class="product">
             <c:forEach items="${listP}" var="p">
                 <div class="product-card">
                     <a href="detail?id=${p.id}" class="product-link">
@@ -165,6 +186,7 @@
 <div class="footer">
     <div class="footer-container">
 
+
         <div class="footer-col">
             <h3>Về chúng tôi</h3>
 
@@ -185,30 +207,29 @@
 
         <div class="footer-col">
             <h3>Chính sách</h3>
-            <a href="../introduce_user.jsp">Về tụi mình</a>
-            <a href="../purchasing_policy_user.jsp">Chính sách Thanh toán</a>
-            <a href="../purchasing_policy_user.jsp">Chính sách Giao hàng</a>
-            <a href="../purchasing_policy_user.jsp">Chính sách Đổi trả</a>
+            <a href="introduce_user.jsp">Về tụi mình</a>
+            <a href="purchasing_policy_user.jsp">Chính sách Thanh toán</a>
+            <a href="purchasing_policy_user.jsp">Chính sách Giao hàng</a>
+            <a href="purchasing_policy_user.jsp">Chính sách Đổi trả</a>
         </div>
 
 
         <div class="footer-col">
             <h3>Hỗ trợ khách hàng</h3>
-            <a href="product_all_user.html">Tất cả sản phẩm</a>
+            <a href="product_all_user.jsp">Tất cả sản phẩm</a>
         </div>
 
 
         <div class="footer-col">
             <h3>Liên kiết nhanh</h3>
-            <a href="../homepage_user.jsp">Trang chủ</a>
-            <a href="../purchasing_policy_user.jsp">Chính sách mua hàng</a>
-            <a href="../introduce_user.jsp">Giới thiệu</a>
-            <a href="../contact_user.jsp">Liên hệ</a>
+            <a href="homepage_user.jsp">Trang chủ</a>
+            <a href="purchasing_policy_user.jsp">Chính sách mua hàng</a>
+            <a href="introduce_user.jsp">Giới thiệu</a>
+            <a href="contact_user.jsp">Liên hệ</a>
         </div>
 
     </div>
 </div>
-
 </body>
 <script src="js/decorate.js"></script>
 </html>
