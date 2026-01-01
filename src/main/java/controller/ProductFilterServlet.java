@@ -57,6 +57,9 @@ public class ProductFilterServlet extends HttpServlet {
             if ("homeoffice".equals(page)){
                 targetJsp = "decorate_homeoffice_user.jsp";
             }
+            if ("miniitem".equals(page)){
+                targetJsp = "decorate_miniitem_user.jsp";
+            }
             request.getRequestDispatcher(targetJsp)
                     .forward(request, response);
         }
