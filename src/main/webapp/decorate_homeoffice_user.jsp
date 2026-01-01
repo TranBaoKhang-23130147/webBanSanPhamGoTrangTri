@@ -16,54 +16,55 @@
 
 </head>
 <body>
-<div id="header">
-    <div id="logo"><img src="img/logo.png" class="image"/>
-        <div class="brand"> <div id="name-web">HOME DECOR</div>
-            <div id="sub-slogan">Nét mộc trong từng góc nhỏ</div></div>
-    </div>
+<jsp:include page="header.jsp"></jsp:include>
+<%--<div id="header">--%>
+<%--    <div id="logo"><img src="img/logo.png" class="image"/>--%>
+<%--        <div class="brand"> <div id="name-web">HOME DECOR</div>--%>
+<%--            <div id="sub-slogan">Nét mộc trong từng góc nhỏ</div></div>--%>
+<%--    </div>--%>
 
-    <nav class="menu-bar">
+<%--    <nav class="menu-bar">--%>
 
-        <a class="menu" id="home" href="homepage_user.jsp"> TRANG CHỦ</a>
-        <div class="menu product-menu">
-            <a id="product" href="product_all_user.jsp">SẢN PHẨM</a>
-            <div class="submenu">
-                <a href="LivingroomDecorateServlet?category=trang-tri-phong-khach">
-                    TRANG TRÍ PHÒNG KHÁCH
-                </a>
-                <a href="BedroomDecorateServlet?category=trang-tri-phong-ngu">TRANG TRÍ PHÒNG NGỦ</a>
-                <a href="KitchenDecorateServlet?category=trang-tri-phong-bep">TRANG TRÍ PHÒNG BẾP</a>
-                <a href="HomeofficeDecorateServlet?category=trang-tri-phong-lam-viec">TRANG TRÍ PHÒNG LÀM VIỆC</a>
-                <a href="MiniitemDecorateServlet?category=do-trang-tri-mini">ĐỒ TRANG TRÍ MINI</a>
-                <a href="SouvenirServlet?category=qua-luu-niem">QUÀ LƯU NIỆM</a>
-            </div>
-        </div>
-        <a class="menu" id=" " href="purchasing_policy_user.jsp" >CHÍNH SÁCH MUA HÀNG</a>
-        <a class="menu" id="introduce" href="introduce_user.jsp" >GIỚI THIỆU</a>
+<%--        <a class="menu" id="home" href="homepage_user.jsp"> TRANG CHỦ</a>--%>
+<%--        <div class="menu product-menu">--%>
+<%--            <a id="product" href="product_all_user.jsp">SẢN PHẨM</a>--%>
+<%--            <div class="submenu">--%>
+<%--                <a href="LivingroomDecorateServlet?category=trang-tri-phong-khach">--%>
+<%--                    TRANG TRÍ PHÒNG KHÁCH--%>
+<%--                </a>--%>
+<%--                <a href="BedroomDecorateServlet?category=trang-tri-phong-ngu">TRANG TRÍ PHÒNG NGỦ</a>--%>
+<%--                <a href="KitchenDecorateServlet?category=trang-tri-phong-bep">TRANG TRÍ PHÒNG BẾP</a>--%>
+<%--                <a href="HomeofficeDecorateServlet?category=trang-tri-phong-lam-viec">TRANG TRÍ PHÒNG LÀM VIỆC</a>--%>
+<%--                <a href="MiniitemDecorateServlet?category=do-trang-tri-mini">ĐỒ TRANG TRÍ MINI</a>--%>
+<%--                <a href="SouvenirServlet?category=qua-luu-niem">QUÀ LƯU NIỆM</a>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <a class="menu" id=" " href="purchasing_policy_user.jsp" >CHÍNH SÁCH MUA HÀNG</a>--%>
+<%--        <a class="menu" id="introduce" href="introduce_user.jsp" >GIỚI THIỆU</a>--%>
 
-        <a class="menu" id="contact" href="contact_user.jsp">LIÊN HỆ</a>
+<%--        <a class="menu" id="contact" href="contact_user.jsp">LIÊN HỆ</a>--%>
 
 
-    </nav>
-    <div class="icons">
-        <a class="nav_item" href="html/shopping-cart.html" id="cart-link" >
-            <i class="fas fa-shopping-cart"></i>
-        </a>
+<%--    </nav>--%>
+<%--    <div class="icons">--%>
+<%--        <a class="nav_item" href="html/shopping-cart.html" id="cart-link" >--%>
+<%--            <i class="fas fa-shopping-cart"></i>--%>
+<%--        </a>--%>
 
-        <a class="nav-item" href="html/search.html" id="search-link">
-            <i class="fas fa-search"></i>
-        </a>
+<%--        <a class="nav-item" href="html/search.html" id="search-link">--%>
+<%--            <i class="fas fa-search"></i>--%>
+<%--        </a>--%>
 
-        <div class="user-login">
-            <i class="fas fa-user"></i>
-            <div class="user">
-                <a class="nav_item" href="mypage_user.jsp" id="login">Trang của tôi</a>
-                <a class="nav-item" href="homepage.html" id="register">Đăng xuất</a>
-            </div>
+<%--        <div class="user-login">--%>
+<%--            <i class="fas fa-user"></i>--%>
+<%--            <div class="user">--%>
+<%--                <a class="nav_item" href="mypage_user.jsp" id="login">Trang của tôi</a>--%>
+<%--                <a class="nav-item" href="homepage.html" id="register">Đăng xuất</a>--%>
+<%--            </div>--%>
 
-        </div>
-    </div>
-</div>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
 
 <section class="banner-product">
 
