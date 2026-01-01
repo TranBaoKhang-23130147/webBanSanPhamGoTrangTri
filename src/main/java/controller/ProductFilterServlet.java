@@ -60,6 +60,9 @@ public class ProductFilterServlet extends HttpServlet {
             if ("miniitem".equals(page)){
                 targetJsp = "decorate_miniitem_user.jsp";
             }
+            if ("sourvenir".equals(page)){
+                targetJsp = "sourvenirs_user.jsp";
+            }
             request.getRequestDispatcher(targetJsp)
                     .forward(request, response);
         }
