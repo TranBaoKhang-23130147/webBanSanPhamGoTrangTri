@@ -59,7 +59,7 @@
 <%--    </div>--%>
 <%--    <div class="overlay-card" style="background-image: url('https://i.pinimg.com/1200x/b2/84/fa/b284fab9541221dff3b9e5f9b49af1ad.jpg');">--%>
 <%--        <h3>QUÀ LƯU NIỆM</h3>--%>
-<%--        <a href="souvenirs_user.html"><button>Xem chi tiết</button></a>--%>
+<%--        <a href="souvenirs_user.jsp"><button>Xem chi tiết</button></a>--%>
 <%--    </div>--%>
 </section>
 <section class="product-all">

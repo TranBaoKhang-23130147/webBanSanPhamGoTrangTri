@@ -31,7 +31,7 @@
                 <a href="KitchenDecorateServlet?category=trang-tri-phong-bep">TRANG TRÍ PHÒNG BẾP</a>
                 <a href="HomeofficeDecorateServlet?category=trang-tri-phong-lam-viec">TRANG TRÍ PHÒNG LÀM VIỆC</a>
                 <a href="MiniitemDecorateServlet?category=do-trang-tri-mini">ĐỒ TRANG TRÍ MINI</a>
-                <a href="souvenirs_user.html">QUÀ LƯU NIỆM</a>
+                <a href="SourvinerServlet?category=qua-luu-niem">QUÀ LƯU NIỆM</a>
             </div>
         </div>
         <div class="menu service">CHÍNH SÁCH MUA HÀNG

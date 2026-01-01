@@ -28,12 +28,14 @@
         <div class="menu product-menu">
             <a id="product" href="product_all_user.html">SẢN PHẨM</a>
             <div class="submenu">
-                <a href="decorate_livingroom_user.jsp">TRANG TRÍ PHÒNG KHÁCH</a>
-                <a href="decorate_bedroom_user.jsp">TRANG TRÍ PHÒNG NGỦ</a>
-                <a href="decorate_kitchen_user.jsp">TRANG TRÍ PHÒNG BẾP</a>
-                <a href="decorate_homeoffice_user.jsp">TRANG TRÍ PHÒNG LÀM VIỆC</a>
-                <a href="decorate_miniitem_user.jsp">ĐỒ TRANG TRÍ MINI</a>
-                <a href="souvenirs_user.html">QUÀ LƯU NIỆM</a>
+                <a href="LivingroomDecorateServlet?category=trang-tri-phong-khach">
+                    TRANG TRÍ PHÒNG KHÁCH
+                </a>
+                <a href="BedroomDecorateServlet?category=trang-tri-phong-ngu">TRANG TRÍ PHÒNG NGỦ</a>
+                <a href="KitchenDecorateServlet?category=trang-tri-phong-bep">TRANG TRÍ PHÒNG BẾP</a>
+                <a href="HomeofficeDecorateServlet?category=trang-tri-phong-lam-viec">TRANG TRÍ PHÒNG LÀM VIỆC</a>
+                <a href="MiniitemDecorateServlet?category=do-trang-tri-mini">ĐỒ TRANG TRÍ MINI</a>
+                <a href="SouvenirServlet?category=qua-luu-niem">QUÀ LƯU NIỆM</a>
             </div>
         </div>
         <a class="menu" id=" " href="purchasing_policy_user.html" >CHÍNH SÁCH MUA HÀNG</a>

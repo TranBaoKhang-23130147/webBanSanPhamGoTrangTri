@@ -38,7 +38,7 @@
 <%--                <a href="html/decorate_kitchen_user.jsp">TRANG TRÍ PHÒNG BẾP</a>--%>
 <%--                <a href="html/decorate_homeoffice_user.jsp">TRANG TRÍ PHÒNG LÀM VIỆC</a>--%>
 <%--                <a href="html/decorate_miniitem_user.jsp">ĐỒ TRANG TRÍ MINI</a>--%>
-<%--                <a href="html/souvenirs_user.html">QUÀ LƯU NIỆM</a>--%>
+<%--                <a href="html/souvenirs_user.jsp">QUÀ LƯU NIỆM</a>--%>
 <%--            </div>--%>
 <%--        </div>--%>
 <%--        <a class="menu" id=" " href="purchasing_policy_user.jsp" >CHÍNH SÁCH MUA HÀNG</a>--%>
