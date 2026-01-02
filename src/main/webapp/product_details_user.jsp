@@ -49,12 +49,11 @@
         <h2 class="product-title">${p.nameProduct}</h2>
         <div class="rating-price-wrapper">
             <div class="rating">
-                <%-- Hiển thị sao dựa trên số điểm trung bình --%>
                 <c:forEach begin="1" end="5" var="i">
-                    <i class="${i <= p.averageRating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
+                    <i class="${i <= p.averageRating ? 'ri-star-s-fill' : 'ri-star-s-line'}" style="color: #ffcc00;"></i>
                 </c:forEach>
-                <span class="rating-text">${p.averageRating}</span>
-                <span class="review-count">| ${p.totalReviews} đánh giá</span>
+                <span>(<fmt:formatNumber value="${p.averageRating}" maxFractionDigits="1"/>)</span>
+                <span>| ${p.totalReviews} đánh giá</span>
             </div>
             <div class="product-price-section">
                 <%-- Hiển thị giá (Nếu có biến thể thì lấy giá biến thể đầu tiên làm mặc định) --%>
@@ -71,26 +70,42 @@
         </ul>
 
         <div class="product-options">
-            <%-- Phần hiển thị Màu sắc --%>
-                <div class="color-select">
-                    <p>Màu Sắc:</p>
-                    <c:forEach var="variant" items="${p.variants}" varStatus="status">
-                        <button class="color-btn ${status.first ? 'active' : ''}"
-                                style="background-color: ${variant.color.colorCode}; border: 1px solid #ddd;">
-                                <%-- Nếu bạn muốn hiện cả chữ thì để dòng dưới, nếu chỉ muốn hiện ô màu thì xóa đi --%>
-                                ${variant.color.colorName}
-                        </button>
+            <div class="color-select option-group">
+                <p>Màu Sắc:</p>
+                <div class="button-list">
+                    <c:set var="usedColors" value="" />
+                    <c:forEach var="v" items="${p.variants}">
+                        <c:if test="${!usedColors.contains(v.color.id.toString())}">
+                            <button type="button"
+                                    class="variant-btn color-btn"
+                                    data-color-id="${v.color.id}"
+                                    onclick="selectColor('${v.color.id}')"
+                                    style="background-color: ${not empty v.color.colorCode ? v.color.colorCode : '#ccc'}; color: #fff; border: 1px solid #ddd;">
+                                    ${not empty v.color.colorName ? v.color.colorName : 'Chưa có tên'}
+                            </button>
+                            <c:set var="usedColors" value="${usedColors},${v.color.id}" />
+                        </c:if>
                     </c:forEach>
                 </div>
+            </div>
 
-                <div class="capacity-select option-group">
-                    <p>Kích thước:</p>
-                    <c:forEach var="variant" items="${p.variants}" varStatus="status">
-                        <button class="${status.first ? 'active' : ''}">
-                                ${variant.size.size_name} <%-- Gọi thông qua object size --%>
-                        </button>
+            <div class="capacity-select option-group">
+                <p>Kích thước:</p>
+                <div class="button-list">
+                    <c:set var="usedSizes" value="" />
+                    <c:forEach var="v" items="${p.variants}">
+                        <c:if test="${!usedSizes.contains(v.size.id.toString())}">
+                            <button type="button"
+                                    class="variant-btn size-btn"
+                                    data-size-id="${v.size.id}"
+                                    onclick="selectSize('${v.size.id}')">
+                                    ${v.size.size_name}
+                            </button>
+                            <c:set var="usedSizes" value="${usedSizes},${v.size.id}" />
+                        </c:if>
                     </c:forEach>
                 </div>
+            </div>
         </div>
 
         <div class="purchase-actions">
@@ -143,67 +158,161 @@
     </div>
 </div>
 <section class="review-section">
+    <h2 class="review-title">Đánh giá sản phẩm</h2>
 
-    <h2 class="review-title">Đánh giá</h2>
-
-    <!-- TỔNG QUAN ĐÁNH GIÁ -->
     <div class="review-summary">
         <div class="score-box">
             <div class="rating">
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-
-                <span>(${p.averageRating})</span>
+                <%-- Sao cho điểm trung bình tổng --%>
+                <c:forEach begin="1" end="5" var="i">
+                    <i class="${i <= p.averageRating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
+                </c:forEach>
+                <span style="font-size: 20px; font-weight: bold; margin-left: 10px;">
+            ${p.averageRating > 0 ? p.averageRating : '0.0'} / 5
+        </span>
             </div>
-            <p>Tổng ${p.reviewList.size()} đánh giá của khách hàng</p>
+            <%-- CẬP NHẬT DÒNG NÀY --%>
+            <p>Tổng <strong>${p.reviewList.size()}</strong> đánh giá từ khách hàng</p>
         </div>
 
         <div class="score-bars">
-            <div class="bar-item"><span>5 sao</span><div class="bar"><div style="width:85%"></div></div></div>
-            <div class="bar-item"><span>4 sao</span><div class="bar"><div style="width:10%"></div></div></div>
-            <div class="bar-item"><span>3 sao</span><div class="bar"><div style="width:3%"></div></div></div>
-            <div class="bar-item"><span>2 sao</span><div class="bar"><div style="width:1%"></div></div></div>
-            <div class="bar-item"><span>1 sao</span><div class="bar"><div style="width:1%"></div></div></div>
+            <%-- Phần này thường cần logic tính % từ Servlet, tạm thời để hiển thị --%>
+            <div class="bar-item"><span>5 sao</span><div class="bar"><div style="width:${p.totalReviews > 0 ? (count5/p.totalReviews)*100 : 0}%"></div></div></div>
+            <div class="bar-item"><span>4 sao</span><div class="bar"><div style="width:${p.totalReviews > 0 ? (count4/p.totalReviews)*100 : 0}%"></div></div></div>
+            <div class="bar-item"><span>3 sao</span><div class="bar"><div style="width:0%"></div></div></div>
+            <div class="bar-item"><span>2 sao</span><div class="bar"><div style="width:0%"></div></div></div>
+            <div class="bar-item"><span>1 sao</span><div class="bar"><div style="width:0%"></div></div></div>
         </div>
     </div>
 
-    <!-- LỌC ĐÁNH GIÁ -->
     <div class="review-filter">
-        <label>Lọc đánh giá: </label>
-        <select>
-            <option>Tất cả</option>
-            <option>5 sao</option>
-            <option>4 sao</option>
-            <option>3 sao</option>
-            <option>2 sao</option>
-            <option>1 sao</option>
+        <label>Lọc xem theo: </label>
+        <select onchange="filterReviews(this.value)">
+            <option value="all">Tất cả đánh giá</option>
+            <option value="5">5 sao</option>
+            <option value="4">4 sao</option>
+            <option value="3">3 sao</option>
+            <option value="2">2 sao</option>
+            <option value="1">1 sao</option>
         </select>
     </div>
 
-    <!-- LIST REVIEW -->
     <div class="review-list">
-        <c:forEach var="rev" items="${p.reviewList}">
-            <div class="review-item">
-                <div class="review-user">
-                    <img src="img/default-avatar.png" class="avatar">
-                    <div>
-                        <h4>Người dùng #${rev.userId}</h4>
-                        <div class="rating stars small">
-                            <c:forEach begin="1" end="5" var="i">
-                                <i class="${i <= rev.rating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
-                            </c:forEach>
+        <c:choose>
+            <c:when test="${not empty p.reviewList}">
+                <c:forEach var="rev" items="${p.reviewList}">
+                    <div class="review-item">
+                        <div class="review-user">
+                            <img src="img/default-avatar.png" class="avatar" alt="User">
+                            <div>
+                                <h4>${userNames[rev.userId]}</h4>
+                                <div class="rating stars small">
+                                        <%-- SỬA TẠI ĐÂY: Dùng rev.rating cho khớp với Model Reviews của bạn --%>
+                                    <c:forEach begin="1" end="5" var="i">
+                                        <i class="${i <= rev.rating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
+                                    </c:forEach>
+
+                                        <%-- Dòng này ĐÚNG RỒI: Khớp với biến createAt trong Model --%>
+                                    <span class="review-date" style="font-size: 12px; color: #999; margin-left: 10px;">
+                                    <fmt:formatDate value="${rev.createAt}" pattern="dd/MM/yyyy" />
+                                </span>
+                                </div>
+                            </div>
                         </div>
+                        <p class="review-text">${rev.comment}</p>
                     </div>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <div style="text-align: center; padding: 40px; color: #888;">
+                    <i class="ri-chat-history-line" style="font-size: 48px;"></i>
+                    <p>Sản phẩm này chưa có đánh giá nào. Hãy là người đầu tiên!</p>
                 </div>
-                <p class="review-text">${rev.comment}</p>
-            </div>
-        </c:forEach>
+            </c:otherwise>
+        </c:choose>
     </div>
 </section>
 
 <jsp:include page="footer.jsp"></jsp:include>
+<script>
+    // 1. Chuyển dữ liệu biến thể từ Java sang JavaScript JSON
+    const allVariants = [
+        <c:forEach var="v" items="${p.variants}" varStatus="status">
+        {
+            id: "${v.id}",
+            colorId: "${v.color.id}",
+            sizeId: "${v.size.id}",
+            price: ${v.variant_price}
+        }${!status.last ? ',' : ''}
+        </c:forEach>
+    ];
+
+    let selectedColorId = null;
+    let selectedSizeId = null;
+
+    function selectColor(colorId) {
+        // Nếu nhấn lại chính nó thì bỏ chọn
+        selectedColorId = (selectedColorId === colorId) ? null : colorId;
+        updateUI();
+    }
+
+    function selectSize(sizeId) {
+        selectedSizeId = (selectedSizeId === sizeId) ? null : sizeId;
+        updateUI();
+    }
+
+    function updateUI() {
+        // --- Xử lý class Active cho các nút ---
+        document.querySelectorAll('.color-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-color-id') === selectedColorId);
+        });
+        document.querySelectorAll('.size-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-size-id') === selectedSizeId);
+        });
+
+        // --- Logic Disable: Kiểm tra tính hợp lệ ---
+
+        // Kiểm tra các nút Size dựa trên Color đang chọn
+        document.querySelectorAll('.size-btn').forEach(btn => {
+            const sizeId = btn.getAttribute('data-size-id');
+            if (selectedColorId) {
+                // Tìm xem có biến thể nào khớp với Color đang chọn và Size này không
+                const exists = allVariants.some(v => v.colorId === selectedColorId && v.sizeId === sizeId);
+                btn.disabled = !exists;
+                btn.style.opacity = exists ? "1" : "0.3";
+                btn.style.pointerEvents = exists ? "auto" : "none";
+            } else {
+                btn.disabled = false;
+                btn.style.opacity = "1";
+                btn.style.pointerEvents = "auto";
+            }
+        });
+
+        // Kiểm tra các nút Color dựa trên Size đang chọn
+        document.querySelectorAll('.color-btn').forEach(btn => {
+            const colorId = btn.getAttribute('data-color-id');
+            if (selectedSizeId) {
+                const exists = allVariants.some(v => v.sizeId === selectedSizeId && v.colorId === colorId);
+                btn.disabled = !exists;
+                btn.style.opacity = exists ? "1" : "0.3";
+                btn.style.pointerEvents = exists ? "auto" : "none";
+            } else {
+                btn.disabled = false;
+                btn.style.opacity = "1";
+                btn.style.pointerEvents = "auto";
+            }
+        });
+
+        // --- Cập nhật giá tiền (Nếu chọn đủ cả 2) ---
+        const activeVariant = allVariants.find(v => v.colorId === selectedColorId && v.sizeId === selectedSizeId);
+        if (activeVariant) {
+            const formattedPrice = new Intl.NumberFormat('vi-VN').format(activeVariant.price);
+            document.querySelector('.product-price').innerText = formattedPrice + " VND";
+        }
+    }
+
+</script>
+<div style="background: #fff3cd; border: 1px solid #ffeeba; padding: 10px; color: #856404;">
+</div>
 </body>
 </html>
