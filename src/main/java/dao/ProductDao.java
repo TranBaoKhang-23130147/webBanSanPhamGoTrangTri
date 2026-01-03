@@ -619,8 +619,75 @@ public class ProductDao {
         }
         return 0;
     }
+    // 1. Lấy danh sách Loại sản phẩm để hiện lên Sidebar
+    public List<ProductType> getAllProductTypes() {
+        List<ProductType> list = new ArrayList<>();
+        String sql = "SELECT id, product_type_name FROM product_types";
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                ProductType pt = new ProductType();
+                pt.setId(rs.getInt("id"));
+                pt.setProductTypeName(rs.getString("product_type_name"));
+                list.add(pt);
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return list;
+    }
 
+    // 2. Lấy danh sách Màu sắc để hiện lên Sidebar
+    public List<ProductColor> getAllColors() {
+        List<ProductColor> list = new ArrayList<>();
+        String sql = "SELECT id, colorName FROM colors";
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                ProductColor c = new ProductColor();
+                c.setId(rs.getInt("id"));
+                c.setColorName(rs.getString("colorName"));
+                list.add(c);
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return list;
+    }
 
+    // 3. Hàm lọc sản phẩm hỗ trợ Màu sắc
+    public List<Product> filterProductsWithColor(String[] types, String[] prices, String[] ratings, Integer categoryId, String colorId) {
+        List<Product> list = new ArrayList<>();
+        StringBuilder sql = new StringBuilder(
+                "SELECT p.id, p.name_product, p.price, img.urlImage, IFNULL(AVG(r.rate),0) AS avg_rate " +
+                        "FROM products p " +
+                        "LEFT JOIN images img ON p.primary_image_id = img.id " +
+                        "LEFT JOIN reviews r ON p.id = r.product_id " +
+                        "LEFT JOIN product_variants pv ON p.id = pv.product_id " + // Cần Join bảng biến thể để lọc màu
+                        "WHERE p.isActive = 1 "
+        );
 
+        if (categoryId != null) sql.append(" AND p.category_id = ").append(categoryId);
+        if (types != null && types.length > 0) sql.append(" AND p.product_type_id IN (").append(String.join(",", types)).append(")");
+        if (colorId != null && !colorId.isEmpty()) sql.append(" AND pv.color_id = ").append(colorId);
 
+        if (prices != null && prices.length > 0) {
+            List<String> conds = new ArrayList<>();
+            for (String p : prices) {
+                if (p.equals("1")) conds.add("p.price < 1000000");
+                else if (p.equals("2")) conds.add("p.price BETWEEN 1000000 AND 3000000");
+                else if (p.equals("3")) conds.add("p.price BETWEEN 3000000 AND 5000000");
+                else if (p.equals("4")) conds.add("p.price BETWEEN 5000000 AND 10000000");
+                else if (p.equals("5")) conds.add("p.price > 10000000");
+            }
+            sql.append(" AND (").append(String.join(" OR ", conds)).append(")");
+        }
+
+        sql.append(" GROUP BY p.id ");
+        if (ratings != null && ratings.length > 0) {
+            int min = Arrays.stream(ratings).mapToInt(Integer::parseInt).min().orElse(0);
+            sql.append(" HAVING avg_rate >= ").append(min);
+        }
+
+        try (Connection con = getConnection(); Statement st = con.createStatement(); ResultSet rs = st.executeQuery(sql.toString())) {
+            while (rs.next()) {
+                list.add(new Product(rs.getInt("id"), rs.getString("name_product"), rs.getDouble("price"), rs.getString("urlImage"), rs.getDouble("avg_rate")));
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return list;
+    }
 }

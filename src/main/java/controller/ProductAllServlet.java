@@ -27,7 +27,8 @@ public class ProductAllServlet extends HttpServlet {
         List<Product> list = dao.getProductsByPage(page, pageSize);
         int totalProducts = dao.countAllProducts();
         int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
-
+        request.setAttribute("listType", dao.getAllProductTypes());
+        request.setAttribute("listColor", dao.getAllColors());
         request.setAttribute("listP", list);
         request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", totalPages);
