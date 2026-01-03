@@ -11,18 +11,29 @@ import java.util.List;
 
 @WebServlet(name = "ProductAllServlet", value = "/ProductAllServlet")
 public class ProductAllServlet extends HttpServlet {
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ProductDao dao = new ProductDao();
-        List<Product> list = dao.getAllProducts();
+        int page = 1;
+        int pageSize = 12;
 
+        String pageParam = request.getParameter("page");
+        if (pageParam != null) {
+            page = Integer.parseInt(pageParam);
+        }
+
+        ProductDao dao = new ProductDao();
+
+        List<Product> list = dao.getProductsByPage(page, pageSize);
+        int totalProducts = dao.countAllProducts();
+        int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
 
         request.setAttribute("listP", list);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+
         request.getRequestDispatcher("product_all_user.jsp").forward(request, response);
     }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

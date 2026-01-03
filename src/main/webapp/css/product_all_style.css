@@ -267,7 +267,7 @@ body {
 /*them*/
 
 .filter-sidebar {
-    width: 260px;
+    width: 200px;
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 12px;
@@ -530,4 +530,52 @@ body {
 }
 .score-box .rating i {
     font-size: 24px; /* Sao ở bảng tổng quan to hơn */
+}
+.pagination-wrapper {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.page-btn {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 20px;
+    border: 2px solid var(--primary-color);
+    background: #fff;
+    color: var(--text-color);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: all 0.3s ease;
+}
+
+/* Hover */
+.page-btn:hover {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+/* Trang hiện tại */
+.page-btn.active {
+    background: var(--primary-color);
+    color: #fff;
+    cursor: default;
+}
+
+/* Disable cảm giác cho nút */
+.page-btn:has(span) {
+    pointer-events: none;
 }

@@ -16,25 +16,36 @@ public class LivingroomDecorateServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String categoryKey = request.getParameter("category"); // phong-khach
+        int page = 1;
+        int pageSize = 12;
+
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
 
         ProductDao dao = new ProductDao();
-
-        // 🔥 2. ĐỔI NAME → ID
         Integer categoryId = dao.getCategoryIdByName(categoryKey);
 
         List<Product> listP;
+        int totalProducts;
 
         if (categoryId == null) {
-            listP = dao.getAllProducts(); // fallback HIỂN THỊ ĐƯỢC
+            listP = dao.getProductsByPage(page, pageSize);   // ✅ CÓ PAGING
+            totalProducts = dao.countAllProducts();          // ✅ ĐÚNG COUNT
         } else {
-            listP = dao.getProductsByCategory(categoryId);
+            listP = dao.getProductsByCategoryPaging(categoryId, page, pageSize);
+            totalProducts = dao.countProductsByCategory(categoryId);
         }
 
+        int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+
         request.setAttribute("listP", listP);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("category", categoryKey);
+
         request.getRequestDispatcher("decorate_livingroom_user.jsp")
                 .forward(request, response);
-        System.out.println("categoryKey = " + categoryKey);
-        System.out.println("categoryId = " + categoryId);
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

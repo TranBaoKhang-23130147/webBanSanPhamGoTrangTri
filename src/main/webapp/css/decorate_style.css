@@ -362,15 +362,16 @@ body {
     background: #f2f2f2;
     color: #444;
 }
-.filter-sidebar {
-    width: 260px;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 20px;
-    height: fit-content;
+/*.filter-sidebar {*/
+/*    width: 200px;*/
+/*    background: #fff;*/
+/*    border: 1px solid #ddd;*/
+/*    border-radius: 12px;*/
+/*    padding: 8px;*/
+/*    height: fit-content;*/
+/*    flex-shrink: 0;*/
 
-}
+/*}*/
 
 .filter-sidebar h3 {
     font-size: 20px;
@@ -408,7 +409,7 @@ body {
     display: flex;
     align-items: flex-start;
     gap: 30px;
-    width: 95%;
+    width: 90%;
     margin: auto;
 }
 .footer {
@@ -647,7 +648,7 @@ body {
     background-color: var(--btn);
 }
 .filter-sidebar {
-    width: 260px;
+    width: 200px;
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 12px;
@@ -896,4 +897,52 @@ body {
 
 .product-card .set:hover {
     transform: translateY(-5px); /* Hiệu ứng nhấc lên khi hover */
+}
+.pagination-wrapper {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.page-btn {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 20px;
+    border: 2px solid var(--primary-color);
+    background: #fff;
+    color: var(--text-color);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: all 0.3s ease;
+}
+
+/* Hover */
+.page-btn:hover {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+/* Trang hiện tại */
+.page-btn.active {
+    background: var(--primary-color);
+    color: #fff;
+    cursor: default;
+}
+
+/* Disable cảm giác cho nút */
+.page-btn:has(span) {
+    pointer-events: none;
 }
