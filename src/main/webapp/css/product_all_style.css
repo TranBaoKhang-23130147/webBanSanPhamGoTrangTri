@@ -518,3 +518,16 @@ body {
 .product-card .set:hover {
     transform: translateY(-5px); /* Hiệu ứng nhấc lên khi hover */
 }
+.ri-star-s-fill, .ri-star-fill {
+    color: #ffcc00 !important; /* Màu vàng */
+}
+.ri-star-s-line, .ri-star-line {
+    color: #ccc !important; /* Màu xám cho sao rỗng */
+}
+.rating i {
+    font-size: 18px;
+    margin-right: 2px;
+}
+.score-box .rating i {
+    font-size: 24px; /* Sao ở bảng tổng quan to hơn */
+}

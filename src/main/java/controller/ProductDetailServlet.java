@@ -7,54 +7,60 @@ import jakarta.servlet.annotation.*;
 import model.*;
 
 import java.io.IOException;
+import java.util.HashMap; // THÊM DÒNG NÀY
 import java.util.List;
+import java.util.Map;      // THÊM DÒNG NÀY
 
-@WebServlet(name = "ProductDetailServlet", value = "/detail") // Đặt path ngắn gọn cho dễ dùng
+@WebServlet(name = "ProductDetailServlet", value = "/detail")
 public class ProductDetailServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 1. Lấy ID sản phẩm từ URL (ví dụ: detail?id=1)
         String idRaw = request.getParameter("id");
-
-
         try {
             if (idRaw != null) {
                 int productId = Integer.parseInt(idRaw);
                 ProductDao dao = new ProductDao();
 
-                // 2. Lấy thông tin cơ bản + mô tả + thông số (JOIN 3 bảng)
-                // Giả sử productId lấy từ request.getParameter("id")
                 Product p = dao.getProductById(productId);
 
                 if (p != null) {
-                    // GỌI CÁC HÀM NÀY ĐỂ ĐỔ DỮ LIỆU VÀO LIST
-                    List<Images> subImages = dao.getProductImages(productId);
-                    List<ProductVariants> variants = dao.getProductVariants(productId);
-                    List<Reviews> reviews = dao.getProductReviews(productId);
+                    p.setSubImages(dao.getProductImages(productId));
+                    p.setVariants(dao.getProductVariants(productId));
 
-                    // Gán ngược lại vào đối tượng p
-                    p.setSubImages(subImages);
-                    p.setVariants(variants);
-                    p.setReviewList(reviews); // Biến này khớp với c:forEach items="${p.reviewList}" ở JSP
+                    // 1. Lấy danh sách đánh giá
+                    List<Reviews> reviewList = dao.getProductReviews(productId);
+                    p.setReviewList(reviewList);
 
-                    // Tính toán sơ bộ tổng số review và trung bình sao nếu cần
-                    p.setTotalReviews(reviews.size());
+                    // 2. TẠO MAP ĐỂ CHỨA TÊN NGƯỜI DÙNG (Key: userId, Value: username)
+                    Map<Integer, String> userNames = new HashMap<>();
+                    if (reviewList != null) {
+                        for (Reviews rev : reviewList) {
+                            // Gọi hàm lấy tên từ DAO dựa vào ID (không cần sửa Model)
+                            String name = dao.getUsernameById(rev.getUserId());
+                            userNames.put(rev.getUserId(), name);
+                        }
+                    }
 
+                    // 3. Gửi cả Product và Map tên sang JSP
                     request.setAttribute("p", p);
+                    request.setAttribute("userNames", userNames); // Gửi Map này đi
+
                     request.getRequestDispatcher("product_details_user.jsp").forward(request, response);
                 } else {
                     response.sendRedirect("homepage_user.jsp");
                 }
-            } else {
-                response.sendRedirect("homepage_user.jsp");
             }
-        } catch (NumberFormatException e) {
-            response.sendRedirect("homepage_user.jsp"); // ID sai định dạng
+        } catch (Exception e) {
+            e.printStackTrace(); // In lỗi ra console để dễ kiểm tra
+            response.sendRedirect("homepage_user.jsp");
         }
     }
 
+    // ... doPost giữ nguyên ...
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Thường dùng cho chức năng "Thêm vào giỏ hàng" hoặc "Gửi đánh giá"
+        // Xử lý thêm vào giỏ hàng hoặc gửi bình luận ở đây
     }
 }

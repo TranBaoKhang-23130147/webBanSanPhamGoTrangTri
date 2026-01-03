@@ -154,19 +154,22 @@ public class ProductDao {
     // 1. Lấy chi tiết 1 sản phẩm (JOIN tất cả các bảng liên quan: Source, Description, Information)
     public Product getProductById(int id) {
         String sql = """
-        SELECT 
-            p.*, 
-            s.sourceName, 
-            i.urlImage, 
-            d.introduce, d.highlights, 
-            inf.material, inf.color, inf.size, inf.guarantee
-        FROM products p
-        LEFT JOIN sources s ON p.source_id = s.id
-        LEFT JOIN images i ON p.primary_image_id = i.id
-        LEFT JOIN descriptions d ON p.description_id = d.id
-        LEFT JOIN informations inf ON d.information_id = inf.id
-        WHERE p.id = ?
-    """;
+    SELECT 
+        p.*, 
+        s.sourceName, 
+        i.urlImage, 
+        d.introduce, d.highlights, 
+        inf.material, inf.color, inf.size, inf.guarantee,
+        /* THÊM 2 DÒNG NÀY VÀO SQL */
+        (SELECT AVG(rate) FROM reviews WHERE product_id = p.id) AS avgRating,
+        (SELECT COUNT(id) FROM reviews WHERE product_id = p.id) AS totalReviews
+    FROM products p
+    LEFT JOIN sources s ON p.source_id = s.id
+    LEFT JOIN images i ON p.primary_image_id = i.id
+    LEFT JOIN descriptions d ON p.description_id = d.id
+    LEFT JOIN informations inf ON d.information_id = inf.id
+    WHERE p.id = ?
+""";
         try (Connection conn = new DBContext().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
@@ -279,21 +282,36 @@ public class ProductDao {
     }
 
     // 4. Lấy danh sách đánh giá của sản phẩm
+// Trong ProductDao.java
     public List<Reviews> getProductReviews(int productId) {
         List<Reviews> list = new ArrayList<>();
-        String sql = "SELECT * FROM reviews WHERE product_id = ? ORDER BY id DESC";
+        // Câu lệnh SQL lấy tất cả đánh giá của 1 sản phẩm
+        String sql = "SELECT * FROM reviews WHERE product_id = ?";
+
         try (Connection conn = new DBContext().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, productId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Reviews r = new Reviews();
+
+                    // 1. Lấy các thông tin cơ bản
+                    r.setId(rs.getInt("id"));
+                    r.setUserId(rs.getInt("user_id"));
+                    r.setProductId(rs.getInt("product_id"));
+                    r.setComment(rs.getString("comment"));
+
+                    // 2. Ánh xạ từ cột "rate" trong DB vào thuộc tính "rating" của Model
                     r.setRating(rs.getInt("rate"));
-                    r.setComment(rs.getString("content"));
+
+                    // 3. Ánh xạ từ cột "createAt" trong DB vào thuộc tính "createAt" của Model
+                    r.setCreateAt(rs.getTimestamp("createAt"));
+
                     list.add(r);
                 }
             }
         } catch (Exception e) {
+            System.out.println("Lỗi tại getProductReviews: " + e.getMessage());
             e.printStackTrace();
         }
         return list;
@@ -435,62 +453,25 @@ public class ProductDao {
         }
         return list;
     }
-    public List<Product> searchProducts(String keyword, Integer typeId) {
-        List<Product> list = new ArrayList<>();
+    public String getUsernameById(int userId) {
+        String name = "Khách hàng ẩn danh";
+        // Nếu trong DB cột tên là 'full_name' thì chọn 'full_name'
+        String sql = "SELECT full_name FROM users WHERE id = ?";
 
-        StringBuilder sql = new StringBuilder("""
-        SELECT 
-            p.id,
-            p.name_product,
-            p.price,
-            img.urlImage,
-            IFNULL(AVG(r.rate),0) AS avgRating
-        FROM products p
-        LEFT JOIN images img ON p.primary_image_id = img.id
-        LEFT JOIN reviews r ON p.id = r.product_id
-        WHERE p.isActive = 1
-    """);
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        // 🔎 tìm theo tên
-        if (keyword != null && !keyword.isBlank()) {
-            sql.append(" AND p.name_product LIKE ? ");
-        }
-
-        // 🔎 lọc theo product_type
-        if (typeId != null) {
-            sql.append(" AND p.product_type_id = ? ");
-        }
-
-        sql.append(" GROUP BY p.id ");
-
-        try (Connection con = getConnection();
-             PreparedStatement ps = con.prepareStatement(sql.toString())) {
-
-            int index = 1;
-
-            if (keyword != null && !keyword.isBlank()) {
-                ps.setString(index++, "%" + keyword + "%");
-            }
-
-            if (typeId != null) {
-                ps.setInt(index++, typeId);
-            }
-
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new Product(
-                        rs.getInt("id"),
-                        rs.getString("name_product"),
-                        rs.getDouble("price"),
-                        rs.getString("urlImage"),
-                        rs.getDouble("avgRating")
-                ));
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    // SỬA TẠI ĐÂY: Phải lấy đúng cột 'full_name' đã chọn ở trên
+                    name = rs.getString("full_name");
+                }
             }
         } catch (Exception e) {
+            System.out.println("Lỗi getUsernameById: " + e.getMessage());
             e.printStackTrace();
         }
-
-        return list;
+        return name;
     }
-
 }
