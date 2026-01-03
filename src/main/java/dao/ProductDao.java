@@ -690,4 +690,57 @@ public class ProductDao {
         } catch (Exception e) { e.printStackTrace(); }
         return list;
     }
+    public ProductVariants getVariantById(int variantId) {
+
+        String sql = """
+        SELECT pv.*,
+               c.id AS c_id, c.colorname, c.color_code,
+               s.id AS s_id, s.size_name, s.length, s.width, s.height
+        FROM product_variants pv
+        LEFT JOIN colors c ON pv.color_id = c.id
+        LEFT JOIN sizes s ON pv.size_id = s.id
+        WHERE pv.id = ?
+    """;
+
+        try (Connection con = DBContext.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, variantId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                ProductVariants v = new ProductVariants();
+
+                v.setId(rs.getInt("id"));
+                v.setProduct_id(rs.getInt("product_id"));
+                v.setColor_id(rs.getInt("color_id"));
+                v.setSize_id(rs.getInt("size_id"));
+                v.setSku(rs.getString("sku"));
+                v.setInventory_quantity(rs.getInt("inventory_quantity"));
+                v.setVariant_price(rs.getBigDecimal("variant_price"));
+
+                // ===== COLOR =====
+                ProductColor color = new ProductColor();
+                color.setId(rs.getInt("c_id"));
+                color.setColorName(rs.getString("colorname"));
+                color.setColorCode(rs.getString("color_code"));
+                v.setColor(color);
+
+                // ===== SIZE =====
+                ProductSize size = new ProductSize();
+                size.setId(rs.getInt("s_id"));
+                size.setSize_name(rs.getString("size_name"));
+                size.setLength(rs.getBigDecimal("length"));
+                size.setWidth(rs.getBigDecimal("width"));
+                size.setHeight(rs.getBigDecimal("height"));
+                v.setSize(size);
+
+                return v;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

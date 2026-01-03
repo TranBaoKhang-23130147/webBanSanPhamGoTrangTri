@@ -42,3 +42,28 @@ document.querySelector('.checkout-form').onsubmit = function(e) {
     modal.style.display = "none";
     document.body.classList.remove("modal-open");
 }
+function updateTotal() {
+    let total = 0;
+
+    document.querySelectorAll('.cart-item').forEach(item => {
+
+        const checkbox = item.querySelector('.cart-check');
+        if (!checkbox.checked) return;
+
+        const price = parseFloat(
+            item.querySelector('.item-price').dataset.price
+        );
+
+        const qty = parseInt(
+            item.querySelector('.item-qty').value
+        );
+
+        total += price * qty;
+    });
+
+    document.getElementById('cart-total').innerText =
+        total.toLocaleString('vi-VN') + " VND";
+}
+
+// chạy ngay khi load trang
+updateTotal();

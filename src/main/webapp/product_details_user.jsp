@@ -107,24 +107,36 @@
                 </div>
             </div>
         </div>
+        <form action="<c:url value='/CartServlet' />"
+              method="post"
+              onsubmit="return submitAddToCart();">
 
-        <div class="purchase-actions">
+            <input type="hidden" name="action" value="add">
+            <input type="hidden" name="productId" value="${p.id}">
+            <input type="hidden" name="variantId" id="variantIdInput">
+            <input type="hidden" name="quantity" id="quantityInput">
+
+
+            <div class="purchase-actions">
             <div class="quantity-select">
                 <div class=" quantity-row">
                     <p>Số Lượng:</p>
                     <div class="quantity-controls">
                         <button class="qty-btn" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
-                        <input type="number" value="1" min="1" max="100" />
+                        <input type="number" id="qtyInput" value="1" min="1" max="100" />
                         <button class="qty-btn" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
                     </div>
                 </div>
             </div>
 
             <div class="button-group">
-                <button class="add-to-cart">Thêm vào giỏ hàng</button>
+                <button type="submit" class="add-to-cart">
+                    Thêm vào giỏ hàng
+                </button>
                 <button class="buy-now">Mua Ngay</button>
             </div>
         </div>
+        </form>
     </div>
 </div>
 </div>
@@ -309,6 +321,28 @@
             const formattedPrice = new Intl.NumberFormat('vi-VN').format(activeVariant.price);
             document.querySelector('.product-price').innerText = formattedPrice + " VND";
         }
+    }
+    function submitAddToCart() {
+
+        if (!selectedColorId || !selectedSizeId) {
+            alert("Vui lòng chọn đầy đủ Màu sắc và Kích thước");
+            return false;
+        }
+
+        const variant = allVariants.find(v =>
+            v.colorId === selectedColorId && v.sizeId === selectedSizeId
+        );
+
+        if (!variant) {
+            alert("Biến thể không hợp lệ");
+            return false;
+        }
+
+        document.getElementById("variantIdInput").value = variant.id;
+        document.getElementById("quantityInput").value =
+            document.getElementById("qtyInput").value;
+
+        return true;
     }
 
 </script>
