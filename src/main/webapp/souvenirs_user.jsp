@@ -186,6 +186,40 @@
         </div>
     </div>
 </section>
+<c:set var="range" value="3" />
+<c:set var="startPage" value="${currentPage - range}" />
+<c:set var="endPage" value="${currentPage + range}" />
+
+<c:if test="${startPage < 1}">
+    <c:set var="startPage" value="1" />
+</c:if>
+
+<c:if test="${endPage > totalPages}">
+    <c:set var="endPage" value="${totalPages}" />
+</c:if>
+<div class="pagination-wrapper">
+    <div class="pagination">
+
+        <!-- Prev -->
+        <c:if test="${currentPage > 1}">
+            <a href="?page=${currentPage - 1}" class="page-btn">«</a>
+        </c:if>
+
+        <!-- Pages -->
+        <c:forEach begin="${startPage}" end="${endPage}" var="i">
+            <a href="?page=${i}"
+               class="page-btn ${i == currentPage ? 'active' : ''}">
+                    ${i}
+            </a>
+        </c:forEach>
+
+        <!-- Next -->
+        <c:if test="${currentPage < totalPages}">
+            <a href="?page=${currentPage + 1}" class="page-btn">»</a>
+        </c:if>
+
+    </div>
+</div>
 <%--<div class="footer">--%>
 <%--    <div class="footer-container">--%>
 
