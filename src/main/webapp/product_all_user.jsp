@@ -65,7 +65,9 @@
 <section class="product-all">
     <h2 class="titleProduct">TẤT CẢ SẢN PHẨM</h2>
     <div class="product-container">
-        <form action="ProductFilterServlet" method="get">
+<%--        <jsp:include page="filter.jsp"></jsp:include>--%>
+
+            <form action="ProductFilterServlet" method="get">
             <input type="hidden" name="page" value="all">
 
             <aside class="filter-sidebar">
@@ -73,12 +75,26 @@
 
                 <div class="filter-group">
                     <h4>Loại</h4>
-                    <label><input type="checkbox" name="type" value="8"> Bàn</label>
-                    <label><input type="checkbox" name="type" value="2"> Ghế</label>
-                    <label><input type="checkbox" name="type" value="4"> Tủ</label>
-                    <label><input type="checkbox" name="type" value="7"> Giường</label>
-                    <label><input type="checkbox" name="type" value="9"> Kệ</label>
-                    <label><input type="checkbox" name="type" value=""> Khác</label>
+                    <c:forEach items="${listType}" var="t">
+                        <label>
+                            <input type="checkbox" name="type" value="${t.id}"
+                            <c:forEach items="${paramValues.type}" var="selectedId">
+                                ${selectedId == t.id ? 'checked' : ''}
+                            </c:forEach>
+                            > ${t.productTypeName} </label>
+                    </c:forEach>
+                </div>
+
+                <div class="filter-group">
+                    <h4>Màu sắc</h4>
+                    <select name="color" class="filter-select">
+                        <option value="">-- Chọn màu --</option>
+                        <c:forEach items="${listColor}" var="c">
+                            <option value="${c.id}" ${param.color == c.id ? 'selected' : ''}>
+                                    ${c.colorName}
+                            </option>
+                        </c:forEach>
+                    </select>
                 </div>
 
                 <div class="filter-group">
@@ -157,7 +173,11 @@
 
             <%-- Hiển thị thông báo nếu không có sản phẩm nào --%>
             <c:if test="${empty listP}">
-                <p style="text-align: center; width: 100%;">Không tìm thấy sản phẩm nào phù hợp.</p>
+                <div style="grid-column: 1 / -1; width: 100%; text-align: center; padding: 100px 0;">
+                    <p style="font-size: 18px; color: #888;">
+                        <i class="ri-search-line"></i> Không tìm thấy sản phẩm nào phù hợp.
+                    </p>
+                </div>
             </c:if>
         </div>
     </div>

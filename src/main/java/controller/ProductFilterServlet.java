@@ -12,64 +12,44 @@ import java.util.List;
 
 @WebServlet(name = "ProductFilterServlet", value = "/ProductFilterServlet")
 public class ProductFilterServlet extends HttpServlet {
-
-        @Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
-                throws ServletException, IOException {
-
-            String[] types = request.getParameterValues("type");
-            String[] prices = request.getParameterValues("price");
-            String[] ratings = request.getParameterValues("rating");
-
-            String categoryParam = request.getParameter("category");
-            String page = request.getParameter("page");
-
-            ProductDao dao = new ProductDao();
-            Integer categoryId = null;
-            if (categoryParam != null && !categoryParam.isBlank()) {
-                categoryId =  dao.getCategoryIdByName(categoryParam);;
-            }
-
-            List<Product> listP;
-
-            if (types == null && prices == null && ratings == null) {
-                if (categoryId != null) {
-                    listP = dao.getProductsByCategory(categoryId);
-                } else {
-                    listP = dao.getAllProducts();
-                }
-            } else {
-                listP = dao.filterProducts(types, prices, ratings, categoryId);
-            }
-
-            request.setAttribute("listP", listP);
-
-            String targetJsp = "product_all_user.jsp";
-            if ("livingroom".equals(page)) {
-                targetJsp = "decorate_livingroom_user.jsp";
-            }
-            if ("bedroom".equals(page)) {
-                targetJsp = "decorate_bedroom_user.jsp";
-            }
-            if ("kitchen".equals(page)) {
-                targetJsp = "decorate_kitchen_user.jsp";
-            }
-            if ("homeoffice".equals(page)){
-                targetJsp = "decorate_homeoffice_user.jsp";
-            }
-            if ("miniitem".equals(page)){
-                targetJsp = "decorate_miniitem_user.jsp";
-            }
-            if ("sourvenir".equals(page)){
-                targetJsp = "sourvenirs_user.jsp";
-            }
-            request.getRequestDispatcher(targetJsp)
-                    .forward(request, response);
-        }
-
-
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-    }
-}
+        ProductDao dao = new ProductDao();
+
+        // 1. Nạp lại dữ liệu Sidebar để không bị mất khi lọc
+        request.setAttribute("listType", dao.getAllProductTypes());
+        request.setAttribute("listColor", dao.getAllColors());
+
+        // 2. Lấy tham số
+        String[] types = request.getParameterValues("type");
+        String[] prices = request.getParameterValues("price");
+        String[] ratings = request.getParameterValues("rating");
+        String colorParam = request.getParameter("color");
+        String page = request.getParameter("page");
+
+        // 🔥 Lấy CategoryId trực tiếp từ hidden field
+        String categoryIdStr = request.getParameter("categoryId");
+        Integer categoryId = (categoryIdStr != null && !categoryIdStr.isEmpty()) ? Integer.parseInt(categoryIdStr) : null;
+
+        // 3. Thực hiện lọc
+        List<Product> listP = dao.filterProductsWithColor(types, prices, ratings, categoryId, colorParam);
+
+        // 4. Gửi dữ liệu về trang
+        request.setAttribute("listP", listP);
+        request.setAttribute("activeCategoryId", categoryId); // Trả lại ID để filter.jsp nhận diện
+
+
+
+        // 5. Điều hướng đến trang tương ứng
+        String targetJsp = "product_all_user.jsp";
+        if ("livingroom".equals(page)) targetJsp = "decorate_livingroom_user.jsp";
+        else if ("bedroom".equals(page)) targetJsp = "decorate_bedroom_user.jsp";
+        else if ("kitchen".equals(page)) targetJsp = "decorate_kitchen_user.jsp";
+        else if ("homeoffice".equals(page)) targetJsp = "decorate_homeoffice_user.jsp";
+        else if ("miniitem".equals(page)) targetJsp = "decorate_miniitem_user.jsp";
+        else if ("sourvenir".equals(page)) targetJsp = "sourvenirs_user.jsp";
+
+        request.getRequestDispatcher(targetJsp).forward(request, response);
+    }}
