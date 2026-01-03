@@ -1,9 +1,11 @@
 package controller;
 
+import dao.AddressDao;
 import dao.UserDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import model.Address;
 import model.User;
 
 import java.io.IOException;
@@ -45,6 +47,7 @@ public class UpdateSettingServlet extends HttpServlet {
             return;
         }
 
+        // Update thông tin cơ bản của User
         String fullName = req.getParameter("full_name");
         String displayName = req.getParameter("display_name");
         String phone = req.getParameter("phone");
@@ -61,6 +64,7 @@ public class UpdateSettingServlet extends HttpServlet {
         if (avatarIdStr != null && !avatarIdStr.isEmpty()) {
             avatarId = Integer.parseInt(avatarIdStr);
         }
+
         User u = new User();
         u.setId(sessionUser.getId());
         u.setUsername(fullName);
@@ -68,21 +72,41 @@ public class UpdateSettingServlet extends HttpServlet {
         u.setPhone(phone);
         u.setGender(gender);
         u.setBirthDate(birthDate);
+
         if (avatarIdStr != null && !avatarIdStr.isEmpty()) {
             u.setAvatarId(Integer.parseInt(avatarIdStr));
         } else {
             u.setAvatarId(sessionUser.getAvatarId());
         }
-        UserDao dao = new UserDao();
+
+        UserDao userDao = new UserDao();
         try {
-            dao.updateUserProfile(u);
+            userDao.updateUserProfile(u);
         } catch (Exception e) {
             throw new ServletException(e);
         }
 
-        // reload user mới
-        User updated = dao.getById(u.getId());
-        session.setAttribute("LOGGED_USER", updated);
+        // ----------- XỬ LÝ ĐỊA CHỈ ----------
+        String detail = req.getParameter("detail");
+        String commune = req.getParameter("commune");
+        String district = req.getParameter("district");
+        String province = req.getParameter("province");
+
+        if (detail != null || commune != null || district != null || province != null) {
+            Address address = new Address();
+            address.setUserId(sessionUser.getId());
+            address.setDetail(detail);
+            address.setCommune(commune);
+            address.setDistrict(district);
+            address.setProvince(province);
+
+            AddressDao addressDao = new AddressDao();
+            addressDao.saveOrUpdate(address); // Ghi lại địa chỉ
+        }
+
+        // cập nhật lại user mới
+        User updatedUser = userDao.getById(u.getId());
+        session.setAttribute("LOGGED_USER", updatedUser);
 
         resp.sendRedirect(req.getContextPath() + "/UpdateSettingServlet");
     }

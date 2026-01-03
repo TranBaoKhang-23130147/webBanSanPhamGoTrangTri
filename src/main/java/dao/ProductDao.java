@@ -435,5 +435,62 @@ public class ProductDao {
         }
         return list;
     }
+    public List<Product> searchProducts(String keyword, Integer typeId) {
+        List<Product> list = new ArrayList<>();
+
+        StringBuilder sql = new StringBuilder("""
+        SELECT 
+            p.id,
+            p.name_product,
+            p.price,
+            img.urlImage,
+            IFNULL(AVG(r.rate),0) AS avgRating
+        FROM products p
+        LEFT JOIN images img ON p.primary_image_id = img.id
+        LEFT JOIN reviews r ON p.id = r.product_id
+        WHERE p.isActive = 1
+    """);
+
+        // 🔎 tìm theo tên
+        if (keyword != null && !keyword.isBlank()) {
+            sql.append(" AND p.name_product LIKE ? ");
+        }
+
+        // 🔎 lọc theo product_type
+        if (typeId != null) {
+            sql.append(" AND p.product_type_id = ? ");
+        }
+
+        sql.append(" GROUP BY p.id ");
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql.toString())) {
+
+            int index = 1;
+
+            if (keyword != null && !keyword.isBlank()) {
+                ps.setString(index++, "%" + keyword + "%");
+            }
+
+            if (typeId != null) {
+                ps.setInt(index++, typeId);
+            }
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(
+                        rs.getInt("id"),
+                        rs.getString("name_product"),
+                        rs.getDouble("price"),
+                        rs.getString("urlImage"),
+                        rs.getDouble("avgRating")
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
 
 }

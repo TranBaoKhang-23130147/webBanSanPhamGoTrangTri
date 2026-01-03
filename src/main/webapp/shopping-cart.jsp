@@ -1,55 +1,60 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>HOME DECOR - GIỎI HÀNG</title>
 
-    <link rel="icon" type="image/png"  href="../img/logo.png">
+    <link rel="icon" type="image/png"  href="img/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="../css/shopping_cart_style.css">
+    <link rel="stylesheet" href="css/shopping_cart_style.css">
 
 
 </head>
 <body>
-<div id="header">
-    <div id="logo"><img src="../img/logo.png" class="image"/>
-        <div class="brand"> <div id="name-web">HOME DECOR</div>
-            <div id="sub-slogan">Nét mộc trong từng góc nhỏ</div></div>
-    </div>
+<jsp:include page="header.jsp"></jsp:include>
+<%--<div id="header">--%>
+<%--    <div id="logo"><img src="img/logo.png" class="image"/>--%>
+<%--        <div class="brand"> <div id="name-web">HOME DECOR</div>--%>
+<%--            <div id="sub-slogan">Nét mộc trong từng góc nhỏ</div></div>--%>
+<%--    </div>--%>
 
-    <nav class="menu-bar">
-        <a class="menu" id="home" href="../homepage_user.jsp"> TRANG CHỦ</a>
-        <div class="menu product-menu">
-            <a id="product" href="../product_all_user.jsp">SẢN PHẨM</a>
-            <div class="submenu">
-                <a href="LivingroomDecorateServlet">TRANG TRÍ PHÒNG KHÁCH</a>
-                <a href="../decorate_bedroom_user.jsp">TRANG TRÍ PHÒNG NGỦ</a>
-                <a href="../decorate_kitchen_user.jsp">TRANG TRÍ PHÒNG BẾP</a>
-                <a href="../decorate_homeoffice_user.jsp">TRANG TRÍ PHÒNG LÀM VIỆC</a>
-                <a href="../decorate_miniitem_user.jsp">ĐỒ TRANG TRÍ MINI</a>
-                <a href="../souvenirs_user.jsp">QUÀ LƯU NIỆM</a>
-            </div>
-        </div>
-        <a class="menu" id=" " href="../purchasing_policy_user.jsp" >CHÍNH SÁCH MUA HÀNG</a>
-        <a class="menu" id="introduce" href="../introduce_user.jsp" >GIỚI THIỆU</a>
-        <a class="menu" id="contact" href="../contact_user.jsp">LIÊN HỆ</a>
-    </nav>
-    <div class="icons">
-        <a class="nav_item" href="shopping-cart.html" id="cart-link" >
-            <i class="fas fa-shopping-cart"></i>
-        </a>
-        <a class="nav-item" href="search.html" id="search-link">
-            <i class="fas fa-search"></i>
-        </a>
-        <div class="user-login">
-            <i class="fas fa-user"></i>
-            <div class="user">
-                <a class="nav_item" href="../mypage_user.jsp" id="login">Trang của tôi</a>
-                <a class="nav-item" href="homepage.html" id="register">Đăng xuất</a>
-            </div>
-        </div>
-    </div>
-</div>
+<%--    <nav class="menu-bar">--%>
+<%--        <a class="menu" id="home" href="homepage_user.jsp"> TRANG CHỦ</a>--%>
+<%--        <div class="menu product-menu">--%>
+<%--            <a id="product" href="product_all_user.jsp">SẢN PHẨM</a>--%>
+<%--            <div class="submenu">--%>
+<%--                <a href="LivingroomDecorateServlet">TRANG TRÍ PHÒNG KHÁCH</a>--%>
+<%--                <a href="decorate_bedroom_user.jsp">TRANG TRÍ PHÒNG NGỦ</a>--%>
+<%--                <a href="decorate_kitchen_user.jsp">TRANG TRÍ PHÒNG BẾP</a>--%>
+<%--                <a href="decorate_homeoffice_user.jsp">TRANG TRÍ PHÒNG LÀM VIỆC</a>--%>
+<%--                <a href="decorate_miniitem_user.jsp">ĐỒ TRANG TRÍ MINI</a>--%>
+<%--                <a href="souvenirs_user.jsp">QUÀ LƯU NIỆM</a>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <a class="menu" id=" " href="purchasing_policy_user.jsp" >CHÍNH SÁCH MUA HÀNG</a>--%>
+<%--        <a class="menu" id="introduce" href="introduce_user.jsp" >GIỚI THIỆU</a>--%>
+<%--        <a class="menu" id="contact" href="contact_user.jsp">LIÊN HỆ</a>--%>
+<%--    </nav>--%>
+<%--    <div class="icons">--%>
+<%--        <a class="nav_item" href="shopping-cart.html" id="cart-link" >--%>
+<%--            <i class="fas fa-shopping-cart"></i>--%>
+<%--        </a>--%>
+<%--        <a class="nav-item" href="html/search.html" id="search-link">--%>
+<%--            <i class="fas fa-search"></i>--%>
+<%--        </a>--%>
+<%--        <div class="user-login">--%>
+<%--            <i class="fas fa-user"></i>--%>
+<%--            <div class="user">--%>
+<%--                <a class="nav_item" href="mypage_user.jsp" id="login">Trang của tôi</a>--%>
+<%--                <a class="nav-item" href="homepage.html" id="register">Đăng xuất</a>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
 <div class="main-content">
     <div class="cart-page-content-new">
         <div class="shopping-cart-list">
@@ -231,53 +236,53 @@
         </form>
     </div>
 </div>
-
-<div class="footer">
-    <div class="footer-container">
-
-
-        <div class="footer-col">
-            <h3>Về chúng tôi</h3>
+<jsp:include page="footer.jsp"></jsp:include>
+<%--<div class="footer">--%>
+<%--    <div class="footer-container">--%>
 
 
-            <p>HOME DECOR</p>
-
-            <p><i class="fa-solid"></i> Địa chỉ: Trường Đại học Nông Lâm Thành phố Hồ Chí Minh</p>
-            <p><i class="fa-solid"></i> Số điện thoại: 0944459364</p>
-            <p><i class="fa-solid"></i> Email: 23130082@st.hcmuaf.edu.vn</p>
-
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-tiktok"></i></a>
-            </div>
-        </div>
+<%--        <div class="footer-col">--%>
+<%--            <h3>Về chúng tôi</h3>--%>
 
 
-        <div class="footer-col">
-            <h3>Chính sách</h3>
-            <a href="#">Về tụi mình</a>
-            <a href="#">Chính sách Thanh toán</a>
-            <a href="#">Chính sách Giao hàng</a>
-            <a href="#">Chính sách Đổi trả</a>
-        </div>
+<%--            <p>HOME DECOR</p>--%>
+
+<%--            <p><i class="fa-solid"></i> Địa chỉ: Trường Đại học Nông Lâm Thành phố Hồ Chí Minh</p>--%>
+<%--            <p><i class="fa-solid"></i> Số điện thoại: 0944459364</p>--%>
+<%--            <p><i class="fa-solid"></i> Email: 23130082@st.hcmuaf.edu.vn</p>--%>
+
+<%--            <div class="social-icons">--%>
+<%--                <a href="#"><i class="fab fa-facebook"></i></a>--%>
+<%--                <a href="#"><i class="fab fa-instagram"></i></a>--%>
+<%--                <a href="#"><i class="fab fa-tiktok"></i></a>--%>
+<%--            </div>--%>
+<%--        </div>--%>
 
 
-        <div class="footer-col">
-            <h3>Hỗ trợ khách hàng</h3>
-            <a href="../product_all_user.jsp">Tất cả sản phẩm</a>
-        </div>
-        <div class="footer-col">
-            <h3>Liên kiết nhanh</h3>
-            <a href="../homepage_user.jsp">Trang chủ</a>
-            <a href="../purchasing_policy_user.jsp">Chính sách mua hàng</a>
-            <a href="../introduce_user.jsp">Giới thiệu</a>
-            <a href="../contact_user.jsp">Liên hệ</a>
-        </div>
-    </div>
+<%--        <div class="footer-col">--%>
+<%--            <h3>Chính sách</h3>--%>
+<%--            <a href="#">Về tụi mình</a>--%>
+<%--            <a href="#">Chính sách Thanh toán</a>--%>
+<%--            <a href="#">Chính sách Giao hàng</a>--%>
+<%--            <a href="#">Chính sách Đổi trả</a>--%>
+<%--        </div>--%>
 
-</div>
-<script src="../js/shopping_cart.js"></script>
+
+<%--        <div class="footer-col">--%>
+<%--            <h3>Hỗ trợ khách hàng</h3>--%>
+<%--            <a href="product_all_user.jsp">Tất cả sản phẩm</a>--%>
+<%--        </div>--%>
+<%--        <div class="footer-col">--%>
+<%--            <h3>Liên kiết nhanh</h3>--%>
+<%--            <a href="homepage_user.jsp">Trang chủ</a>--%>
+<%--            <a href="purchasing_policy_user.jsp">Chính sách mua hàng</a>--%>
+<%--            <a href="introduce_user.jsp">Giới thiệu</a>--%>
+<%--            <a href="contact_user.jsp">Liên hệ</a>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+
+<%--</div>--%>
+<script src="js/shopping_cart.js"></script>
 </body>
 
 </html>

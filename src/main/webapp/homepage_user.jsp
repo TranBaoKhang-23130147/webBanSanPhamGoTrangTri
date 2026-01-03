@@ -47,7 +47,7 @@
 
 <%--    </nav>--%>
 <%--    <div class="icons">--%>
-<%--        <a class="nav_item" href="html/shopping-cart.html" id="cart-link">--%>
+<%--        <a class="nav_item" href="html/shopping-cart.jsp" id="cart-link">--%>
 <%--            <i class="fas fa-shopping-cart"></i>--%>
 <%--        </a>--%>
 

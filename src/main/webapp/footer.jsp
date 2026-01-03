@@ -1,3 +1,8 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="model.User" %>
+<%
+    User user = (User) session.getAttribute("LOGGED_USER");
+%>
 <div class="footer">
     <div class="footer-container">
 
