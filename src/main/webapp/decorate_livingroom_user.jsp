@@ -48,7 +48,7 @@
 
 <%--    </nav>--%>
 <%--    <div class="icons">--%>
-<%--        <a class="nav_item" href="html/shopping-cart.html" id="cart-link" >--%>
+<%--        <a class="nav_item" href="html/shopping-cart.jsp" id="cart-link" >--%>
 <%--            <i class="fas fa-shopping-cart"></i>--%>
 <%--        </a>--%>
 
@@ -187,50 +187,88 @@
 
 
 </section>
-<div class="footer">
-    <div class="footer-container">
+<c:set var="range" value="3" />
+<c:set var="startPage" value="${currentPage - range}" />
+<c:set var="endPage" value="${currentPage + range}" />
 
-        <div class="footer-col">
-            <h3>Về chúng tôi</h3>
+<c:if test="${startPage < 1}">
+    <c:set var="startPage" value="1" />
+</c:if>
 
+<c:if test="${endPage > totalPages}">
+    <c:set var="endPage" value="${totalPages}" />
+</c:if>
 
-            <p>HOME DECOR</p>
+<div class="pagination-wrapper">
+    <div class="pagination">
 
-            <p><i class="fa-solid"></i> Địa chỉ: Trường Đại học Nông Lâm Thành phố Hồ Chí Minh</p>
-            <p><i class="fa-solid"></i> Số điện thoại: 0944459364</p>
-            <p><i class="fa-solid"></i> Email: 23130082@st.hcmuaf.edu.vn</p>
+        <!-- Prev -->
+        <c:if test="${currentPage > 1}">
+            <a href="?page=${currentPage - 1}" class="page-btn">«</a>
+        </c:if>
 
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-tiktok"></i></a>
-            </div>
-        </div>
+        <!-- Pages -->
+        <c:forEach begin="${startPage}" end="${endPage}" var="i">
+            <a href="?page=${i}"
+               class="page-btn ${i == currentPage ? 'active' : ''}">
+                    ${i}
+            </a>
+        </c:forEach>
 
-        <div class="footer-col">
-            <h3>Chính sách</h3>
-            <a href="introduce_user.jsp">Về tụi mình</a>
-            <a href="purchasing_policy_user.jsp">Chính sách Thanh toán</a>
-            <a href="purchasing_policy_user.jsp">Chính sách Giao hàng</a>
-            <a href="purchasing_policy_user.jsp">Chính sách Đổi trả</a>
-        </div>
-
-        <div class="footer-col">
-            <h3>Hỗ trợ khách hàng</h3>
-            <a href="product_all_user.jsp">Tất cả sản phẩm</a>
-        </div>
-
-
-        <div class="footer-col">
-            <h3>Liên kiết nhanh</h3>
-            <a href="homepage_user.jsp">Trang chủ</a>
-            <a href="purchasing_policy_user.jsp">Chính sách mua hàng</a>
-            <a href="introduce_user.jsp">Giới thiệu</a>
-            <a href="contact_user.jsp">Liên hệ</a>
-        </div>
+        <!-- Next -->
+        <c:if test="${currentPage < totalPages}">
+            <a href="?page=${currentPage + 1}" class="page-btn">»</a>
+        </c:if>
 
     </div>
 </div>
+
+
+<jsp:include page="footer.jsp"></jsp:include>
+<%--<div class="footer">--%>
+<%--    <div class="footer-container">--%>
+
+<%--        <div class="footer-col">--%>
+<%--            <h3>Về chúng tôi</h3>--%>
+
+
+<%--            <p>HOME DECOR</p>--%>
+
+<%--            <p><i class="fa-solid"></i> Địa chỉ: Trường Đại học Nông Lâm Thành phố Hồ Chí Minh</p>--%>
+<%--            <p><i class="fa-solid"></i> Số điện thoại: 0944459364</p>--%>
+<%--            <p><i class="fa-solid"></i> Email: 23130082@st.hcmuaf.edu.vn</p>--%>
+
+<%--            <div class="social-icons">--%>
+<%--                <a href="#"><i class="fab fa-facebook"></i></a>--%>
+<%--                <a href="#"><i class="fab fa-instagram"></i></a>--%>
+<%--                <a href="#"><i class="fab fa-tiktok"></i></a>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+
+<%--        <div class="footer-col">--%>
+<%--            <h3>Chính sách</h3>--%>
+<%--            <a href="introduce_user.jsp">Về tụi mình</a>--%>
+<%--            <a href="purchasing_policy_user.jsp">Chính sách Thanh toán</a>--%>
+<%--            <a href="purchasing_policy_user.jsp">Chính sách Giao hàng</a>--%>
+<%--            <a href="purchasing_policy_user.jsp">Chính sách Đổi trả</a>--%>
+<%--        </div>--%>
+
+<%--        <div class="footer-col">--%>
+<%--            <h3>Hỗ trợ khách hàng</h3>--%>
+<%--            <a href="product_all_user.jsp">Tất cả sản phẩm</a>--%>
+<%--        </div>--%>
+
+
+<%--        <div class="footer-col">--%>
+<%--            <h3>Liên kiết nhanh</h3>--%>
+<%--            <a href="homepage_user.jsp">Trang chủ</a>--%>
+<%--            <a href="purchasing_policy_user.jsp">Chính sách mua hàng</a>--%>
+<%--            <a href="introduce_user.jsp">Giới thiệu</a>--%>
+<%--            <a href="contact_user.jsp">Liên hệ</a>--%>
+<%--        </div>--%>
+
+<%--    </div>--%>
+<%--</div>--%>
 
 </body>
 <script src="js/decorate.js"></script>

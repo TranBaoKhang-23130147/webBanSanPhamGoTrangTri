@@ -198,12 +198,8 @@ public class ProductDao {
                     Description desc = new Description();
                     desc.setIntroduce(rs.getString("introduce"));
                     desc.setHighlights(rs.getString("highlights"));
-                    desc.setInformation(info);
+                    desc.setInformation(info); // Đảm bảo Model Description có setter này
                     p.setDetailDescription(desc);
-
-                    // GIỜ THÌ LẤY DỮ LIỆU SẼ KHÔNG CÒN LỖI NỮA
-                    p.setAverageRating(rs.getDouble("avgRating"));
-                    p.setTotalReviews(rs.getInt("totalReviews"));
 
                     return p;
                 }
@@ -294,7 +290,6 @@ public class ProductDao {
 
         try (Connection conn = new DBContext().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setInt(1, productId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -479,4 +474,153 @@ public class ProductDao {
         }
         return name;
     }
+    public List<Product> getProductsByPage(int page, int pageSize) {
+        List<Product> list = new ArrayList<>();
+
+        String sql = """
+        SELECT 
+            p.id, p.name_product, p.price, p.isActive,
+            img.urlImage,
+            COALESCE(AVG(r.rate),0) AS avgRating
+        FROM products p
+        LEFT JOIN images img ON p.primary_image_id = img.id
+        LEFT JOIN reviews r ON p.id = r.product_id
+        WHERE p.isActive = 1
+        GROUP BY p.id
+        LIMIT ? OFFSET ?
+    """;
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, pageSize);
+            ps.setInt(2, (page - 1) * pageSize);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(
+                        rs.getInt("id"),
+                        rs.getString("name_product"),
+                        rs.getDouble("price"),
+                        rs.getString("urlImage"),
+                        rs.getDouble("avgRating")
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public int countAllProducts() {
+        String sql = "SELECT COUNT(*) FROM products WHERE isActive = 1";
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    public int countFilterProducts(String[] types,
+                                   String[] prices,
+                                   String[] ratings,
+                                   Integer categoryId) {
+
+        StringBuilder sql = new StringBuilder(
+                "SELECT COUNT(DISTINCT p.id) " +
+                        "FROM products p " +
+                        "LEFT JOIN reviews r ON p.id = r.product_id " +
+                        "WHERE p.isActive = 1 "
+        );
+
+        if (categoryId != null) {
+            sql.append(" AND p.category_id = ").append(categoryId);
+        }
+
+        if (types != null && types.length > 0) {
+            sql.append(" AND p.product_type_id IN (")
+                    .append(String.join(",", types)).append(")");
+        }
+
+        if (prices != null && prices.length > 0) {
+            sql.append(" AND (");
+            for (int i = 0; i < prices.length; i++) {
+                if (i > 0) sql.append(" OR ");
+                switch (prices[i]) {
+                    case "1": sql.append("p.price < 1000000"); break;
+                    case "2": sql.append("p.price BETWEEN 1000000 AND 3000000"); break;
+                    case "3": sql.append("p.price BETWEEN 3000000 AND 5000000"); break;
+                    case "4": sql.append("p.price BETWEEN 5000000 AND 10000000"); break;
+                    case "5": sql.append("p.price > 10000000"); break;
+                }
+            }
+            sql.append(")");
+        }
+
+        try (Connection con = getConnection();
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql.toString())) {
+
+            if (rs.next()) return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    public List<Product> getProductsByCategoryPaging(
+            int categoryId, int page, int pageSize) {
+
+        List<Product> list = new ArrayList<>();
+        String sql =
+                "SELECT p.id, p.name_product, p.price, img.urlImage " +
+                        "FROM products p " +
+                        "LEFT JOIN images img ON p.primary_image_id = img.id " +
+                        "WHERE p.category_id = ? AND p.isActive = 1 " +
+                        "LIMIT ? OFFSET ?";
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, categoryId);
+            ps.setInt(2, pageSize);
+            ps.setInt(3, (page - 1) * pageSize);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                Product p = new Product();
+                p.setId(rs.getInt("id"));
+                p.setNameProduct(rs.getString("name_product"));
+                p.setPrice(rs.getDouble("price"));
+                p.setImageUrl(rs.getString("urlImage"));
+
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public int countProductsByCategory(int categoryId) {
+        String sql =
+                "SELECT COUNT(*) FROM products " +
+                        "WHERE category_id = ? AND isActive = 1";
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
+
+
 }
