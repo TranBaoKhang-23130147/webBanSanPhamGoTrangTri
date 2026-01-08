@@ -67,3 +67,26 @@ function updateTotal() {
 
 // chạy ngay khi load trang
 updateTotal();
+function changeQty(btn, delta) {
+    const input = btn.parentElement.querySelector('.qty-input');
+    let value = parseInt(input.value) || 1;
+
+    value += delta;
+    if (value < 1) value = 1;
+    if (value > 100) value = 100;
+
+    input.value = value;
+
+    // nếu bạn có update tổng tiền:
+    updateTotal();
+}
+function changeQty(btn, delta) {
+    const qtyInput = btn.parentElement.querySelector(".item-qty");
+    let qty = parseInt(qtyInput.value);
+
+    qty += delta;
+    if (qty < 1) qty = 1;
+
+    qtyInput.value = qty;
+    updateTotal();
+}

@@ -46,9 +46,13 @@ public class CartServlet extends HttpServlet {
                     if (item.getVariant().getId() == variantId) {
                         item.setQuantity(item.getQuantity() + quantity);
                         session.setAttribute("CART", cart);
-                        response.sendRedirect("shopping_cart.jsp");
+
+                        response.sendRedirect(
+                                "detail?id=" + productId + "&added=1"
+                        );
                         return;
                     }
+
                 }
 
                 Product product = dao.getProductById(productId);
@@ -84,6 +88,8 @@ public class CartServlet extends HttpServlet {
         }
 
         session.setAttribute("CART", cart);
-        response.sendRedirect("shopping_cart.jsp");
+        response.sendRedirect(
+                "detail?id=" + request.getParameter("productId") + "&added=1"
+        );
     }
 }
