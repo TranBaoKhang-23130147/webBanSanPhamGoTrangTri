@@ -302,13 +302,14 @@
                                 Hành động này sẽ xóa vĩnh viễn tất cả dữ liệu tài khoản, bao gồm hồ sơ, cài đặt, và lịch sử hoạt động. Không thể hoàn tác.
                             </p>
 
-                            <div class="delete-account-section">
-                                <div class="delete-account-info">
-                                    <h4>Bạn có chắc chắn muốn xóa tài khoản?</h4>
-                                    <p>Sau khi xóa, bạn sẽ mất quyền truy cập vào tất cả các tính năng quản trị. Vui lòng sao lưu dữ liệu quan trọng trước khi tiếp tục.</p>
-                                </div>
-                                <button type="button" class="btn btn-danger">Xóa tài khoản</button>
-                            </div>
+                            <form action="${pageContext.request.contextPath}/DeleteAccountServlet"
+                                  method="post"
+                                  onsubmit="return confirm('Bạn có chắc chắn muốn xóa tài khoản? Hành động này KHÔNG thể hoàn tác!');">
+
+                                <button type="submit" class="btn btn-danger">
+                                    Xóa tài khoản
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
