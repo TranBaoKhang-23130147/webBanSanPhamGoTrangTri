@@ -63,11 +63,25 @@
         </span>
 
                         <!-- số lượng -->
-                        <input type="number"
-                               class="item-qty"
-                               value="${item.quantity}"
-                               min="1"
-                               onchange="updateTotal()">
+                        <div class="quantity-control-list">
+                            <button type="button"
+                                    class="quantity-btn-list"
+                                    onclick="changeQty(this, -1)">
+                                −
+                            </button>
+
+                            <input type="text"
+                                   class="quantity-input-list item-qty"
+                                   value="${item.quantity}"
+                                   readonly>
+
+                            <button type="button"
+                                    class="quantity-btn-list"
+                                    onclick="changeQty(this, 1)">
+                                +
+                            </button>
+                        </div>
+
 
                     </div>
                     <a href="RemoveFromCartServlet?variantId=${item.variant.id}">

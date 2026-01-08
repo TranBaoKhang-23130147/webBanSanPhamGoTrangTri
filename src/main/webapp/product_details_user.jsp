@@ -122,9 +122,12 @@
                 <div class=" quantity-row">
                     <p>Số Lượng:</p>
                     <div class="quantity-controls">
-                        <button class="qty-btn" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                        <button type="button" class="qty-btn"
+                                onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
                         <input type="number" id="qtyInput" value="1" min="1" max="100" />
-                        <button class="qty-btn" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+
+                        <button type="button" class="qty-btn"
+                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
                     </div>
                 </div>
             </div>
@@ -348,5 +351,10 @@
 </script>
 <div style="background: #fff3cd; border: 1px solid #ffeeba; padding: 10px; color: #856404;">
 </div>
+<c:if test="${param.added == 1}">
+    <div id="toast-success">
+        ✅ Đã thêm sản phẩm vào giỏ hàng
+    </div>
+</c:if>
 </body>
 </html>
