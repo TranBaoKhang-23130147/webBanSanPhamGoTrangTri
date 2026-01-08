@@ -328,6 +328,41 @@ public List<User> getAllCustomers() {
         }
         return null;
     }
+    public boolean deleteUser(int userId) throws Exception {
+
+        String deleteAddressSQL = "DELETE FROM addresses WHERE user_id = ?";
+        String removeAvatarSQL = "UPDATE users SET avatar_id = NULL WHERE id = ?";
+        String deleteUserSQL = "DELETE FROM users WHERE id = ?";
+
+        try (Connection conn = DBContext.getConnection()) {
+            conn.setAutoCommit(false); // TRANSACTION
+
+            try (
+                    PreparedStatement psAddr = conn.prepareStatement(deleteAddressSQL);
+                    PreparedStatement psAvatar = conn.prepareStatement(removeAvatarSQL);
+                    PreparedStatement psUser = conn.prepareStatement(deleteUserSQL)
+            ) {
+                // 1. Xóa địa chỉ
+                psAddr.setInt(1, userId);
+                psAddr.executeUpdate();
+
+                // 2. Gỡ avatar
+                psAvatar.setInt(1, userId);
+                psAvatar.executeUpdate();
+
+                // 3. Xóa user
+                psUser.setInt(1, userId);
+                int rows = psUser.executeUpdate();
+
+                conn.commit();
+                return rows > 0;
+
+            } catch (Exception e) {
+                conn.rollback();
+                throw e;
+            }
+        }
+    }
 
 
 
