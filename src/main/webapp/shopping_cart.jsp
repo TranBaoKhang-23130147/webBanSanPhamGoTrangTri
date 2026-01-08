@@ -75,47 +75,7 @@
                     </a>
                 </div>
 
-                <%--                <div class="cart-item">--%>
 
-<%--                    <input type="checkbox" checked>--%>
-
-<%--                    <div class="product-details">--%>
-<%--                        <img src="${item.product.imageUrl}"--%>
-<%--                             class="product-image-list"--%>
-<%--                             alt="${item.product.nameProduct}">--%>
-
-<%--                        <div class="product-info-list">--%>
-<%--                            <div class="product-name-list">--%>
-<%--                                    ${item.product.nameProduct}--%>
-<%--                            </div>--%>
-
-<%--                            <div class="product-options">--%>
-<%--                                <span>Màu: ${item.variant.color.colorName}</span>--%>
-<%--                                <span>Size: ${item.variant.size.size_name}</span>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-
-<%--                    <div class="product-actions-price">--%>
-
-<%--                        <div class="product-price-list">--%>
-<%--                            <fmt:formatNumber value="${item.variant.variant_price}"--%>
-<%--                                              pattern="#,###"/> đ--%>
-<%--                        </div>--%>
-
-<%--                        <div class="quantity-control-list">--%>
-<%--                            <input type="number"--%>
-<%--                                   class="quantity-input-list"--%>
-<%--                                   value="${item.quantity}"--%>
-<%--                                   min="1">--%>
-<%--                        </div>--%>
-
-<%--                        <a href="remove-from-cart?variantId=${item.variant.id}">--%>
-<%--                            <i class="fas fa-trash-alt remove-icon-list"></i>--%>
-<%--                        </a>--%>
-<%--                    </div>--%>
-
-<%--                </div>--%>
             </c:forEach>
 
         </div>

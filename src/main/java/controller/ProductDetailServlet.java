@@ -15,49 +15,57 @@ import java.util.Map;      // THÊM DÒNG NÀY
 public class ProductDetailServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         String idRaw = request.getParameter("id");
-        try {
-            if (idRaw != null) {
-                int productId = Integer.parseInt(idRaw);
-                ProductDao dao = new ProductDao();
 
-                Product p = dao.getProductById(productId);
-
-                if (p != null) {
-                    p.setSubImages(dao.getProductImages(productId));
-                    p.setVariants(dao.getProductVariants(productId));
-
-                    // 1. Lấy danh sách đánh giá
-                    List<Reviews> reviewList = dao.getProductReviews(productId);
-                    p.setReviewList(reviewList);
-
-                    // 2. TẠO MAP ĐỂ CHỨA TÊN NGƯỜI DÙNG (Key: userId, Value: username)
-                    Map<Integer, String> userNames = new HashMap<>();
-                    if (reviewList != null) {
-                        for (Reviews rev : reviewList) {
-                            // Gọi hàm lấy tên từ DAO dựa vào ID (không cần sửa Model)
-                            String name = dao.getUsernameById(rev.getUserId());
-                            userNames.put(rev.getUserId(), name);
-                        }
-                    }
-
-                    // 3. Gửi cả Product và Map tên sang JSP
-                    request.setAttribute("p", p);
-                    request.setAttribute("userNames", userNames); // Gửi Map này đi
-
-                    request.getRequestDispatcher("product_details_user.jsp").forward(request, response);
-                } else {
-                    response.sendRedirect("homepage_user.jsp");
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace(); // In lỗi ra console để dễ kiểm tra
+        // 🔒 Chốt an toàn
+        if (idRaw == null || idRaw.trim().isEmpty()) {
             response.sendRedirect("homepage_user.jsp");
+            return;
         }
+
+        int productId;
+        try {
+            productId = Integer.parseInt(idRaw);
+        } catch (NumberFormatException e) {
+            response.sendRedirect("homepage_user.jsp");
+            return;
+        }
+
+        ProductDao dao = new ProductDao();
+        Product p = dao.getProductById(productId);
+
+        if (p == null) {
+            response.sendRedirect("homepage_user.jsp");
+            return;
+        }
+
+        // Load dữ liệu phụ
+        p.setSubImages(dao.getProductImages(productId));
+        p.setVariants(dao.getProductVariants(productId));
+
+        List<Reviews> reviewList = dao.getProductReviews(productId);
+        p.setReviewList(reviewList);
+
+        Map<Integer, String> userNames = new HashMap<>();
+        if (reviewList != null) {
+            for (Reviews rev : reviewList) {
+                userNames.put(
+                        rev.getUserId(),
+                        dao.getUsernameById(rev.getUserId())
+                );
+            }
+        }
+
+        request.setAttribute("p", p);
+        request.setAttribute("userNames", userNames);
+
+        request.getRequestDispatcher("product_details_user.jsp")
+                .forward(request, response);
     }
 
-    // ... doPost giữ nguyên ...
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

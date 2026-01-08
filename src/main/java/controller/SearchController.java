@@ -11,34 +11,33 @@ import java.util.List;
 
 @WebServlet(name = "SearchController", value = "/search") // Đổi tên URL cho ngắn gọn
 public class SearchController extends HttpServlet {
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        // 1. Lấy dữ liệu từ các ô input (name="txtSearch" và name="category")
+        request.setCharacterEncoding("UTF-8");
         String txtSearch = request.getParameter("txtSearch");
-        String category = request.getParameter("category");
+        String categoryName = request.getParameter("category"); // NAME, KHÔNG PHẢI ID
 
-        // Xử lý trường hợp lần đầu vào trang (txtSearch bị null)
-        if (txtSearch == null) {
-            txtSearch = "";
-        }
-        if (category == null) {
-            category = "all";
+        if (txtSearch == null) txtSearch = "";
+        if (categoryName == null || categoryName.equals("all") || categoryName.equals("null")) {
+            categoryName = "all";
         }
 
-        // 2. Gọi lớp DAO để lấy danh sách sản phẩm
         ProductDao dao = new ProductDao();
-        List<Product> list = dao.searchProducts(txtSearch, category);
 
-        // 3. Đẩy dữ liệu sang trang JSP
+        Integer categoryId = null;
+        if (!categoryName.equals("all")) {
+            categoryId = dao.getCategoryIdByName(categoryName); // NAME → ID
+        }
+
+        List<Product> list = dao.searchProducts(txtSearch, categoryId);
+
         request.setAttribute("listP", list);
-        request.setAttribute("txtS", txtSearch); // Giữ lại từ khóa vừa search trên ô input
-        request.setAttribute("catS", category);  // Giữ lại phân loại đã chọn
+        request.setAttribute("txtS", txtSearch);
+        request.setAttribute("catS", categoryName);
 
-        // 4. Chuyển hướng về trang search.jsp
         request.getRequestDispatcher("search.jsp").forward(request, response);
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

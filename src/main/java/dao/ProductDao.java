@@ -55,69 +55,56 @@ public class ProductDao {
     /**
      * Tìm kiếm sản phẩm nâng cao - JOIN 3 bảng để lấy thông tin chi tiết
      */
-    public List<Product> searchProducts(String txtSearch, String category) {
+    public List<Product> searchProducts(String txtSearch, Integer categoryId) {
         List<Product> list = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
 
-        // SQL sử dụng Double JOIN để lấy dữ liệu từ bảng descriptions và informations
-        sb.append("""
-            SELECT 
-                p.*, 
-                d.introduce, d.highlights, 
-                inf.material, inf.color, inf.size, inf.guarantee,
-                img.urlImage, 
-                COALESCE(AVG(r.rate), 0) AS avgRating
-            FROM products p
-            LEFT JOIN descriptions d ON p.description_id = d.id
-            LEFT JOIN informations inf ON d.information_id = inf.id
-            LEFT JOIN images img ON p.primary_image_id = img.id
-            LEFT JOIN reviews r ON p.id = r.product_id
-            WHERE p.name_product LIKE ?
-            """);
+        StringBuilder sql = new StringBuilder("""
+        SELECT 
+            p.id,
+            p.name_product,
+            p.price,
+            p.category_id,
+            p.primary_image_id,
+            img.urlImage,
+            COALESCE(AVG(r.rate), 0) AS avgRating
+        FROM products p
+        LEFT JOIN images img ON p.primary_image_id = img.id
+        LEFT JOIN reviews r ON p.id = r.product_id
+        WHERE p.isActive = 1
+          AND p.name_product LIKE ?
+    """);
 
-        if (category != null && !category.equals("all") && !category.isBlank()) {
-            sb.append(" AND p.category_id = ?");
+        if (categoryId != null) {
+            sql.append(" AND p.category_id = ?");
         }
 
-        // Group by tất cả các cột cần thiết khi dùng hàm tổng hợp AVG
-        sb.append("""
-             GROUP BY p.id, d.id, inf.id, img.urlImage
-            """);
+        sql.append(" GROUP BY p.id, img.urlImage ");
 
-        try (Connection conn = new DBContext().getConnection();
-             PreparedStatement ps = conn.prepareStatement(sb.toString())) {
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
 
             ps.setString(1, "%" + txtSearch + "%");
-            if (category != null && !category.equals("all") && !category.isBlank()) {
-                ps.setInt(2, Integer.parseInt(category));
+            if (categoryId != null) {
+                ps.setInt(2, categoryId);
             }
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    Product p = new Product();
-                    p.setId(rs.getInt("id"));
-                    p.setNameProduct(rs.getString("name_product"));
-
-                    // description_id bây giờ là int (khóa ngoại)
-                    p.setDescription(rs.getInt("description_id"));
-
-                    p.setCategoryId(rs.getInt("category_id"));
-                    p.setSourceId(rs.getInt("source_id"));
-                    p.setProductTypeId(rs.getInt("product_type_id"));
-                    p.setPrice(rs.getDouble("price"));
-                    p.setPrimaryImageId(rs.getInt("primary_image_id"));
-                    p.setIsActive(rs.getInt("isActive"));
-                    p.setMfgDate(rs.getDate("mfg_date"));
-                    p.setImageUrl(rs.getString("urlImage"));
-                    p.setAverageRating(rs.getDouble("avgRating"));
-
-                    // Bạn có thể set thêm các field introduce/material nếu Model Product có hỗ trợ
-                    list.add(p);
-                }
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                p.setId(rs.getInt("id"));
+                p.setNameProduct(rs.getString("name_product"));
+                p.setPrice(rs.getDouble("price"));
+                p.setCategoryId(rs.getInt("category_id"));
+                p.setPrimaryImageId(rs.getInt("primary_image_id"));
+                p.setImageUrl(rs.getString("urlImage"));
+                p.setAverageRating(rs.getDouble("avgRating"));
+                list.add(p);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return list;
     }
 
