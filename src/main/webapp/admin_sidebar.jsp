@@ -21,6 +21,7 @@
             </li>
             <li><a href="admin_order.html"> Đơn hàng</a></li>
             <li><a href="${pageContext.request.contextPath}/admin/customers"> Khách hàng</a></li>
+            <li><a href="${pageContext.request.contextPath}/admin-management"> Quan tri vien</a></li>
             <li><a href="${pageContext.request.contextPath}/AdminProfileServlet"> Hồ sơ</a></li>
 
             <li class="${activePage == 'setting' ? 'active' : ''}">

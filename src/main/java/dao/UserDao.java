@@ -364,7 +364,33 @@ public List<User> getAllCustomers() {
         }
     }
 
+    public List<User> getAllAdmins() {
+        List<User> list = new ArrayList<>();
+        // Lọc những người dùng có quyền là 'Admin'
+        String sql = "SELECT * FROM users WHERE role = 'Admin'";
 
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setUsername(rs.getString("full_name"));
+                u.setDisplayName(rs.getString("display_name"));
+                u.setEmail(rs.getString("email"));
+                u.setPhone(rs.getString("phone"));
+                u.setRole(rs.getString("role"));
+                u.setStatus(rs.getString("status"));
+                u.setCreateAt(rs.getDate("createAt"));
+
+                list.add(u);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
 
 }
