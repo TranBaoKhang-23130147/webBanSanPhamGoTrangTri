@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="css/admin_customer_style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/admin_profile_style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         .role-admin-tag {
             background-color: #ebf5ff;
@@ -20,7 +23,11 @@
             font-size: 12px;
         }
         .self-account {
-            background-color: #fff9db; /* Highlight dòng của chính mình */
+            background-color: #fff9db;
+        }
+        .col-actions i:hover {
+            transform: scale(1.2);
+            transition: 0.2s;
         }
     </style>
 </head>
@@ -86,7 +93,7 @@
                                         <c:if test="${a.id != sessionScope.LOGGED_USER.id}">
                                             <i class="fa-solid fa-trash-can"
                                                title="Xóa tài khoản admin"
-                                               onclick="confirmDeleteAdmin('${a.id}', '${a.username}')"
+                                               onclick="confirmDeleteAdmin('${a.id}', '${a.displayName != null ? a.displayName : a.username}')"
                                                style="cursor:pointer; color:red; margin-left:15px;"></i>
                                         </c:if>
                                     </td>
@@ -102,11 +109,37 @@
 </div>
 
 <script>
-    function confirmDeleteAdmin(id, username) {
-        if (confirm("CẢNH BÁO: Bạn đang xóa tài khoản QUẢN TRỊ '" + username + "'.\nHành động này có thể ảnh hưởng đến quyền vận hành hệ thống. Tiếp tục?")) {
-            window.location.href = "DeleteAccountServlet?id=" + id + "&type=admin";
-        }
+    function confirmDeleteAdmin(id, name) {
+        Swal.fire({
+            title: 'Xác nhận xóa?',
+            text: "Bạn đang xóa tài khoản Admin '" + name + "'. Dữ liệu liên quan cũng sẽ bị xóa!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Đúng, xóa ngay!',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Gọi đến Servlet bạn đã tạo
+                window.location.href = "AdminDeleteCustomerServlet?id=" + id + "&type=admin";
+            }
+        })
     }
 </script>
+
+<c:if test="${not empty sessionScope.msg}">
+    <script>
+        Swal.fire({
+            title: "${sessionScope.msgType == 'success' ? 'Thành công!' : 'Lỗi!'}",
+            text: "${sessionScope.msg}",
+            icon: "${sessionScope.msgType}",
+            confirmButtonColor: '#4e73df'
+        });
+    </script>
+    <c:remove var="msg" scope="session" />
+    <c:remove var="msgType" scope="session" />
+</c:if>
+
 </body>
 </html>

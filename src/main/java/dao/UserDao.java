@@ -328,40 +328,93 @@ public List<User> getAllCustomers() {
         }
         return null;
     }
+//    public boolean deleteUser(int userId) throws Exception {
+//
+//        String deleteAddressSQL = "DELETE FROM addresses WHERE user_id = ?";
+//        String removeAvatarSQL = "UPDATE users SET avatar_id = NULL WHERE id = ?";
+//        String deleteUserSQL = "DELETE FROM users WHERE id = ?";
+//
+//        try (Connection conn = DBContext.getConnection()) {
+//            conn.setAutoCommit(false); // TRANSACTION
+//
+//            try (
+//                    PreparedStatement psAddr = conn.prepareStatement(deleteAddressSQL);
+//                    PreparedStatement psAvatar = conn.prepareStatement(removeAvatarSQL);
+//                    PreparedStatement psUser = conn.prepareStatement(deleteUserSQL)
+//            ) {
+//                // 1. Xóa địa chỉ
+//                psAddr.setInt(1, userId);
+//                psAddr.executeUpdate();
+//
+//                // 2. Gỡ avatar
+//                psAvatar.setInt(1, userId);
+//                psAvatar.executeUpdate();
+//
+//                // 3. Xóa user
+//                psUser.setInt(1, userId);
+//                int rows = psUser.executeUpdate();
+//
+//                conn.commit();
+//                return rows > 0;
+//
+//            } catch (Exception e) {
+//                conn.rollback();
+//                throw e;
+//            }
+//        }
+//    }
+    /**
+     * Xóa người dùng (bao gồm xóa địa chỉ và gỡ liên kết ảnh đại diện)
+     * Sử dụng Transaction để đảm bảo tính toàn vẹn dữ liệu.
+     */
     public boolean deleteUser(int userId) throws Exception {
-
         String deleteAddressSQL = "DELETE FROM addresses WHERE user_id = ?";
         String removeAvatarSQL = "UPDATE users SET avatar_id = NULL WHERE id = ?";
         String deleteUserSQL = "DELETE FROM users WHERE id = ?";
 
         try (Connection conn = DBContext.getConnection()) {
-            conn.setAutoCommit(false); // TRANSACTION
+            conn.setAutoCommit(false); // Bắt đầu giao dịch
 
-            try (
-                    PreparedStatement psAddr = conn.prepareStatement(deleteAddressSQL);
-                    PreparedStatement psAvatar = conn.prepareStatement(removeAvatarSQL);
-                    PreparedStatement psUser = conn.prepareStatement(deleteUserSQL)
-            ) {
-                // 1. Xóa địa chỉ
+            try (PreparedStatement psAddr = conn.prepareStatement(deleteAddressSQL);
+                 PreparedStatement psAvatar = conn.prepareStatement(removeAvatarSQL);
+                 PreparedStatement psUser = conn.prepareStatement(deleteUserSQL)) {
+
+                // 1. Xóa tất cả địa chỉ của User này trước
                 psAddr.setInt(1, userId);
                 psAddr.executeUpdate();
 
-                // 2. Gỡ avatar
+                // 2. Gỡ Avatar (Tránh lỗi khóa ngoại nếu ảnh thuộc bảng images)
                 psAvatar.setInt(1, userId);
                 psAvatar.executeUpdate();
 
-                // 3. Xóa user
+                // 3. Xóa bản ghi User
                 psUser.setInt(1, userId);
                 int rows = psUser.executeUpdate();
 
-                conn.commit();
+                conn.commit(); // Thành công thì commit
                 return rows > 0;
 
             } catch (Exception e) {
-                conn.rollback();
+                conn.rollback(); // Lỗi thì quay lại trạng thái cũ
                 throw e;
             }
         }
+    }
+
+    /**
+     * Kiểm tra số lượng Admin hiện có.
+     * Dùng để ngăn chặn việc xóa Admin cuối cùng trong hệ thống.
+     */
+    public int countAdmin() {
+        String sql = "SELECT COUNT(*) FROM users WHERE role = 'Admin'";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public List<User> getAllAdmins() {
