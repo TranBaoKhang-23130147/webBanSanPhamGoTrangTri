@@ -81,4 +81,16 @@ public class ProductTypeDao {
             return false;
         }
     }
+    public boolean updateProductType(int id, String name) {
+        String sql = "UPDATE product_types SET product_type_name = ? WHERE id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, name);
+            ps.setInt(2, id);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
