@@ -104,6 +104,44 @@
     <c:remove var="msg" scope="session" />
     <c:remove var="msgType" scope="session" />
 </c:if>
-<script src="js/admin_product_type.js"></script>
+<script src="js/admin_product_type.js"> </script>
+<script>
+    function editProductType(id, name) {
+        const modal = document.getElementById('productTypeModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const form = document.getElementById('productTypeForm');
+        const inputName = document.getElementById('productTypeName');
+
+        // 1. Hiển thị Modal
+        modal.style.display = 'block';
+
+        // 2. Đổi tiêu đề và điền dữ liệu
+        modalTitle.innerText = "Chỉnh Sửa Loại Sản Phẩm";
+        inputName.value = name;
+
+        // 3. Thay đổi action của form để gửi ID qua URL hoặc thêm hidden input
+        // Cách tốt nhất là thêm một hidden input cho ID
+        let hiddenId = document.getElementById('editId');
+        if (!hiddenId) {
+            hiddenId = document.createElement('input');
+            hiddenId.type = 'hidden';
+            hiddenId.name = 'id';
+            hiddenId.id = 'editId';
+            form.appendChild(hiddenId);
+        }
+        hiddenId.value = id;
+
+        // 4. Đổi đường dẫn action tới Servlet Update
+        form.action = "update-product-type";
+    }
+
+    function closeProductTypeModal() {
+        document.getElementById('productTypeModal').style.display = 'none';
+        // Reset form về trạng thái Thêm mới khi đóng
+        document.getElementById('modalTitle').innerText = "Thêm Loại Sản Phẩm Mới";
+        document.getElementById('productTypeForm').action = "add-product-type";
+        document.getElementById('productTypeForm').reset();
+    }
+</script>
 </body>
 </html>
