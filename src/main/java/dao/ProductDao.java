@@ -730,4 +730,54 @@ public class ProductDao {
         }
         return null;
     }
+    // Sửa hàm lấy sản phẩm theo danh mục
+    public List<Product> getProductsByCategoryID(String cid) {
+        List<Product> list = new ArrayList<>();
+        String sql = """
+        SELECT p.id, p.name_product, p.price, img.urlImage, 
+               COALESCE(AVG(r.rate), 0) AS avgRating
+        FROM products p
+        LEFT JOIN images img ON p.primary_image_id = img.id
+        LEFT JOIN reviews r ON p.id = r.product_id
+        WHERE p.category_id = ? AND p.isActive = 1
+        GROUP BY p.id
+        """;
+
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, cid);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Product p = new Product();
+                    p.setId(rs.getInt("id"));
+                    p.setNameProduct(rs.getString("name_product"));
+                    p.setPrice(rs.getDouble("price"));
+                    p.setImageUrl(rs.getString("urlImage"));
+                    p.setAverageRating(rs.getDouble("avgRating"));
+                    list.add(p);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    // Sửa hàm lấy tất cả danh mục
+    public List<Category> getAllCategory() {
+        List<Category> list = new ArrayList<>();
+        String sql = "SELECT * FROM categories"; // Đảm bảo tên bảng là 'categories'
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                list.add(new Category(rs.getInt("id"), rs.getString("category_name")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

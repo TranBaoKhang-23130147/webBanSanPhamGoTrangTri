@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="model.User" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     User user = (User) session.getAttribute("LOGGED_USER");
 %>
@@ -13,20 +14,21 @@
 
         <a class="menu" id="home" href="homepage_user.jsp"> TRANG CHỦ</a>
         <div class="menu product-menu">
+            <%-- Nhấn vào đây ra trang Tất cả sản phẩm --%>
+            <a id="product" href="ProductAllServlet">SẢN PHẨM</a>
 
-            <a id="product" href="${pageContext.request.contextPath}/ProductAllServlet">SẢN PHẨM</a>
-            <div class="submenu">
-                <a href="LivingroomDecorateServlet?category=trang-tri-phong-khach">
-                    TRANG TRÍ PHÒNG KHÁCH
-                </a>
-                <a href="BedroomDecorateServlet?category=trang-tri-phong-ngu">TRANG TRÍ PHÒNG NGỦ</a>
-                <a href="KitchenDecorateServlet?category=trang-tri-phong-bep">TRANG TRÍ PHÒNG BẾP</a>
-                <a href="HomeofficeDecorateServlet?category=trang-tri-phong-lam-viec">TRANG TRÍ PHÒNG LÀM VIỆC</a>
-                <a href="MiniitemDecorateServlet?category=do-trang-tri-mini">ĐỒ TRANG TRÍ MINI</a>
-                <a href="SouvenirServlet?category=qua-luu-niem">QUÀ LƯU NIỆM</a>
-            </div>
+                <div class="submenu">
+                    <c:forEach items="${listCC}" var="c">
+                        <a href="CategoryController?cid=${c.id}">
+                                ${c.categoryName.toUpperCase()}
+                        </a>
+                    </c:forEach>
+                </div>
         </div>
-        <a class="menu" id=" " href="purchasing_policy_user.jsp" >CHÍNH SÁCH MUA HÀNG</a>
+
+                <a class="menu" id=" " href="purchasing_policy_user.jsp" >CHÍNH SÁCH MUA HÀNG</a>
+
+
         <a class="menu" id="introduce" href="introduce_user.jsp" >GIỚI THIỆU</a>
         <a class="menu" id="contact" href="contact_user.jsp">LIÊN HỆ</a>
 

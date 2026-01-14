@@ -26,7 +26,12 @@ public class CartServlet extends HttpServlet {
 
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
-
+        if (session.getAttribute("LOGGED_USER") == null) {
+            // Nếu chưa đăng nhập, trả về thông báo lỗi hoặc chuyển hướng
+            request.setAttribute("ERROR_MESSAGE", "Bạn cần đăng nhập để thêm vào giỏ hàng!");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
         List<CartItem> cart =
                 (List<CartItem>) session.getAttribute("CART");
 
