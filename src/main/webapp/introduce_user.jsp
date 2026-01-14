@@ -5,9 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <title>HOME DECOR - GIỚI THIỆU</title>
-    <link rel="icon" type="image/png"  href="../img/logo.png" >
+    <link rel="icon" type="image/png"  href="img/logo.png" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="../css/introduce_style.css">
+    <link rel="stylesheet" href="css/introduce_style.css">
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>

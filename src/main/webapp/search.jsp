@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="model.User" %>
+    <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="model.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
@@ -88,7 +88,7 @@
         </c:when>
 
         <c:otherwise>
-            <h2>Sản phẩm gợi ý cho bạn</h2>
+            <h2>Nhập sản phẩm bạn muốn tìm</h2>
         </c:otherwise>
     </c:choose>
 
