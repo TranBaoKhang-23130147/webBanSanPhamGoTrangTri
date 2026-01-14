@@ -93,19 +93,8 @@
     </c:choose>
 
 </section>
-<section class="categories">
-    <h2>Danh mục nổi bật</h2>
-    <p>Khám phá không gian nội thất theo từng phong cách</p>
+<jsp:include page="danh_muc_loc.jsp"></jsp:include>
 
-    <div class="category-list">
-        <div class="category-card"><i class="fas fa-couch"></i><p>Phòng khách</p><span>124 sản phẩm</span></div>
-        <div class="category-card"><i class="fas fa-bed"></i><p>Phòng ngủ</p><span>89 sản phẩm</span></div>
-        <div class="category-card"><i class="fas fa-utensils"></i><p>Phòng bếp</p><span>56 sản phẩm</span></div>
-        <div class="category-card"><i class="fas fa-lightbulb"></i><p>Phòng làm việc</p><span>77 sản phẩm</span></div>
-        <div class="category-card"><i class="fas fa-paint-brush"></i><p>Đồ trang trí mini</p><span>102 sản phẩm</span></div>
-        <div class="category-card"><i class="fas fa-chair"></i><p>Quà lưu niệm</p><span>65 sản phẩm</span></div>
-    </div>
-</section>
 
 
 
