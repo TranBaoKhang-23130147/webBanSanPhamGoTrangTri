@@ -49,7 +49,6 @@
                             <th class="col-category">Loại sản phẩm</th>
                             <th class="col-category">Danh mục</th>
                             <th class="col-date-added">Ngày thêm</th>
-                            <th class="col-price">Giá (VND)</th>
                             <th class="col-stock">Số lượng</th>
                             <th class="col-status">Trạng thái</th>
                             <th class="col-actions">Thao tác</th>
@@ -59,29 +58,34 @@
                         <c:forEach var="p" items="${productList}">
                             <tr>
                                 <td class="col-image">
-                                    <img src="${p.imageUrl}" class="product-icon">
+                                        <%-- Kiểm tra nếu không có ảnh thì hiện ảnh mặc định --%>
+                                    <img src="${not empty p.imageUrl ? p.imageUrl : 'img/default-product.png'}"
+                                         class="product-icon" style="width: 50px; height: 50px; object-fit: cover;">
                                 </td>
 
                                 <td class="col-name">${p.nameProduct}</td>
 
+                                    <%-- SỬA Ở ĐÂY: Dùng typeName thay vì ID --%>
                                 <td class="col-category">
-                                        ${p.productTypeId}
+                                        ${not empty p.typeName ? p.typeName : 'Chưa phân loại'}
                                 </td>
 
+                                    <%-- SỬA Ở ĐÂY: Dùng categoryName thay vì ID --%>
                                 <td class="col-category">
-                                        ${p.categoryId}
+                                        ${not empty p.categoryName ? p.categoryName : 'Chưa có danh mục'}
                                 </td>
 
                                 <td class="col-date-added">
                                         ${p.mfgDate}
                                 </td>
 
-                                <td class="col-price">
-                                    <fmt:formatNumber value="${p.price}" type="number"/> đ
-                                </td>
+                                    <%-- BỔ SUNG CỘT GIÁ: Định dạng tiền tệ cho dễ nhìn --%>
+<%--                                <td class="col-price">--%>
+<%--                                    <fmt:formatNumber value="${p.price}" type="number"/> đ--%>
+<%--                                </td>--%>
 
                                 <td class="col-stock">
-                                    10
+                                    10 <%-- Bạn có thể thay bằng ${p.stock} nếu có --%>
                                 </td>
 
                                 <td class="col-status">

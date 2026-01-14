@@ -24,7 +24,15 @@ public class Product {
     private List<ProductVariants> variants; // Danh sách các biến thể màu/size
     private List<Reviews> reviewList;       // Danh sách các đánh giá chi tiết
     private int totalReviews;
+    private String categoryName; // Thêm dòng này
+    private String typeName;     // Thêm dòng này
 
+    // Bắt buộc phải có Getter và Setter cho 2 biến trên thì DAO mới gọi được
+    public String getCategoryName() { return categoryName; }
+    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
+
+    public String getTypeName() { return typeName; }
+    public void setTypeName(String typeName) { this.typeName = typeName; }
     public Product() {}
     public Product(int id, String nameProduct, double price, String imageUrl, double averageRating) {
         this.id = id;
