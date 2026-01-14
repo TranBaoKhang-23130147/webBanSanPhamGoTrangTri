@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@WebServlet("/admin-add-product")
+@WebServlet(name = "AddProductServlet", value = "/admin_add_products")
+
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 2, // 2MB
         maxFileSize = 1024 * 1024 * 10,      // 10MB
@@ -117,6 +118,13 @@ public class AddProductServlet extends HttpServlet {
             e.printStackTrace();
             request.setAttribute("error", "Lỗi: " + e.getMessage());
             request.getRequestDispatcher("admin_add_product.jsp").forward(request, response);
+
         }
+    }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Chuyển hướng người dùng đến file JSP chứa form thêm sản phẩm
+        request.getRequestDispatcher("admin/add_product_form.jsp").forward(request, response);
     }
 }

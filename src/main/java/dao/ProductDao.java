@@ -52,6 +52,40 @@ public class ProductDao {
         return list;
     }
 
+    public List<Product> getAllProductsAdmin() {
+        List<Product> list = new ArrayList<>();
+        String sql = """
+        SELECT p.id, p.name_product, p.price, p.is_active,
+               p.created_at, i.image_url,
+               c.name AS category_name,
+               t.name AS type_name
+        FROM products p
+        JOIN images i ON p.primary_image_id = i.id
+        JOIN categories c ON p.category_id = c.id
+        JOIN product_types t ON p.product_type_id = t.id
+    """;
+
+        try (Connection con = DBContext.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Product p = new Product();
+                p.setId(rs.getInt("id"));
+                p.setNameProduct(rs.getString("name_product"));
+                p.setPrice(rs.getDouble("price"));
+                p.setIsActive(rs.getInt("is_active"));
+                p.setImageUrl(rs.getString("image_url"));
+                p.setMfgDate(rs.getDate("created_at"));
+
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     /**
      * Tìm kiếm sản phẩm nâng cao - JOIN 3 bảng để lấy thông tin chi tiết
      */

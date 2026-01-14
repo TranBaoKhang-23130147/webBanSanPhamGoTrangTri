@@ -56,133 +56,54 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td class="col-image"><img src="https://i.pinimg.com/1200x/b5/40/43/b5404377a9a5be667680522ac523b37a.jpg" alt="Lọ bút gỗ" class="product-icon"></td>
-                            <td class="col-name">Lọ để bút bằng gỗ</td>
-                            <td class="col-category">Trang trí</td>
-                            <td class="col-date-added">13/11/2025</td>
-                            <td class="col-price">250.000</td>
-                            <td class="col-stock highlight-low">8</td>
-                            <td class="col-status">
-                                <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </td>
-                            <td class="col-actions">
-                                <i class="fa-solid fa-pen-to-square edit-icon"></i>
-                                <i class="fa-solid fa-trash-can delete-icon"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-image"><img src="https://i.pinimg.com/1200x/72/e4/e8/72e4e84b787917f48413777f26c103e4.jpg" alt="Quà lưu niệm gỗ" class="product-icon"></td>
-                            <td class="col-name">Bộ quà lưu niện khắc hình gỗ</td>
-                            <td class="col-category">Quà lưu niệm</td>
-                            <td class="col-date-added">10/11/2025</td>
-                            <td class="col-price">120.000</td>
-                            <td class="col-stock">15</td>
-                            <td class="col-status">
-                                <label class="switch">
-                                    <input type="checkbox">
-                                    <span class="slider round"></span>
-                                </label>
-                            </td>
-                            <td class="col-actions">
-                                <i class="fa-solid fa-pen-to-square edit-icon"></i>
-                                <i class="fa-solid fa-trash-can delete-icon"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-image"><img src="https://i.pinimg.com/736x/5c/a3/37/5ca3372159a59999f7c590a4df950dd9.jpg" alt="Đồng hồ gỗ" class="product-icon"></td>
-                            <td class="col-name">Đồng hồ treo tường vân gỗ</td>
-                            <td class="col-category">Trang trí</td>
-                            <td class="col-date-added">05/11/2025</td>
-                            <td class="col-price">450.000</td>
-                            <td class="col-stock">30</td>
-                            <td class="col-status">
-                                <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </td>
-                            <td class="col-actions">
-                                <i class="fa-solid fa-pen-to-square edit-icon"></i>
-                                <i class="fa-solid fa-trash-can delete-icon"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-image"><img src="https://i.pinimg.com/1200x/c7/bc/26/c7bc26436a0852311e9bb485dacbb56d.jpg" alt="Kệ sách mini" class="product-icon"></td>
-                            <td class="col-name">Kệ sách để bàn mini (Gỗ Sồi)</td>
-                            <td class="col-category">Nội thất nhỏ</td>
-                            <td class="col-date-added">01/11/2025</td>
-                            <td class="col-price">320.000</td>
-                            <td class="col-stock">12</td>
-                            <td class="col-status">
-                                <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </td>
-                            <td class="col-actions">
-                                <i class="fa-solid fa-pen-to-square edit-icon"></i>
-                                <i class="fa-solid fa-trash-can delete-icon"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-image"><img src="https://i.pinimg.com/736x/0a/e5/5b/0ae55bf86e9c654b57f56b078b8afe6e.jpg" alt="Khay trà gỗ" class="product-icon"></td>
-                            <td class="col-name">Khay trà gỗ tự nhiên</td>
-                            <td class="col-category">Phòng bếp</td>
-                            <td class="col-date-added">28/10/2025</td>
-                            <td class="col-price">180.000</td>
-                            <td class="col-stock highlight-low">5</td>
-                            <td class="col-status">
-                                <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </td>
-                            <td class="col-actions">
-                                <i class="fa-solid fa-pen-to-square edit-icon"></i>
-                                <i class="fa-solid fa-trash-can delete-icon"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-image"><img src="https://i.pinimg.com/1200x/1f/2d/52/1f2d527f305920f765b3630f04261a7d.jpg" alt="Móc khoá gỗ" class="product-icon"></td>
-                            <td class="col-name">Móc khóa gỗ khắc tên (Custom)</td>
-                            <td class="col-category">Quà lưu niệm</td>
-                            <td class="col-date-added">25/10/2025</td>
-                            <td class="col-price">50.000</td>
-                            <td class="col-stock">58</td>
-                            <td class="col-status">
-                                <label class="switch">
-                                    <input type="checkbox" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            </td>
-                            <td class="col-actions">
-                                <i class="fa-solid fa-pen-to-square edit-icon"></i>
-                                <i class="fa-solid fa-trash-can delete-icon"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-image"><img src="https://i.pinimg.com/736x/a4/43/76/a4437668d730546d45eeeacdcffd75a8.jpg" alt="Hộp đựng trang sức" class="product-icon"></td>
-                            <td class="col-name">Hộp đựng trang sức gỗ có khoá</td>
-                            <td class="col-category">Trang trí</td>
-                            <td class="col-date-added">20/10/2025</td>
-                            <td class="col-price">550.000</td>
-                            <td class="col-stock">20</td>
-                            <td class="col-status">
-                                <label class="switch">
-                                    <input type="checkbox">
-                                    <span class="slider round"></span>
-                                </label>
-                            </td>
-                            <td class="col-actions">
-                                <i class="fa-solid fa-pen-to-square edit-icon"></i>
-                                <i class="fa-solid fa-trash-can delete-icon"></i>
-                            </td>
-                        </tr>
+                        <c:forEach var="p" items="${productList}">
+                            <tr>
+                                <td class="col-image">
+                                    <img src="${p.imageUrl}" class="product-icon">
+                                </td>
+
+                                <td class="col-name">${p.nameProduct}</td>
+
+                                <td class="col-category">
+                                        ${p.productTypeId}
+                                </td>
+
+                                <td class="col-category">
+                                        ${p.categoryId}
+                                </td>
+
+                                <td class="col-date-added">
+                                        ${p.mfgDate}
+                                </td>
+
+                                <td class="col-price">
+                                    <fmt:formatNumber value="${p.price}" type="number"/> đ
+                                </td>
+
+                                <td class="col-stock">
+                                    10
+                                </td>
+
+                                <td class="col-status">
+                                    <label class="switch">
+                                        <input type="checkbox" ${p.isActive == 1 ? "checked" : ""}>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </td>
+
+                                <td class="col-actions">
+                                    <a href="admin/edit-product?id=${p.id}">
+                                        <i class="fa-solid fa-pen-to-square edit-icon"></i>
+                                    </a>
+                                    <a href="admin/delete-product?id=${p.id}"
+                                       onclick="return confirm('Xóa sản phẩm này?')">
+                                        <i class="fa-solid fa-trash-can delete-icon"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
+
                     </table>
                 </div>
             </div>
