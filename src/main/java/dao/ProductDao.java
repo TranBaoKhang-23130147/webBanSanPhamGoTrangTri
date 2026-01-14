@@ -51,22 +51,23 @@ public class ProductDao {
         }
         return list;
     }
-
     public List<Product> getAllProductsAdmin() {
         List<Product> list = new ArrayList<>();
+        // SQL đã sửa: Lấy đúng cột từ bảng categories và product_types
         String sql = """
-        SELECT p.id, p.name_product, p.price, p.is_active,
-               p.created_at, i.image_url,
-               c.name AS category_name,
-               t.name AS type_name
-        FROM products p
-        JOIN images i ON p.primary_image_id = i.id
-        JOIN categories c ON p.category_id = c.id
-        JOIN product_types t ON p.product_type_id = t.id
+    SELECT p.*, 
+           i.urlImage AS primary_image, 
+           c.category_name, 
+           t.product_type_name
+    FROM products p
+    LEFT JOIN images i ON p.primary_image_id = i.id
+    LEFT JOIN categories c ON p.category_id = c.id
+    LEFT JOIN product_types t ON p.product_type_id = t.id
+    ORDER BY p.id DESC
     """;
 
-        try (Connection con = DBContext.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql);
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
@@ -74,13 +75,24 @@ public class ProductDao {
                 p.setId(rs.getInt("id"));
                 p.setNameProduct(rs.getString("name_product"));
                 p.setPrice(rs.getDouble("price"));
-                p.setIsActive(rs.getInt("is_active"));
-                p.setImageUrl(rs.getString("image_url"));
-                p.setMfgDate(rs.getDate("created_at"));
+
+                // Lưu ý: Kiểm tra lại tên cột isActive trong DB có đúng chữ hoa/thường không
+                p.setIsActive(rs.getInt("isActive"));
+
+                // Kiểm tra cột ngày tháng trong DB là mfgDate hay mfg_Date
+                p.setMfgDate(rs.getDate("mfg_Date"));
+
+                // Lấy URL ảnh từ Alias "primary_image"
+                p.setImageUrl(rs.getString("primary_image"));
+
+                // Đổ dữ liệu từ bảng JOIN (Tên cột phải khớp chính xác với SQL trên)
+                p.setCategoryName(rs.getString("category_name"));
+                p.setTypeName(rs.getString("product_type_name"));
 
                 list.add(p);
             }
         } catch (Exception e) {
+            System.err.println("Lỗi SQL: " + e.getMessage());
             e.printStackTrace();
         }
         return list;
