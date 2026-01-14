@@ -1,5 +1,7 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="model.User" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="model.User,model.Order,model.OrderDetail,java.util.List" %>
+
 <%
+    // Lấy đúng tên biến LOGGED_USER từ Session
     User user = (User) session.getAttribute("LOGGED_USER");
     if (user == null) {
         response.sendRedirect(request.getContextPath() + "/login.jsp");
@@ -54,68 +56,78 @@
             <h2>Hồ sơ</h2>
             <p class="subtitle">Quản lý thông tin hồ sơ để giữ an toàn cho tài khoản của bạn</p>
 
-            <div class="profile-container">
-                <div class="profile-left">
-                    <div class="avatar-edit">
-                        <img src="https://i.pinimg.com/474x/f1/7a/28/f17a28e82524a427ea89fd3c1b5f9266.jpg" alt="Avatar" class="main-avatar"/>
-                        <button class="camera-btn"><i class="fas fa-camera"></i></button>
-                    </div>
-                    <div class="form-group">
-                        <label for="ho-ten">Họ và Tên :</label>
-                        <input type="text" name="fullName" value="<%= user.getFullName() != null ? user.getFullName() : "" %>">
-                    </div>
-                    <div class="form-group">
-                        <label for="ten-hien-thi">Tên hiển thị :</label>
-                        <input type="text" id="ten-hien-thi" value="<%= user.getUsername() %>">
-                    </div>
-                    <div class="form-group">
-                        <label>Giới tính :</label>
-                        <div class="radio-group">
-                            <input type="radio" id="nam" name="gioi-tinh" value="Nam" >
-                            <label for="nam">Nam</label>
-                            <input type="radio" id="nu" name="gioi-tinh" value="Nữ" checked>
-                            <label for="nu">Nữ</label>
-                            <input type="radio" id="khac" name="gioi-tinh" value="Khác">
-                            <label for="khac">Khác</label>
+            <%-- Thêm thẻ form bao toàn bộ container --%>
+            <form action="UpdateProfileController" method="post">
+                <div class="profile-container">
+                    <div class="profile-left">
+                        <div class="avatar-edit">
+                            <img src="${not empty user.avatarUrl ? user.avatarUrl : 'https://i.pinimg.com/474x/f1/7a/28/f17a28e82524a427ea89fd3c1b5f9266.jpg'}" class="main-avatar"/>
+                            <button type="button" class="camera-btn"><i class="fas fa-camera"></i></button>
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label for="ho-ten">Tên hiển thị:</label>
+                            <%-- Thêm name="fullName" --%>
+                            <input type="text" name="fullName" value="<%= user.getUsername() != null ? user.getUsername() : "" %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="ten-hien-thi">Tên khác:</label>
+                            <%-- Thêm name="displayName" --%>
+                            <input type="text" name="displayName" id="ten-hien-thi" value="<%= user.getDisplayName() != null ? user.getDisplayName() : "" %>">
+                        </div>
+                        <div class="form-group">
+                            <label>Giới tính :</label>
+                            <div class="radio-group">
+                                <%-- Sửa name="gender" cho cả 3 cái --%>
+                                <input type="radio" id="nam" name="gender" value="Nam" <%= "Nam".equals(user.getGender()) ? "checked" : "" %>>
+                                <label for="nam">Nam</label>
+                                <input type="radio" id="nu" name="gender" value="Nữ" <%= "Nữ".equals(user.getGender()) || user.getGender() == null ? "checked" : "" %>>
+                                <label for="nu">Nữ</label>
+                                <input type="radio" id="khac" name="gender" value="Khác" <%= "Khác".equals(user.getGender()) ? "checked" : "" %>>
+                                <label for="khac">Khác</label>
+                            </div>
+                        </div>
                     <div class="form-group">
                         <label>Ngày sinh :</label>
-                        <div class="date-select">
-                            <select><option>Ngày</option></select>
-                            <select><option>Tháng</option></select>
-                            <select><option>Năm</option></select>
+                        <%-- Để đơn giản, dùng date input sẽ tự động có Ngày/Tháng/Năm mà không cần code phức tạp --%>
+                        <input type="date" name="birthDate" value="<%= user.getBirthDate() %>" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                    <button type="submit" class="save-btn">Lưu</button>
+                </div>
+                    <div class="profile-right">
+                        <h3>Thông tin liên hệ</h3>
+                        <div class="contact-item">
+                            <label>Số điện thoại :</label>
+
+                        <%-- Thay span thành input để người dùng nhập được sđt mới --%>
+                            <input type="text" name="phone" value="<%= user.getPhone() != null ? user.getPhone() : "" %>" placeholder="Số điện thoại">
+                        </div>
+                        <div class="contact-item">
+                            <label>Email :</label>
+
+                        <%-- Email thường cố định, để readonly --%>
+                            <input type="email" name="email" value="<%= user.getEmail() %>" readonly style="border:none; background:none;">
+                        </div>
+                        <h3>Liên kết</h3>
+                        <div class="contact-item link-item">
+                            <i class="fab fa-facebook-square"></i>
+                            <span>Facebook</span>
+                            <button class="link-btn">Liên kết</button>
+                        </div>
+                        <div class="contact-item link-item">
+                            <i class="fab fa-google"></i>
+                            <span>Google</span>
+                            <button class="delete-btn">Xóa</button>
+                        </div>
+                        <div class="contact-item link-item">
+                            <i class="fas fa-comments"></i>
+                            <span>Zalo</span>
+                            <button class="delete-btn">Xóa</button>
                         </div>
                     </div>
-                    <button class="save-btn">Lưu</button>
                 </div>
-                <div class="profile-right">
-                    <h3>Thông tin liên hệ</h3>
-                    <div class="contact-item">
-                        <span><%= user.getPhone() != null ? user.getPhone() : "Chưa cập nhật" %></span>                        <button class="update-btn">Cập nhật</button>
-                    </div>
-                    <div class="contact-item">
-                        <span><%= user.getEmail() != null ? user.getEmail() : "Chưa cập nhật" %></span>
-                        <button class="update-btn">Cập nhật</button>
-                    </div>
-                    <h3>Liên kết</h3>
-                    <div class="contact-item link-item">
-                        <i class="fab fa-facebook-square"></i>
-                        <span>Facebook</span>
-                        <button class="link-btn">Liên kết</button>
-                    </div>
-                    <div class="contact-item link-item">
-                        <i class="fab fa-google"></i>
-                        <span>Google</span>
-                        <button class="delete-btn">Xóa</button>
-                    </div>
-                    <div class="contact-item link-item">
-                        <i class="fas fa-comments"></i>
-                        <span>Zalo</span>
-                        <button class="delete-btn">Xóa</button>
-                    </div>
-                </div>
-            </div>
+            </form>
+
+
         </div>
         <div id="thanh-toan" class="tab-content">
             <div class="header-with-button">
@@ -208,78 +220,56 @@
                 <button class="save-btn float-right">Lưu</button>
             </div>
         </div>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
         <div id="don-hang" class="tab-content">
             <h2>Đơn hàng</h2>
             <div class="order-summary">
                 <div class="summary-box">
-                    <div class="summary-number">39</div>
+                    <div class="summary-number">${countOrder}</div>
                     <div class="summary-label">Đơn hàng</div>
                 </div>
                 <div class="summary-separator">|</div>
                 <div class="summary-box">
-                    <div class="summary-number">198 Tr</div>
+                    <div class="summary-number">
+                        <fmt:formatNumber value="${totalSpent / 1000000}" maxFractionDigits="1"/> Tr
+                    </div>
                     <div class="summary-label">Tổng tiền tích lũy</div>
                 </div>
             </div>
 
-            <div class="order-tabs">
-                <button class="order-tab active">Tất cả</button>
-                <button class="order-tab">Chờ xác nhận</button>
-                <button class="order-tab">Đã xác nhận</button>
-                <button class="order-tab">Đang vận chuyển</button>
-                <button class="order-tab">Đã giao hàng</button>
-                <button class="order-tab">Đã hủy</button>
-            </div>
-
             <div class="order-list">
-                <div class="order-item">
-                    <div class="product-info">
-                        <img src="https://img.fantaskycdn.com/0f1a767c073a34847c39250e742128d2_2056x.webp" alt="Kệ trang trí bằng gỗ 3 tầng" class="product-img">
-                        <div class="product-details">
-                            <p class="product-name">Kệ trang trí bằng gỗ 3 tầng phong cách Bắc Âu</p>
-                            <div class="product-specs">
-                                <p class="product-color"><span>Màu Sắc:</span> Đen</p>
-                                <p class="product-size"><span>Kích thước:</span> 120x30x100 cm</p>
-                                <p class="quantity"><span>Số lượng:</span> 1</p>
+                <c:forEach items="${listO}" var="order">
+                    <c:forEach items="${order.details}" var="d">
+                        <div class="order-item">
+                            <div class="product-info">
+                                <img src="${d.productImg}" alt="Product" class="product-img">
+                                <div class="product-details">
+                                    <p class="product-name">${d.productName}</p>
+                                    <div class="product-specs">
+                                        <p class="product-color"><span>Màu Sắc:</span> ${d.color}</p>
+                                        <p class="product-size"><span>Kích thước:</span> ${d.size}</p>
+                                        <p class="quantity"><span>Số lượng:</span> ${d.quantity}</p>
+                                    </div>
+                                    <span class="delivery-status">${order.status}</span>
+                                </div>
                             </div>
-                            <span class="delivery-status">Đã giao hàng</span>
-                        </div>
-                    </div>
-                    <div class="order-total">
-                        <div class="order-date">22/10/2024</div>
-                        <p>Tổng thanh toán: 1,250,000 VNĐ</p>
-                        <div class="order-actions-group">
-                            <button class="view-details-btn">Xem chi tiết</button>
-                            <button class="support-btn">Hỗ trợ</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="order-item">
-                    <div class="product-info">
-                        <img src="https://i.pinimg.com/1200x/8c/cb/09/8ccb095fb47d80931a606406e3b11ebd.jpg" alt="Giá treo chậu cây bằng gỗ cao cấp" class="product-img">
-                        <div class="product-details">
-                            <p class="product-name">Giá treo chậu cây bằng gỗ cao cấp</p>
-                            <div class="product-specs">
-                                <p class="product-color"><span>Màu Sắc:</span> Nâu nhạt</p>
-                                <p class="product-size"><span>Kích thước:</span> D50 x C70 cm</p>
-                                <p class="quantity"><span>Số lượng:</span> 2</p>
+                            <div class="order-total">
+                                <div class="order-date">
+                                    <fmt:formatDate value="${order.createAt}" pattern="dd/MM/yyyy"/>
+                                </div>
+                                <p>Tổng thanh toán: <fmt:formatNumber value="${d.total}" pattern="#,###"/> VNĐ</p>
+                                <div class="order-actions-group">
+                                    <button class="view-details-btn">Xem chi tiết</button>
+                                    <button class="support-btn">Hỗ trợ</button>
+                                </div>
                             </div>
-                            <span class="delivery-status">Đã giao hàng</span>
                         </div>
-                    </div>
-                    <div class="order-total">
-                        <div class="order-date">22/10/2024</div>
-                        <p>Tổng thanh toán: 900,000 VND</p>
-                        <div class="order-actions-group">
-                            <button class="view-details-btn">Xem chi tiết</button>
-                            <button class="support-btn">Hỗ trợ</button>
-                        </div>
-                    </div>
-                </div>
+                    </c:forEach>
+                </c:forEach>
             </div>
         </div>
-
         <div id="thong-bao" class="tab-content">
             <h2>Thông báo</h2>
             <p>Không có thông báo mới.</p>
