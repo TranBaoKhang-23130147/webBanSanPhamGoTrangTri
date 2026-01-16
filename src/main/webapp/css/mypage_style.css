@@ -809,3 +809,11 @@ button{
     to { opacity: 1; transform: translateY(0); }
 }
 /* ... các style khác của form ... */
+.tab-content {
+    display: none ;
+}
+
+/* Hiện khi có class active */
+.tab-content.active {
+    display: block ;
+}

@@ -1,12 +1,26 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="model.User,model.Order,model.OrderDetail,java.util.List" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+    // Ngăn chặn trình duyệt lưu cache trang này
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+    response.setDateHeader("Expires", 0); // Proxies
+%>
 <%
     // Lấy đúng tên biến LOGGED_USER từ Session
     User user = (User) session.getAttribute("LOGGED_USER");
     if (user == null) {
         response.sendRedirect(request.getContextPath() + "/login.jsp");
         return;
+
+    }
+    System.out.println(user.getId());
+%>
+<%
+    String activeTab = (String) request.getAttribute("activeTab");
+    if (activeTab == null) {
+        activeTab = "ho-so";
     }
 %>
 <!DOCTYPE html>
@@ -20,9 +34,8 @@
     <link rel="stylesheet" href="css/mypage_style.css">
 </head>
 <body>
-
 <jsp:include page="header.jsp"></jsp:include>
-
+<p>Debug: Số lượng thẻ = ${listPayments.size()}</p>
 <div class="dashboard-container">
 
     <div class="sidebar">
@@ -40,10 +53,18 @@
                     <i class="fas fa-chevron-down toggle-icon"></i>
                 </a>
                 <div class="dropdown-content">
-                    <a href="#" class="tab-link active" data-tab="ho-so"><i class="fas fa-id-card"></i> Hồ sơ</a>
-                    <a href="MyPageServlet?tab=thanh-toan" class="tab-link" data-tab="thanh-toan">
+                    <a href="MyPageServlet?tab=ho-so"
+                       class="menu-link ${activeTab == 'ho-so' ? 'active' : ''}"
+                       data-tab="ho-so">
+                        <i class="fas fa-id-card"></i> Hồ sơ
+                    </a>
+
+                    <a href="MyPageServlet?tab=thanh-toan"
+                       class="menu-link ${activeTab == 'thanh-toan' ? 'active' : ''}"
+                       data-tab="thanh-toan">
                         <i class="fas fa-credit-card"></i> Thanh toán
                     </a>
+
                     <a href="#" class="tab-link" data-tab="dia-chi"><i class="fas fa-map-marker-alt"></i> Địa chỉ</a>
                     <a href="#" class="tab-link" data-tab="bao-mat"><i class="fas fa-shield-alt"></i> Bảo mật</a>
                     <a href="#" class="tab-link" data-tab="thong-bao"><i class="fas fa-bell"></i> Thông báo</a>
@@ -55,7 +76,7 @@
     </div>
 
     <main class="main-content">
-        <div id="ho-so" class="tab-content active">
+        <div id="ho-so" class="tab-content <%= "ho-so".equals(activeTab) ? "active" : "" %>">
             <h2>Hồ sơ</h2>
             <p class="subtitle">Quản lý thông tin hồ sơ để giữ an toàn cho tài khoản của bạn</p>
 
@@ -132,80 +153,187 @@
 
 
         </div>
-        <div id="thanh-toan" class="tab-content">
+<%--        <div id="thanh-toan" class="tab-content <%= "thanh-toan".equals(activeTab) ? "active" : "" %>">--%>
 <%--            <div class="header-with-button">--%>
+<%--                <h2>Quản lý thanh toán</h2>--%>
 
-<%--            <h2>Quản lý thanh toán</h2>--%>
-<%--            <button class="add-btn"><i class="fas fa-plus"></i> Thêm</button>--%>
+<%--                <button class="add-btn" onclick="document.getElementById('addForm').style.display='block'">--%>
+<%--                    <i class="fas fa-plus"></i> Thêm thẻ--%>
+<%--                </button>--%>
 <%--            </div>--%>
-    <div class="header-with-button">
-        <h2>Quản lý thanh toán</h2>
 
-        <button class="add-btn" onclick="document.getElementById('addForm').style.display='block'">
-            <i class="fas fa-plus"></i> Thêm thẻ
-        </button>
-    </div>
-
-    <div id="addForm" style="display:none; background: #f9f9f9; padding: 20px; border: 1px solid #ddd; margin-bottom: 20px; border-radius: 8px;">
-        <h3 style="margin-bottom: 15px;">Nhập thông tin thẻ mới</h3>
-        <form action="AddPaymentServlet" method="post">
-            <div class="form-group">
-                <label>Loại thẻ:</label>
-                <select name="type" style="width: 100%; padding: 8px; margin-bottom: 10px;">
-                    <option value="Visa">Visa</option>
-                    <option value="MasterCard">MasterCard</option>
-                    <option value="JCB">JCB</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Ngày hết hạn:</label>
-                <input type="date" name="duration" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
-            </div>
-            <button type="submit" class="save-btn">Lưu thẻ</button>
-            <button type="button" class="delete-btn" onclick="document.getElementById('addForm').style.display='none'">Hủy</button>
-        </form>
-    </div>
-            <div class="payment-management">
-
-<%--                <div class="card-item">--%>
-<%--                    <div class="card-display">--%>
-<%--                        <p class="card-number">Số thẻ: **** **** **** 9999</p>--%>
-<%--                        <p class="card-name">TRAN THI THUY KIEU</p>--%>
-<%--                        <p class="card-date">Date: 31/12/2016</p>--%>
-<%--                        <img src="https://i.pinimg.com/474x/f1/7a/28/f17a28e82524a427ea89fd3c1b5f9266.jpg" alt="VISA" class="visa-logo">--%>
+<%--            <div id="addForm" style="display:none; background: #fff; padding: 20px; border: 1px solid #eee; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">--%>
+<%--                <form action="AddPaymentServlet" method="post">--%>
+<%--                    <h3 style="margin-bottom: 20px; color: #333;"><i class="fas fa-plus-circle"></i> Thêm phương thức thanh toán</h3>--%>
+<%--                    <div class="form-group">--%>
+<%--                        <label>Loại thẻ:</label>--%>
+<%--                        <select name="type" class="input-style">--%>
+<%--                            <option value="Visa">Visa</option>--%>
+<%--                            <option value="MasterCard">MasterCard</option>--%>
+<%--                            <option value="JCB">JCB</option>--%>
+<%--                        </select>--%>
 <%--                    </div>--%>
-<%--                    <div class="card-actions">--%>
-<%--                        <button class="default-btn">Mặc định</button>--%>
-<%--                        <button class="edit-btn">Sửa</button>--%>
-<%--                        <button class="delete-btn">Xóa</button>--%>
+<%--                    <div class="form-group">--%>
+<%--                        <label>Số thẻ:</label>--%>
+<%--                        <input type="text" name="cardNumber" placeholder="**** **** **** ****" required class="input-style">--%>
 <%--                    </div>--%>
-<%--                </div>--%>
-    <c:forEach items="${listPayments}" var="p">
-        <div class="card-item">
-            <div class="card-display">
-                <p class="card-number">Phương thức: ${p.type}</p>
-                <p class="card-name">${user.username}</p>
-                <p class="card-date">Hết hạn: ${p.duration}</p>
-                <img src="img/visa.png" class="visa-logo">
-            </div>
+<%--                    <div class="form-group">--%>
+<%--                        <label>Ngày hết hạn:</label>--%>
+<%--                        <input type="date" name="duration" required class="input-style">--%>
+<%--                    </div>--%>
+<%--                    <div style="margin-top: 20px;">--%>
+<%--                        <button type="submit" class="save-btn">Xác nhận thêm</button>--%>
+<%--                        <button type="button" class="delete-btn" onclick="document.getElementById('addForm').style.display='none'">Hủy bỏ</button>--%>
+<%--                    </div>--%>
+<%--                </form>--%>
+<%--            </div>--%>
 
-            <div class="card-actions" style="margin-top: 15px; display: flex; gap: 10px; justify-content: flex-end;">
-                <button class="add-btn" style="background-color: #2ecc71; padding: 5px 15px; font-size: 13px;"
-                        onclick="editCard('${p.id}', '${p.type}', '${p.duration}')">
-                    <i class="fas fa-edit"></i> Sửa
+<%--            <div class="payment-management">--%>
+<%--                <c:if test="${empty listPayments}">--%>
+<%--                    <p>Chưa có thẻ thanh toán</p>--%>
+<%--                </c:if>--%>
+
+<%--                <c:forEach items="${listPayments}" var="p">--%>
+<%--                    <div class="card-item" style="background: linear-gradient(135deg, #2c3e50, #4ca1af); color: white; border-radius: 15px; padding: 20px; position: relative; overflow: hidden;">--%>
+<%--                        <div class="card-display">--%>
+<%--                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">--%>
+<%--                                <span style="font-size: 1.2em; font-weight: bold; letter-spacing: 2px;">${p.type}</span>--%>
+<%--                                <i class="fas fa-microchip" style="font-size: 2em; color: #f1c40f;"></i>--%>
+<%--                            </div>--%>
+
+<%--                            <p class="card-number" style="font-size: 1.4em; margin: 20px 0; letter-spacing: 4px;">--%>
+<%--                                **** **** **** ${p.cardNumber.substring(p.cardNumber.length() - 4)}--%>
+<%--                            </p>--%>
+
+<%--                            <div style="display: flex; justify-content: space-between;">--%>
+<%--                                <div>--%>
+<%--                                    <small style="opacity: 0.8; display: block;">Chủ thẻ</small>--%>
+<%--                                    <span style="text-transform: uppercase;">${user.getUsername()}</span>--%>
+<%--                                </div>--%>
+<%--                                <div>--%>
+<%--                                    <small style="opacity: 0.8; display: block;">Hết hạn</small>--%>
+<%--                                    <span><fmt:formatDate value="${p.duration}" pattern="MM/yy"/></span>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+
+<%--                        <div class="card-actions" style="margin-top: 20px; display: flex; justify-content: flex-end;">--%>
+<%--                            <a href="DeletePaymentServlet?id=${p.id}" onclick="return confirm('Xóa thẻ này?')" class="btn-small-delete">--%>
+<%--                                <i class="fas fa-trash"></i> Xóa--%>
+<%--                            </a>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </c:forEach>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+        <div id="thanh-toan" class="tab-content <%= "thanh-toan".equals(activeTab) ? "active" : "" %>">
+            <div class="header-with-button">
+                <h2>Quản lý thanh toán</h2>
+                <button class="add-btn" onclick="document.getElementById('addForm').style.display='block'">
+                    <i class="fas fa-plus"></i> Thêm thẻ
                 </button>
+            </div>
 
-                <a href="DeletePaymentServlet?id=${p.id}"
-                   class="add-btn"
-                   style="background-color: #e74c3c; padding: 5px 15px; font-size: 13px; text-decoration: none; color: white;"
-                   onclick="return confirm('Bạn có chắc muốn xóa thẻ này?')">
-                    <i class="fas fa-trash"></i> Xóa
-                </a>
+            <div id="addForm" style="display:none; background: #fff; padding: 20px; border: 1px solid #eee; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                <form action="AddPaymentServlet" method="post">
+                    <h3 style="margin-bottom: 20px; color: #333;"><i class="fas fa-plus-circle"></i> Thêm phương thức thanh toán</h3>
+                    <div class="form-group">
+                        <label>Loại thẻ:</label>
+                        <select name="type" class="input-style">
+                            <option value="Visa">Visa</option>
+                            <option value="MasterCard">MasterCard</option>
+                            <option value="JCB">JCB</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Số thẻ:</label>
+                        <input type="text" name="cardNumber" placeholder="**** **** **** ****" required class="input-style">
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày hết hạn:</label>
+                        <input type="date" name="duration" required class="input-style">
+                    </div>
+                    <div style="margin-top: 20px; display: flex; gap: 10px;">
+                        <button type="submit" class="save-btn">Xác nhận thêm</button>
+                        <button type="button" class="delete-btn" onclick="document.getElementById('addForm').style.display='none'">Hủy bỏ</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="payment-management" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; align-items: stretch;">
+                <c:if test="${empty listPayments}">
+                    <p style="grid-column: span 2; text-align: center; color: #888;">Chưa có thẻ thanh toán</p>
+                </c:if>
+
+                <c:forEach items="${listPayments}" var="p">
+                    <div class="card-item" style="background: linear-gradient(135deg, #2c3e50, #4ca1af); color: white; border-radius: 15px; padding: 25px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); display: flex; flex-direction: column; justify-content: space-between; min-height: 230px;">
+
+                        <div class="card-display">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 1.3em; font-weight: bold; letter-spacing: 2px;">${p.type}</span>
+                                <i class="fas fa-microchip" style="font-size: 2.2em; color: #f1c40f;"></i>
+                            </div>
+
+                            <p class="card-number" style="font-size: 1.5em; margin: 30px 0; letter-spacing: 4px; text-align: center; font-family: 'Courier New', monospace;">
+                                <c:choose>
+                                    <c:when test="${p.cardNumber.length() > 4}">
+                                        **** **** **** ${p.cardNumber.substring(p.cardNumber.length() - 4)}
+                                    </c:when>
+                                    <c:otherwise>${p.cardNumber}</c:otherwise>
+                                </c:choose>
+                            </p>
+
+                            <div style="display: flex; justify-content: space-between; font-size: 0.85em;">
+                                <div>
+                                    <small style="display: block; opacity: 0.7; margin-bottom: 5px; text-transform: uppercase;">Chủ thẻ</small>
+                                    <span style="text-transform: uppercase; font-weight: bold; font-size: 1.1em;"><%= user.getUsername() %></span>
+                                </div>
+                                <div style="text-align: right;">
+                                    <small style="display: block; opacity: 0.7; margin-bottom: 5px; text-transform: uppercase;">Hết hạn</small>
+                                    <span style="font-size: 1.1em;"><fmt:formatDate value="${p.duration}" pattern="MM/yy"/></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-actions" style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;">
+                            <a href="EditPaymentServlet?id=${p.id}" style="background: rgba(255,255,255,0.25); color: white; padding: 7px 15px; border-radius: 6px; text-decoration: none; font-size: 0.9em; transition: 0.3s;">
+                                <i class="fas fa-edit"></i> Sửa
+                            </a>
+                            <a href="DeletePaymentServlet?id=${p.id}" onclick="return confirm('Bạn có chắc chắn muốn xóa thẻ này?')" style="background: #e74c3c; color: white; padding: 7px 15px; border-radius: 6px; text-decoration: none; font-size: 0.9em; transition: 0.3s;">
+                                <i class="fas fa-trash"></i> Xóa
+                            </a>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
         </div>
-    </c:forEach>
+
+            <div id="addForm" style="display:none; background: #fff; padding: 20px; border: 1px solid #eee; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                <form action="AddPaymentServlet" method="post">
+                    <h3 style="margin-bottom: 20px; color: #333;"><i class="fas fa-plus-circle"></i> Thêm phương thức thanh toán</h3>
+                    <div class="form-group">
+                        <label>Loại thẻ:</label>
+                        <select name="type" class="input-style">
+                            <option value="Visa">Visa</option>
+                            <option value="MasterCard">MasterCard</option>
+                            <option value="JCB">JCB</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Số thẻ:</label>
+                        <input type="text" name="cardNumber" placeholder="**** **** **** ****" required class="input-style">
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày hết hạn:</label>
+                        <input type="date" name="duration" required class="input-style">
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <button type="submit" class="save-btn">Xác nhận thêm</button>
+                        <button type="button" class="delete-btn" onclick="document.getElementById('addForm').style.display='none'">Hủy bỏ</button>
+                    </div>
+                </form>
             </div>
-        </div>
+
 
         <div id="dia-chi" class="tab-content">
             <div class="header-with-button">

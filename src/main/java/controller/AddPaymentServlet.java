@@ -15,16 +15,18 @@ public class AddPaymentServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String cardNumber = request.getParameter("cardNumber"); // Lấy số thẻ
         String type = request.getParameter("type");
         String duration = request.getParameter("duration");
         User user = (User) request.getSession().getAttribute("LOGGED_USER");
+        String tab = request.getParameter("tab");
+        if (tab == null) tab = "ho-so";
+        request.setAttribute("activeTab", tab);
 
         if (user != null) {
-            new dao.PaymentDao().addPayment(user.getId(), type, duration);
+            new dao.PaymentDao().addPayment(user.getId(), cardNumber, type, duration);
         }
-        // Sau khi thêm xong quay về trang cá nhân
-        response.sendRedirect("MyPageServlet");
+        response.sendRedirect("MyPageServlet?tab=thanh-toan");
     }
 }

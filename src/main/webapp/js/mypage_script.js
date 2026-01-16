@@ -1,11 +1,7 @@
-/* mypage_script.js */
-
 document.addEventListener('DOMContentLoaded', function() {
-
-    // 1. Logic cho chức năng đóng/mở menu Tài khoản (Dropdown Toggle)
+    // === 1. XỬ LÝ DROPDOWN (Giữ nguyên) ===
     const dropdownToggle = document.querySelector('.dropdown-toggle');
     const dropdownMenu = document.querySelector('.menu-item-dropdown');
-
     if (dropdownToggle && dropdownMenu) {
         dropdownToggle.addEventListener('click', function(e) {
             e.preventDefault();
@@ -13,60 +9,47 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 2. Logic chuyển tab (Tab Switching Logic)
-    const tabLinks = document.querySelectorAll('.tab-link');
-    const tabContents = document.querySelectorAll('.tab-content');
+    // === 2. HÀM CHUYỂN TAB CHUNG ===
+    function activeTab(tabId) {
+        const targetContent = document.getElementById(tabId);
+        const targetLink = document.querySelector(`[data-tab="${tabId}"]`);
 
-    tabLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        if (targetContent) {
+            // Ẩn tất cả tab
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            // Hiện tab mục tiêu
+            targetContent.classList.add('active');
+
+            if (targetLink) {
+                document.querySelectorAll('.tab-link, .menu-link').forEach(l => l.classList.remove('active'));
+                targetLink.classList.add('active');
+
+                const parentDropdown = targetLink.closest('.menu-item-dropdown');
+                if (parentDropdown) parentDropdown.classList.add('active');
+            }
+        }
+    }
+
+    // === 3. XỬ LÝ CLICK ĐÃ SỬA ===
+    document.querySelectorAll('.menu-link[data-tab], .tab-link[data-tab]').forEach(link => {
+        link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+
+            // NẾU LINK CÓ CHỨA SERVLET (Hồ sơ, Thanh toán, Đơn hàng)
+            if (href && href !== '#' && href.includes('MyPageServlet')) {
+                // CHO PHÉP trình duyệt load lại trang để Servlet chạy
+                return;
+            }
+
+            // NẾU LÀ TAB NỘI BỘ (Địa chỉ, Bảo mật...)
             e.preventDefault();
-            const tabId = this.getAttribute('data-tab');
-
-            // Xử lý Tab Link:
-            tabLinks.forEach(otherLink => otherLink.classList.remove('active'));
-
-            const parentDropdown = this.closest('.menu-item-dropdown');
-            if (parentDropdown) {
-                parentDropdown.classList.add('active');
-            }
-
-            if (!parentDropdown) {
-                if(dropdownMenu) dropdownMenu.classList.remove('active');
-            }
-
-            this.classList.add('active');
-
-
-            // Xử lý Tab Content:
-            tabContents.forEach(content => content.classList.remove('active'));
-
-            const targetContent = document.getElementById(tabId);
-            if(targetContent) {
-                targetContent.classList.add('active');
-            }
+            const tabId = this.dataset.tab;
+            activeTab(tabId);
         });
     });
-});
-// Thêm vào file js/mypage_script.js hoặc cuối trang JSP
-window.addEventListener('load', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const tabName = urlParams.get('tab');
-    if (tabName) {
-        // 1. Ẩn tất cả các tab content hiện tại
-        document.querySelectorAll('.tab-content').forEach(tab => {
-            tab.classList.remove('active');
-        });
-        // 2. Hiện tab content tương ứng
-        const targetTab = document.getElementById(tabName);
-        if (targetTab) {
-            targetTab.classList.add('active');
-        }
-        // 3. Cập nhật trạng thái active cho menu bên trái (tùy chọn)
-        document.querySelectorAll('.tab-link').forEach(link => {
-            link.classList.remove('active');
-            if(link.getAttribute('data-tab') === tabName) {
-                link.classList.add('active');
-            }
-        });
-    }
+
+    // Tự động active tab khi trang load xong dựa trên ?tab=
+    const params = new URLSearchParams(window.location.search);
+    const tabName = params.get('tab') || 'ho-so';
+    activeTab(tabName);
 });
