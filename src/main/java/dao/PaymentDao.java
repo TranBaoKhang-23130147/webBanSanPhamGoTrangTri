@@ -43,4 +43,18 @@ public class PaymentDao {
             System.out.println(payment);
         }
     }
+    public boolean deletePayment(int id) {
+        String sql = "DELETE FROM payments WHERE id = ?";
+        try (Connection conn = DBContext.getConnection(); // Thay bằng cách lấy connection của bạn
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            int rowsDeleted = ps.executeUpdate();
+            return rowsDeleted > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

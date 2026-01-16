@@ -299,7 +299,9 @@
                             <a href="EditPaymentServlet?id=${p.id}" style="background: rgba(255,255,255,0.25); color: white; padding: 7px 15px; border-radius: 6px; text-decoration: none; font-size: 0.9em; transition: 0.3s;">
                                 <i class="fas fa-edit"></i> Sửa
                             </a>
-                            <a href="DeletePaymentServlet?id=${p.id}" onclick="return confirm('Bạn có chắc chắn muốn xóa thẻ này?')" style="background: #e74c3c; color: white; padding: 7px 15px; border-radius: 6px; text-decoration: none; font-size: 0.9em; transition: 0.3s;">
+                            <a href="DeletePaymentServlet?id=${p.id}"
+                               onclick="return confirm('Bạn có chắc chắn muốn xóa thẻ này?')"
+                               style="background: #e74c3c; color: white; padding: 7px 15px; border-radius: 6px; text-decoration: none;">
                                 <i class="fas fa-trash"></i> Xóa
                             </a>
                         </div>
