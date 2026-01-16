@@ -57,4 +57,20 @@ public class PaymentDao {
         }
         return false;
     }
+    public boolean updatePayment(int id, String type, String cardNumber, String duration) {
+        String sql = "UPDATE payments SET type = ?, card_number = ?, duration = ? WHERE id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, type);
+            ps.setString(2, cardNumber);
+            ps.setString(3, duration); // Định dạng yyyy-MM-dd từ input date
+            ps.setInt(4, id);
+
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

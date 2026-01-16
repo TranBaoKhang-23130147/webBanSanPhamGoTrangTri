@@ -35,7 +35,6 @@
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
-<p>Debug: Số lượng thẻ = ${listPayments.size()}</p>
 <div class="dashboard-container">
 
     <div class="sidebar">
@@ -296,7 +295,10 @@
                         </div>
 
                         <div class="card-actions" style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;">
-                            <a href="EditPaymentServlet?id=${p.id}" style="background: rgba(255,255,255,0.25); color: white; padding: 7px 15px; border-radius: 6px; text-decoration: none; font-size: 0.9em; transition: 0.3s;">
+                            <a href="javascript:void(0)"
+                               onclick="openEditModal('${p.id}', '${p.type}', '${p.cardNumber}', '<fmt:formatDate value="${p.duration}" pattern="yyyy-MM-dd"/>')"
+                               class="btn-action-card"
+                               style="background: rgba(255,255,255,0.2); color: white; padding: 6px 15px; border-radius: 6px; text-decoration: none; font-size: 0.85em; border: 1px solid rgba(255,255,255,0.3); transition: 0.3s;">
                                 <i class="fas fa-edit"></i> Sửa
                             </a>
                             <a href="DeletePaymentServlet?id=${p.id}"
@@ -468,5 +470,39 @@
 <jsp:include page="footer.jsp"></jsp:include>
 
 <script src="js/mypage_script.js"></script>
-</body>
+<div id="editCardModal" style="display:none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(3px);">
+    <div style="background: #fff; margin: 10% auto; padding: 30px; border-radius: 12px; width: 400px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+        <h3 style="margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 15px; color: var(--text-color);">
+            <i class="fas fa-credit-card" style="color: var(--primary-color);"></i> Chỉnh sửa thẻ
+        </h3>
+
+        <form action="EditPaymentServlet" method="post" style="margin-top: 20px;">
+            <input type="hidden" name="id" id="edit-id">
+
+            <div class="form-group" style="flex-direction: column; align-items: flex-start;">
+                <label style="margin-bottom: 8px; width: 100%;">Loại thẻ:</label>
+                <select name="type" id="edit-type" style="width:100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+                    <option value="Visa">Visa</option>
+                    <option value="MasterCard">MasterCard</option>
+                    <option value="JCB">JCB</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="flex-direction: column; align-items: flex-start; margin-top: 15px;">
+                <label style="margin-bottom: 8px; width: 100%;">Số thẻ:</label>
+                <input type="text" name="cardNumber" id="edit-number" style="width:100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+            </div>
+
+            <div class="form-group" style="flex-direction: column; align-items: flex-start; margin-top: 15px;">
+                <label style="margin-bottom: 8px; width: 100%;">Ngày hết hạn:</label>
+                <input type="date" name="duration" id="edit-duration" style="width:100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px;">
+            </div>
+
+            <div style="text-align: right; margin-top: 25px; display: flex; justify-content: flex-end; gap: 10px;">
+                <button type="button" class="support-btn" onclick="document.getElementById('editCardModal').style.display='none'" style="margin:0; width: 80px;">Hủy</button>
+                <button type="submit" class="save-btn" style="margin:0; width: 120px;">Lưu lại</button>
+            </div>
+        </form>
+    </div>
+</div></body>
 </html>
