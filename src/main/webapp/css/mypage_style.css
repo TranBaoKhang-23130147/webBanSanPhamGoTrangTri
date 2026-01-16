@@ -798,5 +798,14 @@ button{
     align-items: flex-start;
     position: relative;
 }
+#addForm {
+    max-width: 400px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    animation: fadeIn 0.3s ease-in;
+}
 
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 /* ... các style khác của form ... */

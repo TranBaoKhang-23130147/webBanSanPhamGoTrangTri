@@ -47,3 +47,26 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+// Thêm vào file js/mypage_script.js hoặc cuối trang JSP
+window.addEventListener('load', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabName = urlParams.get('tab');
+    if (tabName) {
+        // 1. Ẩn tất cả các tab content hiện tại
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        // 2. Hiện tab content tương ứng
+        const targetTab = document.getElementById(tabName);
+        if (targetTab) {
+            targetTab.classList.add('active');
+        }
+        // 3. Cập nhật trạng thái active cho menu bên trái (tùy chọn)
+        document.querySelectorAll('.tab-link').forEach(link => {
+            link.classList.remove('active');
+            if(link.getAttribute('data-tab') === tabName) {
+                link.classList.add('active');
+            }
+        });
+    }
+});

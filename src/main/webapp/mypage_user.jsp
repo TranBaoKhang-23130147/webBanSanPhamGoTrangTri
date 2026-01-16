@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="model.User,model.Order,model.OrderDetail,java.util.List" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
     // Lấy đúng tên biến LOGGED_USER từ Session
     User user = (User) session.getAttribute("LOGGED_USER");
@@ -40,7 +41,9 @@
                 </a>
                 <div class="dropdown-content">
                     <a href="#" class="tab-link active" data-tab="ho-so"><i class="fas fa-id-card"></i> Hồ sơ</a>
-                    <a href="#" class="tab-link" data-tab="thanh-toan"><i class="fas fa-credit-card"></i> Thanh toán</a>
+                    <a href="MyPageServlet?tab=thanh-toan" class="tab-link" data-tab="thanh-toan">
+                        <i class="fas fa-credit-card"></i> Thanh toán
+                    </a>
                     <a href="#" class="tab-link" data-tab="dia-chi"><i class="fas fa-map-marker-alt"></i> Địa chỉ</a>
                     <a href="#" class="tab-link" data-tab="bao-mat"><i class="fas fa-shield-alt"></i> Bảo mật</a>
                     <a href="#" class="tab-link" data-tab="thong-bao"><i class="fas fa-bell"></i> Thông báo</a>
@@ -130,26 +133,77 @@
 
         </div>
         <div id="thanh-toan" class="tab-content">
-            <div class="header-with-button">
+<%--            <div class="header-with-button">--%>
 
-            <h2>Quản lý thanh toán</h2>
-            <button class="add-btn"><i class="fas fa-plus"></i> Thêm</button>
+<%--            <h2>Quản lý thanh toán</h2>--%>
+<%--            <button class="add-btn"><i class="fas fa-plus"></i> Thêm</button>--%>
+<%--            </div>--%>
+    <div class="header-with-button">
+        <h2>Quản lý thanh toán</h2>
+
+        <button class="add-btn" onclick="document.getElementById('addForm').style.display='block'">
+            <i class="fas fa-plus"></i> Thêm thẻ
+        </button>
+    </div>
+
+    <div id="addForm" style="display:none; background: #f9f9f9; padding: 20px; border: 1px solid #ddd; margin-bottom: 20px; border-radius: 8px;">
+        <h3 style="margin-bottom: 15px;">Nhập thông tin thẻ mới</h3>
+        <form action="AddPaymentServlet" method="post">
+            <div class="form-group">
+                <label>Loại thẻ:</label>
+                <select name="type" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+                    <option value="Visa">Visa</option>
+                    <option value="MasterCard">MasterCard</option>
+                    <option value="JCB">JCB</option>
+                </select>
             </div>
+            <div class="form-group">
+                <label>Ngày hết hạn:</label>
+                <input type="date" name="duration" required style="width: 100%; padding: 8px; margin-bottom: 15px;">
+            </div>
+            <button type="submit" class="save-btn">Lưu thẻ</button>
+            <button type="button" class="delete-btn" onclick="document.getElementById('addForm').style.display='none'">Hủy</button>
+        </form>
+    </div>
             <div class="payment-management">
 
-                <div class="card-item">
-                    <div class="card-display">
-                        <p class="card-number">Số thẻ: **** **** **** 9999</p>
-                        <p class="card-name">TRAN THI THUY KIEU</p>
-                        <p class="card-date">Date: 31/12/2016</p>
-                        <img src="https://i.pinimg.com/474x/f1/7a/28/f17a28e82524a427ea89fd3c1b5f9266.jpg" alt="VISA" class="visa-logo">
-                    </div>
-                    <div class="card-actions">
-                        <button class="default-btn">Mặc định</button>
-                        <button class="edit-btn">Sửa</button>
-                        <button class="delete-btn">Xóa</button>
-                    </div>
-                </div>
+<%--                <div class="card-item">--%>
+<%--                    <div class="card-display">--%>
+<%--                        <p class="card-number">Số thẻ: **** **** **** 9999</p>--%>
+<%--                        <p class="card-name">TRAN THI THUY KIEU</p>--%>
+<%--                        <p class="card-date">Date: 31/12/2016</p>--%>
+<%--                        <img src="https://i.pinimg.com/474x/f1/7a/28/f17a28e82524a427ea89fd3c1b5f9266.jpg" alt="VISA" class="visa-logo">--%>
+<%--                    </div>--%>
+<%--                    <div class="card-actions">--%>
+<%--                        <button class="default-btn">Mặc định</button>--%>
+<%--                        <button class="edit-btn">Sửa</button>--%>
+<%--                        <button class="delete-btn">Xóa</button>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+    <c:forEach items="${listPayments}" var="p">
+        <div class="card-item">
+            <div class="card-display">
+                <p class="card-number">Phương thức: ${p.type}</p>
+                <p class="card-name">${user.username}</p>
+                <p class="card-date">Hết hạn: ${p.duration}</p>
+                <img src="img/visa.png" class="visa-logo">
+            </div>
+
+            <div class="card-actions" style="margin-top: 15px; display: flex; gap: 10px; justify-content: flex-end;">
+                <button class="add-btn" style="background-color: #2ecc71; padding: 5px 15px; font-size: 13px;"
+                        onclick="editCard('${p.id}', '${p.type}', '${p.duration}')">
+                    <i class="fas fa-edit"></i> Sửa
+                </button>
+
+                <a href="DeletePaymentServlet?id=${p.id}"
+                   class="add-btn"
+                   style="background-color: #e74c3c; padding: 5px 15px; font-size: 13px; text-decoration: none; color: white;"
+                   onclick="return confirm('Bạn có chắc muốn xóa thẻ này?')">
+                    <i class="fas fa-trash"></i> Xóa
+                </a>
+            </div>
+        </div>
+    </c:forEach>
             </div>
         </div>
 
@@ -220,8 +274,7 @@
                 <button class="save-btn float-right">Lưu</button>
             </div>
         </div>
-        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
         <div id="don-hang" class="tab-content">
             <h2>Đơn hàng</h2>
