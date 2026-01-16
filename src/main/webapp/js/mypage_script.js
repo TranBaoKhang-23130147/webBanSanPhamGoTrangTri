@@ -53,3 +53,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const tabName = params.get('tab') || 'ho-so';
     activeTab(tabName);
 });
+function openEditModal(id, type, number, duration) {
+    // Điền dữ liệu vào form trong Modal
+    document.getElementById('edit-id').value = id;
+    document.getElementById('edit-type').value = type;
+    document.getElementById('edit-number').value = number;
+    document.getElementById('edit-duration').value = duration;
+
+    // Hiện cái Modal lên
+    document.getElementById('editCardModal').style.display = 'block';
+}
