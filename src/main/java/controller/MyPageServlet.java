@@ -1,51 +1,60 @@
 package controller;
 
+import dao.PaymentDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import model.Order;
 import model.Payment;
 import model.User;
 
 import java.io.IOException;
 import java.util.List;
-
 @WebServlet(name = "MyPageServlet", value = "/MyPageServlet")
 public class MyPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("LOGGED_USER");
-
+        User user = (User) request.getSession().getAttribute("LOGGED_USER");
         if (user == null) {
             response.sendRedirect("login.jsp");
             return;
         }
 
-        // 1. Lấy danh sách THANH TOÁN
-        dao.PaymentDao pDao = new dao.PaymentDao();
-        List<Payment> listP = pDao.getPaymentsByUserId(user.getId());
-        request.setAttribute("listPayments", listP);
-
-        // 2. Lấy danh sách ĐƠN HÀNG (Copy logic từ UpdateProfileController sang)
-        dao.OrderDao orderDao = new dao.OrderDao();
-        List<model.Order> listOrders = orderDao.getOrdersByUserId(user.getId());
-
-        double totalSpent = 0;
-        for (model.Order o : listOrders) {
-            totalSpent += o.getTotalOrder();
+        // Lấy tham số tab từ URL
+        String tab = request.getParameter("tab");
+        if (tab == null || tab.isEmpty()) {
+            tab = "ho-so"; // Mặc định là profile (ho-so)
         }
 
-        request.setAttribute("listO", listOrders); // Đặt tên listO cho khớp với JSP
-        request.setAttribute("countOrder", listOrders.size());
-        request.setAttribute("totalSpent", totalSpent);
+        request.setAttribute("activeTab", tab); // Gửi tab đang active sang JSP
 
-        // 3. Chuyển hướng
-        request.getRequestDispatcher("/mypage_user.jsp").forward(request, response);
+        // ===== LOAD DỮ LIỆU THEO TAB =====
+        if ("thanh-toan".equals(tab)) {
+            // Nếu tab là "Thanh toán", tải danh sách payments
+            PaymentDao paymentDao = new PaymentDao();
+            List<Payment> listPayments = paymentDao.getPaymentsByUserId(user.getId());
+            request.setAttribute("listPayments", listPayments);
+        } else if ("don-hang".equals(tab)) {
+            // Thực hiện logic xử lý khi tab "Đơn hàng" được chọn (nếu cần)
+            // Ví dụ:
+            // OrderDao orderDao = new OrderDao();
+            // List<Order> listOrders = orderDao.getOrdersByUserId(user.getId());
+            // request.setAttribute("listO", listOrders);
+        }
+
+        // ===== CHUYỂN ĐẾN TRANG MYPAGE =====
+        try {
+            request.getRequestDispatcher("/mypage_user.jsp").forward(request, response);
+        } catch (Exception e) {
+
+        }
     }
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Xử lý post logic (nếu cần)
     }
 }
