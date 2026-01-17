@@ -54,18 +54,12 @@ public class ProductDao {
     public List<Product> getAllProductsAdmin() {
         List<Product> list = new ArrayList<>();
         // SQL đã sửa: Lấy đúng cột từ bảng categories và product_types
-        String sql = """
-    SELECT p.*, 
-           i.urlImage AS primary_image, 
-           c.category_name, 
-           t.product_type_name
-    FROM products p
-    LEFT JOIN images i ON p.primary_image_id = i.id
-    LEFT JOIN categories c ON p.category_id = c.id
-    LEFT JOIN product_types t ON p.product_type_id = t.id
-    ORDER BY p.id DESC
-    """;
-
+        String sql = "SELECT p.*, t.product_type_name, c.category_name, img.urlImage, " +
+                "(SELECT SUM(pv.inventory_quantity) FROM product_variants pv WHERE pv.product_id = p.id) AS total_stock " +
+                "FROM products p " +
+                "LEFT JOIN product_types t ON p.product_type_id = t.id " +
+                "LEFT JOIN categories c ON p.category_id = c.id " +
+                "LEFT JOIN images img ON p.primary_image_id = img.id";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -74,7 +68,8 @@ public class ProductDao {
                 Product p = new Product();
                 p.setId(rs.getInt("id"));
                 p.setNameProduct(rs.getString("name_product"));
-                p.setPrice(rs.getDouble("price"));
+                p.setPrice(rs.getDouble("price")); // Lấy giá ở đây
+                p.setTotalStock(rs.getInt("total_stock"));
 
                 // Lưu ý: Kiểm tra lại tên cột isActive trong DB có đúng chữ hoa/thường không
                 p.setIsActive(rs.getInt("isActive"));
@@ -83,8 +78,7 @@ public class ProductDao {
                 p.setMfgDate(rs.getDate("mfg_Date"));
 
                 // Lấy URL ảnh từ Alias "primary_image"
-                p.setImageUrl(rs.getString("primary_image"));
-
+                p.setImageUrl(rs.getString("urlImage"));
                 // Đổ dữ liệu từ bảng JOIN (Tên cột phải khớp chính xác với SQL trên)
                 p.setCategoryName(rs.getString("category_name"));
                 p.setTypeName(rs.getString("product_type_name"));
@@ -942,9 +936,10 @@ public class ProductDao {
         }
     public List<Product> searchProducts(String keyword, String typeId, String categoryId) {
         List<Product> list = new ArrayList<>();
-        // 1. Sửa t.productTypeName thành t.product_type_name
+        // 1. Thêm subquery SUM(inventory_quantity) để lấy tổng số lượng từ bảng biến thể
         StringBuilder sql = new StringBuilder(
-                "SELECT p.*, t.product_type_name, c.category_name, img.urlImage " +
+                "SELECT p.*, t.product_type_name, c.category_name, img.urlImage, " +
+                        "(SELECT SUM(pv.inventory_quantity) FROM product_variants pv WHERE pv.product_id = p.id) AS total_stock " +
                         "FROM products p " +
                         "LEFT JOIN product_types t ON p.product_type_id = t.id " +
                         "LEFT JOIN categories c ON p.category_id = c.id " +
@@ -952,6 +947,7 @@ public class ProductDao {
                         "WHERE 1=1"
         );
 
+        // 2. Thêm các điều kiện lọc động
         if (keyword != null && !keyword.trim().isEmpty()) {
             sql.append(" AND p.name_product LIKE ?");
         }
@@ -979,22 +975,30 @@ public class ProductDao {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Product p = new Product();
+                // Lấy dữ liệu cơ bản từ bảng products
                 p.setId(rs.getInt("id"));
                 p.setNameProduct(rs.getString("name_product"));
                 p.setPrice(rs.getDouble("price"));
                 p.setIsActive(rs.getInt("isActive"));
+
+                // Chú ý: Đồng bộ tên cột mfg_date như hàm getAll của bạn
                 p.setMfgDate(rs.getDate("mfg_date"));
+
+                // Lấy URL ảnh từ bảng images đã join
                 p.setImageUrl(rs.getString("urlImage"));
 
-                // 2. Lấy dữ liệu theo tên cột mới: product_type_name
+                // Lấy tổng kho (từ Alias 'total_stock')
+                p.setTotalStock(rs.getInt("total_stock"));
+
+                // Lấy dữ liệu từ bảng JOIN (Khớp với Alias trong câu lệnh SELECT)
                 p.setProductTypeName(rs.getString("product_type_name"));
                 p.setCategoryName(rs.getString("category_name"));
 
                 list.add(p);
             }
         } catch (Exception e) {
+            System.err.println("Lỗi SQL Search: " + e.getMessage());
             e.printStackTrace();
         }
         return list;
-    }
-    }
+    }}

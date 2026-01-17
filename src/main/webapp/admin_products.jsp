@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,6 +74,7 @@
                             <th class="col-category">Loại sản phẩm</th>
                             <th class="col-category">Danh mục</th>
                             <th class="col-date-added">Ngày thêm</th>
+                            <th class="col-stock">Giá</th>
                             <th class="col-stock">Số lượng</th>
                             <th class="col-status">Trạng thái</th>
                             <th class="col-actions">Thao tác</th>
@@ -103,15 +105,13 @@
                                         ${p.mfgDate}
                                 </td>
 
-                                    <%-- BỔ SUNG CỘT GIÁ: Định dạng tiền tệ cho dễ nhìn --%>
-<%--                                <td class="col-price">--%>
-<%--                                    <fmt:formatNumber value="${p.price}" type="number"/> đ--%>
-<%--                                </td>--%>
-
-                                <td class="col-stock">
-                                    10 <%-- Bạn có thể thay bằng ${p.stock} nếu có --%>
+                                <td class="col-price">
+                                    <fmt:formatNumber value="${p.price}" pattern="#,###"/> đ
                                 </td>
 
+                                <td class="col-stock">
+                                        ${p.totalStock != null ? p.totalStock : 0}
+                                </td>
                                 <td class="col-status">
                                     <label class="switch">
                                         <input type="checkbox" ${p.isActive == 1 ? "checked" : ""}>

@@ -19,7 +19,7 @@ public class SourceDao {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(new Source(rs.getInt("id"), rs.getString("source_name")));
+                list.add(new Source(rs.getInt("id"), rs.getString("sourcename")));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -29,7 +29,7 @@ public class SourceDao {
 
     // 2. Thêm nhà cung cấp mới
     public boolean insertSource(String name) {
-        String sql = "INSERT INTO sources (source_name) VALUES (?)";
+        String sql = "INSERT INTO sources (sourcename) VALUES (?)";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -51,7 +51,7 @@ public class SourceDao {
             ps.setString(1, "%" + keyword + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(new Source(rs.getInt("id"), rs.getString("source_name")));
+                list.add(new Source(rs.getInt("id"), rs.getString("sourcename")));
             }
         } catch (Exception e) {
             e.printStackTrace();

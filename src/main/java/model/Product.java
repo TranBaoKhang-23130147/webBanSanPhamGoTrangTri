@@ -12,6 +12,8 @@ public class Product {
     private int sourceId;
     private int productTypeId;
     private double price;
+    private int totalStock; // Thêm trường này
+
     private int primaryImageId;
     private int isActive;
     private Date mfgDate;
@@ -60,8 +62,7 @@ public class Product {
     public void setSourceId(int sourceId) { this.sourceId = sourceId; }
     public int getProductTypeId() { return productTypeId; }
     public void setProductTypeId(int productTypeId) { this.productTypeId = productTypeId; }
-    public double getPrice() { return price; }
-    public void setPrice(double price) { this.price = price; }
+
     public int getPrimaryImageId() { return primaryImageId; }
     public void setPrimaryImageId(int primaryImageId) { this.primaryImageId = primaryImageId; }
     public int getIsActive() { return isActive; }
@@ -82,6 +83,14 @@ public class Product {
     public void setReviewList(List<Reviews> reviewList) { this.reviewList = reviewList; }
     public int getTotalReviews() { return totalReviews; }
     public void setTotalReviews(int totalReviews) { this.totalReviews = totalReviews; }
+
+        // ... các trường cũ ...
+
+        public double getPrice() { return price; }
+        public void setPrice(double price) { this.price = price; }
+
+        public int getTotalStock() { return totalStock; }
+        public void setTotalStock(int totalStock) { this.totalStock = totalStock; }
 
     public void setProductTypeName(String productTypeName) {
     }
