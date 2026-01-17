@@ -30,6 +30,13 @@ public class AdminProductServlet extends HttpServlet {
 
 // CHỈ DÙNG hàm searchProducts này thôi (Hàm này phải xử lý được cả khi tham số null)
         List<Product> list = dao.searchProducts(keyword, typeId, categoryId);
+        if ((keyword == null || keyword.isEmpty()) &&
+                (typeId == null || typeId.isEmpty()) &&
+                (categoryId == null || categoryId.isEmpty())) {
+            list = dao.getAllProductsAdmin();
+        } else {
+            list = dao.searchProducts(keyword, typeId, categoryId);
+        }
 
         request.setAttribute("productList", list);
         request.setAttribute("typeList", dao.getAllProductTypes());
