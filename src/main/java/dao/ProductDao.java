@@ -940,4 +940,61 @@ public class ProductDao {
                 ps.executeUpdate();
             } catch (Exception e) { e.printStackTrace(); }
         }
+    public List<Product> searchProducts(String keyword, String typeId, String categoryId) {
+        List<Product> list = new ArrayList<>();
+        // 1. Sửa t.productTypeName thành t.product_type_name
+        StringBuilder sql = new StringBuilder(
+                "SELECT p.*, t.product_type_name, c.category_name, img.urlImage " +
+                        "FROM products p " +
+                        "LEFT JOIN product_types t ON p.product_type_id = t.id " +
+                        "LEFT JOIN categories c ON p.category_id = c.id " +
+                        "LEFT JOIN images img ON p.primary_image_id = img.id " +
+                        "WHERE 1=1"
+        );
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND p.name_product LIKE ?");
+        }
+        if (typeId != null && !typeId.trim().isEmpty()) {
+            sql.append(" AND p.product_type_id = ?");
+        }
+        if (categoryId != null && !categoryId.trim().isEmpty()) {
+            sql.append(" AND p.category_id = ?");
+        }
+
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql.toString())) {
+
+            int index = 1;
+            if (keyword != null && !keyword.trim().isEmpty()) {
+                ps.setString(index++, "%" + keyword + "%");
+            }
+            if (typeId != null && !typeId.trim().isEmpty()) {
+                ps.setInt(index++, Integer.parseInt(typeId));
+            }
+            if (categoryId != null && !categoryId.trim().isEmpty()) {
+                ps.setInt(index++, Integer.parseInt(categoryId));
+            }
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                p.setId(rs.getInt("id"));
+                p.setNameProduct(rs.getString("name_product"));
+                p.setPrice(rs.getDouble("price"));
+                p.setIsActive(rs.getInt("isActive"));
+                p.setMfgDate(rs.getDate("mfg_date"));
+                p.setImageUrl(rs.getString("urlImage"));
+
+                // 2. Lấy dữ liệu theo tên cột mới: product_type_name
+                p.setProductTypeName(rs.getString("product_type_name"));
+                p.setCategoryName(rs.getString("category_name"));
+
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     }
