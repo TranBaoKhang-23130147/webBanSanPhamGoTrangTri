@@ -20,26 +20,50 @@
 
             <div class="product-management-container">
                 <h2 class="page-title">Quản Lý Sản Phẩm</h2>
-
                 <div class="search-filter-bar">
-                    <div class="search-input-group">
-                        <input type="text" placeholder="Tìm kiếm sản phẩm" class="search-input">
+                    <%-- Gửi dữ liệu về @WebServlet("/products") --%>
+                    <form action="products" method="GET" style="display: flex; gap: 10px; flex-grow: 1; align-items: center;">
+
+                        <div class="search-input-group">
+                            <%-- Giữ lại từ khóa tìm kiếm bằng param.keyword --%>
+                            <input type="text" name="keyword" value="${param.keyword}"
+                                   placeholder="Tìm kiếm sản phẩm" class="search-input">
+                        </div>
+
+                        <%-- Lọc theo Loại sản phẩm: Tự submit khi chọn --%>
+                        <select name="typeId" class="filter-select" onchange="this.form.submit()">
+                            <option value="">Loại sản phẩm</option>
+                            <c:forEach var="type" items="${typeList}">
+                                <option value="${type.id}" ${param.typeId == type.id ? 'selected' : ''}>
+                                        ${type.productTypeName}
+                                </option>
+                            </c:forEach>
+                        </select>
+
+                        <%-- Lọc theo Danh mục: Tự submit khi chọn --%>
+                        <select name="categoryId" class="filter-select" onchange="this.form.submit()">
+                            <option value="">Danh mục</option>
+                            <c:forEach var="cat" items="${categoryList}">
+                                <option value="${cat.id}" ${param.categoryId == cat.id ? 'selected' : ''}>
+                                        ${cat.categoryName}
+                                </option>
+                            </c:forEach>
+                        </select>
+
+                        <%-- Nút tìm kiếm icon --%>
+                        <button type="submit" style="background: none; border: none; cursor: pointer; color: #666;">
+                        </button>
+                    </form>
+
+                    <div class="action-buttons" style="display: flex; gap: 10px;">
+                        <button class="export-product-btn">
+                            <i class="fa-solid fa-file-export"></i> Thêm màu sắc và kích thướt
+                        </button>
+                        <button class="add-new-product-btn">
+                            <i class="fa-solid fa-plus"></i> Thêm Sản Phẩm Mới
+                        </button>
                     </div>
-                    <select class="filter-select">
-                        <option value="">Loại sản phẩm</option>
-                    </select>
-                    <select class="filter-select">
-                        <option value="">Danh mục</option>
-                    </select>
-
-                    <button class="export-product-btn">
-                        <i class="fa-solid fa-file-export"></i> Thêm màu sắc và kích thướt
-                    </button>
-                    <button class="add-new-product-btn">
-                        <i class="fa-solid fa-plus"></i> Thêm Sản Phẩm Mới
-                    </button>
                 </div>
-
                 <div class="product-table-wrapper">
                     <table class="product-table">
                         <thead>

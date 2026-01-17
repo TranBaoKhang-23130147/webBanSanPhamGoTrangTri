@@ -7,9 +7,9 @@
                 <a href="${pageContext.request.contextPath}/AdminOverviewOrderServlet">Tổng quan</a>
             </li>
 
-<%--            <li class="${activePage == 'productType' ? 'active' : ''}">--%>
+            <li class="${activePage == 'products' ? 'active' : ''}">
                 <a href="${pageContext.request.contextPath}/products">sản phẩm</a>
-<%--            </li>--%>
+            </li>
             <li class="${activePage == 'productType' ? 'active' : ''}">
                 <a href="${pageContext.request.contextPath}/product-type-manager">Loại sản phẩm</a>
             </li>

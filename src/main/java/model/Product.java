@@ -82,4 +82,7 @@ public class Product {
     public void setReviewList(List<Reviews> reviewList) { this.reviewList = reviewList; }
     public int getTotalReviews() { return totalReviews; }
     public void setTotalReviews(int totalReviews) { this.totalReviews = totalReviews; }
+
+    public void setProductTypeName(String productTypeName) {
+    }
 }
