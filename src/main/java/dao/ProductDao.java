@@ -1042,5 +1042,38 @@ public class ProductDao {
 
         return list;
     }
+    public List<Product> getTop8BestSellers() {
+        List<Product> list = new ArrayList<>();
+        String sql = "SELECT p.id, p.name_product, p.price, i.urlImage, " +
+                "SUM(od.quantity) AS total_sold, " +
+                "AVG(r.rate) AS avg_rate " + // Thêm lấy trung bình cộng rate
+                "FROM products p " +
+                "LEFT JOIN images i ON p.primary_image_id = i.id " +
+                "LEFT JOIN product_variants pv ON p.id = pv.product_id " +
+                "LEFT JOIN order_details od ON pv.id = od.product_variant_id " +
+                "LEFT JOIN reviews r ON p.id = r.product_id " + // QUAN TRỌNG: JOIN thêm bảng reviews
+                "GROUP BY p.id " +
+                "ORDER BY total_sold DESC " +
+                "LIMIT 8";
 
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Product p = new Product();
+                p.setId(rs.getInt("id"));
+                p.setNameProduct(rs.getString("name_product")); // Lưu ý đúng tên cột name_product
+                p.setPrice(rs.getDouble("price"));
+                p.setImageUrl(rs.getString("urlImage"));
+                // Nếu bạn có hàm tính rating trung bình từ bảng reviews, hãy gọi ở đây
+                p.setAverageRating(rs.getDouble("avg_rate")); // Tạm thời để demo hoặc viết hàm lấy từ bảng reviews
+
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
