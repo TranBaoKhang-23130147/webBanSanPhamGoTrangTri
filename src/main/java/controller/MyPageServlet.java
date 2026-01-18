@@ -1,9 +1,11 @@
 package controller;
 
+import dao.AddressDao;
 import dao.PaymentDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import model.Address;
 import model.Order;
 import model.Payment;
 import model.User;
@@ -21,8 +23,6 @@ public class MyPageServlet extends HttpServlet {
             response.sendRedirect("login.jsp");
             return;
         }
-
-        // Lấy tham số tab từ URL
         String tab = request.getParameter("tab");
         if (tab == null || tab.isEmpty()) {
             tab = "ho-so"; // Mặc định là profile (ho-so)
@@ -37,14 +37,12 @@ public class MyPageServlet extends HttpServlet {
             List<Payment> listPayments = paymentDao.getPaymentsByUserId(user.getId());
             request.setAttribute("listPayments", listPayments);
         } else if ("don-hang".equals(tab)) {
-            // Thực hiện logic xử lý khi tab "Đơn hàng" được chọn (nếu cần)
-            // Ví dụ:
-            // OrderDao orderDao = new OrderDao();
-            // List<Order> listOrders = orderDao.getOrdersByUserId(user.getId());
-            // request.setAttribute("listO", listOrders);
+        } else if ("dia-chi".equals(tab)) {
+            AddressDao dao = new AddressDao();
+            List<Address> addresses = dao.getByUserId(user.getId());
+            request.setAttribute("addresses", addresses);
         }
 
-        // ===== CHUYỂN ĐẾN TRANG MYPAGE =====
         try {
             request.getRequestDispatcher("/mypage_user.jsp").forward(request, response);
         } catch (Exception e) {
@@ -55,6 +53,6 @@ public class MyPageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Xử lý post logic (nếu cần)
+
     }
 }
