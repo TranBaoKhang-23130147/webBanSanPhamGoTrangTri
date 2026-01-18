@@ -12,7 +12,7 @@
 
     <nav class="menu-bar">
 
-        <a class="menu" id="home" href="homepage_user.jsp"> TRANG CHỦ</a>
+        <a class="menu" id="home" href="HomeServlet"> TRANG CHỦ</a>
         <div class="menu product-menu">
             <%-- Nhấn vào đây ra trang Tất cả sản phẩm --%>
             <a id="product" href="ProductAllServlet">SẢN PHẨM</a>

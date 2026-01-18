@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="model.User" %>
 <%
     User user = (User) session.getAttribute("LOGGED_USER");
@@ -72,58 +74,56 @@
         <p>Từng đường vân, sắc màu và cảm hứng từ thiên nhiên được chúng tôi tỉ mỉ chọn lọc và chăm chút, mang đến cảm giác ấm áp, tinh tế và gần gũi – tạo nên không gian hài hòa, chan hòa với thiên nhiên.</p>
     </div>
 
-    <section class="products">
-        <div class="product-card">
-            <!--            <span class="badge">NEW</span>-->
-            <a href="product_details_user.jsp">
-                <img src="https://i.pinimg.com/736x/0b/e6/ab/0be6ab843569781d6a78bd3786e736de.jpg" alt="ke treo tuong">
-                <h2>Kệ treo tường</h2>
-            </a>
-            <div class="rating">
-            </div>
-            <div class="price">129.000 VNĐ</div>
-            <div class="action-buttons">
-                <button class="add-cart">Thêm giỏ hàng</button>
-                <button class="buy-now">Mua hàng</button>
-            </div>
-        </div>
+<%--    <section class="products">--%>
+<%--        <c:forEach items="${products}" var="p">--%>
+<%--            <div class="product-card">--%>
 
-        <div class="product-card">
-            <!--            <span class="badge">NEW</span>-->
-            <img src="https://i.pinimg.com/736x/68/1c/46/681c469884d60a1a27b0b3686c589f3e.jpg" alt="Bộ bàn ghế gỗ tự nhiên">
-            <h2>Bộ bàn ghế gỗ tự nhiên</h2>
-            <div class="rating">
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <span>(5.0)</span></div>
-            <div class="price">99.000 VNĐ</div>
-            <div class="action-buttons">
-                <button class="add-cart">Thêm giỏ hàng</button>
-                <button class="buy-now">Mua hàng</button>
-            </div>
-        </div>
+<%--                <a href="product-detail?id=${p.id}">--%>
+<%--                    <img src="${p.imageUrl}" alt="${p.nameProduct}">--%>
+<%--                    <h2>${p.nameProduct}</h2>--%>
+<%--                </a>--%>
 
-        <div class="product-card">
-            <!--            <span class="badge">NEW</span>-->
-            <img src="https://i.pinimg.com/736x/29/1c/81/291c814c237f586afa66fb1700800563.jpg" alt="Đồ trang trí tường">
-            <h2>Đồ trang trí tường bằng gỗ</h2>
-            <div class="rating">
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-s-fill"></i>
-                <i class="ri-star-half-line"></i>
-                <span>(4.5)</span></div>
-            <div class="price">159.000 VNĐ</div>
-            <div class="action-buttons">
-                <button class="add-cart">Thêm giỏ hàng</button>
-                <button class="buy-now">Mua hàng</button>
+<%--                <div class="rating">--%>
+<%--                    <i class="ri-star-s-fill"></i>--%>
+<%--                    <span>(${p.averageRating})</span>--%>
+<%--                </div>--%>
+
+<%--                <div class="price">--%>
+<%--                    <fmt:formatNumber value="${p.price}" type="currency" currencySymbol="VNĐ"/>--%>
+<%--                </div>--%>
+
+<%--                <div class="action-buttons">--%>
+<%--                    <a href="add-to-cart?id=${p.id}" class="add-cart">Thêm giỏ hàng</a>--%>
+<%--                    <a href="buy-now?id=${p.id}" class="buy-now">Mua hàng</a>--%>
+<%--                </div>--%>
+
+<%--            </div>--%>
+<%--        </c:forEach>--%>
+<%--    </section>--%>
+    <div class="products">
+        <c:forEach items="${top3Products}" var="p">
+            <div class="product-card">
+                <a href="product-detail?id=${p.id}">
+                    <img src="${p.imageUrl}" alt="${p.nameProduct}">
+                    <h2>${p.nameProduct}</h2>
+                </a>
+
+                <div class="rating">
+                    <i class="ri-star-s-fill"></i>
+                    <span>(${p.averageRating})</span>
+                </div>
+
+                <div class="price">
+                    <fmt:formatNumber value="${p.price}" type="number" groupingUsed="true"/> VNĐ
+                </div>
+
+                <div class="action-buttons">
+                    <a href="add-to-cart?id=${p.id}" class="add-cart">Thêm giỏ hàng</a>
+                    <a href="buy-now?id=${p.id}" class="buy-now">Mua hàng</a>
+                </div>
             </div>
-        </div>
-    </section>
+        </c:forEach>
+    </div>
 
     <section class="intro-section">
         <div class="intro-content">
