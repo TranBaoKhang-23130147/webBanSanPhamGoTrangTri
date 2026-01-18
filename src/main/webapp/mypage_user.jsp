@@ -64,7 +64,10 @@
                         <i class="fas fa-credit-card"></i> Thanh toán
                     </a>
 
-                    <a href="#" class="tab-link" data-tab="dia-chi"><i class="fas fa-map-marker-alt"></i> Địa chỉ</a>
+                    <a href="MyPageServlet?tab=dia-chi"
+                       class="menu-link ${activeTab == 'dia-chi' ? 'active' : ''}">
+                        <i class="fas fa-map-marker-alt"></i> Địa chỉ
+                    </a>
                     <a href="#" class="tab-link" data-tab="bao-mat"><i class="fas fa-shield-alt"></i> Bảo mật</a>
                     <a href="#" class="tab-link" data-tab="thong-bao"><i class="fas fa-bell"></i> Thông báo</a>
                 </div>
@@ -152,79 +155,7 @@
 
 
         </div>
-<%--        <div id="thanh-toan" class="tab-content <%= "thanh-toan".equals(activeTab) ? "active" : "" %>">--%>
-<%--            <div class="header-with-button">--%>
-<%--                <h2>Quản lý thanh toán</h2>--%>
 
-<%--                <button class="add-btn" onclick="document.getElementById('addForm').style.display='block'">--%>
-<%--                    <i class="fas fa-plus"></i> Thêm thẻ--%>
-<%--                </button>--%>
-<%--            </div>--%>
-
-<%--            <div id="addForm" style="display:none; background: #fff; padding: 20px; border: 1px solid #eee; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">--%>
-<%--                <form action="AddPaymentServlet" method="post">--%>
-<%--                    <h3 style="margin-bottom: 20px; color: #333;"><i class="fas fa-plus-circle"></i> Thêm phương thức thanh toán</h3>--%>
-<%--                    <div class="form-group">--%>
-<%--                        <label>Loại thẻ:</label>--%>
-<%--                        <select name="type" class="input-style">--%>
-<%--                            <option value="Visa">Visa</option>--%>
-<%--                            <option value="MasterCard">MasterCard</option>--%>
-<%--                            <option value="JCB">JCB</option>--%>
-<%--                        </select>--%>
-<%--                    </div>--%>
-<%--                    <div class="form-group">--%>
-<%--                        <label>Số thẻ:</label>--%>
-<%--                        <input type="text" name="cardNumber" placeholder="**** **** **** ****" required class="input-style">--%>
-<%--                    </div>--%>
-<%--                    <div class="form-group">--%>
-<%--                        <label>Ngày hết hạn:</label>--%>
-<%--                        <input type="date" name="duration" required class="input-style">--%>
-<%--                    </div>--%>
-<%--                    <div style="margin-top: 20px;">--%>
-<%--                        <button type="submit" class="save-btn">Xác nhận thêm</button>--%>
-<%--                        <button type="button" class="delete-btn" onclick="document.getElementById('addForm').style.display='none'">Hủy bỏ</button>--%>
-<%--                    </div>--%>
-<%--                </form>--%>
-<%--            </div>--%>
-
-<%--            <div class="payment-management">--%>
-<%--                <c:if test="${empty listPayments}">--%>
-<%--                    <p>Chưa có thẻ thanh toán</p>--%>
-<%--                </c:if>--%>
-
-<%--                <c:forEach items="${listPayments}" var="p">--%>
-<%--                    <div class="card-item" style="background: linear-gradient(135deg, #2c3e50, #4ca1af); color: white; border-radius: 15px; padding: 20px; position: relative; overflow: hidden;">--%>
-<%--                        <div class="card-display">--%>
-<%--                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">--%>
-<%--                                <span style="font-size: 1.2em; font-weight: bold; letter-spacing: 2px;">${p.type}</span>--%>
-<%--                                <i class="fas fa-microchip" style="font-size: 2em; color: #f1c40f;"></i>--%>
-<%--                            </div>--%>
-
-<%--                            <p class="card-number" style="font-size: 1.4em; margin: 20px 0; letter-spacing: 4px;">--%>
-<%--                                **** **** **** ${p.cardNumber.substring(p.cardNumber.length() - 4)}--%>
-<%--                            </p>--%>
-
-<%--                            <div style="display: flex; justify-content: space-between;">--%>
-<%--                                <div>--%>
-<%--                                    <small style="opacity: 0.8; display: block;">Chủ thẻ</small>--%>
-<%--                                    <span style="text-transform: uppercase;">${user.getUsername()}</span>--%>
-<%--                                </div>--%>
-<%--                                <div>--%>
-<%--                                    <small style="opacity: 0.8; display: block;">Hết hạn</small>--%>
-<%--                                    <span><fmt:formatDate value="${p.duration}" pattern="MM/yy"/></span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-
-<%--                        <div class="card-actions" style="margin-top: 20px; display: flex; justify-content: flex-end;">--%>
-<%--                            <a href="DeletePaymentServlet?id=${p.id}" onclick="return confirm('Xóa thẻ này?')" class="btn-small-delete">--%>
-<%--                                <i class="fas fa-trash"></i> Xóa--%>
-<%--                            </a>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </c:forEach>--%>
-<%--            </div>--%>
-<%--        </div>--%>
         <div id="thanh-toan" class="tab-content <%= "thanh-toan".equals(activeTab) ? "active" : "" %>">
             <div class="header-with-button">
                 <h2>Quản lý thanh toán</h2>
@@ -339,38 +270,79 @@
             </div>
 
 
-        <div id="dia-chi" class="tab-content">
-            <div class="header-with-button">
-            <h2>Địa Chỉ</h2>
-            <button class="add-btn float-right"><i class="fas fa-plus"></i> Thêm</button>
-            </div>
-            <div class="address-list">
-                <div class="address-item default-address">
-                    <div class="address-icon"><i class="fas fa-home"></i></div>
-                    <div class="address-details">
-                        <p class="address-name">Trần Thị Thúy Kiều <span>0399999970</span></p>
-                        <p class="address-line">Thủ Đức, TP.HCM</p>
-                    </div>
-                    <div class="address-actions">
-                        <span class="default-tag">Mặc định</span>
-                        <button class="change-btn">Thay đổi</button>
-                        <button class="set-default-btn">Đặt làm mặc định</button>
-                        <button class="delete-btn">Xóa</button>
-                    </div>
-                </div>
-                <div class="address-item">
-                    <div class="address-icon"><i class="fas fa-building"></i></div>
-                    <div class="address-details">
-                        <p class="address-name">Trần Thị Thúy Kiều <span>0399999970</span></p>
-                        <p class="address-line">Thủ Đức, TP.HCM</p>
-                    </div>
-                    <div class="address-actions">
-                        <button class="set-default-btn">Đặt làm mặc định</button>
 
-                        <button class="change-btn">Thay đổi</button>
-                        <button class="delete-btn">Xóa</button>
+        <div id="dia-chi" class="tab-content <%= "dia-chi".equals(activeTab) ? "active" : "" %>">
+
+            <div class="header-with-button">
+                <h2>Địa Chỉ</h2>
+                <button class="add-btn" onclick="openAddAddressModal()">
+                    <i class="fas fa-plus"></i> Thêm
+                </button>
+            </div>
+
+            <div class="address-list">
+
+                <c:if test="${empty addresses}">
+                    <p style="color:#888;">Bạn chưa có địa chỉ nào</p>
+                </c:if>
+
+                <c:forEach var="a" items="${addresses}">
+                    <div class="address-item ${a.isDefault == 1 ? 'default-address' : ''}">
+
+                        <div class="address-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+
+                        <div class="address-details">
+                            <p class="address-name">
+                                    ${a.name}
+                                <span>${a.phone}</span>
+                            </p>
+                            <p class="address-line">${a.fullAddress}</p>
+                        </div>
+
+                        <div class="address-actions">
+
+                            <c:if test="${a.isDefault == 1}">
+                                <span class="default-tag">Mặc định</span>
+                            </c:if>
+
+                            <form action="AddressServlet" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="${a.id}">
+                                <button class="set-default-btn"
+                                        name="action" value="default"
+                                        <c:if test="${a.isDefault == 1}">disabled</c:if>>
+                                    Đặt làm mặc định
+                                </button>
+                            </form>
+
+                            <button class="change-btn"
+                                    onclick="openEditAddressModal(
+                                            '${a.id}',
+                                            '${a.name}',
+                                            '${a.phone}',
+                                            '${a.detail}',
+                                            '${a.commune}',
+                                            '${a.district}',
+                                            '${a.province}'
+                                            )">
+                                Thay đổi
+                            </button>
+
+
+                            <form action="AddressServlet" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="${a.id}">
+                                <button class="delete-btn"
+                                        name="action" value="delete"
+                                        onclick="return confirm('Xóa địa chỉ này?')">
+                                    Xóa
+                                </button>
+                            </form>
+
+                        </div>
                     </div>
-                </div>
+                </c:forEach>
+
             </div>
         </div>
 
@@ -470,6 +442,56 @@
 <jsp:include page="footer.jsp"></jsp:include>
 
 <script src="js/mypage_script.js"></script>
+<div id="addressModal" class="modal-overlay">
+    <div class="modal-box">
+        <h3 id="modalTitle">
+            <i class="fas fa-plus-circle"></i> Thêm địa chỉ
+        </h3>
+
+        <form action="AddressServlet" method="post" class="modal-form">
+            <input type="hidden" name="id" id="addr-id">
+            <input type="hidden" name="action" id="addr-action" value="add">
+
+            <div class="form-group">
+                <label>Họ tên</label>
+                <input name="name" id="addr-name" placeholder="Nhập tên người nhận" required>
+            </div>
+
+            <div class="form-group">
+                <label>Số điện thoại</label>
+                <input name="phone" id="addr-phone" placeholder="Nhập số điện thoại" required>
+            </div>
+
+            <div class="form-group">
+                <label>Địa chỉ chi tiết</label>
+                <input name="detail" id="addr-detail" placeholder="Số nhà, tên đường" required>
+            </div>
+
+
+                <div class="form-group">
+                    <label>Phường / Xã</label>
+                    <input name="commune" id="addr-commune" placeholder="Nhập tên Phường / Xã" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Quận / Huyện</label>
+                    <input name="district" id="addr-district" placeholder="Nhập tên Quận / Huyện " required>
+                </div>
+
+
+            <div class="form-group">
+                <label>Tỉnh / Thành phố</label>
+                <input name="province" id="addr-province" placeholder="Nhập tên Tỉnh / Thành phố" required>
+            </div>
+
+            <div class="modal-actions">
+                <button type="submit" class="save-btn">Xác nhận</button>
+                <button type="button" class="cancel-btn" onclick="closeAddressModal()">Hủy bỏ</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div id="editCardModal" style="display:none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(3px);">
     <div style="background: #fff; margin: 10% auto; padding: 30px; border-radius: 12px; width: 400px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
         <h3 style="margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 15px; color: var(--text-color);">
