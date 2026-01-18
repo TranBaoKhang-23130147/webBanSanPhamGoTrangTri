@@ -68,7 +68,7 @@
                        class="menu-link ${activeTab == 'dia-chi' ? 'active' : ''}">
                         <i class="fas fa-map-marker-alt"></i> Địa chỉ
                     </a>
-                    <a href="#" class="tab-link" data-tab="bao-mat"><i class="fas fa-shield-alt"></i> Bảo mật</a>
+                    <a href="MyPageServlet?tab=bao-mat" class="menu-link" ${activeTab == 'bao-mat' ? 'active' : ''}><i class="fas fa-shield-alt"></i> Bảo mật</a>
                     <a href="#" class="tab-link" data-tab="thong-bao"><i class="fas fa-bell"></i> Thông báo</a>
                 </div>
             </div>
@@ -346,38 +346,72 @@
             </div>
         </div>
 
-        <div id="bao-mat" class="tab-content">
-            <h2>Mật khẩu</h2>
+<%--        <div id="bao-mat" class="tab-content">--%>
+<%--            <h2>Mật khẩu</h2>--%>
+<%--            <h3>Đổi mật khẩu</h3>--%>
+<%--            <div class="password-change-form">--%>
+<%--                <div class="form-group">--%>
+<%--                    <label for="current-pass">Mật khẩu hiện tại <span class="required">*</span></label>--%>
+<%--                    <input type="password" id="current-pass">--%>
+<%--                    <i class="fas fa-eye password-toggle"></i>--%>
+<%--                </div>--%>
+<%--                <div class="form-group">--%>
+<%--                    <label for="new-pass">Mật khẩu mới <span class="required">*</span></label>--%>
+<%--                    <input type="password" id="new-pass">--%>
+<%--                    <i class="fas fa-eye password-toggle"></i>--%>
+<%--                </div>--%>
+<%--                <div class="form-group">--%>
+<%--                    <label for="confirm-pass">Xác nhận mật khẩu <span class="required">*</span></label>--%>
+<%--                    <input type="password" id="confirm-pass">--%>
+<%--                    <i class="fas fa-eye password-toggle"></i>--%>
+<%--                </div>--%>
+<%--                <div class="password-requirements">--%>
+<%--                    <h4>Yêu cầu mật khẩu:</h4>--%>
+<%--                    <p>Đảm bảo các yêu cầu sau được đáp ứng:</p>--%>
+<%--                    <ul>--%>
+<%--                        <li>Tối thiểu 8 ký tự - càng dài càng tốt</li>--%>
+<%--                        <li>Ít nhất một ký tự viết thường</li>--%>
+<%--                        <li>Ít nhất một ký tự viết hoa</li>--%>
+<%--                        <li>Ít nhất một ký tự số, ký hiệu hoặc khoảng trắng</li>--%>
+<%--                    </ul>--%>
+<%--                </div>--%>
+<%--                <button class="save-btn float-right">Lưu</button>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+        <div id="bao-mat" class="tab-content"<%= "bao-mat".equals(activeTab) ? "active" : "" %>">
+            <h2>Bảo mật</h2>
             <h3>Đổi mật khẩu</h3>
-            <div class="password-change-form">
+
+            <form action="ChangePasswordServlet" method="post" class="password-change-form">
                 <div class="form-group">
-                    <label for="current-pass">Mật khẩu hiện tại <span class="required">*</span></label>
-                    <input type="password" id="current-pass">
-                    <i class="fas fa-eye password-toggle"></i>
+                    <label>Mật khẩu hiện tại *</label>
+                    <input type="password" name="currentPassword" required>
                 </div>
+
                 <div class="form-group">
-                    <label for="new-pass">Mật khẩu mới <span class="required">*</span></label>
-                    <input type="password" id="new-pass">
-                    <i class="fas fa-eye password-toggle"></i>
+                    <label>Mật khẩu mới *</label>
+                    <input type="password" name="newPassword" required>
                 </div>
+
                 <div class="form-group">
-                    <label for="confirm-pass">Xác nhận mật khẩu <span class="required">*</span></label>
-                    <input type="password" id="confirm-pass">
-                    <i class="fas fa-eye password-toggle"></i>
+                    <label>Xác nhận mật khẩu *</label>
+                    <input type="password" name="confirmPassword" required>
                 </div>
-                <div class="password-requirements">
-                    <h4>Yêu cầu mật khẩu:</h4>
-                    <p>Đảm bảo các yêu cầu sau được đáp ứng:</p>
-                    <ul>
-                        <li>Tối thiểu 8 ký tự - càng dài càng tốt</li>
-                        <li>Ít nhất một ký tự viết thường</li>
-                        <li>Ít nhất một ký tự viết hoa</li>
-                        <li>Ít nhất một ký tự số, ký hiệu hoặc khoảng trắng</li>
-                    </ul>
-                </div>
-                <button class="save-btn float-right">Lưu</button>
-            </div>
-        </div>
+
+                <button type="submit" class="save-btn">Lưu</button>
+            </form>
+
+            <c:if test="${not empty msg}">
+                <p style="color: green">${msg}</p>
+            </c:if>
+
+            <c:if test="${not empty error}">
+                <p style="color: red">${error}</p>
+            </c:if>
+        <c:remove var="msg" scope="session"/>
+        <c:remove var="error" scope="session"/>
+
+</div>
 
 
         <div id="don-hang" class="tab-content">
