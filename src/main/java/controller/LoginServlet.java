@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/admin_homepage.jsp");
             } else {
                 // CHUYỂN HƯỚNG VỀ HOMEPAGE USER
-                response.sendRedirect(request.getContextPath() + "/homepage_user.jsp");
+                response.sendRedirect(request.getContextPath() + "/HomeServlet");
             }
         }
     }

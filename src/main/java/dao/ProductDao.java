@@ -1001,4 +1001,46 @@ public class ProductDao {
             e.printStackTrace();
         }
         return list;
-    }}
+    }
+    public List<Product> getTop3FeaturedProducts() {
+        List<Product> list = new ArrayList<>();
+        String sql = """
+        SELECT 
+            p.id,
+            p.name_product,
+            p.price,
+            img.urlImage,
+            AVG(r.rate) AS avg_rate,
+            COUNT(r.id) AS review_count
+        FROM products p
+        LEFT JOIN reviews r ON p.id = r.product_id
+        LEFT JOIN images img ON p.primary_image_id = img.id
+        WHERE p.isActive = 1
+        GROUP BY p.id
+        ORDER BY avg_rate DESC, review_count DESC
+        LIMIT 3
+    """;
+
+        try (Connection con = DBContext.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Product p = new Product();
+                p.setId(rs.getInt("id"));
+                p.setNameProduct(rs.getString("name_product"));
+                p.setPrice(rs.getDouble("price"));
+                p.setImageUrl(rs.getString("urlImage"));
+                p.setAverageRating(rs.getDouble("avg_rate"));
+                p.setTotalReviews(rs.getInt("review_count"));
+
+                list.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+}
