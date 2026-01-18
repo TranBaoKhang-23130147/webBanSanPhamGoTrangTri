@@ -40,16 +40,20 @@ public class ChangePasswordServlet extends HttpServlet {
 
         HttpSession session = req.getSession(false);
         Integer userId = null;
+        User user = null;
+
         if (session != null) {
-            Object u = session.getAttribute("LOGGED_USER");
-            if (u instanceof User) {
-                userId = ((User) u).getId();
+            Object obj = session.getAttribute("LOGGED_USER");
+            if (obj instanceof User) {
+                user = (User) obj;
+                userId = user.getId();
             } else {
                 Object uid = session.getAttribute("userId");
                 if (uid instanceof Integer) userId = (Integer) uid;
                 else if (uid instanceof String) userId = Integer.valueOf((String) uid);
             }
         }
+
 
         try (PrintWriter out = resp.getWriter()) {
             if (userId == null) {
@@ -85,13 +89,20 @@ public class ChangePasswordServlet extends HttpServlet {
             }
 
             boolean ok = userDao.updatePassword(userId, next);
-            if (ok) {
-                req.setAttribute("successMessage", "Đổi mật khẩu thành công.");
-                req.getRequestDispatcher("/admin_setting.jsp").forward(req, resp); // Điều hướng lại admin_setting.jsp
-            } else {
-                req.setAttribute("errorMessage", "Cập nhật thất bại. Vui lòng thử lại.");
-                req.getRequestDispatcher("/admin_setting.jsp").forward(req, resp); // Điều hướng lại admin_setting.jsp
+            String targetPage = "/mypage_user.jsp"; // mặc định user
+
+            if (user != null && "admin".equalsIgnoreCase(user.getRole())) {
+                targetPage = "/admin_setting.jsp";
             }
+
+            if (ok) {
+                session.setAttribute("msg", "Đổi mật khẩu thành công.");
+                resp.sendRedirect("MyPageServlet?tab=bao-mat");
+            } else {
+                session.setAttribute("error", "Cập nhật thất bại. Vui lòng thử lại.");
+                resp.sendRedirect("MyPageServlet?tab=bao-mat");
+            }
+
 
 
         } catch (Exception e) {
