@@ -74,7 +74,7 @@ public class SourceDao {
 
     // 5. Cập nhật nhà cung cấp (Dùng cho chức năng Edit)
     public boolean updateSource(int id, String name) {
-        String sql = "UPDATE sources SET source_name = ? WHERE id = ?";
+        String sql = "UPDATE sources SET sourcename = ? WHERE id = ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);

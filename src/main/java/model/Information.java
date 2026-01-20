@@ -7,6 +7,7 @@ public class Information {
     private String size;      // Kích thước
     private String guarantee; // Bảo hành
 
+
     public Information() {}
 
     public Information(int id, String material, String color, String size, String guarantee) {

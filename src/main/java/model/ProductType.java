@@ -7,6 +7,9 @@ public class ProductType {
 
     public ProductType() {}
 
+    public ProductType(int id, String productTypeName) {
+    }
+
     // Getter và Setter
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

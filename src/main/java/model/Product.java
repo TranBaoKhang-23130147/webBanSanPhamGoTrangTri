@@ -29,6 +29,9 @@ public class Product {
     private String categoryName; // Thêm dòng này
     private String typeName;     // Thêm dòng này
 
+    public Product(String name, double price, int catId, int typeId, int sourceId, String mfgDate) {
+    }
+
     // Bắt buộc phải có Getter và Setter cho 2 biến trên thì DAO mới gọi được
     public String getCategoryName() { return categoryName; }
     public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
@@ -67,8 +70,14 @@ public class Product {
     public void setPrimaryImageId(int primaryImageId) { this.primaryImageId = primaryImageId; }
     public int getIsActive() { return isActive; }
     public void setIsActive(int isActive) { this.isActive = isActive; }
-    public Date getMfgDate() { return mfgDate; }
-    public void setMfgDate(Date mfgDate) { this.mfgDate = mfgDate; }
+    public Date getMfgDate() {
+        return mfgDate;
+    }
+
+    // Setter
+    public void setMfgDate(Date mfgDate) {
+        this.mfgDate = mfgDate;
+    }
     public Reviews getReviews() { return reviews; }
     public void setReviews(Reviews reviews) { this.reviews = reviews; }
     public double getAverageRating() { return averageRating; }
@@ -93,5 +102,8 @@ public class Product {
         public void setTotalStock(int totalStock) { this.totalStock = totalStock; }
 
     public void setProductTypeName(String productTypeName) {
+    }
+
+    public void setTypeId(int typeId) {
     }
 }
