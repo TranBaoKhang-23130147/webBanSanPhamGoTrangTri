@@ -1,9 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <form action="ProductFilterServlet" method="get">
-    <input type="hidden" name="page" value="all">
-
+    <input type="hidden" name="cid" value="${param.cid}">
+    <input type="hidden" name="returnPage"
+           value="${pageContext.request.servletPath}">
     <aside class="filter-sidebar">
         <h3>Bộ lọc</h3>
 
@@ -33,40 +35,91 @@
 
         <div class="filter-group">
             <h4>Giá tiền</h4>
-            <label><input type="checkbox" name="price" value="1"> Dưới 1 triệu</label>
-            <label><input type="checkbox" name="price" value="2"> 1 - 3 triệu</label>
-            <label><input type="checkbox" name="price" value="3"> 3 - 5 triệu</label>
-            <label><input type="checkbox" name="price" value="4"> 5 - 10 triệu</label>
-            <label><input type="checkbox" name="price" value="5"> Trên 10 triệu</label>
+<%--            <label><input type="checkbox" name="price" value="1"> Dưới 1 triệu</label>--%>
+<%--            <label><input type="checkbox" name="price" value="2"> 1 - 3 triệu</label>--%>
+<%--            <label><input type="checkbox" name="price" value="3"> 3 - 5 triệu</label>--%>
+<%--            <label><input type="checkbox" name="price" value="4"> 5 - 10 triệu</label>--%>
+<%--            <label><input type="checkbox" name="price" value="5"> Trên 10 triệu</label>--%>
+            <c:set var="prices" value="${fn:join(paramValues.price, ',')}" />
+
+            <label>
+                <input type="checkbox" name="price" value="1"
+                       <c:if test="${fn:contains(prices, '1')}">checked</c:if>>
+                Dưới 1 triệu
+            </label>
+
+            <label>
+                <input type="checkbox" name="price" value="2"
+                       <c:if test="${fn:contains(prices, '2')}">checked</c:if>>
+                1 - 3 triệu
+            </label>
+
+            <label>
+                <input type="checkbox" name="price" value="3"
+                       <c:if test="${fn:contains(prices, '3')}">checked</c:if>>
+                3 - 5 triệu
+            </label>
+
+            <label>
+                <input type="checkbox" name="price" value="4"
+                       <c:if test="${fn:contains(prices, '4')}">checked</c:if>>
+                5 - 10 triệu
+            </label>
+
+            <label>
+                <input type="checkbox" name="price" value="5"
+                       <c:if test="${fn:contains(prices, '5')}">checked</c:if>>
+                Trên 10 triệu
+            </label>
+
         </div>
 
         <div class="filter-group">
             <h4>Đánh giá</h4>
-            <label><input type="checkbox" name="rating" value="5">
+            <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+            <c:set var="ratings" value="${fn:join(paramValues.rating, ',')}" />
+
+            <label>
+                <input type="checkbox" name="rating" value="5"
+                       <c:if test="${fn:contains(ratings, '5')}">checked</c:if>>
                 <i class="ri-star-s-fill rating"></i>
                 <i class="ri-star-s-fill rating"></i>
                 <i class="ri-star-s-fill rating"></i>
                 <i class="ri-star-s-fill rating"></i>
                 <i class="ri-star-s-fill rating"></i>
             </label>
-            <label><input type="checkbox" name="rating" value="4">
+
+            <label>
+                <input type="checkbox" name="rating" value="4"
+                       <c:if test="${fn:contains(ratings, '4')}">checked</c:if>>
                 <i class="ri-star-s-fill rating"></i>
                 <i class="ri-star-s-fill rating"></i>
                 <i class="ri-star-s-fill rating"></i>
                 <i class="ri-star-s-fill rating"></i>
             </label>
-            <label><input type="checkbox" name="rating" value="3">
+
+            <label>
+                <input type="checkbox" name="rating" value="3"
+                       <c:if test="${fn:contains(ratings, '3')}">checked</c:if>>
                 <i class="ri-star-s-fill rating"></i>
                 <i class="ri-star-s-fill rating"></i>
                 <i class="ri-star-s-fill rating"></i>
             </label>
-            <label><input type="checkbox" name="rating" value="2">
+
+            <label>
+                <input type="checkbox" name="rating" value="2"
+                       <c:if test="${fn:contains(ratings, '2')}">checked</c:if>>
                 <i class="ri-star-s-fill rating"></i>
                 <i class="ri-star-s-fill rating"></i>
             </label>
-            <label><input type="checkbox" name="rating" value="1">
+
+            <label>
+                <input type="checkbox" name="rating" value="1"
+                       <c:if test="${fn:contains(ratings, '1')}">checked</c:if>>
                 <i class="ri-star-s-fill rating"></i>
             </label>
+
         </div>
 
         <br><br>
