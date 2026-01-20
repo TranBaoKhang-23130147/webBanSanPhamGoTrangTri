@@ -586,3 +586,21 @@ textarea#description {
     grid-template-columns: 1fr 1fr;
     gap: 15px;
 }
+.variant-item.duplicate {
+    border: 2px solid #ff4444 !important;
+    background-color: #ffe6e6;
+    position: relative;
+}
+
+.variant-item.duplicate::after {
+    content: "⚠️ TRÙNG MÀU + SIZE";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4444;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}

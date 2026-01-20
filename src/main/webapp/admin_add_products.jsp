@@ -53,18 +53,22 @@
                                     <input type="number" name="basePrice" required>
                                 </div>
 
+                                <!-- Danh mục -->
                                 <div class="form-group">
                                     <label>Danh mục</label>
-                                    <select name="categoryId" required>
+                                    <select name="categoryId">
+                                        <option value="">-- Chọn danh mục (tùy chọn) --</option>
                                         <c:forEach var="cat" items="${listCategories}">
                                             <option value="${cat.id}">${cat.categoryName}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
 
+                                <!-- Loại sản phẩm -->
                                 <div class="form-group">
                                     <label>Loại sản phẩm</label>
-                                    <select name="typeId" required>
+                                    <select name="typeId">
+                                        <option value="">-- Chọn loại (tùy chọn) --</option>
                                         <c:forEach var="t" items="${listTypes}">
                                             <option value="${t.id}">${t.productTypeName}</option>
                                         </c:forEach>
@@ -219,6 +223,207 @@
         finder.popup();
     }
 </script>
+<script>
+    function addVariant() {
+        const container = document.getElementById('variant-container');
 
+        // Tạo một khối variant-item mới (copy cấu trúc từ khối mẫu)
+        const newVariant = document.createElement('div');
+        newVariant.className = 'card variant-item';
+        newVariant.innerHTML = `
+            <h2 class="card-title">Biến thể</h2>
+            <span class="remove-variant" onclick="this.parentElement.remove()">
+                <i class="fas fa-trash"></i>
+            </span>
+
+            <div class="variant-grid">
+                <div class="form-group sku-group">
+                    <label>Mã SKU:</label>
+                    <input type="text" name="variantSKU[]" required placeholder="Ví dụ: BG-PB-01">
+                </div>
+
+                <div class="form-group">
+                    <label>Màu sắc:</label>
+                    <select name="colorId[]">
+                        <c:forEach var="c" items="${listColors}">
+                            <option value="${c.id}">${c.colorName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Kích thước:</label>
+                    <select name="sizeId[]">
+                        <c:forEach var="sz" items="${listSizes}">
+                            <option value="${sz.id}">${sz.size_name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Giá biến thể (VND):</label>
+                    <input type="number" name="variantPrice[]" required placeholder="0.00">
+                </div>
+
+                <div class="form-group">
+                    <label>Số lượng kho:</label>
+                    <input type="number" name="variantStock[]" required placeholder="0">
+                </div>
+            </div>
+        `;
+
+        // Thêm khối mới vào container
+        container.appendChild(newVariant);
+
+        // Hiện nút xóa cho khối mới (khối đầu tiên có display:none)
+        const removeBtn = newVariant.querySelector('.remove-variant');
+        if (removeBtn) removeBtn.style.display = 'block';
+    }
+
+    // Tùy chọn: Hiện nút xóa cho khối biến thể đầu tiên (nếu muốn cho phép xóa luôn khối mặc định)
+    window.onload = function() {
+        const firstRemove = document.querySelector('.variant-item .remove-variant');
+        if (firstRemove) firstRemove.style.display = 'block';
+    };
+</script>
+<script>
+    // Hàm kiểm tra trùng variant (color + size) - gọi trước khi submit
+    function validateVariants() {
+        const variantItems = document.querySelectorAll('.variant-item');
+        const seenCombinations = new Set(); // Lưu {colorId-sizeId}
+        let hasDuplicate = false;
+        let errorMsg = '';
+
+        for (let i = 0; i < variantItems.length; i++) {
+            const colorSelect = variantItems[i].querySelector('select[name="colorId[]"]');
+            const sizeSelect = variantItems[i].querySelector('select[name="sizeId[]"]');
+
+            if (colorSelect && sizeSelect) {
+                const colorId = colorSelect.value;
+                const sizeId = sizeSelect.value;
+
+                if (colorId && sizeId) { // Chỉ check nếu đã chọn cả 2
+                    const combination = `${colorId}-${sizeId}`;
+
+                    if (seenCombinations.has(combination)) {
+                        hasDuplicate = true;
+                        errorMsg += `Biến thể ${i+1}: Màu "${colorSelect.options[colorSelect.selectedIndex].text}" + Kích thước "${sizeSelect.options[sizeSelect.selectedIndex].text}" đã trùng!\n`;
+                    } else {
+                        seenCombinations.add(combination);
+                    }
+                }
+            }
+        }
+
+        if (hasDuplicate) {
+            alert('LỖI: Các biến thể sau bị TRÙNG (cùng màu + kích thước):\n\n' + errorMsg + '\n\nVui lòng sửa lại!');
+            return false;
+        }
+
+        // Check thêm: bắt buộc ít nhất 1 variant
+        if (variantItems.length === 0) {
+            alert('Vui lòng thêm ít nhất 1 biến thể!');
+            return false;
+        }
+
+        return true;
+    }
+
+    // Gắn event cho form submit
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form[action="admin-add-product"]');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                if (!validateVariants()) {
+                    e.preventDefault(); // Ngăn submit
+                }
+            });
+        }
+    });
+
+    // Real-time warning khi user thay đổi color/size (optional - UX tốt hơn)
+    function checkDuplicateLive(container) {
+        const items = container.querySelectorAll('.variant-item');
+        const seen = new Set();
+
+        items.forEach(item => {
+            const colorSel = item.querySelector('select[name="colorId[]"]');
+            const sizeSel = item.querySelector('select[name="sizeId[]"]');
+            if (colorSel && sizeSel && colorSel.value && sizeSel.value) {
+                const combo = `${colorSel.value}-${sizeSel.value}`;
+                if (seen.has(combo)) {
+                    item.style.border = '2px solid red';
+                    item.title = 'Trùng màu + kích thước!';
+                } else {
+                    seen.add(combo);
+                    item.style.border = '';
+                    item.title = '';
+                }
+            }
+        });
+    }
+
+    // Gắn real-time check cho tất cả select color/size
+    document.addEventListener('change', function(e) {
+        if (e.target.name === 'colorId[]' || e.target.name === 'sizeId[]') {
+            checkDuplicateLive(document.getElementById('variant-container'));
+        }
+    });
+
+    // Hàm addVariant() (đã có từ trước, cải tiến thêm)
+    function addVariant() {
+        const container = document.getElementById('variant-container');
+        const newVariant = document.createElement('div');
+        newVariant.className = 'card variant-item';
+        newVariant.innerHTML = `
+            <h2 class="card-title">Biến thể</h2>
+            <span class="remove-variant" onclick="this.parentElement.remove(); checkDuplicateLive(document.getElementById('variant-container'));">
+                <i class="fas fa-trash"></i>
+            </span>
+            <div class="variant-grid">
+                <div class="form-group sku-group">
+                    <label>Mã SKU:</label>
+                    <input type="text" name="variantSKU[]" required placeholder="Ví dụ: BG-PB-01">
+                </div>
+                <div class="form-group">
+                    <label>Màu sắc:</label>
+                    <select name="colorId[]" onchange="checkDuplicateLive(document.getElementById('variant-container'));">
+                        <option value="">-- Chọn màu --</option>
+                        <c:forEach var="c" items="${listColors}">
+                            <option value="${c.id}">${c.colorName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Kích thước:</label>
+                    <select name="sizeId[]" onchange="checkDuplicateLive(document.getElementById('variant-container'));">
+                        <option value="">-- Chọn size --</option>
+                        <c:forEach var="sz" items="${listSizes}">
+                            <option value="${sz.id}">${sz.size_name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Giá biến thể (VND):</label>
+                    <input type="number" name="variantPrice[]" required placeholder="0.00" step="0.01" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Số lượng kho:</label>
+                    <input type="number" name="variantStock[]" required placeholder="0" min="0">
+                </div>
+            </div>
+        `;
+        container.appendChild(newVariant);
+
+        // Check duplicate ngay sau khi add
+        setTimeout(() => checkDuplicateLive(container), 100);
+    }
+
+    // Cho phép xóa variant đầu tiên
+    document.addEventListener('DOMContentLoaded', function() {
+        const firstRemove = document.querySelector('.remove-variant');
+        if (firstRemove) firstRemove.style.display = 'block';
+    });
+</script>
     </body>
 </html>

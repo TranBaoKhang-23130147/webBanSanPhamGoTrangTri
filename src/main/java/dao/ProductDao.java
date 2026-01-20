@@ -1115,7 +1115,12 @@ public class ProductDao {
             PreparedStatement psProd = conn.prepareStatement(sqlProd, Statement.RETURN_GENERATED_KEYS);
             psProd.setString(1, p.getNameProduct());
             psProd.setDouble(2, p.getPrice());
-            psProd.setInt(3, p.getCategoryId());
+            int catId = p.getCategoryId();
+            if (catId > 0) {
+                psProd.setInt(3, catId);
+            } else {
+                psProd.setNull(3, java.sql.Types.INTEGER);
+            }
             psProd.setInt(4, p.getSourceId());
             if (p.getProductTypeId() > 0) {
                 psProd.setInt(5, p.getProductTypeId());
