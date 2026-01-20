@@ -36,7 +36,7 @@
                 <a href="admin_thong_tin_tai_khoan.html"> Thông tin tài khoản</a>
                 <a href="#"> Đổi mật khẩu</a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="logout-link"> Đăng xuất</a>
+                <a href="login.jsp" class="logout-link"> Đăng xuất</a>
             </div>
         </div>
     </div>
