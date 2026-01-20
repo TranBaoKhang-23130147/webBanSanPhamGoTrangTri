@@ -35,9 +35,9 @@ public class HomeServlet extends HttpServlet {
         request.setAttribute("top3Products", top3Products);
 
         if (user == null) {
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
         } else {
-            request.getRequestDispatcher("homepage_user.jsp").forward(request, response);
+            request.getRequestDispatcher("/homepage_user.jsp").forward(request, response);
         }
     }
     @Override
