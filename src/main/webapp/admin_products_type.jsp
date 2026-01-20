@@ -52,8 +52,7 @@
                             <tr>
                                 <td class="col-id">${pt.id}</td>
                                 <td class="col-name">${pt.productTypeName}</td>
-                                <td class="col-product-count">0</td>
-
+                                <td class="col-product-count">${pt.totalInventory}</td>   <!-- ← sửa ở đây -->
                                 <td class="col-actions">
                                     <i class="fa-solid fa-pen-to-square"
                                        onclick="editProductType('${pt.id}', '${pt.productTypeName}')"></i>

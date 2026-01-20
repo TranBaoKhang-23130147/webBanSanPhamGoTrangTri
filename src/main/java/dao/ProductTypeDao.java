@@ -93,4 +93,47 @@ public class ProductTypeDao {
             return false;
         }
     }
+    public List<ProductType> getAllProductTypesWithTotalInventory(String keyword) {
+        List<ProductType> list = new ArrayList<>();
+
+        String sql = """
+        SELECT 
+            pt.id,
+            pt.product_type_name,
+            COALESCE(SUM(pv.inventory_quantity), 0) AS total_inventory
+        FROM product_types pt
+        LEFT JOIN products p ON p.product_type_id = pt.id
+        LEFT JOIN product_variants pv ON pv.product_id = p.id
+        WHERE (? IS NULL OR pt.product_type_name LIKE ?)
+        GROUP BY pt.id, pt.product_type_name
+        ORDER BY pt.id
+    """;
+
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            if (keyword == null || keyword.trim().isEmpty()) {
+                ps.setNull(1, Types.VARCHAR);
+                ps.setNull(2, Types.VARCHAR);
+            } else {
+                String pattern = "%" + keyword.trim() + "%";
+                ps.setString(1, pattern);
+                ps.setString(2, pattern);
+            }
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ProductType pt = new ProductType();
+                pt.setId(rs.getInt("id"));
+                pt.setProductTypeName(rs.getString("product_type_name"));
+                pt.setTotalInventory(rs.getLong("total_inventory"));
+                list.add(pt);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
 }

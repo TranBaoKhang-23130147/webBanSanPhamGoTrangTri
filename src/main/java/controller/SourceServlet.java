@@ -31,16 +31,21 @@ public class SourceServlet extends HttpServlet {
         }
 
 
-        String keyword = request.getParameter("search");
-        List<Source> list = (keyword != null && !keyword.trim().isEmpty())
-                ? dao.searchSourceByName(keyword)
-                : dao.getAllSources();
 
-        request.setAttribute("listS", list);
+
+
+        String keyword = request.getParameter("keyword");
+
+        List<Source> listS = dao.getAllSourcesWithTotalInventory(keyword);
+
+        request.setAttribute("listS", listS);
         request.setAttribute("activePage", "source"); // Để active menu
-        request.setAttribute("keyword", keyword);
-        request.getRequestDispatcher("admin_source.jsp").forward(request, response);
+
+        request.setAttribute("keyword", keyword != null ? keyword : "");
+
+        request.getRequestDispatcher("/admin_source.jsp").forward(request, response);  // tên file JSP thực tế
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

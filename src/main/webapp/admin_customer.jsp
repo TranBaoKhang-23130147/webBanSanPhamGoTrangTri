@@ -29,8 +29,7 @@
                         <input type="text" placeholder="Tìm kiếm">
                     </div>
                     <div class="header-actions">
-                        <button class="action-btn export-btn"><i class="fas fa-file-export"></i> Xuất</button>
-                        <button class="action-btn customize-btn"><i class="fas fa-cog"></i> Tùy Chọn</button>
+                        <button class="action-btn customize-btn"><i class="fas fa-cog"></i> Them khach hang</button>
                     </div>
                 </div>
                 <div class="customer-list-container">

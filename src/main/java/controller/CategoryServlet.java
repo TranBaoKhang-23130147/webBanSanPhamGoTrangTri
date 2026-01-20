@@ -31,15 +31,18 @@ public class CategoryServlet extends HttpServlet {
         }
 
         // Logic tìm kiếm và hiển thị danh sách (giữ nguyên)
-        String keyword = request.getParameter("search");
-        List<Category> list = (keyword != null && !keyword.trim().isEmpty())
-                ? dao.searchCategoryByName(keyword)
-                : dao.getAllCategory();
+        String keyword = request.getParameter("keyword");
 
-        request.setAttribute("listC", list);
+        List<Category> listC = dao.getAllCategoriesWithTotalInventory(keyword);
+
+        request.setAttribute("listC", listC);
+        request.setAttribute("keyword", keyword != null ? keyword : "");
+
+
+        request.setAttribute("listC", listC);
         request.setAttribute("keyword", keyword);
         request.setAttribute("activePage", "category"); // Để active menu
-        request.getRequestDispatcher("admin_category.jsp").forward(request, response);
+        request.getRequestDispatcher("/admin_category.jsp").forward(request, response);
     }
 
     @Override
