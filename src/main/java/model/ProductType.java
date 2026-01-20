@@ -3,7 +3,16 @@ package model;
 public class ProductType {
     private int id;
     private String productTypeName;
+    private long totalInventory;   // ← thêm field này (tổng tồn kho)
 
+    // constructor, getters, setters
+    public long getTotalInventory() {
+        return totalInventory;
+    }
+
+    public void setTotalInventory(long totalInventory) {
+        this.totalInventory = totalInventory;
+    }
 
     public ProductType() {}
 

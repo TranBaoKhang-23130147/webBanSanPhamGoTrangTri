@@ -86,5 +86,45 @@ public class SourceDao {
         }
         return false;
     }
+    public List<Source> getAllSourcesWithTotalInventory(String keyword) {
+        List<Source> list = new ArrayList<>();
 
+        String sql = """
+        SELECT 
+            s.id,
+            s.sourcename,
+            COALESCE(SUM(pv.inventory_quantity), 0) AS total_inventory
+        FROM sources s
+        LEFT JOIN products p ON p.source_id = s.id
+        LEFT JOIN product_variants pv ON pv.product_id = p.id
+        WHERE (? IS NULL OR s.sourcename LIKE ?)
+        GROUP BY s.id, s.sourcename
+        ORDER BY s.id
+    """;
+
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            if (keyword == null || keyword.trim().isEmpty()) {
+                ps.setNull(1, Types.VARCHAR);
+                ps.setNull(2, Types.VARCHAR);
+            } else {
+                String pattern = "%" + keyword.trim() + "%";
+                ps.setString(1, pattern);
+                ps.setString(2, pattern);
+            }
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Source s = new Source();
+                s.setId(rs.getInt("id"));
+                s.setSourceName(rs.getString("sourcename"));
+                s.setTotalInventory(rs.getLong("total_inventory"));
+                list.add(s);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

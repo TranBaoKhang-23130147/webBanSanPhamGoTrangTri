@@ -54,8 +54,7 @@
                             <tr>
                                 <td class="col-id">${c.id}</td>
                                 <td class="col-name">${c.categoryName}</td>
-                                <td class="col-product-count">0</td>
-                                <td class="col-actions">
+                                <td class="col-product-count">${c.totalInventory}</td>   <!-- ← sửa ở đây -->                                <td class="col-actions">
                                     <i class="fa-solid fa-pen-to-square" onclick="openCategoryModal('edit', '${c.id}', '${c.categoryName}')"></i>
                                     <i class="fa-solid fa-trash-can" onclick="deleteCategory('${c.id}', '${c.categoryName}')" style="cursor:pointer; color:red; margin-left:10px;"></i>
                                 </td>

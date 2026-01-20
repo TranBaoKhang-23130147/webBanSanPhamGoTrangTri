@@ -50,8 +50,7 @@
                             <tr>
                                 <td class="col-id">${s.id}</td>
                                 <td class="col-name">${s.sourceName}</td>
-                                <td class="col-product-count">0</td>
-                                <td class="col-actions">
+                                <td class="col-product-count">${s.totalInventory}</td>   <!-- ← sửa ở đây -->                                <td class="col-actions">
                                         <%-- Cập nhật hàm gọi: openSourceModal và deleteSource --%>
                                     <i class="fa-solid fa-pen-to-square"
                                        onclick="openSourceModal('edit', '${s.id}', '${s.sourceName}')"

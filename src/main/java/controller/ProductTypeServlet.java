@@ -29,14 +29,17 @@
                 response.sendRedirect("product-type-manager");
                 return;
             }
+            String keyword = request.getParameter("keyword");
+            ProductTypeDao dao = new ProductTypeDao();
 
-            String keyword = request.getParameter("search");
-            ProductTypeDao ptDao = new ProductTypeDao();
-            List<model.ProductType> listPT = (keyword != null && !keyword.trim().isEmpty())
-                    ? ptDao.searchProductTypeByName(keyword)
-                    : ptDao.getAllProductType();
+            List<ProductType> listPT = dao.getAllProductTypesWithTotalInventory(keyword);
 
             request.setAttribute("listPT", listPT);
+            request.setAttribute("keyword", keyword != null ? keyword : "");
+
+
+
+
             request.setAttribute("keyword", keyword);
             request.setAttribute("activePage", "productType"); // Để active menu
 
