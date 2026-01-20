@@ -68,7 +68,7 @@ public class AddProductServlet extends HttpServlet {
             p.setCategoryId(parseInt(request.getParameter("categoryId")));   // nếu "" → 0 → DAO sẽ set NULL nếu cần
             p.setProductTypeId(parseInt(request.getParameter("typeId")));
             p.setSourceId(parseInt(request.getParameter("sourceId")));
-        // có thể là 0 hoặc null → sẽ xử lý ở DAO
+            // có thể là 0 hoặc null → sẽ xử lý ở DAO
 
             // Xử lý ngày sản xuất
             String mfgDateStr = request.getParameter("mfgDate");

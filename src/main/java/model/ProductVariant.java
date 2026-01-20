@@ -35,6 +35,13 @@ public class ProductVariant {
 
     // --- GETTERS AND SETTERS ---
 
+
+    private Integer soldQuantity;      // số lượng đã bán (nếu có)
+
+
+    public Integer getSoldQuantity() { return soldQuantity; }
+    public void setSoldQuantity(Integer soldQuantity) { this.soldQuantity = soldQuantity; }
+
     public int getId() {
         return id;
     }
@@ -101,4 +108,5 @@ public class ProductVariant {
                 ", price=" + variantPrice +
                 '}';
     }
+
 }
