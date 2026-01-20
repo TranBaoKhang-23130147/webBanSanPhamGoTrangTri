@@ -728,100 +728,100 @@ public class ProductDao {
         return null;
     }
 
-        // 1. Lưu Information và Description (Trả về ID của Description)
-        public int insertFullDescription(String introduce, String highlights, String material, String size, String color, String guarantee) {
-            String sqlInfo = "INSERT INTO informations (material, color, size, guarantee) VALUES (?, ?, ?, ?)";
-            String sqlDesc = "INSERT INTO descriptions (introduce, highlights, information_id) VALUES (?, ?, ?)";
+    // 1. Lưu Information và Description (Trả về ID của Description)
+    public int insertFullDescription(String introduce, String highlights, String material, String size, String color, String guarantee) {
+        String sqlInfo = "INSERT INTO informations (material, color, size, guarantee) VALUES (?, ?, ?, ?)";
+        String sqlDesc = "INSERT INTO descriptions (introduce, highlights, information_id) VALUES (?, ?, ?)";
 
-            try (Connection conn = new DBContext().getConnection()) {
-                conn.setAutoCommit(false); // Bắt đầu transaction
-                try {
-                    // Thêm vào bảng informations
-                    int infoId = 0;
-                    try (PreparedStatement ps1 = conn.prepareStatement(sqlInfo, Statement.RETURN_GENERATED_KEYS)) {
-                        ps1.setString(1, material);
-                        ps1.setString(2, color);
-                        ps1.setString(3, size);
-                        ps1.setString(4, guarantee);
-                        ps1.executeUpdate();
-                        ResultSet rs1 = ps1.getGeneratedKeys();
-                        if (rs1.next()) infoId = rs1.getInt(1);
-                    }
-
-                    // Thêm vào bảng descriptions
-                    int descId = 0;
-                    try (PreparedStatement ps2 = conn.prepareStatement(sqlDesc, Statement.RETURN_GENERATED_KEYS)) {
-                        ps2.setString(1, introduce);
-                        ps2.setString(2, highlights);
-                        ps2.setInt(3, infoId);
-                        ps2.executeUpdate();
-                        ResultSet rs2 = ps2.getGeneratedKeys();
-                        if (rs2.next()) descId = rs2.getInt(1);
-                    }
-
-                    conn.commit(); // Hoàn tất
-                    return descId;
-                } catch (Exception e) {
-                    conn.rollback();
-                    throw e;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return 0;
-        }
-
-        // 2. Lưu Product và trả về ID sản phẩm
-
-
-        // 3. Lưu ảnh vào bảng images và bảng trung gian product_images
-        public int insertImageAndGetId(String url, int productId) {
-            String sqlImg = "INSERT INTO images (urlImage) VALUES (?)";
-            String sqlMap = "INSERT INTO product_images (product_id, image_id) VALUES (?, ?)";
-
-            try (Connection conn = new DBContext().getConnection()) {
-                int imgId = 0;
-                try (PreparedStatement ps1 = conn.prepareStatement(sqlImg, Statement.RETURN_GENERATED_KEYS)) {
-                    ps1.setString(1, url);
+        try (Connection conn = new DBContext().getConnection()) {
+            conn.setAutoCommit(false); // Bắt đầu transaction
+            try {
+                // Thêm vào bảng informations
+                int infoId = 0;
+                try (PreparedStatement ps1 = conn.prepareStatement(sqlInfo, Statement.RETURN_GENERATED_KEYS)) {
+                    ps1.setString(1, material);
+                    ps1.setString(2, color);
+                    ps1.setString(3, size);
+                    ps1.setString(4, guarantee);
                     ps1.executeUpdate();
-                    ResultSet rs = ps1.getGeneratedKeys();
-                    if (rs.next()) imgId = rs.getInt(1);
+                    ResultSet rs1 = ps1.getGeneratedKeys();
+                    if (rs1.next()) infoId = rs1.getInt(1);
                 }
 
-                try (PreparedStatement ps2 = conn.prepareStatement(sqlMap)) {
-                    ps2.setInt(1, productId);
-                    ps2.setInt(2, imgId);
+                // Thêm vào bảng descriptions
+                int descId = 0;
+                try (PreparedStatement ps2 = conn.prepareStatement(sqlDesc, Statement.RETURN_GENERATED_KEYS)) {
+                    ps2.setString(1, introduce);
+                    ps2.setString(2, highlights);
+                    ps2.setInt(3, infoId);
                     ps2.executeUpdate();
+                    ResultSet rs2 = ps2.getGeneratedKeys();
+                    if (rs2.next()) descId = rs2.getInt(1);
                 }
-                return imgId;
-            } catch (Exception e) { e.printStackTrace(); }
-            return 0;
-        }
 
-        // 4. Cập nhật ảnh chính cho sản phẩm
-        public void updatePrimaryImage(int productId, int imageId) {
-            String sql = "UPDATE products SET primary_image_id = ? WHERE id = ?";
-            try (Connection conn = new DBContext().getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setInt(1, imageId);
-                ps.setInt(2, productId);
-                ps.executeUpdate();
-            } catch (Exception e) { e.printStackTrace(); }
+                conn.commit(); // Hoàn tất
+                return descId;
+            } catch (Exception e) {
+                conn.rollback();
+                throw e;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return 0;
+    }
 
-        // 5. Lưu biến thể sản phẩm
-        public void insertVariant(int productId, int colorId, int sizeId, double price, int stock) {
-            String sql = "INSERT INTO product_variants (product_id, color_id, size_id, variant_price, stock_quantity) VALUES (?, ?, ?, ?, ?)";
-            try (Connection conn = new DBContext().getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setInt(1, productId);
-                ps.setInt(2, colorId);
-                ps.setInt(3, sizeId);
-                ps.setDouble(4, price);
-                ps.setInt(5, stock);
-                ps.executeUpdate();
-            } catch (Exception e) { e.printStackTrace(); }
-        }
+    // 2. Lưu Product và trả về ID sản phẩm
+
+
+    // 3. Lưu ảnh vào bảng images và bảng trung gian product_images
+    public int insertImageAndGetId(String url, int productId) {
+        String sqlImg = "INSERT INTO images (urlImage) VALUES (?)";
+        String sqlMap = "INSERT INTO product_images (product_id, image_id) VALUES (?, ?)";
+
+        try (Connection conn = new DBContext().getConnection()) {
+            int imgId = 0;
+            try (PreparedStatement ps1 = conn.prepareStatement(sqlImg, Statement.RETURN_GENERATED_KEYS)) {
+                ps1.setString(1, url);
+                ps1.executeUpdate();
+                ResultSet rs = ps1.getGeneratedKeys();
+                if (rs.next()) imgId = rs.getInt(1);
+            }
+
+            try (PreparedStatement ps2 = conn.prepareStatement(sqlMap)) {
+                ps2.setInt(1, productId);
+                ps2.setInt(2, imgId);
+                ps2.executeUpdate();
+            }
+            return imgId;
+        } catch (Exception e) { e.printStackTrace(); }
+        return 0;
+    }
+
+    // 4. Cập nhật ảnh chính cho sản phẩm
+    public void updatePrimaryImage(int productId, int imageId) {
+        String sql = "UPDATE products SET primary_image_id = ? WHERE id = ?";
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, imageId);
+            ps.setInt(2, productId);
+            ps.executeUpdate();
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+
+    // 5. Lưu biến thể sản phẩm
+    public void insertVariant(int productId, int colorId, int sizeId, double price, int stock) {
+        String sql = "INSERT INTO product_variants (product_id, color_id, size_id, variant_price, stock_quantity) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            ps.setInt(2, colorId);
+            ps.setInt(3, sizeId);
+            ps.setDouble(4, price);
+            ps.setInt(5, stock);
+            ps.executeUpdate();
+        } catch (Exception e) { e.printStackTrace(); }
+    }
     public List<Product> searchProducts(String keyword, String typeId, String categoryId) {
         List<Product> list = new ArrayList<>();
         // 1. Thêm subquery SUM(inventory_quantity) để lấy tổng số lượng từ bảng biến thể
@@ -1188,6 +1188,89 @@ public class ProductDao {
             try { if (conn != null) conn.rollback(); } catch (Exception ignored) {}
             return false;
         }
-    }}
+    }
+    public boolean deleteFullProduct(int productId) {
+        Connection conn = null;
+        try {
+            conn = new DBContext().getConnection();
+            conn.setAutoCommit(false);
 
+            // 1. Lấy description_id, information_id
+            int descId = -1, infoId = -1;
+            String q = """
+            SELECT d.id AS descId, i.id AS infoId
+            FROM products p
+            JOIN descriptions d ON p.description_id = d.id
+            JOIN informations i ON d.information_id = i.id
+            WHERE p.id = ?
+        """;
+            PreparedStatement ps = conn.prepareStatement(q);
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                descId = rs.getInt("descId");
+                infoId = rs.getInt("infoId");
+            }
+
+            // 2. Xóa biến thể
+            conn.prepareStatement(
+                    "DELETE FROM product_variants WHERE product_id = " + productId
+            ).executeUpdate();
+
+            // 3. Xóa ảnh
+            conn.prepareStatement(
+                    "DELETE i FROM images i JOIN product_images pi ON i.id = pi.image_id WHERE pi.product_id = " + productId
+            ).executeUpdate();
+
+            conn.prepareStatement(
+                    "DELETE FROM product_images WHERE product_id = " + productId
+            ).executeUpdate();
+
+            // 4. Xóa product
+            conn.prepareStatement(
+                    "DELETE FROM products WHERE id = " + productId
+            ).executeUpdate();
+
+            // 5. Xóa mô tả + thông tin
+            if (descId > 0)
+                conn.prepareStatement("DELETE FROM descriptions WHERE id = " + descId).executeUpdate();
+
+            if (infoId > 0)
+                conn.prepareStatement("DELETE FROM informations WHERE id = " + infoId).executeUpdate();
+
+            conn.commit();
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            try { if (conn != null) conn.rollback(); } catch (Exception ignored) {}
+            return false;
+        }
+    }
+
+
+    public int getSoldQuantityByVariantId(int variantId) {
+        String sql = """
+        SELECT COALESCE(SUM(oi.quantity), 0)
+        FROM order_items oi
+        JOIN orders o ON oi.order_id = o.order_id
+        WHERE oi.variant_id = ?
+          AND o.status IN ('completed', 'shipped', 'delivered')  -- đơn đã giao hoặc hoàn thành
+        """;
+
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, variantId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+}
 

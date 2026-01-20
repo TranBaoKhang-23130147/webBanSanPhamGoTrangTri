@@ -28,9 +28,10 @@ public class Product {
     private int totalReviews;
     private String categoryName; // Thêm dòng này
     private String typeName;     // Thêm dòng này
-
-    public Product(String name, double price, int catId, int typeId, int sourceId, String mfgDate) {
-    }
+    // Trong class Product.java
+    private int totalImported = 0;
+    private int totalSold = 0;
+    private int totalRemaining = 0;
 
     // Bắt buộc phải có Getter và Setter cho 2 biến trên thì DAO mới gọi được
     public String getCategoryName() { return categoryName; }
@@ -93,17 +94,40 @@ public class Product {
     public int getTotalReviews() { return totalReviews; }
     public void setTotalReviews(int totalReviews) { this.totalReviews = totalReviews; }
 
-        // ... các trường cũ ...
+    // ... các trường cũ ...
 
-        public double getPrice() { return price; }
-        public void setPrice(double price) { this.price = price; }
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
 
-        public int getTotalStock() { return totalStock; }
-        public void setTotalStock(int totalStock) { this.totalStock = totalStock; }
+    public int getTotalStock() { return totalStock; }
+    public void setTotalStock(int totalStock) { this.totalStock = totalStock; }
 
     public void setProductTypeName(String productTypeName) {
     }
 
-    public void setTypeId(int typeId) {
+    // Getter & Setter
+    public int getTotalImported() {
+        return totalImported;
     }
+    public void setTotalImported(int totalImported) {
+        this.totalImported = totalImported;
+    }
+
+    public int getTotalSold() {
+        return totalSold;
+    }
+    public void setTotalSold(int totalSold) {
+        this.totalSold = totalSold;
+    }
+
+    public int getTotalRemaining() {
+        return totalRemaining;
+    }
+    public void setTotalRemaining(int totalRemaining) {
+        this.totalRemaining = totalRemaining;
+    }
+
+    public Product(String name, double price, int catId, int typeId, int sourceId, String mfgDate) {
+    }
+
 }
