@@ -1,4 +1,21 @@
+<%@ page import="dao.NotificationDao" %>
+<%@ page import="model.Notification" %>
+<%@ page import="model.User" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%
+    // 1. Lấy user từ session
+    User admin = (User) session.getAttribute("LOGGED_USER");
+    if (admin != null) {
+        NotificationDao notiDAO = new NotificationDao();
+        // 2. Lấy danh sách từ DB
+        List<Notification> notifications = notiDAO.getTopNotifications(admin.getId());
+        // 3. Đẩy vào request để JSTL bên dưới sử dụng
+        request.setAttribute("notifications", notifications);
+    }
+%>
 <header class="header">
     <div class="logo-placeholder">
         <img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo Modern Homes">
@@ -16,18 +33,27 @@
             </div>
         </div>
 
+        <%-- Phần hiển thị thông báo trong header.jsp --%>
         <div class="notification-dropdown">
             <i class="fa-solid fa-bell notification-icon"></i>
-            <div id="notificationMenuContent" class="dropdown-content notification-content">
-                <div class="dropdown-header">Thông Báo Mới (5)</div>
-                <a href="#">Đơn hàng mới #1001</a>
-                <a href="#">Sản phẩm hết hàng</a>
-                <a href="#">Khách hàng mới đăng ký</a>
-                <a href="#">Đơn hàng #1005 vừa được hủy bỏ</a>
-                <a href="#">Cần duyệt 3 đánh giá sản phẩm mới</a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="view-all-link">Xem tất cả</a>
+            <span class="badge">${notifications.size()}</span> <div id="notificationMenuContent" class="dropdown-content notification-content">
+            <div class="dropdown-header">
+                Thông Báo Mới (${notifications != null ? notifications.size() : 0})
             </div>
+
+            <c:forEach var="n" items="${notifications}">
+                <a href="ViewContactDetail?id=${n.relatedId}">
+                    <div class="noti-item ${n.isRead() ? '' : 'unread'}">
+                        📩 ${n.content}
+                        <br><small>${n.createAt}</small>
+                    </div>
+                </a>
+            </c:forEach>
+
+            <c:if test="${empty notifications}">
+                <p class="no-messages-text">Không có thông báo mới.</p>
+            </c:if>
+        </div>
         </div>
 
         <div class="user-dropdown">
