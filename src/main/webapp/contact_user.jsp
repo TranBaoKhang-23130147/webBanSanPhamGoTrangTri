@@ -15,44 +15,55 @@
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
-
+<%
+    String success = request.getParameter("success");
+    if ("true".equals(success)) {
+%>
+<p style="color: green; font-weight: bold; margin-bottom: 15px;">
+    ✔ Gửi liên hệ thành công! Chúng tôi sẽ phản hồi sớm.
+</p>
+<%
+    }
+%>
 <section class="contact-wrapper">
     <div class="contact-box">
 
+
         <!-- Form liên hệ -->
         <div class="form-container">
-            <form>
+            <form action="ContactServlet" method="post">
                 <div class="row">
                     <div class="input-group">
                         <label>Họ</label>
-                        <input type="text" placeholder="Nhập họ của bạn">
+                        <input type="text" name="fname" placeholder="Nhập họ của bạn" required>
                     </div>
 
                     <div class="input-group">
                         <label>Tên</label>
-                        <input type="text" placeholder="Nhập tên của bạn">
+                        <input type="text" name="lname" placeholder="Nhập tên của bạn" required>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="input-group">
                         <label>Email</label>
-                        <input type="email" placeholder="Nhập email">
+                        <input type="email" name="email" placeholder="Nhập email" required>
                     </div>
 
                     <div class="input-group">
                         <label>Số điện thoại</label>
-                        <input type="text" placeholder="Nhập số điện thoại">
+                        <input type="text" name="phone" placeholder="Nhập số điện thoại" required>
                     </div>
                 </div>
 
                 <div class="input-group">
                     <label>Nội dung cần liên hệ</label>
-                    <textarea placeholder="Vui lòng nhập nội dung..."></textarea>
+                    <textarea name="content" placeholder="Vui lòng nhập nội dung..." required></textarea>
                 </div>
 
                 <button type="submit" class="btn-submit">Gửi liên hệ</button>
             </form>
+
         </div>
 
         <!-- Info liên hệ -->

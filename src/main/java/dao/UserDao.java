@@ -418,32 +418,6 @@ public List<User> getAllCustomers() {
         }
         return list;
     }
-//    public boolean updateUserProfile(User u) throws Exception {
-//        String sql = """
-//        UPDATE users
-//        SET full_name = ?,
-//            display_name = ?,
-//            phone = ?,
-//            gender = ?,
-//            birth_date = ?,
-//            avatar_id = ?
-//        WHERE id = ?
-//    """;
-//
-//        try (Connection conn = DBContext.getConnection();
-//             PreparedStatement ps = conn.prepareStatement(sql)) {
-//
-//            ps.setString(1, u.getUsername());
-//            ps.setString(2, u.getDisplayName());
-//            ps.setString(3, u.getPhone());
-//            ps.setString(4, u.getGender());
-//            ps.setDate(5, (Date) u.getBirthDate());
-//            ps.setObject(6, u.getAvatarId());
-//            ps.setInt(7, u.getId());
-//
-//            return ps.executeUpdate() > 0;
-//        }
-//    }
 
     public boolean updateUserProfile(User u) {
         String sql = "UPDATE users SET full_name=?, display_name=?, phone=?, gender=?, birth_date=? WHERE id=?";
@@ -460,6 +434,20 @@ public List<User> getAllCustomers() {
             e.printStackTrace();
         }
         return false;
+    }
+    public Integer getFirstAdminId() {
+        String sql = "SELECT id FROM users WHERE role = 'Admin' LIMIT 1";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
