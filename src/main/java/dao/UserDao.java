@@ -449,5 +449,16 @@ public List<User> getAllCustomers() {
         }
         return null;
     }
+    public boolean deleteUser(String id) {
+        String sql = "DELETE FROM users WHERE id = ?";
+        try (Connection conn = getConnection(); // Hàm lấy kết nối DB của bạn
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }
