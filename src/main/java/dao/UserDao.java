@@ -287,11 +287,11 @@ public List<User> getAllCustomers() {
             if (rs.next()) {
                 User u = new User();
                 u.setId(rs.getInt("id"));
-                u.setUsername(rs.getString("full_name")); // ✅ SỬA Ở ĐÂY
+                u.setUsername(rs.getString("full_name"));
                 u.setEmail(rs.getString("email"));
                 u.setDisplayName(rs.getString("display_name"));
                 u.setPhone(rs.getString("phone"));
-                u.setGender(rs.getString("gender")); // ✅ CỰC QUAN TRỌNG
+                u.setGender(rs.getString("gender"));
                 u.setBirthDate(rs.getDate("birth_date"));
                 u.setAvatarId(rs.getInt("avatar_id"));
                 u.setAvatarUrl(rs.getString("urlImage"));
@@ -448,6 +448,17 @@ public List<User> getAllCustomers() {
             e.printStackTrace();
         }
         return null;
+    }
+    public boolean deleteUser(String id) {
+        String sql = "DELETE FROM users WHERE id = ?";
+        try (Connection conn = getConnection(); // Hàm lấy kết nối DB của bạn
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

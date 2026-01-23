@@ -10,6 +10,14 @@ public class Address {
     private String name;
     private String phone;
     private int isDefault;
+    private String fullAddress; // Thêm dòng này
+
+    // Setter để bạn có thể gọi a.setFullAddress(full)
+    public void setFullAddress(String fullAddress) {
+        this.fullAddress = fullAddress;
+    }
+
+    // Ghi đè lại Getter cũ để lấy giá trị từ biến thay vì nối chuỗi thủ công
 
     // Constructor không tham số
     public Address() {

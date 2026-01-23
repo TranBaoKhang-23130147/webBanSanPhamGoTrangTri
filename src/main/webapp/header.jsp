@@ -34,7 +34,7 @@
 
     </nav>
     <div class="icons">
-        <a class="nav_item" href="shopping_cart.jsp" id="cart-link">
+        <a class="nav_item" href="CartServlet?action=view" id="cart-link">
             <i class="fas fa-shopping-cart"></i>
         </a>
 
@@ -49,7 +49,8 @@
 <%--                <span style="display:block; padding: 5px 10px; font-weight:bold; color:#8B4513;">--%>
 <%--                Chào, <%= user.getUsername() %>--%>
             </span>
-                <a class="nav_item" href="mypage_user.jsp" id="myPage">Trang của tôi</a>
+
+                <a class="nav_item" id="myPage" href="${pageContext.request.contextPath}/MyPageServlet">Trang cuả tôi</a>
                 <a class="nav-item" href="LogoutServlet" id="login-register">Đăng xuất</a>
                 <% } else { %>
                 <a class="nav-item" href="login.jsp" id="login-register">Đăng nhập</a>

@@ -29,7 +29,7 @@
                         <input type="text" placeholder="Tìm kiếm">
                     </div>
                     <div class="header-actions">
-                        <button class="action-btn customize-btn"><i class="fas fa-cog"></i> Them khach hang</button>
+                        <button class="action-btn customize-btn"> <i class="fa-solid fa-plus"></i> Thêm khách hàng</button>
                     </div>
                 </div>
                 <div class="customer-list-container">
@@ -47,7 +47,7 @@
                                 <th>Email</th>
                                 <th>Ngày Tạo</th>
                                 <th>Trạng Thái</th>
-                                <th>Thao Tac</th>
+                                <th>Thao Tác</th>
 
                             </tr>
                             </thead>
@@ -56,8 +56,10 @@
                                 <tr>
                                     <td><input type="checkbox" value="${u.id}"></td>
                                     <td class="customer-name-cell">
-                                        <a href="customer-detail?id=${u.id}" class="customer-name-link">
-                                            ${u.displayName != null ? u.displayName : u.username}
+                                        <a href="${pageContext.request.contextPath}/admin/customer-detail?id=${u.id}"
+                                           class="customer-name-link"
+                                           style="font-weight: bold; color: #4e73df; text-decoration: none;">
+                                                ${u.displayName != null ? u.displayName : u.username}
                                         </a>
                                         <br><small style="color: #888;">(${u.username})</small>
                                     </td>
@@ -104,6 +106,25 @@
         </main>
     </div>
     </div>
+<div id="customerModal" class="modal-overlay" style="display:none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); align-items: center; justify-content: center;">
+    <div class="modal-box" style="background: #fff; width: 850px; border-radius: 15px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden;">
+        <div style="background: #4e73df; color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin: 0;"><i class="fas fa-user-circle"></i> Thông Tin Chi Tiết Khách Hàng</h3>
+            <span onclick="closeCustomerModal()" style="font-size: 30px; cursor: pointer; line-height: 1;">&times;</span>
+        </div>
+
+        <div id="modalContent" style="padding: 30px; max-height: 550px; overflow-y: auto;">
+            <div style="text-align: center; padding: 50px;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 30px; color: #4e73df;"></i>
+                <p>Đang tải dữ liệu khách hàng...</p>
+            </div>
+        </div>
+
+        <div style="padding: 15px 30px; background: #f8f9fc; text-align: right; border-top: 1px solid #eee;">
+            <button onclick="closeCustomerModal()" class="action-btn" style="background: #6c757d; border: none; padding: 8px 20px; color: white; border-radius: 5px; cursor: pointer;">Đóng</button>
+        </div>
+    </div>
+</div>
 <script>
     function confirmDeleteAdmin(id, name) {
         Swal.fire({
@@ -122,6 +143,22 @@
             }
         })
     }
+    function deleteUser(id, name) {
+        Swal.fire({
+            title: 'Xác nhận xóa?',
+            text: "Bạn có chắc chắn muốn xóa khách hàng '" + name + "' không? Hành động này không thể hoàn tác!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Đồng ý, xóa!',
+            cancelButtonText: 'Hủy'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Chuyển hướng đến Servlet xử lý xóa
+                window.location.href = "${pageContext.request.contextPath}/DeleteCustomerServlet?id=" + id;            }
+        })
+    }
 </script>
 
 <c:if test="${not empty sessionScope.msg}">
@@ -132,6 +169,7 @@
             icon: "${sessionScope.msgType}",
             confirmButtonColor: '#4e73df'
         });
+
     </script>
     <c:remove var="msg" scope="session" />
     <c:remove var="msgType" scope="session" />

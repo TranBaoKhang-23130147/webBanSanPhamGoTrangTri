@@ -185,5 +185,39 @@ public class AddressDao {
             e.printStackTrace();
         }
     }
+    public List<Address> getAddressesByUserId(int userId) {
+        List<Address> list = new ArrayList<>();
+        // Lưu ý: Đổi userId thành user_id để đồng bộ với DB
+        String sql = "SELECT * FROM addresses WHERE user_id = ? ORDER BY isDefault DESC";
 
+        try (Connection con = DBContext.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Address a = new Address();
+                a.setId(rs.getInt("id"));
+                a.setUserId(userId);
+                a.setName(rs.getString("name"));
+                a.setPhone(rs.getString("phone"));
+                a.setDetail(rs.getString("detail"));
+                a.setCommune(rs.getString("commune"));
+                a.setDistrict(rs.getString("district"));
+                a.setProvince(rs.getString("province"));
+                a.setIsDefault(rs.getInt("isDefault"));
+
+                // Tạo chuỗi địa chỉ đầy đủ
+                String full = a.getDetail() + ", " + a.getCommune() + ", " +
+                        a.getDistrict() + ", " + a.getProvince();
+                a.setFullAddress(full);
+
+                list.add(a);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

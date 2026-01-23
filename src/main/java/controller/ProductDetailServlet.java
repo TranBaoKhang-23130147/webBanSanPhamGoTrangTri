@@ -35,6 +35,11 @@ public class ProductDetailServlet extends HttpServlet {
         }
 
         ProductDao dao = new ProductDao();
+
+
+
+
+
         Product p = dao.getProductById(productId);
 
         if (p == null) {
@@ -42,9 +47,15 @@ public class ProductDetailServlet extends HttpServlet {
             return;
         }
 
-        // Load dữ liệu phụ
+// 1. Tính tổng số lượng từ các biến thể và gán vào model
+        int totalStock = dao.getTotalStockByProductId(productId);
+        p.setTotalQuantity(totalStock);
+
+// 2. Load các dữ liệu phụ khác
         p.setSubImages(dao.getProductImages(productId));
         p.setVariants(dao.getProductVariants(productId));
+
+
 
         List<Reviews> reviewList = dao.getProductReviews(productId);
         p.setReviewList(reviewList);

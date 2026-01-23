@@ -32,7 +32,15 @@ public class Product {
     private int totalImported = 0;
     private int totalSold = 0;
     private int totalRemaining = 0;
+    private int totalQuantity;
 
+    public int getTotalQuantity() {
+        return totalQuantity;
+    }
+
+    public void setTotalQuantity(int totalQuantity) {
+        this.totalQuantity = totalQuantity;
+    }
     // Bắt buộc phải có Getter và Setter cho 2 biến trên thì DAO mới gọi được
     public String getCategoryName() { return categoryName; }
     public void setCategoryName(String categoryName) { this.categoryName = categoryName; }

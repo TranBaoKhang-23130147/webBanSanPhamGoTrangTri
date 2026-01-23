@@ -43,8 +43,8 @@
                         <tr>
                             <th class="col-id">ID</th>
                             <th class="col-name">Tên Danh Mục</th>
-
-                            <th class="col-product-count">Số SP</th>
+                            <th class="col-product">Số Sản Phẩm</th>
+                            <th class="col-product-count">Tổng tồn kho</th>
 
                             <th class="col-actions">Thao tác</th>
                         </tr>
@@ -54,6 +54,7 @@
                             <tr>
                                 <td class="col-id">${c.id}</td>
                                 <td class="col-name">${c.categoryName}</td>
+                                <td class="col-product"> 0</td>
                                 <td class="col-product-count">${c.totalInventory}</td>   <!-- ← sửa ở đây -->                                <td class="col-actions">
                                     <i class="fa-solid fa-pen-to-square" onclick="openCategoryModal('edit', '${c.id}', '${c.categoryName}')"></i>
                                     <i class="fa-solid fa-trash-can" onclick="deleteCategory('${c.id}', '${c.categoryName}')" style="cursor:pointer; color:red; margin-left:10px;"></i>
