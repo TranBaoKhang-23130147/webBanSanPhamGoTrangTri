@@ -430,3 +430,67 @@ tbody tr:hover {
 .gmail-dropdown:hover .dropdown-content {
     display: block;
 }
+/* Badge chung */
+.badge {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Trạng thái đơn hàng */
+.status-cho-xac-nhan { background: #fff3cd; color: #856404; }
+.status-dang-xu-ly { background: #cce5ff; color: #004085; }
+.status-da-gui { background: #d1ecf1; color: #0c5460; }
+.status-da-giao { background: #d4edda; color: #155724; }
+.status-da-huy { background: #f8d7da; color: #721c24; }
+
+/* Trạng thái thanh toán */
+.payment-paid { background: #2ecc71; color: #fff; }
+.payment-pending { background: #f1c40f; color: #fff; }
+.payment-refund { background: #9b59b6; color: #fff; }
+
+/* Tùy chỉnh khung Modal chính */
+.modal-content {
+    background: #fff;
+    margin: 2% auto; /* Giảm margin top để Modal cao hơn */
+    padding: 25px;
+    width: 60%; /* Tăng độ rộng để bảng sản phẩm rõ ràng hơn */
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+
+    /* QUAN TRỌNG: Tạo thanh cuộn */
+    max-height: 90vh; /* Chiều cao tối đa bằng 90% màn hình */
+    overflow-y: auto; /* Hiện thanh cuộn khi nội dung vượt quá chiều cao */
+}
+
+/* Làm đẹp thanh cuộn (Tùy chọn cho trình duyệt Chrome/Edge) */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+.modal-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+.modal-content::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
+/* Style cho bảng sản phẩm bên trong để dễ nhìn khi cuộn */
+.modal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+.modal-content thead th {
+    position: sticky; /* Giữ tiêu đề bảng khi cuộn */
+    top: -25px; /* Khớp với padding của modal-content */
+    background: #f8f9fa;
+    z-index: 10;
+    padding: 12px;
+}

@@ -41,7 +41,31 @@ public class Order {
     public void setDetails(List<OrderDetail> details) { this.details = details; }
     public double getTotalOrder() { return totalOrder; }
     public void setTotalOrder(double totalOrder) { this.totalOrder = totalOrder; }
+    // Thêm hàm này vào Order.java
+    private String productName; // Thêm biến này để hứng tên sản phẩm khi JOIN
 
+    public String getProductName() { return productName; }
+    public void setProductName(String productName) { this.productName = productName; }
+
+    public String getAddressDetail() {
+        return address;
+    }
     // Hàm giải quyết lỗi getTotalAmount trong MyPageServlet
     public double getTotalAmount() { return totalOrder; }
+    private double subTotal;     // Tiền hàng
+    private double taxAmount;    // Thuế 8%
+    private double shippingFee;  // Phí vận chuyển
+
+
+    // Getter và Setter cho các trường mới
+    public double getSubTotal() { return subTotal; }
+    public void setSubTotal(double subTotal) { this.subTotal = subTotal; }
+
+    public double getTaxAmount() { return taxAmount; }
+    public void setTaxAmount(double taxAmount) { this.taxAmount = taxAmount; }
+
+    public double getShippingFee() { return shippingFee; }
+    public void setShippingFee(double shippingFee) { this.shippingFee = shippingFee; }
+
+
 }
