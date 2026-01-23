@@ -31,7 +31,8 @@
     <link rel="icon" type="image/png" href="img/logo.png" class="lo">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="css/homepage_style.css">
-    <link rel="stylesheet" href="css/mypage_style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mypage_style.css">
+
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
@@ -72,8 +73,9 @@
                     <a href="#" class="tab-link" data-tab="thong-bao"><i class="fas fa-bell"></i> Thông báo</a>
                 </div>
             </div>
-            <a href="#" class="tab-link menu-link" data-tab="don-hang"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
-            <a href="#" class="tab-link menu-link" data-tab="tin-nhan"><i class="fas fa-comment-dots"></i> Tin nhắn</a>
+            <a href="MyPageServlet?tab=don-hang" class="menu-link ${activeTab == 'don-hang' ? 'active' : ''}">
+                <i class="fas fa-shopping-cart"></i> Đơn hàng
+            </a>            <a href="#" class="tab-link menu-link" data-tab="tin-nhan"><i class="fas fa-comment-dots"></i> Tin nhắn</a>
         </div>
     </div>
 
@@ -346,38 +348,6 @@
             </div>
         </div>
 
-<%--        <div id="bao-mat" class="tab-content">--%>
-<%--            <h2>Mật khẩu</h2>--%>
-<%--            <h3>Đổi mật khẩu</h3>--%>
-<%--            <div class="password-change-form">--%>
-<%--                <div class="form-group">--%>
-<%--                    <label for="current-pass">Mật khẩu hiện tại <span class="required">*</span></label>--%>
-<%--                    <input type="password" id="current-pass">--%>
-<%--                    <i class="fas fa-eye password-toggle"></i>--%>
-<%--                </div>--%>
-<%--                <div class="form-group">--%>
-<%--                    <label for="new-pass">Mật khẩu mới <span class="required">*</span></label>--%>
-<%--                    <input type="password" id="new-pass">--%>
-<%--                    <i class="fas fa-eye password-toggle"></i>--%>
-<%--                </div>--%>
-<%--                <div class="form-group">--%>
-<%--                    <label for="confirm-pass">Xác nhận mật khẩu <span class="required">*</span></label>--%>
-<%--                    <input type="password" id="confirm-pass">--%>
-<%--                    <i class="fas fa-eye password-toggle"></i>--%>
-<%--                </div>--%>
-<%--                <div class="password-requirements">--%>
-<%--                    <h4>Yêu cầu mật khẩu:</h4>--%>
-<%--                    <p>Đảm bảo các yêu cầu sau được đáp ứng:</p>--%>
-<%--                    <ul>--%>
-<%--                        <li>Tối thiểu 8 ký tự - càng dài càng tốt</li>--%>
-<%--                        <li>Ít nhất một ký tự viết thường</li>--%>
-<%--                        <li>Ít nhất một ký tự viết hoa</li>--%>
-<%--                        <li>Ít nhất một ký tự số, ký hiệu hoặc khoảng trắng</li>--%>
-<%--                    </ul>--%>
-<%--                </div>--%>
-<%--                <button class="save-btn float-right">Lưu</button>--%>
-<%--            </div>--%>
-<%--        </div>--%>
         <div id="bao-mat" class="tab-content"<%= "bao-mat".equals(activeTab) ? "active" : "" %>">
             <h2>Bảo mật</h2>
             <h3>Đổi mật khẩu</h3>
@@ -413,54 +383,58 @@
 
 </div>
 
+<div id="don-hang" class="tab-content ${activeTab == 'don-hang' ? 'active' : ''}">
+    <h2 style="margin-bottom: 20px; color: #333;">Đơn hàng của tôi</h2>
 
-        <div id="don-hang" class="tab-content">
-            <h2>Đơn hàng</h2>
-            <div class="order-summary">
-                <div class="summary-box">
-                    <div class="summary-number">${countOrder}</div>
-                    <div class="summary-label">Đơn hàng</div>
-                </div>
-                <div class="summary-separator">|</div>
-                <div class="summary-box">
-                    <div class="summary-number">
-                        <fmt:formatNumber value="${totalSpent / 1000000}" maxFractionDigits="1"/> Tr
-                    </div>
-                    <div class="summary-label">Tổng tiền tích lũy</div>
-                </div>
-            </div>
-
-            <div class="order-list">
-                <c:forEach items="${listO}" var="order">
-                    <c:forEach items="${order.details}" var="d">
-                        <div class="order-item">
-                            <div class="product-info">
-                                <img src="${d.productImg}" alt="Product" class="product-img">
-                                <div class="product-details">
-                                    <p class="product-name">${d.productName}</p>
-                                    <div class="product-specs">
-                                        <p class="product-color"><span>Màu Sắc:</span> ${d.color}</p>
-                                        <p class="product-size"><span>Kích thước:</span> ${d.size}</p>
-                                        <p class="quantity"><span>Số lượng:</span> ${d.quantity}</p>
-                                    </div>
-                                    <span class="delivery-status">${order.status}</span>
-                                </div>
-                            </div>
-                            <div class="order-total">
-                                <div class="order-date">
-                                    <fmt:formatDate value="${order.createAt}" pattern="dd/MM/yyyy"/>
-                                </div>
-                                <p>Tổng thanh toán: <fmt:formatNumber value="${d.total}" pattern="#,###"/> VNĐ</p>
-                                <div class="order-actions-group">
-                                    <button class="view-details-btn">Xem chi tiết</button>
-                                    <button class="support-btn">Hỗ trợ</button>
-                                </div>
-                            </div>
-                        </div>
-                    </c:forEach>
-                </c:forEach>
-            </div>
+    <div class="order-dashboard-summary" style="display: flex; gap: 20px; margin-bottom: 30px;">
+        <div class="summary-item" style="background: #e3f2fd; padding: 20px; border-radius: 10px; flex: 1; text-align: center;">
+            <span class="num" style="display: block; font-size: 1.5em; font-weight: bold; color: #1976d2;">${countOrder}</span>
+            <span class="label" style="color: #555;">Tổng đơn hàng</span>
         </div>
+        <div class="summary-item" style="background: #f1f8e9; padding: 20px; border-radius: 10px; flex: 1; text-align: center;">
+            <span class="num" style="display: block; font-size: 1.5em; font-weight: bold; color: #388e3c;">
+                <fmt:formatNumber value="${totalSpent}" pattern="#,###"/> VND
+            </span>
+            <span class="label" style="color: #555;">Tổng tích lũy</span>
+        </div>
+    </div>
+    <div class="orders-grid">
+        <c:forEach items="${listO}" var="order">
+            <div class="order-item-card">
+                <div class="card-header">
+                    <span class="order-id">#${order.id}</span>
+                    <span class="order-status status-${order.status}">${order.status}</span>
+                </div>
+
+                <div class="card-body">
+                    <div class="info-row">
+                        <i class="far fa-calendar-alt"></i>
+                        <span><fmt:formatDate value="${order.createAt}" pattern="dd/MM/yyyy HH:mm"/></span>
+                    </div>
+                    <div class="info-row">
+                        <i class="fas fa-credit-card"></i>
+                        <span>${order.paymentStatus}</span>
+                    </div>
+                    <div class="price-box">
+                        <span class="label">Tổng thanh toán:</span>
+                        <span class="amount"><fmt:formatNumber value="${order.totalOrder}" pattern="#,###"/> VND</span>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <a href="javascript:void(0)"
+                       class="btn-detail"
+                       onclick="openOrderDetail(${order.id})">
+                        Xem chi tiết <i class="fas fa-chevron-right"></i>
+                    </a>
+
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+</div>
+
+
         <div id="thong-bao" class="tab-content">
             <h2>Thông báo</h2>
             <p>Không có thông báo mới.</p>
@@ -560,5 +534,46 @@
             </div>
         </form>
     </div>
-</div></body>
+</div>
+<div id="orderDetailModal" class="order-modal" style="display: none;">
+    <div class="order-modal-content">
+    </div>
+</div>
+</body>
+
+<script>
+    function openOrderDetail(orderId) {
+        const modal = document.getElementById('orderDetailModal');
+        const content = modal.querySelector('.order-modal-content');
+
+        modal.style.display = 'block'; // Hiện modal ngay lập tức
+        content.innerHTML = '<div style="padding:20px; text-align:center;"><i class="fas fa-sync fa-spin"></i> Đang tải...</div>';
+
+        fetch(`OrderDetailServlet?orderId=${orderId}`)
+            .then(response => {
+                if (!response.ok) throw new Error("Lỗi Server (500)");
+                return response.text();
+            })
+            .then(html => {
+                content.innerHTML = html; // Đổ dữ liệu từ ajax_order_detail.jsp vào
+            })
+            .catch(err => {
+                content.innerHTML = `<span class="order-close" onclick="closeOrderDetail()">&times;</span>
+                                 <p style="color:red; padding:20px; text-align:center;">${err.message}. Kiểm tra lại Console của Java!</p>`;
+            });
+    }
+    function closeOrderDetail() {
+        const modal = document.getElementById('orderDetailModal');
+        modal.style.display = 'none';
+    }
+
+    // Đóng modal khi click ra ngoài vùng trắng
+    window.onclick = function(event) {
+        const modal = document.getElementById('orderDetailModal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+</script>
+
 </html>

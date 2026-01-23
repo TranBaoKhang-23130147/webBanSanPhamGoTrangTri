@@ -267,6 +267,7 @@ public class ProductDao {
                     ProductVariants v = new ProductVariants();
                     v.setId(rs.getInt("id"));
                     v.setVariant_price(rs.getBigDecimal("variant_price"));
+                    v.setInventory_quantity(rs.getInt("inventory_quantity")); //
 
                     // Khởi tạo đối tượng Color và gán giá trị
                     ProductColor c = new ProductColor();
@@ -1271,5 +1272,19 @@ public class ProductDao {
         }
         return 0;
     }
-
+    public int getTotalStockByProductId(int productId) {
+        int total = 0;
+        String sql = "SELECT SUM(inventory_quantity) FROM product_variants WHERE product_id = ?"; //
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
 }

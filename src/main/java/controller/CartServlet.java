@@ -9,16 +9,140 @@ import model.Product;
 import model.ProductVariants;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import dao.AddressDao;
+import dao.PaymentDao;
+import model.User;
 
 @WebServlet(name = "CartServlet", value = "/CartServlet")
 public class CartServlet extends HttpServlet {
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String action = request.getParameter("action");
+
+        if ("updateQtyAjax".equals(action)) {
+            HttpSession session = request.getSession(false);
+            List<CartItem> cart = (session != null) ? (List<CartItem>) session.getAttribute("CART") : null;
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            // Debug giỏ hàng ngay đầu
+            System.out.println("=== DEBUG FULL CART IN SERVLET (AJAX UPDATE QTY) ===");
+            if (cart == null || cart.isEmpty()) {
+                System.out.println("Giỏ hàng NULL hoặc rỗng");
+                response.setStatus(400);
+                response.getWriter().write("{\"success\":false, \"message\":\"Giỏ hàng rỗng hoặc session không tồn tại\"}");
+                response.getWriter().flush();
+                return;
+            }
+
+            for (CartItem item : cart) {
+                ProductVariants v = item.getVariant();
+                System.out.println("  - Item: variantId = " + (v != null ? v.getId() : "NULL")
+                        + ", productName = " + (item.getProduct() != null ? item.getProduct().getNameProduct() : "NULL")
+                        + ", quantity = " + item.getQuantity());
+            }
+
+            try {
+                int variantId = Integer.parseInt(request.getParameter("variantId"));
+                int quantity = Integer.parseInt(request.getParameter("quantity"));
+
+                System.out.println("AJAX UPDATE: Tìm variantId = " + variantId + " trong giỏ có " + cart.size() + " items");
+
+                boolean found = false;
+                for (CartItem item : cart) {
+                    ProductVariants variant = item.getVariant();
+                    if (variant == null) {
+                        System.out.println("Cảnh báo: Item có variant NULL! Bỏ qua item này.");
+                        continue;
+                    }
+
+                    int itemVariantId = variant.getId();
+                    System.out.println("  So sánh: item variantId = " + itemVariantId + " vs gửi lên " + variantId);
+
+                    if (itemVariantId == variantId) {
+                        BigDecimal price = variant.getVariant_price();
+                        if (price == null) {
+                            System.out.println("LỖI: variant_price là NULL cho variantId = " + variantId);
+                            throw new IllegalStateException("Giá variant null cho variantId " + variantId);
+                        }
+
+                        item.setQuantity(quantity);
+                        item.setTotalPrice(price.multiply(BigDecimal.valueOf(quantity)));
+
+                        found = true;
+                        System.out.println("→ CẬP NHẬT THÀNH CÔNG variantId " + variantId
+                                + " | new qty = " + quantity
+                                + " | new totalPrice = " + item.getTotalPrice());
+                        break;
+                    }
+                }
+
+                if (found) {
+                    session.setAttribute("CART", cart);
+                    response.setStatus(200);
+                    response.getWriter().write("{\"success\":true, \"message\":\"Cập nhật thành công\"}");
+                    response.getWriter().flush();
+                    System.out.println("Response 200 đã gửi cho client");
+                } else {
+                    System.out.println("Không tìm thấy variantId " + variantId + " trong giỏ");
+                    response.setStatus(400);
+                    response.getWriter().write("{\"success\":false, \"message\":\"Không tìm thấy sản phẩm với variantId " + variantId + "\"}");
+                    response.getWriter().flush();
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("Lỗi parse tham số: " + e.getMessage());
+                response.setStatus(400);
+                response.getWriter().write("{\"success\":false, \"message\":\"Dữ liệu không hợp lệ (variantId hoặc quantity sai định dạng)\"}");
+                response.getWriter().flush();
+            } catch (Exception e) {
+                System.out.println("LỖI SERVER TRONG AJAX UPDATE: " + e.getMessage());
+                e.printStackTrace();
+                response.setStatus(500);
+                response.getWriter().write("{\"success\":false, \"message\":\"Lỗi server: " + e.getMessage() + "\"}");
+                response.getWriter().flush();
+            }
+            return;
+        }
+
+        // Xử lý action=view
+        if ("view".equals(action)) {
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("LOGGED_USER");
+
+            if (user != null) {
+                // Khởi tạo các DAO để lấy dữ liệu từ My Page
+                AddressDao addrDao = new AddressDao();
+                PaymentDao payDao = new PaymentDao();
+
+                // 1. Lấy danh sách địa chỉ của user
+                request.setAttribute("addresses", addrDao.getAddressesByUserId(user.getId()));
+
+                // 2. Lấy danh sách thẻ thanh toán của user
+                request.setAttribute("listPayments", payDao.getPaymentsByUserId(user.getId()));
+
+                // 3. (Tùy chọn) Tính tổng tiền giỏ hàng để hiển thị ban đầu
+                List<CartItem> cart = (List<CartItem>) session.getAttribute("CART");
+                BigDecimal subTotal = BigDecimal.ZERO;
+                if (cart != null) {
+                    for (CartItem item : cart) {
+                        subTotal = subTotal.add(item.getVariant().getVariant_price().multiply(BigDecimal.valueOf(item.getQuantity())));
+                    }
+                }
+                request.setAttribute("total", subTotal);
+            }
+
+            request.getRequestDispatcher("shopping_cart.jsp").forward(request, response);
+        }
 
     }
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -26,50 +150,54 @@ public class CartServlet extends HttpServlet {
 
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
+
+        // Kiểm tra đăng nhập
         if (session.getAttribute("LOGGED_USER") == null) {
-            // Nếu chưa đăng nhập, trả về thông báo lỗi hoặc chuyển hướng
-            request.setAttribute("ERROR_MESSAGE", "Bạn cần đăng nhập để thêm vào giỏ hàng!");
+            request.setAttribute("ERROR_MESSAGE", "Bạn cần đăng nhập để thực hiện thao tác này!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
             return;
         }
-        List<CartItem> cart =
-                (List<CartItem>) session.getAttribute("CART");
 
-        if (cart == null) cart = new ArrayList<>();
+        List<CartItem> cart = (List<CartItem>) session.getAttribute("CART");
+        if (cart == null) {
+            cart = new ArrayList<>();
+        }
 
         ProductDao dao = new ProductDao();
 
         switch (action) {
-
             case "add": {
                 int productId = Integer.parseInt(request.getParameter("productId"));
                 int variantId = Integer.parseInt(request.getParameter("variantId"));
                 int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-                // nếu đã có variant → cộng số lượng
+                boolean isExisted = false;
                 for (CartItem item : cart) {
                     if (item.getVariant().getId() == variantId) {
                         item.setQuantity(item.getQuantity() + quantity);
-                        session.setAttribute("CART", cart);
-
-                        response.sendRedirect(
-                                "detail?id=" + productId + "&added=1"
-                        );
-                        return;
+                        isExisted = true;
+                        break;
                     }
-
                 }
 
-                Product product = dao.getProductById(productId);
-                ProductVariants variant = dao.getVariantById(variantId);
+                if (!isExisted) {
+                    Product product = dao.getProductById(productId);
+                    ProductVariants variant = dao.getVariantById(variantId);
 
-                CartItem item = new CartItem();
-                item.setProduct(product);
-                item.setVariant(variant);
-                item.setQuantity(quantity);
+                    // Debug thêm khi add mới
+                    System.out.println("ADD NEW ITEM: variantId = " + variantId
+                            + ", price = " + (variant != null ? variant.getVariant_price() : "NULL"));
 
-                cart.add(item);
-                break;
+                    CartItem newItem = new CartItem();
+                    newItem.setProduct(product);
+                    newItem.setVariant(variant);
+                    newItem.setQuantity(quantity);
+                    cart.add(newItem);
+                }
+
+                session.setAttribute("CART", cart);
+                response.sendRedirect("detail?id=" + productId + "&addSuccess=1");
+                return;
             }
 
             case "update": {
@@ -93,8 +221,12 @@ public class CartServlet extends HttpServlet {
         }
 
         session.setAttribute("CART", cart);
-        response.sendRedirect(
-                "detail?id=" + request.getParameter("productId") + "&added=1"
-        );
+
+        String productId = request.getParameter("productId");
+        if (productId != null) {
+            response.sendRedirect("detail?id=" + productId + "&added=1");
+        } else {
+            response.sendRedirect("CartServlet?action=view");
+        }
     }
 }

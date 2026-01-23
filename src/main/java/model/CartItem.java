@@ -6,6 +6,7 @@ public class CartItem {
     private Product product;              // tên + ảnh
     private ProductVariants variant;       // màu + size + giá
     private int quantity;
+    private BigDecimal totalPrice; // Thêm field này để lưu trữ giá trị đã tính
 
     public CartItem() {}
 
@@ -22,5 +23,9 @@ public class CartItem {
     public BigDecimal getTotalPrice() {
         return variant.getVariant_price()
                 .multiply(BigDecimal.valueOf(quantity));
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

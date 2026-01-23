@@ -287,11 +287,11 @@ public List<User> getAllCustomers() {
             if (rs.next()) {
                 User u = new User();
                 u.setId(rs.getInt("id"));
-                u.setUsername(rs.getString("full_name")); // ✅ SỬA Ở ĐÂY
+                u.setUsername(rs.getString("full_name"));
                 u.setEmail(rs.getString("email"));
                 u.setDisplayName(rs.getString("display_name"));
                 u.setPhone(rs.getString("phone"));
-                u.setGender(rs.getString("gender")); // ✅ CỰC QUAN TRỌNG
+                u.setGender(rs.getString("gender"));
                 u.setBirthDate(rs.getDate("birth_date"));
                 u.setAvatarId(rs.getInt("avatar_id"));
                 u.setAvatarUrl(rs.getString("urlImage"));
