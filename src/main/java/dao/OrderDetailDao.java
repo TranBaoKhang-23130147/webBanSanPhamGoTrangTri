@@ -41,6 +41,7 @@ public class OrderDetailDao {
         }
         return list;
     }
-
+    // Đổi từ private sang public
+    // Đổi sang PUBLIC
 
 }
