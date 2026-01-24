@@ -29,56 +29,35 @@ public class OrderDao {
             throw new Exception("Failed to fetch order count!");
         }
     }
-    // Hàm lấy tổng số đơn và tổng tiền theo User ID
     public List<Order> getOrdersByUserId(int userId) {
         List<Order> list = new ArrayList<>();
-
-        String sql = """
-        SELECT 
-            o.id,
-            o.user_id,
-            o.fullName,
-            o.phone,
-            o.status,
-            o.payment_status,
-            o.totalOrder,
-            o.createAt
-        FROM orders o
-        WHERE o.user_id = ?
-        ORDER BY o.createAt DESC
-    """;
+        // Truy vấn đầy đủ các cột tiền đã lưu trong DB
+        String sql = "SELECT id, user_id, fullName, phone, status, payment_status, " +
+                "totalOrder, subTotal, taxAmount, shippingFee, createAt " +
+                "FROM orders WHERE user_id = ? ORDER BY createAt DESC";
 
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 Order o = new Order();
-
                 o.setId(rs.getInt("id"));
-                o.setUserId(rs.getInt("user_id"));
                 o.setFullName(rs.getString("fullName"));
-                o.setPhone(rs.getString("phone"));
                 o.setStatus(rs.getString("status"));
                 o.setPaymentStatus(rs.getString("payment_status"));
                 o.setCreateAt(rs.getTimestamp("createAt"));
 
-                // 🔥 DÒNG QUAN TRỌNG NHẤT
+                // Lấy chính xác giá trị từ các cột trong Database
+                o.setSubTotal(rs.getDouble("subTotal"));
+                o.setTaxAmount(rs.getDouble("taxAmount"));
+                o.setShippingFee(rs.getDouble("shippingFee"));
                 o.setTotalOrder(rs.getDouble("totalOrder"));
-
                 list.add(o);
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        } catch (Exception e) { e.printStackTrace(); }
         return list;
     }
-
-
 //    private List<OrderDetail> getDetailsByOrderId(int orderId) {
 //        List<OrderDetail> details = new ArrayList<>();
 //        String sql = "SELECT od.*, p.nameProduct, p.image FROM order_details od " +
@@ -327,5 +306,19 @@ public class OrderDao {
             e.printStackTrace();
         }
         return false;
+    }// Cập nhật trạng thái cho người dùng (Hủy/Hoàn hàng)
+    public boolean updateStatusByUser(int orderId, String newStatus) {
+        String sql = "UPDATE orders SET status = ? WHERE id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, newStatus);
+            ps.setInt(2, orderId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
+    // Lấy tổng doanh thu của TẤT CẢ đơn hàng (bao gồm cả chưa giao)
+
 }
