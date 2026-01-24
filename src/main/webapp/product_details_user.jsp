@@ -20,6 +20,16 @@
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
+<c:if test="${not empty sessionScope.ADD_CART_SUCCESS}">
+    <div id="cartAlert"
+         >
+        <i class="ri-checkbox-circle-fill"></i>
+            ${sessionScope.ADD_CART_SUCCESS}
+    </div>
+
+    <%-- Xóa sau khi hiển thị --%>
+    <c:remove var="ADD_CART_SUCCESS" scope="session"/>
+</c:if>
 
 <div class="product-detail">
     <div class="product-gallery">

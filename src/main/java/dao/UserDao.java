@@ -2,6 +2,7 @@ package dao;
 
 import model.Address;
 import model.User;
+import utils.PasswordUtils;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -21,36 +22,40 @@ public class UserDao {
      * @return Đối tượng User nếu đăng nhập thành công, ngược lại trả về null.
      */
     public User checkLogin(String email, String password) {
-
+        // SỬA: Chỉ select theo email, không đưa password vào query SQL
         String sql = """
         SELECT id, full_name, display_name, birth_date,
-               email, phone, gender, avatar_id,
+               email, password, phone, gender, avatar_id,
                role, status, createAt
         FROM users
-        WHERE email = ? AND password = ?
+        WHERE email = ?
     """;
 
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, email);
-            ps.setString(2, password);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    User u = new User();
-                    u.setId(rs.getInt("id"));
-                    u.setUsername(rs.getString("full_name"));
-                    u.setDisplayName(rs.getString("display_name"));
-                    u.setBirthDate(rs.getDate("birth_date"));
-                    u.setEmail(rs.getString("email"));
-                    u.setPhone(rs.getString("phone"));
-                    u.setGender(rs.getString("gender"));
-                    u.setAvatarId(rs.getObject("avatar_id", Integer.class));
-                    u.setRole(rs.getString("role"));
-                    u.setStatus(rs.getString("status"));
-                    u.setCreateAt(rs.getDate("createAt"));
-                    return u;
+                    String hashedPasswordFromDB = rs.getString("password");
+
+                    // KIỂM TRA MẬT KHẨU Ở ĐÂY
+                    if (PasswordUtils.checkPassword(password, hashedPasswordFromDB)) {
+                        User u = new User();
+                        u.setId(rs.getInt("id"));
+                        u.setUsername(rs.getString("full_name"));
+                        u.setDisplayName(rs.getString("display_name"));
+                        u.setBirthDate(rs.getDate("birth_date"));
+                        u.setEmail(rs.getString("email"));
+                        u.setPhone(rs.getString("phone"));
+                        u.setGender(rs.getString("gender"));
+                        u.setAvatarId(rs.getObject("avatar_id", Integer.class));
+                        u.setRole(rs.getString("role"));
+                        u.setStatus(rs.getString("status"));
+                        u.setCreateAt(rs.getDate("createAt"));
+                        return u;
+                    }
                 }
             }
         } catch (Exception e) {
@@ -58,6 +63,44 @@ public class UserDao {
         }
         return null;
     }
+//    public User checkLogin(String email, String password) {
+//
+//        String sql = """
+//        SELECT id, full_name, display_name, birth_date,
+//               email, phone, gender, avatar_id,
+//               role, status, createAt
+//        FROM users
+//        WHERE email = ?
+//    """;
+//
+//        try (Connection conn = DBContext.getConnection();
+//             PreparedStatement ps = conn.prepareStatement(sql)) {
+//
+//            ps.setString(1, email);
+//            ps.setString(2, password);
+//
+//            try (ResultSet rs = ps.executeQuery()) {
+//                if (rs.next()) {
+//                    User u = new User();
+//                    u.setId(rs.getInt("id"));
+//                    u.setUsername(rs.getString("full_name"));
+//                    u.setDisplayName(rs.getString("display_name"));
+//                    u.setBirthDate(rs.getDate("birth_date"));
+//                    u.setEmail(rs.getString("email"));
+//                    u.setPhone(rs.getString("phone"));
+//                    u.setGender(rs.getString("gender"));
+//                    u.setAvatarId(rs.getObject("avatar_id", Integer.class));
+//                    u.setRole(rs.getString("role"));
+//                    u.setStatus(rs.getString("status"));
+//                    u.setCreateAt(rs.getDate("createAt"));
+//                    return u;
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     /**
      * Kiểm tra xem một email đã tồn tại trong DB chưa.
@@ -79,24 +122,38 @@ public class UserDao {
         return false;
     }
 
-    /**
-     * Thực hiện đăng ký tài khoản mới.
-     * Mặc định set role='User' và status='Active'.
-     */
     public void signup(String username, String email, String password) {
-        String SQL = "INSERT INTO users (full_name, email, password, role, status,createAt) VALUES (?, ?, ?, 'User', 'Active',?)";
+        String SQL = "INSERT INTO users (full_name, email, password, role, status, createAt) VALUES (?, ?, ?, 'User', 'Active', ?)";
 
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL)) {
+
+            // BĂM MẬT KHẨU TRƯỚC KHI LƯU
+            String hashedPassword = PasswordUtils.hashPassword(password);
+
             ps.setString(1, username);
             ps.setString(2, email);
-            ps.setString(3, password);
-            ps.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // 👈 THÊM DÒNG NÀY
+            ps.setString(3, hashedPassword);
+            ps.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+//    public void signup(String username, String email, String password) {
+//        String SQL = "INSERT INTO users (full_name, email, password, role, status,createAt) VALUES (?, ?, ?, 'User', 'Active',?)";
+//
+//        try (Connection conn = DBContext.getConnection();
+//             PreparedStatement ps = conn.prepareStatement(SQL)) {
+//            ps.setString(1, username);
+//            ps.setString(2, email);
+//            ps.setString(3, password);
+//            ps.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // 👈 THÊM DÒNG NÀY
+//            ps.executeUpdate();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public int countNewUsersLast30Days() {
         String sql = "SELECT COUNT(*) FROM users WHERE (role = 'User') and (createAt IS NULL OR createAt >= ?)";
@@ -202,16 +259,28 @@ public class UserDao {
             }
         }
     }
-
     public boolean updatePassword(int userId, String newPassword) throws Exception {
         String sql = "UPDATE users SET password = ? WHERE id = ?";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, newPassword);
+
+            // CẦN SỬA: Băm mật khẩu mới ở đây
+            String hashedPassword = PasswordUtils.hashPassword(newPassword);
+
+            ps.setString(1, hashedPassword);
             ps.setInt(2, userId);
             return ps.executeUpdate() == 1;
         }
     }
+//    public boolean updatePassword(int userId, String newPassword) throws Exception {
+//        String sql = "UPDATE users SET password = ? WHERE id = ?";
+//        try (Connection conn = DBContext.getConnection();
+//             PreparedStatement ps = conn.prepareStatement(sql)) {
+//            ps.setString(1, newPassword);
+//            ps.setInt(2, userId);
+//            return ps.executeUpdate() == 1;
+//        }
+//    }
 
     public boolean updateUser(User user) {
         // Lưu ý: Tên cột phải chính xác như trong DB (ví dụ: full_name hay fullName)
@@ -230,20 +299,37 @@ public class UserDao {
         }
         return false;
     }
-    public boolean updatePasswordByEmail(String email, String newPassword) {
-        String sql = "UPDATE users SET password = ? WHERE email = ?";
-        try (Connection conn = DBContext.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+//    public boolean updatePasswordByEmail(String email, String newPassword) {
+//        String sql = "UPDATE users SET password = ? WHERE email = ?";
+//        try (Connection conn = DBContext.getConnection();
+//             PreparedStatement ps = conn.prepareStatement(sql)) {
+//
+//            ps.setString(1, newPassword);
+//            ps.setString(2, email);
+//
+//            return ps.executeUpdate() == 1;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
+public boolean updatePasswordByEmail(String email, String newPassword) {
+    String sql = "UPDATE users SET password = ? WHERE email = ?";
+    try (Connection conn = DBContext.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, newPassword);
-            ps.setString(2, email);
+        // CẦN SỬA: Băm mật khẩu mới ở đây
+        String hashedPassword = PasswordUtils.hashPassword(newPassword);
 
-            return ps.executeUpdate() == 1;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
+        ps.setString(1, hashedPassword);
+        ps.setString(2, email);
+
+        return ps.executeUpdate() == 1;
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+    return false;
+}
 //    hien thi ng dung admin
 public List<User> getAllCustomers() {
     List<User> list = new ArrayList<>();
@@ -448,22 +534,39 @@ public List<User> getAllCustomers() {
         }
         return false;
     }
+//
+//    public boolean adminInsertUser(String username, String email, String phone, String password, String role) {
+//        String sql = "INSERT INTO users (full_name, email, phone, password, role, status, createAt) VALUES (?, ?, ?, ?, ?, 'Active', NOW())";
+//        try (Connection conn = DBContext.getConnection();
+//             PreparedStatement ps = conn.prepareStatement(sql)) {
+//
+//            ps.setString(1, username);
+//            ps.setString(2, email);
+//            ps.setString(3, phone);
+//            ps.setString(4, password); // Nên dùng mã hóa BCrypt nếu cần
+//            ps.setString(5, role);
+//
+//            return ps.executeUpdate() > 0;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
+public boolean adminInsertUser(String username, String email, String phone, String password, String role) {
+    String sql = "INSERT INTO users (full_name, email, phone, password, role, status, createAt) VALUES (?, ?, ?, ?, ?, 'Active', NOW())";
+    try (Connection conn = DBContext.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
 
-    public boolean adminInsertUser(String username, String email, String phone, String password, String role) {
-        String sql = "INSERT INTO users (full_name, email, phone, password, role, status, createAt) VALUES (?, ?, ?, ?, ?, 'Active', NOW())";
-        try (Connection conn = DBContext.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, username);
+        ps.setString(2, email);
+        ps.setString(3, phone);
+        ps.setString(4, PasswordUtils.hashPassword(password)); // HASH Ở ĐÂY
+        ps.setString(5, role);
 
-            ps.setString(1, username);
-            ps.setString(2, email);
-            ps.setString(3, phone);
-            ps.setString(4, password); // Nên dùng mã hóa BCrypt nếu cần
-            ps.setString(5, role);
-
-            return ps.executeUpdate() > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
+        return ps.executeUpdate() > 0;
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+    return false;
+}
 }
