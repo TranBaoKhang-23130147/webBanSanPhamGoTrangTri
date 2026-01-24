@@ -13,15 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 public class OrderDao {
     public int getOrderCount() throws Exception {
-        String sql = "SELECT COUNT(*) AS cnt FROM orders";
+        String sql = "SELECT COUNT(*) AS cnt FROM orders WHERE payment_status = ? AND status = ?";
         try (Connection conn = DBContext.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            if (rs.next()) {
-                int count = rs.getInt("cnt");
-                System.out.println("Order Count from DB: " + count); // Log giá trị lấy được
-                return count;
+            ps.setString(1, "Đã thanh toán");
+            ps.setString(2, "Đã giao");
+
+            try(ResultSet rs = ps.executeQuery()){
+
+                if (rs.next()) {
+                    int count = rs.getInt("cnt");
+                    System.out.println("Order Count from DB: " + count); // Log giá trị lấy được
+                    return count;
+                }
             }
             return 0;
         } catch (Exception e) {
@@ -362,5 +367,25 @@ public class OrderDao {
         } finally {
             if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
         }
+    }
+    public double getTotalRevenue() {
+        // Sử dụng tên cột chính xác từ file SQL của bạn: payment_status và status
+        String sql = "SELECT SUM(totalOrder) FROM orders WHERE payment_status = ? AND status = ?";
+
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, "Đã thanh toán");
+            ps.setString(2, "Đã giao");
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getDouble(1);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0.0;
     }
 }

@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%@ page import="model.User" %>
 <%@ page import="dao.UserDao" %>
 <%@ page import="dao.OrderDao" %>
@@ -25,6 +27,7 @@
 // Nếu không có từ servlet (truy cập trực tiếp JSP), lấy từ database
     if (orderCountObj == null) {
         OrderDao orderDao = new OrderDao();
+
         try {
             orderCount = orderDao.getOrderCount();
         } catch (Exception e) {
@@ -34,6 +37,12 @@
     } else {
         orderCount = orderCountObj;
     }
+    OrderDao orderDao = new OrderDao();
+    double totalRevenue = orderDao.getTotalRevenue();
+
+    dao.ProductDao productDao = new dao.ProductDao();
+    List<model.Product> topProducts = productDao.getTop8BestSellers();
+    request.setAttribute("topProducts", topProducts);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +69,9 @@
             <div class="kpi-row-modern">
                 <div class="kpi-card-modern">
                     <div class="kpi-label-modern">Tổng Doanh Thu </div>
-                    <div class="kpi-value-modern">720,700,000 <span class="unit">VND</span></div>
+                    <div class="kpi-value-modern">
+                        <fmt:formatNumber value="<%= totalRevenue %>" pattern="#,###"/>
+                        <span class="unit">VND</span></div>
                 </div>
                 <!--                <div class="kpi-card-modern">-->
                 <!--                    <div class="kpi-label-modern">Tổng Lượt Truy Cập <span class="trend down">▼ 8.2%</span></div>-->
@@ -94,30 +105,29 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Kệ Treo Tường Gỗ Sồi 3 Tầng</td>
-                            <td>622</td>
-                            <td>4.8 <i class="fas fa-star text-yellow"></i></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Đồng Hồ Treo Tường Gỗ Phong Cách Retro</td>
-                            <td>422</td>
-                            <td>4.8 <i class="fas fa-star text-yellow"></i></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Chậu Cây Để Bàn Gỗ Tần Bì (Set 3)</td>
-                            <td>325</td>
-                            <td>4.8 <i class="fas fa-star text-yellow"></i></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Tượng Gỗ Trang Trí Hình Hươu (Lớn)</td>
-                            <td>322</td>
-                            <td>4.8 <i class="fas fa-star text-yellow"></i></td>
-                        </tr>
+                        <c:forEach items="${topProducts}" var="p" varStatus="status">
+                            <tr>
+                                <td>${status.index + 1}</td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <img src="${p.imageUrl}" alt="${p.nameProduct}" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover;">
+                                            ${p.nameProduct}
+                                    </div>
+                                </td>
+                                <td>${p.price} VND</td>
+                                <td>
+                                    <fmt:formatNumber value="${p.averageRating}" pattern="#.#"/>
+                                    <i class="fas fa-star text-yellow"></i>
+                                </td>
+                            </tr>
+                        </c:forEach>
+
+                        <%-- Hiển thị thông báo nếu không có sản phẩm nào --%>
+                        <c:if test="${empty topProducts}">
+                            <tr>
+                                <td colspan="4" style="text-align: center;">Chưa có dữ liệu bán hàng</td>
+                            </tr>
+                        </c:if>
                         </tbody>
                     </table>
                 </div>
