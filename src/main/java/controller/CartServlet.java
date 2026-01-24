@@ -50,8 +50,22 @@ public class CartServlet extends HttpServlet {
             }
 
             try {
-                int variantId = Integer.parseInt(request.getParameter("variantId"));
-                int quantity = Integer.parseInt(request.getParameter("quantity"));
+                String variantIdRaw = request.getParameter("variantId");
+                String quantityRaw  = request.getParameter("quantity");
+
+                if (variantIdRaw == null || variantIdRaw.trim().isEmpty()
+                        || quantityRaw == null || quantityRaw.trim().isEmpty()) {
+
+                    System.out.println("LỖI: variantId hoặc quantity rỗng");
+                    response.setStatus(400);
+                    response.getWriter().write("{\"success\":false, \"message\":\"Thiếu tham số\"}");
+                    response.getWriter().flush();
+                    return;
+                }
+
+                int variantId = Integer.parseInt(variantIdRaw);
+                int quantity  = Integer.parseInt(quantityRaw);
+
 
                 System.out.println("AJAX UPDATE: Tìm variantId = " + variantId + " trong giỏ có " + cart.size() + " items");
 
@@ -196,8 +210,12 @@ public class CartServlet extends HttpServlet {
                 }
 
                 session.setAttribute("CART", cart);
-                response.sendRedirect("detail?id=" + productId + "&addSuccess=1");
+
+                session.setAttribute("ADD_CART_SUCCESS", "Đã thêm sản phẩm vào giỏ hàng thành công!");
+
+                response.sendRedirect("detail?id=" + productId);
                 return;
+
             }
 
             case "update": {

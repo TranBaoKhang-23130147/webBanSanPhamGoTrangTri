@@ -37,7 +37,7 @@
             </div>
 
             <c:forEach var="item" items="${cart}">
-                <div class="cart-item">
+                <div class="cart-item" data-variant-id="${item.variant.id}">
 
                     <input type="checkbox"
                            name="selectedItems"
@@ -79,6 +79,7 @@
 
                             <input type="text"
                                    class="quantity-input-list item-qty"
+                                   data-id="${item.variant.id}"
                                    value="${item.quantity}"
                                    readonly>
 
@@ -284,43 +285,42 @@
 
     // Thay đổi số lượng + gửi AJAX (giữ nguyên, nhưng thêm kiểm tra an toàn hơn)
     function changeQty(btn, delta) {
-        const qtyInput = btn.parentElement.querySelector(".item-qty");
-        let qty = parseInt(qtyInput.value) || 1;
-        qty += delta;
+        const cartItem = btn.closest('.cart-item');
+        const qtyInput = cartItem.querySelector(".item-qty");
+
+        // Lấy ID và số lượng mới
+        const variantId = cartItem.getAttribute("data-variant-id");
+        let qty = (parseInt(qtyInput.value) || 0) + delta;
+
         if (qty < 1) return;
 
+        // Cập nhật giao diện trước cho mượt
         const oldQty = qtyInput.value;
         qtyInput.value = qty;
         updateTotal();
 
-        const cartItem = btn.closest('.cart-item');
-        const removeLink = cartItem.querySelector('a.remove-link');
-        const variantId = removeLink?.dataset.variantId?.trim();
+        // TẠO URL CHUẨN: Đảm bảo các tham số được nối chính xác
+        const url = "CartServlet?action=updateQtyAjax&variantId=" + variantId + "&quantity=" + qty;
 
-        if (!variantId) {
-            console.error("Không tìm thấy variantId");
-            alert("Lỗi: Không xác định sản phẩm. Vui lòng tải lại trang.");
-            qtyInput.value = oldQty;
-            updateTotal();
-            return;
-        }
-
-        fetch(`CartServlet?action=updateQtyAjax&variantId=${variantId}&quantity=${qty}`, {
+        fetch(url, {
             method: 'GET',
             headers: { 'X-Requested-With': 'XMLHttpRequest' }
         })
-            .then(response => {
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                console.log("Cập nhật số lượng thành công");
+            .then(res => res.json())
+            .then(data => {
+                if (!data.success) {
+                    alert("Lỗi: " + data.message);
+                    qtyInput.value = oldQty;
+                    updateTotal();
+                }
             })
-            .catch(error => {
-                console.error("Lỗi cập nhật số lượng:", error);
-                alert("Không thể cập nhật số lượng. Vui lòng thử lại!");
+            .catch(err => {
+                console.error("AJAX Error:", err);
+                alert("Không thể kết nối đến máy chủ");
                 qtyInput.value = oldQty;
                 updateTotal();
             });
     }
-
     // Mở modal thanh toán (gộp 2 hàm thành 1)
     function openCheckoutModal() {
         const totalText = document.getElementById('cart-total').innerText.trim();
