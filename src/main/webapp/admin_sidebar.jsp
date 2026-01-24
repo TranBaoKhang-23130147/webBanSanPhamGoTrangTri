@@ -20,7 +20,9 @@
             <li class="${activePage == 'source' ? 'active' : ''}">
                 <a href="${pageContext.request.contextPath}/source-manager"> Nhà cung cấp</a>
             </li>
-            <li><a href="admin_order.html"> Đơn hàng</a></li>
+            <li class="${activePage == ' ' ? 'active' : ''}">
+                <a href="${pageContext.request.contextPath}/admin-orders">don hang </a>
+            </li>
             <li><a href="${pageContext.request.contextPath}/admin/customers"> Khách hàng</a></li>
             <li><a href="${pageContext.request.contextPath}/admin-management"> Quan tri vien</a></li>
             <li><a href="${pageContext.request.contextPath}/AdminProfileServlet"> Hồ sơ</a></li>

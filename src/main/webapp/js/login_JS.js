@@ -44,3 +44,5 @@ var jsMessRegister = '${MESS_REGISTER}';
 if(jsMessRegister !== '') {
     container.classList.add("right-panel-active");
 }
+
+

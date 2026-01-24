@@ -42,7 +42,8 @@
                         <tr>
                             <th class="col-id">ID</th>
                             <th class="col-name">Tên Loại Sản Phẩm</th>
-                            <th class="col-product-count">Số Sản Phẩm</th>
+                            <th class="col-product">Số Sản Phẩm</th>
+                            <th class="col-product-count">Tổng tồn kho </th>
                             <th class="col-actions">Thao tác</th>
                         </tr>
                         </thead>
@@ -52,6 +53,8 @@
                             <tr>
                                 <td class="col-id">${pt.id}</td>
                                 <td class="col-name">${pt.productTypeName}</td>
+                                <td class="col-product"> 0</td>
+
                                 <td class="col-product-count">${pt.totalInventory}</td>   <!-- ← sửa ở đây -->
                                 <td class="col-actions">
                                     <i class="fa-solid fa-pen-to-square"

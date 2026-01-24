@@ -271,35 +271,23 @@ public List<User> getAllCustomers() {
     return list;
 }
     public User getAdminProfile(int userId) {
-        String sql = """
-        SELECT u.*, i.urlImage
-        FROM users u
-        LEFT JOIN images i ON u.avatar_id = i.id
-        WHERE u.id = ?
-    """;
-
+        // Thêm u.role vào câu lệnh SELECT nếu u.* không lấy hết
+        String sql = "SELECT u.*, i.urlImage FROM users u " +
+                "LEFT JOIN images i ON u.avatar_id = i.id WHERE u.id = ?";
         try (Connection con = DBContext.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
-
             if (rs.next()) {
                 User u = new User();
                 u.setId(rs.getInt("id"));
                 u.setUsername(rs.getString("full_name"));
+                u.setRole(rs.getString("role")); // DÒNG QUAN TRỌNG NHẤT: Lấy chữ 'Admin' hoặc 'Staff' từ DB
                 u.setEmail(rs.getString("email"));
-                u.setDisplayName(rs.getString("display_name"));
                 u.setPhone(rs.getString("phone"));
-                u.setGender(rs.getString("gender"));
-                u.setBirthDate(rs.getDate("birth_date"));
-                u.setAvatarId(rs.getInt("avatar_id"));
-                u.setAvatarUrl(rs.getString("urlImage"));
                 return u;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) { e.printStackTrace(); }
         return null;
     }
 //    public boolean deleteUser(int userId) throws Exception {
