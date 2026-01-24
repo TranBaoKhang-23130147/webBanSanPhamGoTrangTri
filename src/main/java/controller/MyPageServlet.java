@@ -89,18 +89,22 @@ public class MyPageServlet extends HttpServlet {
         OrderDao orderDao = new OrderDao();
 
         if (orderIdStr != null) {
-            int orderId = Integer.parseInt(orderIdStr);
+            try {
+                int orderId = Integer.parseInt(orderIdStr);
 
-            if ("cancelOrder".equals(action)) {
-                // Thực hiện hủy đơn hàng
-                orderDao.updateStatusByUser(orderId, "Đã hủy");
-            } else if ("returnOrder".equals(action)) {
-                // Thực hiện yêu cầu hoàn hàng
-                orderDao.updateStatusByUser(orderId, "Hoàn hàng");
+                if ("cancelOrder".equals(action)) {
+                    // Hủy đơn và hoàn trả kho
+                    orderDao.cancelOrReturnOrder(orderId, "Đã hủy");
+                } else if ("returnOrder".equals(action)) {
+                    // Yêu cầu hoàn hàng và hoàn trả kho (hoặc chờ xác nhận tùy bạn)
+                    orderDao.cancelOrReturnOrder(orderId, "Hoàn hàng");
+                }
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
             }
         }
 
-        // Quay lại tab đơn hàng sau khi xử lý
+        // Quay lại tab đơn hàng
         response.sendRedirect("MyPageServlet?tab=don-hang");
     }
 }

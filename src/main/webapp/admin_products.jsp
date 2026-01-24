@@ -129,6 +129,7 @@
                                     <a href="admin/edit-product?id=${p.id}" title="Sửa">
                                         <i class="fa-solid fa-pen-to-square edit-icon"></i>
                                     </a>
+
                                     <a href="#" onclick="confirmDelete(${p.id}); return false;" title="Xóa">
                                         <i class="fa-solid fa-trash-can delete-icon"></i>
                                     </a>
@@ -147,15 +148,12 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    // Confirm xóa sản phẩm
+    function toggleActive(productId, willBeActive) {   // ← đổi tên tham số cho dễ hiểu
+        const status = willBeActive ? 1 : 0;
 
-
-    // Bật/tắt trạng thái active (nếu bạn muốn implement)
-    function toggleActive(productId, isActive) {
-        const status = isActive ? 1 : 0;
         Swal.fire({
-            title: isActive ? 'Kích hoạt sản phẩm?' : 'Tắt sản phẩm?',
-            text: isActive ? "Sản phẩm sẽ hiển thị cho khách hàng." : "Sản phẩm sẽ ẩn đi.",
+            title: willBeActive ? 'Kích hoạt sản phẩm?' : 'Tắt sản phẩm?',
+            text: willBeActive ? "Sản phẩm sẽ hiển thị cho khách hàng." : "Sản phẩm sẽ ẩn đi.",
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -163,30 +161,30 @@
             confirmButtonText: 'Đồng ý'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Gửi AJAX hoặc redirect đến servlet update status
-                // Ví dụ dùng fetch (AJAX đơn giản)
                 fetch('${pageContext.request.contextPath}/admin/update-product-status', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    body: 'id=' + productId + '&active=' + status
+                    body: 'id=' + productId + '&status=' + status     // ← đổi thành status cho đồng bộ
                 })
-                    .then(response => {
-                        if (response.ok) {
-                            Swal.fire('Thành công!', 'Trạng thái đã cập nhật.', 'success');
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire('Thành công!', data.message, 'success');
+                            // location.reload();   // nếu muốn reload để thấy ngay
                         } else {
-                            throw new Error('Cập nhật thất bại');
+                            Swal.fire('Lỗi!', data.message || 'Không xác định', 'error');
+                            this.checked = !willBeActive;   // hoàn nguyên checkbox
                         }
                     })
-                    .catch(error => {
-                        Swal.fire('Lỗi!', 'Không thể cập nhật trạng thái.', 'error');
-                        // Hoàn nguyên checkbox nếu lỗi
-                        document.querySelector(`input[onchange="toggleActive(${productId}, ${!isActive})"]`).checked = !isActive;
+                    .catch(err => {
+                        console.error(err);
+                        Swal.fire('Lỗi!', 'Không thể kết nối server', 'error');
+                        this.checked = !willBeActive;
                     });
             } else {
-                // Hoàn nguyên checkbox nếu hủy
-                this.checked = !isActive;
+                this.checked = !willBeActive;   // hủy → trả về trạng thái cũ
             }
         });
     }
@@ -246,6 +244,12 @@
                     });
             }
         });
+        Swal.fire({
+            title: 'Không thể xóa',
+            text: 'Sản phẩm đã phát sinh đơn hàng. Bạn chỉ có thể ngưng bán.',
+            icon: 'info'
+        });
+
     }
 </script>
 </body>

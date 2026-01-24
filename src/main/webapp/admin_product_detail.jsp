@@ -119,14 +119,6 @@
                                     <p style="margin: 0;"><strong>Trạng thái kho:</strong> <span id="inventoryDisplay" style="color: var(--primary-color);">Chưa chọn biến thể</span></p>
                                 </div>
 
-                                <div class="admin-action-buttons" style="display: flex; gap: 15px;">
-                                    <a href="${pageContext.request.contextPath}/admin/edit-product?id=${p.id}" class="add-new-product-btn" style="text-decoration: none;">
-                                        <i class="ri-edit-2-line"></i> Sửa sản phẩm
-                                    </a>
-                                    <button class="export-product-btn" onclick="deleteSelectedVariant()">
-                                        <i class="ri-delete-bin-6-line"></i> Xóa biến thể
-                                    </button>
-                                </div>
                             </div>
                         </div>
 
