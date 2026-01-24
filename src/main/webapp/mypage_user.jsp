@@ -694,6 +694,11 @@
         const modal = document.getElementById('orderDetailModal');
         modal.style.display = 'none';
     }
+    // Thêm vào trong thẻ <script> của bạn
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('statusUpdate') === 'success') {
+        alert("Thao tác thành công! Sản phẩm đã được hoàn trả lại kho.");
+    }
     function showUserOrderDetail(id) {
         const modal = document.getElementById('orderDetailModal');
         const container = modal.querySelector('.order-modal-content');
@@ -710,14 +715,6 @@
 
     function closeOrderDetail() {
         document.getElementById('orderDetailModal').style.display = 'none';
-    }
-
-    // Đóng khi click ra ngoài
-    window.onclick = function(event) {
-        const modal = document.getElementById('orderDetailModal');
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
     }
 
     // Đóng modal khi click ra ngoài vùng trắng

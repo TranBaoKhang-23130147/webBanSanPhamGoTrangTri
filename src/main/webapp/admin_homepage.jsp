@@ -55,11 +55,11 @@
 
 
         <main class="content">
-            <h2 class="page-title">Tổng quan tháng 11</h2>
+            <h2 class="page-title">Tổng quan</h2>
 
             <div class="kpi-row-modern">
                 <div class="kpi-card-modern">
-                    <div class="kpi-label-modern">Tổng Doanh Thu <span class="trend up">▲ 12.2%</span></div>
+                    <div class="kpi-label-modern">Tổng Doanh Thu </div>
                     <div class="kpi-value-modern">720,700,000 <span class="unit">VND</span></div>
                 </div>
                 <!--                <div class="kpi-card-modern">-->
@@ -77,7 +77,7 @@
                     </div>
                 </div>
                 <div class="kpi-card-modern">
-                    <div class="kpi-label-modern">Khách Hàng Mới <span class="trend up">▲ 10.0%</span></div>
+                    <div class="kpi-label-modern">Khách Hàng Mới </div>
                     <div class="kpi-value-modern"><%= newUsersLast30Days %></div>
                 </div>
             </div>
@@ -90,48 +90,33 @@
                             <th>Top</th>
                             <th>Sản Phẩm</th>
                             <th>Lượt Mua</th>
-                            <!--                            <th>Còn Lại</th>-->
-                            <!--                            <th>Số Lượt Xem</th>-->
                             <th>Đánh Giá</th>
-                            <!--                            <th>Xu Hướng</th>-->
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
                             <td>1</td>
                             <td>Kệ Treo Tường Gỗ Sồi 3 Tầng</td>
-                            <!--                            <td>530</td>-->
-                            <!--                            <td>10</td>-->
                             <td>622</td>
                             <td>4.8 <i class="fas fa-star text-yellow"></i></td>
-                            <!--                            <td><span class="trend up">▲ 4.5%</span></td>-->
                         </tr>
                         <tr>
                             <td>2</td>
                             <td>Đồng Hồ Treo Tường Gỗ Phong Cách Retro</td>
-                            <!--                            <td>330</td>-->
-                            <!--                            <td>30</td>-->
                             <td>422</td>
                             <td>4.8 <i class="fas fa-star text-yellow"></i></td>
-                            <!--                            <td><span class="trend up">▲ 4.5%</span></td>-->
                         </tr>
                         <tr>
                             <td>3</td>
                             <td>Chậu Cây Để Bàn Gỗ Tần Bì (Set 3)</td>
-                            <!--                            <td>230</td>-->
-                            <!--                            <td>93</td>-->
                             <td>325</td>
                             <td>4.8 <i class="fas fa-star text-yellow"></i></td>
-                            <!--                            <td><span class="trend up">▲ 4.5%</span></td>-->
                         </tr>
                         <tr>
                             <td>4</td>
                             <td>Tượng Gỗ Trang Trí Hình Hươu (Lớn)</td>
-                            <!--                            <td>230</td>-->
-                            <!--                            <td>40</td>-->
                             <td>322</td>
                             <td>4.8 <i class="fas fa-star text-yellow"></i></td>
-                            <!--                            <td><span class="trend up">▲ 4.5%</span></td>-->
                         </tr>
                         </tbody>
                     </table>

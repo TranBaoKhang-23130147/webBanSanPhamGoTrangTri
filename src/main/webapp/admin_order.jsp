@@ -44,9 +44,7 @@
                             <option>Đã Hủy</option>
                         </select>
                     </div>
-                    <button class="export-btn">
-                        Xuất <i class="fas fa-file-export"></i>
-                    </button>
+
                 </div>
 
                 <div class="user-table-container">

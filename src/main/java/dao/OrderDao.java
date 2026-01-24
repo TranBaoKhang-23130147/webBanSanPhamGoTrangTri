@@ -320,5 +320,47 @@ public class OrderDao {
         return false;
     }
     // Lấy tổng doanh thu của TẤT CẢ đơn hàng (bao gồm cả chưa giao)
+// Thêm vào class OrderDao
+    public boolean cancelOrReturnOrder(int orderId, String newStatus) {
+        String sqlUpdateStatus = "UPDATE orders SET status = ? WHERE id = ?";
+        String sqlGetDetails = "SELECT product_variant_id, quantity FROM order_details WHERE order_id = ?";
+        String sqlRestoreStock = "UPDATE product_variants SET inventory_quantity = inventory_quantity + ? WHERE id = ?";
 
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            conn.setAutoCommit(false); // Bắt đầu Transaction
+
+            // 1. Cập nhật trạng thái đơn hàng
+            try (PreparedStatement ps = conn.prepareStatement(sqlUpdateStatus)) {
+                ps.setString(1, newStatus);
+                ps.setInt(2, orderId);
+                ps.executeUpdate();
+            }
+
+            // 2. Lấy danh sách sản phẩm để trả kho
+            try (PreparedStatement psGet = conn.prepareStatement(sqlGetDetails)) {
+                psGet.setInt(1, orderId);
+                ResultSet rs = psGet.executeQuery();
+
+                try (PreparedStatement psRestore = conn.prepareStatement(sqlRestoreStock)) {
+                    while (rs.next()) {
+                        psRestore.setInt(1, rs.getInt("quantity"));
+                        psRestore.setInt(2, rs.getInt("product_variant_id"));
+                        psRestore.addBatch();
+                    }
+                    psRestore.executeBatch();
+                }
+            }
+
+            conn.commit(); // Thành công hết thì mới lưu
+            return true;
+        } catch (Exception e) {
+            if (conn != null) try { conn.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (conn != null) try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+        }
+    }
 }

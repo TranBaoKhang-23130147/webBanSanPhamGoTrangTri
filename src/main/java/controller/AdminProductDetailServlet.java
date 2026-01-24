@@ -55,19 +55,29 @@ public class AdminProductDetailServlet extends HttpServlet {
         }
 
         // TÍNH TOÁN THỐNG KÊ KHO HÀNG CHÍNH XÁC 100%
-        int totalImported = 0;
-        int totalSold = 0;
+        // ===== TÍNH TOÁN THỐNG KÊ KHO HÀNG (ĐÚNG NGHIỆP VỤ) =====
+        int totalRemaining = 0; // tồn kho hiện tại
+        int totalSold = 0;      // đã bán
 
         if (p.getVariants() != null) {
             for (ProductVariants v : p.getVariants()) {
-                totalImported += v.getInventory_quantity();
-                totalSold += dao.getSoldQuantityByVariantId(v.getId()); // ĐÂY LÀ CHỖ QUAN TRỌNG
+
+                // 1. Tồn kho: lấy trực tiếp từ variant
+                totalRemaining += v.getInventory_quantity();
+
+                // 2. Đã bán: tổng số lượng trong order (trừ huỷ + hoàn)
+                totalSold += dao.getSoldQuantityByVariantId(v.getId());
             }
         }
 
-        p.setTotalImported(totalImported);
+// 3. Tổng nhập = tồn kho + đã bán
+        int totalImported = totalRemaining + totalSold;
+
+// Set lại vào product
+        p.setTotalRemaining(totalRemaining);
         p.setTotalSold(totalSold);
-        p.setTotalRemaining(totalImported - totalSold);
+        p.setTotalImported(totalImported);
+
 
         // Set attribute
         request.setAttribute("p", p);

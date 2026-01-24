@@ -70,7 +70,7 @@ public class ProductDao {
                 "LEFT JOIN product_types t ON p.product_type_id = t.id " +
                 "LEFT JOIN categories c ON p.category_id = c.id " +
                 "LEFT JOIN images img ON p.primary_image_id = img.id";
-        try (Connection conn = DBContext.getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
@@ -130,7 +130,7 @@ public class ProductDao {
 
         sql.append(" GROUP BY p.id, img.urlImage ");
 
-        try (Connection conn = DBContext.getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql.toString())) {
 
             ps.setString(1, "%" + txtSearch + "%");
@@ -687,7 +687,7 @@ public class ProductDao {
         WHERE pv.id = ?
     """;
 
-        try (Connection con = DBContext.getConnection();
+        try (Connection con = getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, variantId);
@@ -910,7 +910,7 @@ public class ProductDao {
         LIMIT 3
     """;
 
-        try (Connection con = DBContext.getConnection();
+        try (Connection con = getConnection();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
@@ -945,7 +945,7 @@ public class ProductDao {
                 "ORDER BY total_sold DESC " +
                 "LIMIT 8";
 
-        try (Connection conn = DBContext.getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
@@ -988,7 +988,7 @@ public class ProductDao {
     public List<Source> getAllSources() {
         List<Source> list = new ArrayList<>();
         String sql = "SELECT * FROM sources";
-        try (Connection conn = DBContext.getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -1041,7 +1041,7 @@ public class ProductDao {
     public List<ProductSize> getAllSizes() {
         List<ProductSize> list = new ArrayList<>();
         String sql = "SELECT * FROM sizes";
-        try (Connection conn = DBContext.getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -1120,13 +1120,13 @@ public class ProductDao {
             if (catId > 0) {
                 psProd.setInt(3, catId);
             } else {
-                psProd.setNull(3, java.sql.Types.INTEGER);
+                psProd.setNull(3, Types.INTEGER);
             }
             psProd.setInt(4, p.getSourceId());
             if (p.getProductTypeId() > 0) {
                 psProd.setInt(5, p.getProductTypeId());
             } else {
-                psProd.setNull(5, java.sql.Types.INTEGER);
+                psProd.setNull(5, Types.INTEGER);
             }
             psProd.setInt(6, descId);
             psProd.setDate(7, p.getMfgDate());
@@ -1183,7 +1183,7 @@ public class ProductDao {
             e.printStackTrace();
             System.out.println("Lỗi ở bước: " + e.getMessage());
             // Thêm dòng này để xem chính xác
-            if (e instanceof java.sql.SQLIntegrityConstraintViolationException) {
+            if (e instanceof SQLIntegrityConstraintViolationException) {
                 System.out.println("→ Vi phạm ràng buộc: " + e.getMessage());
             }
             try { if (conn != null) conn.rollback(); } catch (Exception ignored) {}
@@ -1250,32 +1250,10 @@ public class ProductDao {
     }
 
 
-    public int getSoldQuantityByVariantId(int variantId) {
-        String sql = """
-        SELECT COALESCE(SUM(oi.quantity), 0)
-        FROM order_items oi
-        JOIN orders o ON oi.order_id = o.order_id
-        WHERE oi.variant_id = ?
-          AND o.status IN ('completed', 'shipped', 'delivered')  -- đơn đã giao hoặc hoàn thành
-        """;
-
-        try (Connection conn = DBContext.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, variantId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
     public int getTotalStockByProductId(int productId) {
         int total = 0;
         String sql = "SELECT SUM(inventory_quantity) FROM product_variants WHERE product_id = ?"; //
-        try (Connection conn = DBContext.getConnection();
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, productId);
             ResultSet rs = ps.executeQuery();
@@ -1287,4 +1265,218 @@ public class ProductDao {
         }
         return total;
     }
+    public boolean updateProductStatus(int productId, int status) {
+        String sql = "UPDATE products SET isActive = ? WHERE id = ?";  // <-- xác nhận tên cột là isActive
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = getConnection();  // đảm bảo connection đúng
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, status);
+            ps.setInt(2, productId);
+
+            int rowsAffected = ps.executeUpdate();
+            System.out.println("Update products id=" + productId + " → rows affected: " + rowsAffected);  // <-- log này rất quan trọng
+
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            // Đóng resource đúng cách
+            try { if (ps != null) ps.close(); } catch (Exception ignored) {}
+            try { if (conn != null) conn.close(); } catch (Exception ignored) {}
+        }
+    }
+    public int getSoldQuantityByVariantId(int variantId) {
+        String sql = """
+        SELECT COALESCE(SUM(oi.quantity), 0)
+        FROM order_details oi
+        JOIN orders o ON oi.order_id = o.id
+        WHERE oi.product_variant_id = ?
+          AND o.status NOT IN ('Đã hủy', 'Hoàn hàng')
+    """;
+
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, variantId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    public Information getInformationByProductId(int productId) {
+        String sql = """
+        SELECT i.*
+        FROM products p
+        JOIN description d ON p.description_id = d.id
+        JOIN information i ON d.information_id = i.id
+        WHERE p.id = ?
+    """;
+
+        Connection connection = null;
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Information info = new Information();
+                info.setId(rs.getInt("id"));
+                info.setMaterial(rs.getString("material"));
+                info.setColor(rs.getString("color"));
+                info.setSize(rs.getString("size"));
+                info.setGuarantee(rs.getString("guarantee"));
+                return info;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public Description getDescriptionByProductId(int productId) {
+        String sql = """
+        SELECT d.*
+        FROM products p
+        JOIN description d ON p.description_id = d.id
+        WHERE p.id = ?
+    """;
+
+        Connection connection = null;
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Description d = new Description();
+                d.setId(rs.getInt("id"));
+                d.setIntroduce(rs.getString("introduce"));
+                d.setHighlights(rs.getString("highlight"));
+                d.setInformationId(rs.getInt("information_id"));
+                return d;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public List<Integer> getVariantIdsByProduct(int productId) {
+        List<Integer> ids = new ArrayList<>();
+        String sql = "SELECT id FROM product_variants WHERE product_id = ?";
+
+        Connection connection = null;
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ids.add(rs.getInt("id"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ids;
+    }public void deleteVariant(int variantId) {
+        String sql = "DELETE FROM product_variants WHERE id = ?";
+        Connection connection =null;
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, variantId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateFullProduct(Product p, Information info, Description desc) {
+
+        String sqlProduct = """
+        UPDATE products
+        SET name_product = ?, price = ?, category_id = ?, product_type_id = ?, source_id = ?
+        WHERE id = ?
+    """;
+
+        String sqlDesc = """
+        UPDATE description
+        SET introduce = ?, highlight = ?
+        WHERE id = ?
+    """;
+
+        String sqlInfo = """
+        UPDATE information
+        SET material = ?, color = ?, size = ?, guarantee = ?
+        WHERE id = ?
+    """;
+        Connection connection =null;
+
+        try {
+            connection.setAutoCommit(false);
+
+            // PRODUCT
+            try (PreparedStatement ps = connection.prepareStatement(sqlProduct)) {
+                ps.setString(1, p.getNameProduct());
+                ps.setDouble(2, p.getPrice());
+                ps.setInt(3, p.getCategoryId());
+                ps.setInt(4, p.getProductTypeId());
+                ps.setInt(5, p.getSourceId());
+                ps.setInt(6, p.getId());
+                ps.executeUpdate();
+            }
+
+            // DESCRIPTION
+            try (PreparedStatement ps = connection.prepareStatement(sqlDesc)) {
+                ps.setString(1, desc.getIntroduce());
+                ps.setString(2, desc.getHighlights());
+                ps.setInt(3, desc.getId());
+                ps.executeUpdate();
+            }
+
+            // INFORMATION
+            try (PreparedStatement ps = connection.prepareStatement(sqlInfo)) {
+                ps.setString(1, info.getMaterial());
+                ps.setString(2, info.getColor());
+                ps.setString(3, info.getSize());
+                ps.setString(4, info.getGuarantee());
+                ps.setInt(5, info.getId());
+                ps.executeUpdate();
+            }
+
+            connection.commit();
+            connection.setAutoCommit(true);
+
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+    }
+    public void updateVariant(int variantId, double price, int stock) {
+        String sql = """
+        UPDATE product_variants
+        SET variant_price = ?, inventory_quantity = ?
+        WHERE id = ?
+    """;
+
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setDouble(1, price);
+            ps.setInt(2, stock);
+            ps.setInt(3, variantId);
+
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
