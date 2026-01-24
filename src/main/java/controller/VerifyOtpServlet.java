@@ -16,8 +16,22 @@ public class VerifyOtpServlet extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-
         HttpSession session = request.getSession();
+
+// Trong VerifyOtpServlet.java, phần doPost
+        String action = request.getParameter("action");
+        if ("checkOnly".equals(action)) {
+            String inputOtp = request.getParameter("otp");
+            String sessionOtp = (String) session.getAttribute("OTP");
+
+            response.setContentType("application/json");
+            if (sessionOtp != null && sessionOtp.equals(inputOtp)) {
+                response.getWriter().write("{\"status\": \"success\"}");
+            } else {
+                response.getWriter().write("{\"status\": \"error\"}");
+            }
+            return; // Kết thúc xử lý
+        }
 
         String inputOtp = request.getParameter("otp");
 

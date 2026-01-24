@@ -1,5 +1,5 @@
 
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -18,70 +18,15 @@
 
 
 
+
 </head>
 <body>
 
 <div class="admin-container">
-    <header class="header">
-        <div class="logo-placeholder">
-            <img src="../img/logo.png" alt="Logo Modern Homes">
-            <p class="logo">HOME DECOR</p>
-        </div>
 
-        <div class="header-icons">
-
-            <div class="gmail-dropdown">
-                <i class="fa-solid fa-envelope gmail-icon"></i>
-
-                <div id="gmailMenuContent" class="dropdown-content gmail-content">
-                    <div class="dropdown-header">Gmail</div>
-                    <p class="no-messages-text">Không có Gmail nào.</p>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="view-all-link">Mở Gmail</a>
-                </div>
-            </div>
-            <div class="notification-dropdown">
-                <i class="fa-solid fa-bell notification-icon"></i>
-
-                <div id="notificationMenuContent" class="dropdown-content notification-content">
-                    <div class="dropdown-header">Thông Báo Mới (5)</div>
-                    <a href="#">Đơn hàng mới #1001</a>
-                    <a href="#">Sản phẩm hết hàng</a>
-                    <a href="#">Khách hàng mới đăng ký</a>
-                    <a href="#">Đơn hàng #1005 vừa được hủy bỏ</a>
-                    <a href="#">Cần duyệt 3 đánh giá sản phẩm mới</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="view-all-link">Xem tất cả</a>
-                </div>
-            </div>
-
-            <div class="user-dropdown">
-                <i class="fas fa-user-circle user-logo" ></i>
-
-                <div id="userMenuContent" class="dropdown-content">
-                    <a href="admin_thong_tin_tai_khoan.html"> Thông tin tài khoản</a>
-                    <a href="admin_doi_mat_khau.html"> Đổi mật khẩu</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="logout-link"> Đăng xuất</a>
-                </div>
-            </div>
-        </div>
-    </header>
-    <div class="main-wrapper">
-        <aside class="sidebar">
-            <nav class="sidebar-nav">
-                <ul>
-                    <li ><a href="../admin_homepage.jsp">Tổng quan</a></li>
-                    <li><a href="../admin_products.jsp"> Sản phẩm</a></li>
-                    <li><a href="../admin_product_type.jsp">Loại sản phẩm</a></li>
-                    <li><a href="admin_category.html"> Danh mục</a></li>
-                    <li class="active"><a href="#"> Đơn hàng</a></li>
-                    <li><a href="../admin_customer.jsp"> Khách hàng</a></li>
-                    <li><a href="../admin_profile.jsp"> Hồ sơ</a></li>
-                    <li><a href="../admin_setting.jsp"> Cài đặt</a></li>
-                </ul>
-            </nav>
-        </aside>
+        <%@ include file="admin_header.jsp" %>
+        <div class="main-wrapper">
+            <%@ include file="admin_sidebar.jsp" %>
         <main class="content">
             <div class="user-management-panel">
                 <h2 class="page-title">Quản Lý Đơn Hàng</h2>
@@ -236,6 +181,7 @@
                                             </div>
                                         </div> </div>
                                         <style>
+
                                             /* Khung bao ngoài tạo khoảng cách với các phần khác */
                                             .summary-horizontal-card {
                                                 display: flex;
@@ -296,6 +242,38 @@
                                             .total-final {
                                                 color: #e53e3e; /* Màu đỏ nổi bật cho tổng số tiền */
                                                 font-size: 18px;
+                                            }
+                                            /* Giới hạn chiều cao vùng chứa nội dung Modal */
+                                            .modal-body-scroll {
+                                                max-height: 400px; /* Giới hạn chiều cao bảng sản phẩm */
+                                                overflow-y: auto;  /* Hiện thanh cuộn nếu nội dung quá dài */
+                                                margin-bottom: 15px;
+                                                border: 1px solid #eee;
+                                                padding: 10px;
+                                                border-radius: 5px;
+                                            }
+
+                                            /* Thu gọn form cập nhật */
+                                            .update-form-container {
+                                                background: #f4f7f6;
+                                                padding: 10px 15px !important; /* Giảm padding */
+                                                border-radius: 8px;
+                                                margin-top: 10px !important;
+                                            }
+
+                                            .update-form-container form {
+                                                gap: 8px !important; /* Giảm khoảng cách giữa các phần tử trong form */
+                                            }
+
+                                            /* Sửa lại Modal để có thể cuộn toàn bộ hộp thoại nếu cần */
+                                            .modal {
+                                                overflow-y: auto;
+                                                padding: 20px 0;
+                                            }
+
+                                            .modal-content {
+                                                margin: 2% auto !important; /* Đẩy modal lên sát trên hơn */
+                                                width: 60% !important; /* Nới rộng chiều ngang một chút để tránh bị quá dài */
                                             }
                                         </style>
 

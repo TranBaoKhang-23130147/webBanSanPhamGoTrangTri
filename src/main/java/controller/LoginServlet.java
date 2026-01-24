@@ -46,7 +46,12 @@ public class LoginServlet extends HttpServlet {
             if ("Admin".equalsIgnoreCase(user.getRole())) {
                 // redirect to the admin homepage at the webapp root
                 response.sendRedirect(request.getContextPath() + "/admin_homepage.jsp");
-            } else {
+
+
+        } else if ("Staff".equalsIgnoreCase(user.getRole())) {
+            // Staff về trang dành riêng cho nhân viên (hoặc cùng trang admin nhưng bị giới hạn)
+            response.sendRedirect(request.getContextPath() + "/AdminProfileServlet");}
+            else {
                 // CHUYỂN HƯỚNG VỀ HOMEPAGE USER
                 response.sendRedirect(request.getContextPath() + "/HomeServlet");
             }

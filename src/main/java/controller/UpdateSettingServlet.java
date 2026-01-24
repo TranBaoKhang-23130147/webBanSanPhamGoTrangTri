@@ -108,6 +108,15 @@ public class UpdateSettingServlet extends HttpServlet {
         User updatedUser = userDao.getById(u.getId());
         session.setAttribute("LOGGED_USER", updatedUser);
 
-        resp.sendRedirect(req.getContextPath() + "/UpdateSettingServlet");
+        // Trong doPost của UpdateSettingServlet
+        String source = req.getParameter("source");
+
+        if ("admin_profile".equals(source)) {
+            // Quay lại trang Profile Admin (Sử dụng Admin ID trong session hoặc id cố định)
+            resp.sendRedirect(req.getContextPath() + "/AdminProfileServlet?msg=success");
+        } else {
+            // Mặc định cho các trường hợp khác
+            resp.sendRedirect(req.getContextPath() + "/UpdateSettingServlet?msg=success");
+        }
     }
 }

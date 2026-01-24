@@ -8,71 +8,18 @@
     <title>HOME DECOR - HỒ SƠ</title>
     <link rel="icon" type="image/png"  href="../img/logo.png" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/admin_profile_style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_profile_style.css">
+
+
 
 </head>
 <body>
 <div class="admin-container">
-    <header class="header">
-        <div class="logo-placeholder">
-            <img src="../img/logo.png" alt="Logo Modern Homes">
-            <p class="logo">HOME DECOR</p>
-        </div>
 
-        <div class="header-icons">
 
-            <div class="gmail-dropdown">
-                <i class="fa-solid fa-envelope gmail-icon"></i>
-
-                <div id="gmailMenuContent" class="dropdown-content gmail-content">
-                    <div class="dropdown-header">Gmail</div>
-                    <p class="no-messages-text">Không có Gmail nào.</p>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="view-all-link">Mở Gmail</a>
-                </div>
-            </div>
-            <div class="notification-dropdown">
-                <i class="fa-solid fa-bell notification-icon"></i>
-
-                <div id="notificationMenuContent" class="dropdown-content notification-content">
-                    <div class="dropdown-header">Thông Báo Mới (5)</div>
-                    <a href="#">Đơn hàng mới #1001</a>
-                    <a href="#">Sản phẩm hết hàng</a>
-                    <a href="#">Khách hàng mới đăng ký</a>
-                    <a href="#">Đơn hàng #1005 vừa được hủy bỏ</a>
-                    <a href="#">Cần duyệt 3 đánh giá sản phẩm mới</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="view-all-link">Xem tất cả</a>
-                </div>
-            </div>
-
-            <div class="user-dropdown">
-                <i class="fas fa-user-circle user-logo" ></i>
-
-                <div id="userMenuContent" class="dropdown-content">
-                    <a href="admin_thong_tin_tai_khoan.html"> Thông tin tài khoản</a>
-                    <a href="admin_doi_mat_khau.html"> Đổi mật khẩu</a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="logout-link"> Đăng xuất</a>
-                </div>
-            </div>
-        </div>
-    </header>
-    <div class="main-wrapper">
-        <aside class="sidebar">
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="../admin_homepage.jsp">Tổng quan</a></li>
-                    <li><a href="../admin_products.jsp"> Sản phẩm</a></li>
-                    <li><a href="../admin_product_type.jsp">Loại sản phẩm</a></li>
-                    <li><a href="admin_category.html"> Danh mục</a></li>
-                    <li><a href="admin_order.html"> Đơn hàng</a></li>
-                    <li><a href="../admin_customer.jsp"> Khách hàng</a></li>
-                    <li class="active"><a href="admin_profile.html"> Hồ sơ</a></li>
-                    <li><a href="../admin_setting.jsp"> Cài đặt</a></li>
-                </ul>
-            </nav>
-        </aside>
+        <%@ include file="admin_header.jsp" %>
+        <div class="main-wrapper">
+            <%@ include file="admin_sidebar.jsp" %>
 
         <main class="main-content">
             <div class="profile-header-section">
@@ -90,12 +37,9 @@
                             <c:out value="${admin.username}" default="Admin Name" />
                             <i class="fas fa-check-circle verified-icon"></i>
                         </h1>
-                        <p class="user-meta">
-                            <i class="fas fa-map-marker-alt"></i>
-                            ${not empty admin.address ? admin.address.province : "Việt Nam"} |
-                            <i class="fas fa-calendar-alt"></i>
-                            Tham gia <fmt:formatDate value="${admin.createAt}" pattern="MMMM 'năm' yyyy" />
-                        </p>
+                        <p><i class="fas fa-clock"></i> Đăng nhập lúc: <span id="loginTime"></span></p>
+
+                        </span>
                     </div>
                 </div>
             </div>
@@ -103,24 +47,16 @@
             <div class="profile-content-section">
                 <div class="profile-tabs">
                     <span class="tab-item active-tab">Hồ sơ</span>
-                    <span class="tab-item">Cài đặt</span>
                 </div>
 
-                <button class="edit-profile-btn"><i class="fas fa-edit"></i> Chỉnh sửa hồ sơ</button>
 
                 <div class="profile-details-wrapper">
 
                     <div class="profile-details-left">
-                        <h3 class="section-title">Giới Thiệu</h3>
 
                         <div class="info-group">
                             <label>Họ và tên:</label>
                             <p class="info-text">${admin.username}</p>
-                        </div>
-
-                        <div class="info-group">
-                            <label>Chức vụ: </label>
-                            <p class="info-text">${admin.role}</p>
                         </div>
 
                         <div class="info-group">
@@ -133,65 +69,95 @@
                             <p class="info-text">${admin.email}</p>
                         </div>
 
-                        <div class="info-group">
-                            <label>Ngày tạo tài khoản</label>
-                            <p class="info-text">
-                                <fmt:formatDate value="${admin.createAt}" pattern="dd.MM.yyyy" />
-                            </p>
-                        </div>
+<%--                        <div class="info-group">--%>
+<%--                            <label>Ngày tạo tài khoản</label>--%>
+<%--                            <p class="info-text">--%>
+<%--                                <fmt:formatDate value="${admin.createAt}" pattern="dd.MM.yyyy" />--%>
+<%--                            </p>--%>
+<%--                        </div>--%>
 
-                        <div class="info-group">
-                            <label>Địa chỉ</label>
-                            <p class="info-text">
-                                <c:choose>
-                                    <c:when test="${not empty admin.address}">
-                                        <%-- Gọi hàm getFullAddress() từ model Address --%>
-                                        ${admin.address.fullAddress}
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span style="color: #999;">Chưa cập nhật địa chỉ</span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </p>
-                        </div>
+<%--                        <div class="info-group">--%>
+<%--                            <label>Địa chỉ</label>--%>
+<%--                            <p class="info-text">--%>
+<%--                                <c:choose>--%>
+<%--                                    <c:when test="${not empty admin.address}">--%>
+<%--                                        ${admin.address.fullAddress}--%>
+<%--                                    </c:when>--%>
+<%--                                    <c:otherwise>--%>
+<%--                                        <span style="color: #999;">Chưa cập nhật địa chỉ</span>--%>
+<%--                                    </c:otherwise>--%>
+<%--                                </c:choose>--%>
+<%--                            </p>--%>
+<%--                        </div>--%>
                     </div>
 
                     <div class="profile-details-right">
-                        <h3 class="section-title">Thống Kê Nhanh</h3>
-                        <div class="quick-stats-grid">
-                            <div class="stat-item">
-                                <i class="fas fa-box"></i>
-                                <p class="stat-value">200</p>
-                                <p class="stat-label">Sản phẩm</p>
-                            </div>
-                            <div class="stat-item">
-                                <i class="fas fa-users"></i>
-                                <p class="stat-value">2</p>
-                                <p class="stat-label">Khách hàng</p>
-                            </div>
-                            <div class="stat-item">
-                                <i class="fas fa-shopping-cart"></i>
-                                <p class="stat-value">85</p>
-                                <p class="stat-label">Đơn hàng mới</p>
-                            </div>
-                            <div class="stat-item">
-                                <i class="fas fa-star"></i>
-                                <p class="stat-value">4.9/5</p>
-                                <p class="stat-label">Đánh giá TB</p>
-                            </div>
+                        <h3 class="section-title">Quyền Hạn Hệ Thống</h3>
+
+                        <div class="role-status-message ${admin.role eq 'Admin' ? 'msg-admin' : 'msg-staff'}">
+                            <c:choose>
+                                <%-- Sử dụng 'eq' và viết hoa đúng như Database --%>
+                                <c:when test="${admin.role eq 'Admin'}">
+                                    <i class="fas fa-crown"></i> <strong>Chào Admin!</strong> Bạn có tất cả mọi quyền hạn trong hệ thống.
+                                </c:when>
+                                <c:otherwise>
+                                    <i class="fas fa-info-circle"></i> <strong>Chào Staff!</strong> Bạn chỉ được phép xem và cập nhật trạng thái đơn hàng.
+                                </c:otherwise>
+                            </c:choose>
                         </div>
 
-                        <div class="dropdown-divider"></div>
-
-                        <h3 class="section-title">Liên Kết Nhanh</h3>
-                        <div class="share-link-copy">
-                            <p>Đường dẫn đến Trang Chủ Admin:</p>
-                            <div class="link-box">
-                                http://localhost:63342/webBanSanPhamGoTrangTri/html/homepage_admin.html
-                                <i class="fas fa-copy copy-icon"></i>
+                        <div class="permissions-container">
+                            <div class="perm-item granted">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Xem danh sách các mục trong hệ thống</span>
                             </div>
+
+                            <div class="perm-item granted">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Cập nhật trạng thái đơn hàng</span>
+                            </div>
+
+                            <c:choose>
+                                <c:when test="${admin.role == 'Admin'}">
+                                    <div class="perm-item granted">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Quản lý nhân sự (Thêm/Sửa/Xóa)</span>
+                                    </div>
+                                    <div class="perm-item granted">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Xem báo cáo & Tổng doanh thu</span>
+                                    </div>
+                                    <div class="perm-item granted">
+                                        <i class="fas fa-check-circle"></i>
+                                        <span>Toàn quyền Xóa dữ liệu </span>
+                                    </div>
+                                </c:when>
+
+                                <c:otherwise>
+                                    <div class="perm-item restricted">
+                                        <i class="fas fa-lock"></i>
+                                        <span>Quản lý nhân sự (Bị giới hạn)</span>
+                                    </div>
+                                    <div class="perm-item restricted">
+                                        <i class="fas fa-lock"></i>
+                                        <span>Quản lý sản phẩm & đơn hàng (Bị giới hạn)</span>
+                                    </div>
+                                    <div class="perm-item restricted">
+                                        <i class="fas fa-lock"></i>
+                                        <span>Quản lý loại sản phẩm, danh mục, nhà sản xuất (Bị giới hạn)</span>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
+
+
                     </div>
+
+                    <script>
+                        document.getElementById('loginTime').innerText = new Date().toLocaleTimeString();
+                    </script>
+
+
                 </div>
             </div>
         </main>

@@ -14,13 +14,23 @@ public class AdminProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Giả sử Admin ID là 1 (hoặc lấy từ session)
-        int adminId = 1;
+        HttpSession session = request.getSession();
+        User loggedUser = (User) session.getAttribute("LOGGED_USER");
+
+        // 2. Kiểm tra nếu chưa đăng nhập hoặc session hết hạn
+        if (loggedUser == null) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
+        }
+
+        // 3. Lấy ID của người dùng hiện tại (Ví dụ trong ảnh DB của bạn là ID = 2)
+        int currentId = loggedUser.getId();
 
         UserDao dao = new UserDao();
-        User admin = dao.getAdminProfile(adminId);
+        User adminData = dao.getAdminProfile(currentId);
 
-        // Gửi đối tượng admin sang JSP
-        request.setAttribute("admin", admin);
+        // 4. Gửi dữ liệu sang JSP
+        request.setAttribute("admin", adminData);
         request.getRequestDispatcher("admin_profile.jsp").forward(request, response);
     }
 

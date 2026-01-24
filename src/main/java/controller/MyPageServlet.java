@@ -5,10 +5,7 @@ import dao.PaymentDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import model.Address;
-import model.Order;
-import model.Payment;
-import model.User;
+import model.*;
 import dao.OrderDao;
 
 import java.io.IOException;
@@ -38,25 +35,43 @@ public class MyPageServlet extends HttpServlet {
             List<Payment> listPayments = paymentDao.getPaymentsByUserId(user.getId());
             request.setAttribute("listPayments", listPayments);
 
-        } else if ("don-hang".equals(tab)) {
-            // --- SỬA TẠI ĐÂY ---
-            OrderDao orderDao = new OrderDao();
-            // 1. Lấy danh sách đơn hàng (bao gồm danh sách chi tiết bên trong mỗi đơn)
-            List<Order> listO = orderDao.getOrdersByUserId(user.getId());
+         } else if ("don-hang".equals(tab)) {
+        OrderDao orderDao = new OrderDao();
+        // 1. Lấy tất cả đơn hàng của User để hiển thị và lọc
+        List<Order> allOrders = orderDao.getOrdersByUserId(user.getId());
 
-            // 2. Tính toán thống kê cho Dashboard đơn hàng
-            int countOrder = listO.size();
-            double totalSpent = 0;
-            for(Order o : listO) {
-                // Giả sử bạn có thuộc tính tổng tiền trong model Order hoặc tính từ chi tiết
-                totalSpent += o.getTotalAmount();
+        // 2. Lấy tham số lọc từ URL (Tất cả, Chờ xác nhận, v.v.)
+        String statusFilter = request.getParameter("status");
+        List<Order> displayList = new java.util.ArrayList<>();
+
+        // 3. Khai báo biến thống kê
+        int countQualifiedOrders = 0; // Đếm số đơn thỏa mãn (Đã giao + Đã thanh toán)
+        double totalSpent = 0;        // Tổng tiền của các đơn thỏa mãn
+
+        for (Order o : allOrders) {
+            // Nạp chi tiết sản phẩm cho từng đơn
+            o.setDetails(orderDao.getDetailsByOrderId(o.getId()));
+
+            // --- LOGIC THỐNG KÊ MỚI ---
+            // Chỉ tính vào "Tổng đơn hàng" và "Tổng tích lũy" nếu:
+            // Trạng thái đơn = "Đã giao" VÀ Trạng thái thanh toán = "Đã thanh toán"
+            if ("Đã giao".equals(o.getStatus()) && "Đã thanh toán".equals(o.getPaymentStatus())) {
+                countQualifiedOrders++;
+                totalSpent += o.getTotalOrder();
             }
 
-            request.setAttribute("listO", listO);
-            request.setAttribute("countOrder", countOrder);
-            request.setAttribute("totalSpent", totalSpent);
+            // Logic để lọc danh sách hiển thị phía dưới
+            if (statusFilter == null || statusFilter.isEmpty() || o.getStatus().equals(statusFilter)) {
+                displayList.add(o);
+            }
+        }
 
-        } else if ("dia-chi".equals(tab)) {
+        // 4. Đẩy dữ liệu ra JSP
+        request.setAttribute("listO", displayList);           // Danh sách hiển thị theo filter
+        request.setAttribute("countOrder", countQualifiedOrders); // Số lượng đơn thỏa mãn 2 điều kiện
+        request.setAttribute("totalSpent", totalSpent);       // Tổng tiền thỏa mãn 2 điều kiện
+    }
+    else if ("dia-chi".equals(tab)) {
             AddressDao dao = new AddressDao();
             List<Address> addresses = dao.getAddressesByUserId(user.getId()); // Dùng hàm mới đã chỉnh sửa
             request.setAttribute("addresses", addresses);
@@ -69,5 +84,23 @@ public class MyPageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String action = request.getParameter("action");
+        String orderIdStr = request.getParameter("orderId");
+        OrderDao orderDao = new OrderDao();
+
+        if (orderIdStr != null) {
+            int orderId = Integer.parseInt(orderIdStr);
+
+            if ("cancelOrder".equals(action)) {
+                // Thực hiện hủy đơn hàng
+                orderDao.updateStatusByUser(orderId, "Đã hủy");
+            } else if ("returnOrder".equals(action)) {
+                // Thực hiện yêu cầu hoàn hàng
+                orderDao.updateStatusByUser(orderId, "Hoàn hàng");
+            }
+        }
+
+        // Quay lại tab đơn hàng sau khi xử lý
+        response.sendRedirect("MyPageServlet?tab=don-hang");
     }
 }

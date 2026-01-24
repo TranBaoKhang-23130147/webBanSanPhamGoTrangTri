@@ -41,7 +41,8 @@
                         <tr>
                             <th class="col-id">ID</th>
                             <th class="col-name">Tên Nguồn Hàng</th>
-                            <th class="col-product-count">Số SP</th>
+                            <th class="col-product">Số Sản Phẩm</th>
+                            <th class="col-product-count">Tổng tồn kho </th>
                             <th class="col-actions">Thao tác</th>
                         </tr>
                         </thead>
@@ -50,6 +51,8 @@
                             <tr>
                                 <td class="col-id">${s.id}</td>
                                 <td class="col-name">${s.sourceName}</td>
+                                <td class="col-product"> 0</td>
+
                                 <td class="col-product-count">${s.totalInventory}</td>   <!-- ← sửa ở đây -->                                <td class="col-actions">
                                         <%-- Cập nhật hàm gọi: openSourceModal và deleteSource --%>
                                     <i class="fa-solid fa-pen-to-square"

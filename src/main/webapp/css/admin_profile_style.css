@@ -550,3 +550,92 @@ body {
 .gmail-dropdown:hover .dropdown-content {
     display: block;
 }
+.role-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-top: 5px;
+    color: white;
+}
+.role-admin { background-color: #e74c3c; } /* Màu đỏ cho Admin */
+.role-staff { background-color: #3498db; } /* Màu xanh cho Staff */
+
+
+/* Hộp thông báo quyền ở đầu */
+.role-status-message {
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.4;
+}
+
+.msg-admin {
+    background-color: #fff5f5;
+    color: #c53030;
+    border-left: 4px solid #f56565;
+}
+
+.msg-staff {
+    background-color: #ebf8ff;
+    color: #2b6cb0;
+    border-left: 4px solid #4299e1;
+}
+
+/* Danh sách quyền */
+.permissions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.perm-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+/* Hiệu ứng hover cho chuyên nghiệp */
+.perm-item:hover {
+    transform: translateX(5px);
+}
+
+.perm-item.granted {
+    background: #ffffff;
+    color: #2d3748;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border-color: #e2e8f0;
+}
+
+.perm-item.granted i {
+    color: #38a169; /* Xanh lá */
+}
+
+.perm-item.restricted {
+    background: #f7fafc;
+    color: #a0aec0;
+    border-color: #edf2f7;
+    /* Gạch ngang chữ cho Staff thấy quyền bị khóa */
+    text-decoration: line-through;
+    opacity: 0.8;
+}
+
+.perm-item.restricted i {
+    color: #cbd5e0; /* Màu xám icon khóa */
+}
+
+.text-success {
+    color: #38a169;
+    font-weight: bold;
+}
