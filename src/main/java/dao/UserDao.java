@@ -449,4 +449,21 @@ public List<User> getAllCustomers() {
         return false;
     }
 
+    public boolean adminInsertUser(String username, String email, String phone, String password, String role) {
+        String sql = "INSERT INTO users (full_name, email, phone, password, role, status, createAt) VALUES (?, ?, ?, ?, ?, 'Active', NOW())";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, username);
+            ps.setString(2, email);
+            ps.setString(3, phone);
+            ps.setString(4, password); // Nên dùng mã hóa BCrypt nếu cần
+            ps.setString(5, role);
+
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

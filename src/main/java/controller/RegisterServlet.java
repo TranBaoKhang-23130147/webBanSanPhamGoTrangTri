@@ -17,7 +17,26 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
+        // Thêm đoạn này vào đầu hàm doPost của RegisterServlet.java
+        String action = request.getParameter("action");
+        if ("sendOtp".equals(action)) {
+            String email = request.getParameter("email");
+            String otp = String.valueOf((int) (Math.random() * 900000 + 100000));
 
+            try {
+                EmailUtil.sendOTP(email, otp);
+                HttpSession session = request.getSession();
+                session.setAttribute("OTP", otp);
+                session.setAttribute("OTP_TIME", System.currentTimeMillis());
+
+                // Trả về trạng thái OK để AJAX nhận diện thành công
+                response.setStatus(HttpServletResponse.SC_OK);
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
+            return; // QUAN TRỌNG: Kết thúc xử lý tại đây, không chạy xuống phần validate đăng ký
+        }
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
