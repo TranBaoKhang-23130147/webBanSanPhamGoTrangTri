@@ -53,7 +53,9 @@
                             <tr>
                                 <td class="col-id">${pt.id}</td>
                                 <td class="col-name">${pt.productTypeName}</td>
-                                <td class="col-product"> 0</td>
+                                <td class="col-product">
+                                        ${productCountMap[pt.id] != null ? productCountMap[pt.id] : 0}
+                                </td>
 
                                 <td class="col-product-count">${pt.totalInventory}</td>   <!-- ← sửa ở đây -->
                                 <td class="col-actions">

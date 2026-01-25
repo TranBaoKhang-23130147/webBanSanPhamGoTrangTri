@@ -51,7 +51,9 @@
                             <tr>
                                 <td class="col-id">${s.id}</td>
                                 <td class="col-name">${s.sourceName}</td>
-                                <td class="col-product"> 0</td>
+                                <td class="col-product">
+                                        ${productCountMap[s.id] != null ? productCountMap[s.id] : 0}
+                                </td>
 
                                 <td class="col-product-count">${s.totalInventory}</td>   <!-- ← sửa ở đây -->                                <td class="col-actions">
                                         <%-- Cập nhật hàm gọi: openSourceModal và deleteSource --%>

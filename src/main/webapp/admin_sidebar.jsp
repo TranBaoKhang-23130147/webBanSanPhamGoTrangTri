@@ -11,14 +11,14 @@
                 <a href="${pageContext.request.contextPath}/products">sản phẩm</a>
             </li>
             <li class="${activePage == 'productType' ? 'active' : ''}">
-                <a href="${pageContext.request.contextPath}/product-type-manager">Loại sản phẩm</a>
+                <a href="${pageContext.request.contextPath}/AdminProductTypeServlet">Loại sản phẩm</a>
             </li>
             <li class="${activePage == 'category' ? 'active' : ''}">
-                <a href="${pageContext.request.contextPath}/category-manager"> Danh mục</a>
+                <a href="${pageContext.request.contextPath}/AdminCountProductCategoryServlet"> Danh mục</a>
             </li>
 
             <li class="${activePage == 'source' ? 'active' : ''}">
-                <a href="${pageContext.request.contextPath}/source-manager"> Nhà cung cấp</a>
+                <a href="${pageContext.request.contextPath}/AdminCountProductSourceServlet"> Nhà cung cấp</a>
             </li>
             <li class="${activePage == ' ' ? 'active' : ''}">
                 <a href="${pageContext.request.contextPath}/admin-orders">don hang </a>

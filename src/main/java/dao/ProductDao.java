@@ -1,14 +1,13 @@
 package dao;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import model.Images;
 import model.Product;
 import model.Reviews;
 import java.sql.*;
+
 import model.*;
 
 import static dao.DBContext.getConnection;
@@ -247,9 +246,6 @@ public class ProductDao {
         }
         return list;
     }
-
-    // 3. Lấy danh sách biến thể (Màu sắc & Kích thước) kèm tên từ bảng Color/Size
-    // 3. Lấy danh sách biến thể (Màu sắc & Kích thước) kèm tên và MÃ MÀU
     public List<ProductVariants> getProductVariants(int productId) {
         List<ProductVariants> list = new ArrayList<>();
         String sql = """
@@ -1477,6 +1473,83 @@ public class ProductDao {
             e.printStackTrace();
         }
     }
+
+    public Map<Integer, Integer> countProductByType() {
+        Map<Integer, Integer> map = new HashMap<>();
+
+        String sql = """
+        SELECT product_type_id, COUNT(*) AS total
+        FROM products
+        WHERE isActive = 1
+        GROUP BY product_type_id
+    """;
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                map.put(
+                        rs.getInt("product_type_id"),
+                        rs.getInt("total")
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+    public Map<Integer, Integer> countProductByCategory() {
+        Map<Integer, Integer> map = new HashMap<>();
+
+        String sql = """
+        SELECT category_id, COUNT(*) AS total
+        FROM products
+        WHERE isActive = 1
+        GROUP BY category_id
+    """;
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                map.put(
+                        rs.getInt("category_id"),
+                        rs.getInt("total")
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+    public Map<Integer, Integer> countProductBySource() {
+        Map<Integer, Integer> map = new HashMap<>();
+
+        String sql = """
+        SELECT source_id, COUNT(*) AS total
+        FROM products
+        WHERE isActive = 1
+        GROUP BY source_id
+    """;
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                map.put(
+                        rs.getInt("source_id"),
+                        rs.getInt("total")
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
 
 
 }
