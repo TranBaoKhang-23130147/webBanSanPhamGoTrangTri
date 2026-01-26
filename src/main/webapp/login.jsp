@@ -34,11 +34,13 @@
         <div class="form-container sign-up-container">
         <form action="<%= request.getContextPath() %>/RegisterServlet" method="post">
              <h1>Đăng ký</h1>
-             <div class="social-container">
-                 <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                 <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                 <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-             </div>
+            <div class="social-container">
+                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=http://localhost:8080/demo/google-login&response_type=code&client_id=1089942878583-pq5ui5eubco8s2lav650ln4gn19gogfe.apps.googleusercontent.com&approval_prompt=force" class="social">
+                    <i class="fab fa-google-plus-g"></i>
+                </a>
+                <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+            </div>
              <span>hoặc sử dụng email của bạn để đăng ký</span>
              <div class="infield">
                  <input id="reg_username" type="text" name="username" placeholder="Tên" required/>
@@ -67,7 +69,9 @@
              <h1></h1>
              <div class="social-container">
                  <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                 <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                 <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=http://localhost:8080/demo/google-login&response_type=code&client_id=1089942878583-pq5ui5eubco8s2lav650ln4gn19gogfe.apps.googleusercontent.com&approval_prompt=force" class="social">
+                     <i class="fab fa-google-plus-g"></i>
+                 </a>
                  <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
              </div>
              <span>hoặc sử dụng tài khoản của bạn</span>

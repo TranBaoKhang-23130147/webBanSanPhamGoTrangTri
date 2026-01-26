@@ -401,45 +401,7 @@ public List<User> getAllCustomers() {
         } catch (Exception e) { e.printStackTrace(); }
         return null;
     }
-//    public boolean deleteUser(int userId) throws Exception {
-//
-//        String deleteAddressSQL = "DELETE FROM addresses WHERE user_id = ?";
-//        String removeAvatarSQL = "UPDATE users SET avatar_id = NULL WHERE id = ?";
-//        String deleteUserSQL = "DELETE FROM users WHERE id = ?";
-//
-//        try (Connection conn = DBContext.getConnection()) {
-//            conn.setAutoCommit(false); // TRANSACTION
-//
-//            try (
-//                    PreparedStatement psAddr = conn.prepareStatement(deleteAddressSQL);
-//                    PreparedStatement psAvatar = conn.prepareStatement(removeAvatarSQL);
-//                    PreparedStatement psUser = conn.prepareStatement(deleteUserSQL)
-//            ) {
-//                // 1. Xóa địa chỉ
-//                psAddr.setInt(1, userId);
-//                psAddr.executeUpdate();
-//
-//                // 2. Gỡ avatar
-//                psAvatar.setInt(1, userId);
-//                psAvatar.executeUpdate();
-//
-//                // 3. Xóa user
-//                psUser.setInt(1, userId);
-//                int rows = psUser.executeUpdate();
-//
-//                conn.commit();
-//                return rows > 0;
-//
-//            } catch (Exception e) {
-//                conn.rollback();
-//                throw e;
-//            }
-//        }
-//    }
-    /**
-     * Xóa người dùng (bao gồm xóa địa chỉ và gỡ liên kết ảnh đại diện)
-     * Sử dụng Transaction để đảm bảo tính toàn vẹn dữ liệu.
-     */
+
     public boolean deleteUser(int userId) throws Exception {
         String deleteAddressSQL = "DELETE FROM addresses WHERE user_id = ?";
         String removeAvatarSQL = "UPDATE users SET avatar_id = NULL WHERE id = ?";
@@ -544,24 +506,7 @@ public List<User> getAllCustomers() {
         }
         return false;
     }
-//
-//    public boolean adminInsertUser(String username, String email, String phone, String password, String role) {
-//        String sql = "INSERT INTO users (full_name, email, phone, password, role, status, createAt) VALUES (?, ?, ?, ?, ?, 'Active', NOW())";
-//        try (Connection conn = DBContext.getConnection();
-//             PreparedStatement ps = conn.prepareStatement(sql)) {
-//
-//            ps.setString(1, username);
-//            ps.setString(2, email);
-//            ps.setString(3, phone);
-//            ps.setString(4, password); // Nên dùng mã hóa BCrypt nếu cần
-//            ps.setString(5, role);
-//
-//            return ps.executeUpdate() > 0;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
+
 public boolean adminInsertUser(String username, String email, String phone, String password, String role) {
     String sql = "INSERT INTO users (full_name, email, phone, password, role, status, createAt) VALUES (?, ?, ?, ?, ?, 'Active', NOW())";
     try (Connection conn = DBContext.getConnection();
@@ -810,5 +755,54 @@ public boolean adminInsertUser(String username, String email, String phone, Stri
             e.printStackTrace();
         }
     }
+    public User checkLoginGoogle(String email) {
+        // Sử dụng LEFT JOIN để lấy luôn ảnh đại diện nếu có
+        String sql = """
+        SELECT u.*, i.urlImage 
+        FROM users u 
+        LEFT JOIN images i ON u.avatar_id = i.id 
+        WHERE u.email = ?
+    """;
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    User user = new User();
+                    // LẤY ĐỦ THÌ MỚI HIỆN ĐỦ
+                    user.setId(rs.getInt("id"));
+                    user.setUsername(rs.getString("full_name")); // Đây là tên bạn đã cập nhật
+                    user.setDisplayName(rs.getString("display_name"));
+                    user.setEmail(rs.getString("email"));
+                    user.setPhone(rs.getString("phone"));       // Đây là số điện thoại bạn đã cập nhật
+                    user.setRole(rs.getString("role"));
+                    user.setStatus(rs.getString("status"));
+                    user.setAvatarUrl(rs.getString("urlImage")); // URL ảnh
 
+                    return user;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public boolean insertUserFromGoogle(User user) {
+        // Sửa 'fullname' thành 'full_name' cho khớp với bảng users của bạn
+        String sql = "INSERT INTO users (email, full_name, role, status, password, createAt) VALUES (?, ?, ?, ?, ?, NOW())";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getEmail());
+            ps.setString(2, user.getUsername());
+            ps.setString(3, user.getRole());
+            ps.setString(4, user.getStatus());
+            ps.setString(5, user.getPassword());
+
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
+
