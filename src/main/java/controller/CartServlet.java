@@ -67,7 +67,24 @@ public class CartServlet extends HttpServlet {
                 int quantity  = Integer.parseInt(quantityRaw);
 
 
-                System.out.println("AJAX UPDATE: Tìm variantId = " + variantId + " trong giỏ có " + cart.size() + " items");
+                // --- CHÈN CODE KIỂM TRA TỒN KHO VÀO ĐÂY ---
+                ProductDao pDao = new ProductDao();
+                ProductVariants dbVariant = pDao.getVariantById(variantId);
+
+                if (dbVariant == null) {
+                    response.setStatus(404);
+                    response.getWriter().write("{\"success\":false, \"message\":\"Biến thể không tồn tại\"}");
+                    return;
+                }
+
+                if (quantity > dbVariant.getInventory_quantity()) {
+                    response.setStatus(400); // Trả về lỗi 400 để Ajax bắt được
+                    response.getWriter().write("{\"success\":false, \"message\":\"Số lượng vượt quá tồn kho hiện có (" + dbVariant.getInventory_quantity() + ")\"}");
+                    response.getWriter().flush();
+                    return; // Dừng xử lý, không cập nhật giỏ hàng nữa
+                }
+
+
 
                 boolean found = false;
                 for (CartItem item : cart) {
@@ -183,39 +200,49 @@ public class CartServlet extends HttpServlet {
             case "add": {
                 int productId = Integer.parseInt(request.getParameter("productId"));
                 int variantId = Integer.parseInt(request.getParameter("variantId"));
-                int quantity = Integer.parseInt(request.getParameter("quantity"));
+                int quantityToAdd = Integer.parseInt(request.getParameter("quantity"));
+
+                ProductVariants variant = dao.getVariantById(variantId);
+                int inventory = variant.getInventory_quantity(); // Lấy tồn kho từ DB
 
                 boolean isExisted = false;
                 for (CartItem item : cart) {
                     if (item.getVariant().getId() == variantId) {
-                        item.setQuantity(item.getQuantity() + quantity);
+                        int newTotalQty = item.getQuantity() + quantityToAdd;
+
+                        // KIỂM TRA TỒN KHO TẠI ĐÂY
+                        if (newTotalQty > inventory) {
+                            session.setAttribute("ERROR_CART", "Không thể thêm! Tổng số lượng trong giỏ (" + newTotalQty + ") vượt quá tồn kho (" + inventory + ")");
+                            response.sendRedirect("detail?id=" + productId);
+                            return;
+                        }
+
+                        item.setQuantity(newTotalQty);
                         isExisted = true;
                         break;
                     }
                 }
 
                 if (!isExisted) {
+                    // Kiểm tra cho sản phẩm mới thêm lần đầu
+                    if (quantityToAdd > inventory) {
+                        session.setAttribute("ERROR_CART", "Số lượng yêu cầu vượt quá tồn kho hiện có!");
+                        response.sendRedirect("detail?id=" + productId);
+                        return;
+                    }
+
                     Product product = dao.getProductById(productId);
-                    ProductVariants variant = dao.getVariantById(variantId);
-
-                    // Debug thêm khi add mới
-                    System.out.println("ADD NEW ITEM: variantId = " + variantId
-                            + ", price = " + (variant != null ? variant.getVariant_price() : "NULL"));
-
                     CartItem newItem = new CartItem();
                     newItem.setProduct(product);
                     newItem.setVariant(variant);
-                    newItem.setQuantity(quantity);
+                    newItem.setQuantity(quantityToAdd);
                     cart.add(newItem);
                 }
 
                 session.setAttribute("CART", cart);
-
-                session.setAttribute("ADD_CART_SUCCESS", "Đã thêm sản phẩm vào giỏ hàng thành công!");
-
+                session.setAttribute("ADD_CART_SUCCESS", "Đã thêm sản phẩm vào giỏ hàng!");
                 response.sendRedirect("detail?id=" + productId);
                 return;
-
             }
 
             case "update": {

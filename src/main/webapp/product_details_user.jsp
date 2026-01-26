@@ -313,27 +313,33 @@
             btn.style.opacity = exists ? "1" : "0.3";
         });
 
-        // 3. Cập nhật Giá và Số lượng còn lại
         const activeVariant = allVariants.find(v => v.colorId === selectedColorId && v.sizeId === selectedSizeId);
-        const stockDisplay = document.querySelector('.product-info p strong'); // Thẻ hiển thị số lượng
+        const stockDisplay = document.querySelector('.product-info p strong');
+        const qtyInput = document.getElementById('qtyInput'); // Ô nhập số lượng
 
         if (activeVariant) {
-            // CẬP NHẬT: Lấy số lượng của riêng biến thể đó thay vì tổng sản phẩm
             stockDisplay.innerText = activeVariant.stock;
 
-            // Kiểm tra nếu biến thể đó thực sự bằng 0 thì mới hiện "Hết hàng"
+            // CẬP NHẬT TẠI ĐÂY: Gán giới hạn max cho ô input
+            qtyInput.max = activeVariant.stock;
+
+            // Nếu số lượng hiện tại đang lớn hơn kho (do đổi biến thể), tự động giảm về max
+            if (parseInt(qtyInput.value) > activeVariant.stock) {
+                qtyInput.value = activeVariant.stock;
+            }
+
             if (activeVariant.stock <= 0) {
                 stockDisplay.style.color = "red";
                 stockDisplay.innerText = "Hết hàng";
+                qtyInput.value = 0; // Hết hàng thì để 0
                 document.querySelector('.add-to-cart').disabled = true;
             } else {
                 stockDisplay.style.color = "inherit";
                 document.querySelector('.add-to-cart').disabled = false;
             }
         } else {
-            // Nếu chưa chọn đủ cặp Màu + Size, hiển thị tổng số lượng ban đầu
             stockDisplay.innerText = "${p.totalQuantity}";
-            stockDisplay.style.color = "inherit";
+            qtyInput.max = 100; // Reset về mặc định nếu chưa chọn biến thể
         }
     }
     function submitAddToCart() {
