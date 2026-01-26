@@ -1,6 +1,7 @@
 package dao;
 
 import model.Address;
+import model.Reviews;
 import model.User;
 import utils.PasswordUtils;
 
@@ -739,4 +740,75 @@ public boolean adminInsertUser(String username, String email, String phone, Stri
         } catch (Exception e) { e.printStackTrace(); }
         return false;
     }
+    public List<Reviews> getUniqueProductsToReview(int orderId) {
+
+        List<Reviews> list = new ArrayList<>();
+
+        String sql = """
+        SELECT DISTINCT p.id
+        FROM order_details od
+        JOIN products p ON od.product_id = p.id
+        WHERE od.order_id = ?
+    """;
+
+        try (Connection con = DBContext.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Reviews r = new Reviews();
+                r.setProductId(rs.getInt(1));
+                list.add(r);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+
+    // 2. Phương thức lưu đánh giá vào DB
+    public boolean insertReview(Reviews r) {
+
+        String sql = """
+        INSERT INTO reviews(user_id, product_id, rating, comment)
+        VALUES(?,?,?,?)
+    """;
+
+        try (Connection con = DBContext.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, r.getUserId());
+            ps.setInt(2, r.getProductId());
+            ps.setInt(3, r.getRating());
+            ps.setString(4, r.getComment());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+
+}public void updateOrderRatedStatus(int orderId, boolean status) {
+
+        String sql = "UPDATE orders SET is_rated=? WHERE id=?";
+
+        try (Connection con = DBContext.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setBoolean(1, status);
+            ps.setInt(2, orderId);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
