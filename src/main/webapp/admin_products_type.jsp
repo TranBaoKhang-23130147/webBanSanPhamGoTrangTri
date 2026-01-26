@@ -43,7 +43,7 @@
                             <th class="col-id">ID</th>
                             <th class="col-name">Tên Loại Sản Phẩm</th>
                             <th class="col-product">Số Sản Phẩm</th>
-                            <th class="col-product-count">Tổng tồn kho </th>
+<%--                            <th class="col-product-count">Tổng tồn kho </th>--%>
                             <th class="col-actions">Thao tác</th>
                         </tr>
                         </thead>
@@ -57,7 +57,7 @@
                                         ${productCountMap[pt.id] != null ? productCountMap[pt.id] : 0}
                                 </td>
 
-                                <td class="col-product-count">${pt.totalInventory}</td>   <!-- ← sửa ở đây -->
+<%--                                <td class="col-product-count">${pt.totalInventory}</td>   <!-- ← sửa ở đây -->--%>
                                 <td class="col-actions">
                                     <i class="fa-solid fa-pen-to-square"
                                        onclick="editProductType('${pt.id}', '${pt.productTypeName}')"></i>

@@ -80,9 +80,9 @@
                 </span>
                                     </td>
                                     <td class="col-actions">
-                                        <i class="fa-solid fa-pen-to-square"
-                                           onclick="location.href='edit-customer?id=${u.id}'"
-                                           style="cursor:pointer;"></i>
+<%--                                        <i class="fa-solid fa-pen-to-square"--%>
+<%--                                           onclick="location.href='edit-customer?id=${u.id}'"--%>
+<%--                                           style="cursor:pointer;"></i>--%>
                                         <i class="fa-solid fa-trash-can"
                                            onclick="deleteUser('${u.id}', '${u.displayName}')"
                                            style="cursor:pointer; color:red; margin-left:10px;"></i>

@@ -1,6 +1,7 @@
 package dao;
 
 import model.Address;
+import model.Reviews;
 import model.User;
 import utils.PasswordUtils;
 
@@ -22,13 +23,14 @@ public class UserDao {
      * @return Đối tượng User nếu đăng nhập thành công, ngược lại trả về null.
      */
     public User checkLogin(String email, String password) {
-        // SỬA: Chỉ select theo email, không đưa password vào query SQL
+        // SỬA: Sử dụng LEFT JOIN để lấy thêm cột urlImage từ bảng images
         String sql = """
-        SELECT id, full_name, display_name, birth_date,
-               email, password, phone, gender, avatar_id,
-               role, status, createAt
-        FROM users
-        WHERE email = ?
+    SELECT u.id, u.full_name, u.display_name, u.birth_date,
+           u.email, u.password, u.phone, u.gender, u.avatar_id,
+           u.role, u.status, u.createAt, i.urlImage
+    FROM users u
+    LEFT JOIN images i ON u.avatar_id = i.id
+    WHERE u.email = ?
     """;
 
         try (Connection conn = DBContext.getConnection();
@@ -40,7 +42,7 @@ public class UserDao {
                 if (rs.next()) {
                     String hashedPasswordFromDB = rs.getString("password");
 
-                    // KIỂM TRA MẬT KHẨU Ở ĐÂY
+                    // KIỂM TRA MẬT KHẨU
                     if (PasswordUtils.checkPassword(password, hashedPasswordFromDB)) {
                         User u = new User();
                         u.setId(rs.getInt("id"));
@@ -50,7 +52,13 @@ public class UserDao {
                         u.setEmail(rs.getString("email"));
                         u.setPhone(rs.getString("phone"));
                         u.setGender(rs.getString("gender"));
+
+                        // Lấy ID ảnh (dạng số)
                         u.setAvatarId(rs.getObject("avatar_id", Integer.class));
+
+                        // QUAN TRỌNG: Lấy URL ảnh từ bảng images để hiển thị ở Sidebar
+                        u.setAvatarUrl(rs.getString("urlImage"));
+
                         u.setRole(rs.getString("role"));
                         u.setStatus(rs.getString("status"));
                         u.setCreateAt(rs.getDate("createAt"));
@@ -330,6 +338,23 @@ public boolean updatePasswordByEmail(String email, String newPassword) {
     }
     return false;
 }
+    public boolean updatePasswordById(int userId, String newPassword) {
+        String sql = "UPDATE users SET password = ? WHERE id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            // Băm mật khẩu mới bằng PasswordUtils (giống logic đổi theo email của bạn)
+            String hashedPassword = PasswordUtils.hashPassword(newPassword);
+
+            ps.setString(1, hashedPassword);
+            ps.setInt(2, userId);
+
+            return ps.executeUpdate() == 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 //    hien thi ng dung admin
 public List<User> getAllCustomers() {
     List<User> list = new ArrayList<>();
@@ -493,22 +518,7 @@ public List<User> getAllCustomers() {
         return list;
     }
 
-    public boolean updateUserProfile(User u) {
-        String sql = "UPDATE users SET full_name=?, display_name=?, phone=?, gender=?, birth_date=? WHERE id=?";
-        try (Connection conn = DBContext.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, u.getUsername());    // full_name
-            ps.setString(2, u.getDisplayName()); // display_name
-            ps.setString(3, u.getPhone());
-            ps.setString(4, u.getGender());
-            ps.setDate(5, (java.sql.Date) u.getBirthDate());
-            ps.setInt(6, u.getId());
-            return ps.executeUpdate() > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+
     public Integer getFirstAdminId() {
         String sql = "SELECT id FROM users WHERE role = 'Admin' LIMIT 1";
         try (Connection conn = DBContext.getConnection();
@@ -569,4 +579,236 @@ public boolean adminInsertUser(String username, String email, String phone, Stri
     }
     return false;
 }
+    /**
+     * Lấy hoặc tạo mới ID ảnh từ bảng images dựa trên urlImage
+     */
+    public Integer getImageIdByUrl(String url) {
+        if (url == null || url.trim().isEmpty()) {
+            System.out.println("getImageIdByUrl: URL null hoặc rỗng, trả về null");
+            return null; // Hoặc trả về ID ảnh mặc định nếu bạn có
+        }
+
+        String sqlSelect = "SELECT id FROM images WHERE urlImage = ?";
+        String sqlInsert = "INSERT INTO images (urlImage) VALUES (?)";
+
+        try (Connection conn = DBContext.getConnection()) {
+            // 1. Kiểm tra xem URL đã tồn tại chưa
+            try (PreparedStatement psSelect = conn.prepareStatement(sqlSelect)) {
+                psSelect.setString(1, url.trim());
+                try (ResultSet rs = psSelect.executeQuery()) {
+                    if (rs.next()) {
+                        int id = rs.getInt("id");
+                        System.out.println("getImageIdByUrl: Tìm thấy URL tồn tại, ID = " + id);
+                        return id;
+                    }
+                }
+            }
+
+            // 2. Insert mới nếu chưa có
+            try (PreparedStatement psInsert = conn.prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                psInsert.setString(1, url.trim());
+                psInsert.executeUpdate();
+
+                try (ResultSet generatedKeys = psInsert.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int newId = generatedKeys.getInt(1);
+                        System.out.println("getImageIdByUrl: Insert mới thành công, ID mới = " + newId);
+                        return newId;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Lỗi getImageIdByUrl cho URL '" + url + "': " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        System.out.println("getImageIdByUrl: Lỗi, trả về ID mặc định 1");
+        return 1; // ID mặc định nếu có lỗi
+    }
+
+    /**
+     * Lấy User từ DB theo ID, lấy avatar_url trực tiếp từ cột avatar_url
+     */
+    public User getUserById(int id) {
+        // Sử dụng LEFT JOIN để lấy URL ảnh từ bảng images
+        String sql = "SELECT u.*, i.urlImage FROM users u " +
+                "LEFT JOIN images i ON u.avatar_id = i.id WHERE u.id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    User u = new User();
+                    u.setId(rs.getInt("id"));
+                    u.setUsername(rs.getString("full_name"));
+                    u.setDisplayName(rs.getString("display_name"));
+                    u.setPhone(rs.getString("phone"));
+                    u.setGender(rs.getString("gender"));
+                    u.setBirthDate(rs.getDate("birth_date"));
+                    u.setEmail(rs.getString("email"));
+                    u.setAvatarId(rs.getInt("avatar_id"));
+                    u.setAvatarUrl(rs.getString("urlImage")); // Lấy URL thực tế ở đây
+                    return u;
+                }
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return null;
+    }
+
+    /**
+     * Update profile user, lưu cả avatar_id và avatar_url trực tiếp vào DB
+     */
+//    public boolean updateUserProfile(User u) {
+//        String sql = """
+//        UPDATE users
+//        SET full_name    = ?,
+//            display_name = ?,
+//            phone        = ?,
+//            gender       = ?,
+//            birth_date   = ?,
+//            avatar_id    = ?,
+//            avatar_url   = ?    -- lưu URL trực tiếp vào DB
+//        WHERE id = ?
+//    """;
+//
+//        try (Connection conn = DBContext.getConnection();
+//             PreparedStatement ps = conn.prepareStatement(sql)) {
+//
+//            ps.setString(1, u.getUsername());  // sửa thành getFullName() để khớp schema
+//            ps.setString(2, u.getDisplayName());
+//            ps.setString(3, u.getPhone());
+//            ps.setString(4, u.getGender());
+//
+//            if (u.getBirthDate() != null) {
+//                ps.setDate(5, new java.sql.Date(u.getBirthDate().getTime()));
+//            } else {
+//                ps.setNull(5, java.sql.Types.DATE);
+//            }
+//
+//            if (u.getAvatarId() != null) {
+//                ps.setInt(6, u.getAvatarId());
+//            } else {
+//                ps.setNull(6, java.sql.Types.INTEGER);
+//            }
+//
+//            // Lưu avatar_url trực tiếp vào DB
+//            if (u.getAvatarUrl() != null && !u.getAvatarUrl().trim().isEmpty()) {
+//                ps.setString(7, u.getAvatarUrl().trim());
+//            } else {
+//                ps.setNull(7, java.sql.Types.VARCHAR);
+//            }
+//
+//            ps.setInt(8, u.getId());
+//
+//            int rows = ps.executeUpdate();
+//            System.out.println("updateUserProfile: Updated rows = " + rows
+//                    + " | avatar_id = " + u.getAvatarId()
+//                    + " | avatar_url = " + u.getAvatarUrl());
+//            return rows > 0;
+//
+//        } catch (Exception e) {
+//            System.err.println("Lỗi updateUserProfile cho user ID " + u.getId() + ": " + e.getMessage());
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
+    public boolean updateUserProfile(User u) {
+        // Câu lệnh SQL phải cập nhật avatar_id
+        String sql = "UPDATE users SET full_name=?, display_name=?, phone=?, gender=?, birth_date=?, avatar_id=? WHERE id=?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, u.getUsername());
+            ps.setString(2, u.getDisplayName());
+            ps.setString(3, u.getPhone());
+            ps.setString(4, u.getGender());
+
+            if (u.getBirthDate() != null) {
+                ps.setDate(5, new java.sql.Date(u.getBirthDate().getTime()));
+            } else {
+                ps.setNull(5, java.sql.Types.DATE);
+            }
+
+            // Lưu avatar_id (khóa ngoại trỏ sang bảng images)
+            if (u.getAvatarId() != null && u.getAvatarId() > 0) {
+                ps.setInt(6, u.getAvatarId());
+            } else {
+                ps.setNull(6, java.sql.Types.INTEGER);
+            }
+
+            ps.setInt(7, u.getId());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) { e.printStackTrace(); }
+        return false;
+    }
+    public List<Reviews> getUniqueProductsToReview(int orderId) {
+
+        List<Reviews> list = new ArrayList<>();
+
+        String sql = """
+        SELECT DISTINCT p.id
+        FROM order_details od
+        JOIN products p ON od.product_id = p.id
+        WHERE od.order_id = ?
+    """;
+
+        try (Connection con = DBContext.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Reviews r = new Reviews();
+                r.setProductId(rs.getInt(1));
+                list.add(r);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+
+    // 2. Phương thức lưu đánh giá vào DB
+    public boolean insertReview(Reviews r) {
+
+        String sql = """
+        INSERT INTO reviews(user_id, product_id, rating, comment)
+        VALUES(?,?,?,?)
+    """;
+
+        try (Connection con = DBContext.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, r.getUserId());
+            ps.setInt(2, r.getProductId());
+            ps.setInt(3, r.getRating());
+            ps.setString(4, r.getComment());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+
+}public void updateOrderRatedStatus(int orderId, boolean status) {
+
+        String sql = "UPDATE orders SET is_rated=? WHERE id=?";
+
+        try (Connection con = DBContext.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setBoolean(1, status);
+            ps.setInt(2, orderId);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

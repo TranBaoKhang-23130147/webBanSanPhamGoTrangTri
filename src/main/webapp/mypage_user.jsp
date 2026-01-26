@@ -41,9 +41,16 @@
     <div class="sidebar">
         <div class="user-info">
             <div class="avatar-container">
-                <img src="https://i.pinimg.com/474x/f1/7a/28/f17a28e82524a427ea89fd3c1b5f9266.jpg" alt="Avatar" class="avatar-img"/>
+                <img
+                <%-- Dùng LOGGED_USER để đồng bộ ngay sau khi nhấn Lưu --%>
+                        src="${pageContext.request.contextPath}${not empty LOGGED_USER.avatarUrl ? LOGGED_USER.avatarUrl : '/img/logo.png'}"
+                        alt="Avatar"
+                        class="avatar-img"
+                        onerror="this.src='${pageContext.request.contextPath}/img/logo.png';"
+                        style="width: 60px; height: 60px; object-fit: cover; border-radius: 50%;" />
             </div>
-            <div class="user-name"><%= user.getUsername() %></div>
+            <%-- Hiển thị tên từ Session --%>
+            <div class="user-name">${LOGGED_USER.username}</div>
         </div>
 
         <div class="menu-list">
@@ -89,8 +96,18 @@
                 <div class="profile-container">
                     <div class="profile-left">
                         <div class="avatar-edit">
-                            <img src="${not empty user.avatarUrl ? user.avatarUrl : 'https://i.pinimg.com/474x/f1/7a/28/f17a28e82524a427ea89fd3c1b5f9266.jpg'}" class="main-avatar"/>
-                            <button type="button" class="camera-btn"><i class="fas fa-camera"></i></button>
+                            <img id="user-avatar-display"
+                                 src="${pageContext.request.contextPath}${not empty LOGGED_USER.avatarUrl ? LOGGED_USER.avatarUrl : '/img/logo.png'}"
+                                 alt="Avatar"
+                                 class="avatar-img"
+                                 style="width:150px; height:150px; object-fit:cover; border-radius:50%;"
+                                 onerror="this.src='${pageContext.request.contextPath}/img/logo.png';" />
+
+                            <button type="button" class="camera-btn" onclick="selectAvatarWithCKFinder()">
+                                <i class="fas fa-camera"></i>
+                            </button>
+
+                            <input type="hidden" name="avatar_id" id="user-avatar-url" value="${LOGGED_USER.avatarUrl}">
                         </div>
                         <div class="form-group">
                             <label for="ho-ten">Tên hiển thị:</label>
@@ -485,8 +502,10 @@
                         </thead>
                         <tbody>
                         <c:forEach items="${order.details}" var="d">
-                            <tr style="border-bottom: 1px solid #eee;">
-                                <td style="padding: 10px;">${d.productName}</td>
+                            <tr style="border-bottom: 1px solid #eee;" >
+
+                            <td style="padding: 10px;">${d.productName}</td>
+
                                 <td style="padding: 10px; text-align: center;">x${d.quantity}</td>
                                 <td style="padding: 10px; text-align: right;">
                                     <fmt:formatNumber value="${d.total / d.quantity}" pattern="#,###"/>
@@ -534,26 +553,50 @@
                     </c:if>
 
                         <%-- 2. Nút HOÀN HÀNG: Hiện khi 'Đã giao' và trong vòng 7 ngày --%>
-                    <c:if test="${order.status == 'Đã giao'}">
-                        <jsp:useBean id="now" class="java.util.Date" />
-                        <c:set var="diff" value="${now.time - order.createAt.time}" />
-                        <c:set var="days" value="${diff / (1000 * 60 * 60 * 24)}" />
+                                <%-- Kiểm tra Đơn đã giao VÀ đã thanh toán --%>
+                            <div class="order-actions" style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+                                    <%-- 1. Nút HỦY ĐƠN: Hiện khi trạng thái là 'Chờ xác nhận' --%>
+                                <c:if test="${order.status == 'Chờ xác nhận'}">
+                                    <form action="MyPageServlet" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')">
+                                        <input type="hidden" name="action" value="cancelOrder">
+                                        <input type="hidden" name="orderId" value="${order.id}">
+                                        <button type="submit" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                                            Hủy Đơn Hàng
+                                        </button>
+                                    </form>
+                                </c:if>
 
-                        <c:choose>
-                            <c:when test="${days <= 7}">
-                                <form action="MyPageServlet" method="post" onsubmit="return confirm('Bạn muốn yêu cầu hoàn hàng cho đơn hàng này?')">
-                                    <input type="hidden" name="action" value="returnOrder">
-                                    <input type="hidden" name="orderId" value="${order.id}">
-                                    <button type="submit" style="background: #f39c12; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                                        Yêu Cầu Hoàn Hàng
-                                    </button>
-                                </form>
-                            </c:when>
-                            <c:otherwise>
-                                <span style="color: #888; font-style: italic; font-size: 0.9em;">(Đã hết thời hạn hoàn hàng 7 ngày)</span>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:if>
+                                        <c:if test="${order.status == 'Đã giao'}">
+                                            <jsp:useBean id="now" class="java.util.Date" />
+                                            <c:set var="diff" value="${now.time - order.createAt.time}" />
+                                            <c:set var="days" value="${diff / (1000 * 60 * 60 * 24)}" />
+
+                                            <div style="display: flex; gap: 10px; align-items: center;">
+                                                    <%-- Nút VIẾT ĐÁNH GIÁ: Luôn hiện khi đã giao --%>
+                                                            <%-- Nút VIẾT ĐÁNH GIÁ: Gọi hàm JS truyền vào Order ID --%>
+                                                        <button type="button"
+                                                                onclick="openReviewModal(${order.id})"
+                                                                style="background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                                                            Viết Đánh Giá
+                                                        </button>
+                                                    <%-- Nút HOÀN HÀNG: Chỉ hiện trong vòng 7 ngày --%>
+                                                <c:choose>
+                                                    <c:when test="${days <= 7}">
+                                                        <form action="MyPageServlet" method="post" onsubmit="return confirm('Bạn muốn yêu cầu hoàn hàng cho đơn hàng này?')" style="margin: 0;">
+                                                            <input type="hidden" name="action" value="returnOrder">
+                                                            <input type="hidden" name="orderId" value="${order.id}">
+                                                            <button type="submit" style="background: #f39c12; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                                                                Yêu Cầu Hoàn Hàng
+                                                            </button>
+                                                        </form>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span style="color: #888; font-style: italic; font-size: 0.9em;">(Hết hạn hoàn hàng)</span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </div>
+                                        </c:if>
+                            </div>
                 </div>
 
             </div>
@@ -667,63 +710,330 @@
     <div class="order-modal-content">
     </div>
 </div>
+
 </body>
+<div id="reviewModal" class="modal" style="display:none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); overflow-y: auto;">
+    <div class="modal-content" style="background: #fff; margin: 2% auto; padding: 25px; width: 50%; border-radius: 12px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+        <span onclick="closeReviewModal()" style="position: absolute; right: 20px; top: 10px; cursor: pointer; font-size: 28px; color: #888;">&times;</span>
+        <h2 style="margin-top: 0; color: #333; border-bottom: 2px solid #27ae60; padding-bottom: 10px;">Đánh giá sản phẩm</h2>
+
+        <form action="ReviewServlet" method="post" id="mainReviewForm">
+            <input type="hidden" name="orderId" id="reviewOrderId">
+
+            <div id="reviewProductList"></div>
+
+            <div style="text-align: right; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px;">
+                <button type="button" onclick="closeReviewModal()" style="background: #95a5a6; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-right: 10px;">Hủy</button>
+                <button type="submit" style="background: #27ae60; color: white; border: none; padding: 10px 30px; border-radius: 5px; cursor: pointer; font-weight: bold;">Gửi Đánh Giá</button>
+            </div>
+        </form>
+    </div>
+</div>
+<%--<script>--%>
+<%--    function openOrderDetail(orderId) {--%>
+<%--        const modal = document.getElementById('orderDetailModal');--%>
+<%--        const content = modal.querySelector('.order-modal-content');--%>
+
+<%--        modal.style.display = 'block'; // Hiện modal ngay lập tức--%>
+<%--        content.innerHTML = '<div style="padding:20px; text-align:center;"><i class="fas fa-sync fa-spin"></i> Đang tải...</div>';--%>
+
+<%--        fetch(`OrderDetailServlet?orderId=${orderId}`)--%>
+<%--            .then(response => {--%>
+<%--                if (!response.ok) throw new Error("Lỗi Server (500)");--%>
+<%--                return response.text();--%>
+<%--            })--%>
+<%--            .then(html => {--%>
+<%--                content.innerHTML = html; // Đổ dữ liệu từ ajax_order_detail.jsp vào--%>
+<%--            })--%>
+<%--            .catch(err => {--%>
+<%--                content.innerHTML = `<span class="order-close" onclick="closeOrderDetail()">&times;</span>--%>
+<%--                                 <p style="color:red; padding:20px; text-align:center;">${err.message}. Kiểm tra lại Console của Java!</p>`;--%>
+<%--            });--%>
+<%--    }--%>
+<%--    function closeOrderDetail() {--%>
+<%--        const modal = document.getElementById('orderDetailModal');--%>
+<%--        modal.style.display = 'none';--%>
+<%--    }--%>
+<%--    // Thêm vào trong thẻ <script> của bạn--%>
+<%--    const urlParams = new URLSearchParams(window.location.search);--%>
+<%--    if (urlParams.get('statusUpdate') === 'success') {--%>
+<%--        alert("Thao tác thành công! Sản phẩm đã được hoàn trả lại kho.");--%>
+<%--    }--%>
+<%--    function showUserOrderDetail(id) {--%>
+<%--        const modal = document.getElementById('orderDetailModal');--%>
+<%--        const container = modal.querySelector('.order-modal-content');--%>
+
+<%--        // Lấy nội dung từ div ẩn--%>
+<%--        const data = document.getElementById('data-order-' + id).innerHTML;--%>
+
+<%--        // Chèn vào modal (thêm nút đóng)--%>
+<%--        container.innerHTML = '<span class="order-close" onclick="closeOrderDetail()">&times;</span>' + data;--%>
+
+<%--        // Hiện modal--%>
+<%--        modal.style.display = 'block';--%>
+<%--    }--%>
+
+<%--    function closeOrderDetail() {--%>
+<%--        document.getElementById('orderDetailModal').style.display = 'none';--%>
+<%--    }--%>
+
+<%--    // Đóng modal khi click ra ngoài vùng trắng--%>
+<%--    window.onclick = function(event) {--%>
+<%--        const modal = document.getElementById('orderDetailModal');--%>
+<%--        if (event.target == modal) {--%>
+<%--            modal.style.display = 'none';--%>
+<%--        }--%>
+<%--    }--%>
+
+<%--</script>--%>
+<%-- 1. Khai báo thư viện CKFinder (đảm bảo đúng đường dẫn) --%>
+<script src="${pageContext.request.contextPath}/ckfinder/ckfinder.js"></script>
 
 <script>
-    function openOrderDetail(orderId) {
+    function selectAvatarWithCKFinder() {
+        var finder = new CKFinder();
+        finder.basePath = '${pageContext.request.contextPath}/ckfinder/';
+
+        finder.selectActionFunction = function(fileUrl) {
+            console.log("CKFinder gốc trả về:", fileUrl);  // debug để xem fileUrl thực tế là gì
+
+            var contextPath = "${pageContext.request.contextPath}" || "";  // tránh lỗi nếu contextPath rỗng
+            var relativeUrl = fileUrl || "";
+
+            // Loại bỏ context path nếu có ở đầu
+            if (contextPath && relativeUrl.startsWith(contextPath)) {
+                relativeUrl = relativeUrl.substring(contextPath.length);
+            }
+
+            // Đảm bảo luôn bắt đầu bằng dấu /
+            if (relativeUrl && !relativeUrl.startsWith('/')) {
+                relativeUrl = '/' + relativeUrl;
+            }
+
+            // Nếu CKFinder trả về đường dẫn thiếu phần /img/... thì thêm lại (tùy cấu trúc upload của bạn)
+            // Ví dụ: nếu bạn biết ảnh luôn nằm trong /img/products/images/
+            if (!relativeUrl.includes('/img/') && !relativeUrl.includes('/products/')) {
+                var fileName = relativeUrl.split('/').pop();  // lấy tên file cuối cùng
+                relativeUrl = '/img/products/images/' + fileName;  // chỉnh đường dẫn gốc của bạn nếu khác
+            }
+
+            console.log("Context Path:", contextPath);
+            console.log("Relative URL sau khi xử lý:", relativeUrl);
+
+            // Cập nhật input hidden để gửi về server
+            var input = document.getElementById('user-avatar-url');
+            if (input) {
+                input.value = relativeUrl;
+            } else {
+                console.error("Không tìm thấy input #user-avatar-url");
+            }
+
+            // Cập nhật preview ảnh ngay lập tức
+            var preview = document.getElementById('user-avatar-display');
+            if (preview) {
+                preview.src = contextPath + relativeUrl;
+                preview.onerror = function() {
+                    this.src = contextPath + '/img/logo.png';  // fallback nếu ảnh lỗi
+                    console.warn("Preview lỗi, fallback về logo");
+                };
+            } else {
+                console.error("Không tìm thấy img #user-avatar-display");
+            }
+        };
+
+        finder.popup();
+    }
+    function openReviewModal(orderId) {
         const modal = document.getElementById('orderDetailModal');
         const content = modal.querySelector('.order-modal-content');
 
-        modal.style.display = 'block'; // Hiện modal ngay lập tức
-        content.innerHTML = '<div style="padding:20px; text-align:center;"><i class="fas fa-sync fa-spin"></i> Đang tải...</div>';
+        modal.style.display = 'block';
+        content.innerHTML = '<div style="padding:20px; text-align:center;"><i class="fas fa-sync fa-spin"></i> Đang tải form đánh giá...</div>';
 
-        fetch(`OrderDetailServlet?orderId=${orderId}`)
+        // Gọi Servlet bằng phương thức GET để lấy form
+        fetch(`ReviewServlet?orderId=${orderId}`)
             .then(response => {
-                if (!response.ok) throw new Error("Lỗi Server (500)");
+                if (!response.ok) throw new Error("Không thể tải form đánh giá");
                 return response.text();
             })
             .then(html => {
-                content.innerHTML = html; // Đổ dữ liệu từ ajax_order_detail.jsp vào
+                // Chèn form vào modal kèm nút đóng
+                content.innerHTML = '<span class="order-close" onclick="closeOrderDetail()">&times;</span>' + html;
             })
             .catch(err => {
                 content.innerHTML = `<span class="order-close" onclick="closeOrderDetail()">&times;</span>
-                                 <p style="color:red; padding:20px; text-align:center;">${err.message}. Kiểm tra lại Console của Java!</p>`;
+                                 <p style="color:red; padding:20px; text-align:center;">${err.message}</p>`;
             });
     }
-    function closeOrderDetail() {
-        const modal = document.getElementById('orderDetailModal');
-        modal.style.display = 'none';
+    function openReviewModal(orderId) {
+        const modal = document.getElementById('reviewModal');
+        const container = document.getElementById('reviewFormContainer');
+
+        // 1. Lấy div ẩn chứa chi tiết đơn hàng
+        const sourceData = document.getElementById('data-order-' + orderId);
+        if (!sourceData) return;
+
+        // 2. Lấy danh sách các dòng sản phẩm (tr)
+        const items = sourceData.querySelectorAll('table tbody tr');
+
+        // Bắt đầu dựng HTML Form
+        let htmlContent = `<form action="ReviewServlet" method="post">
+                        <input type="hidden" name="orderId" value="${orderId}">`;
+
+        items.forEach((item) => {
+            const productName = item.cells[0].innerText; // Cột 1: Tên SP
+
+            // MẸO: Con cần lấy được ProductID.
+            // Nếu trong bảng chi tiết con chưa có ID, hãy gắn nó vào thẻ <tr> ở phần JSP cũ:
+            // Ví dụ: <tr data-pid="${d.productId}">
+            const productId = item.getAttribute('data-pid');
+
+            htmlContent += `
+            <div class="review-item" style="border: 1px solid #eee; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
+                <div style="margin-bottom: 10px;">
+                    <strong style="color: #27ae60;">${productName}</strong>
+                </div>
+                <div style="margin: 10px 0;">
+                    <label>Chất lượng:</label>
+                    <select name="rating_${productId}" style="padding: 5px; margin-left: 10px;">
+                        <option value="5">⭐⭐⭐⭐⭐ 5 Sao</option>
+                        <option value="4">⭐⭐⭐⭐ 4 Sao</option>
+                        <option value="3">⭐⭐⭐ 3 Sao</option>
+                        <option value="2">⭐⭐ 2 Sao</option>
+                        <option value="1">⭐ 1 Sao</option>
+                    </select>
+                </div>
+                <textarea name="comment_${productId}" placeholder="Cảm nhận của bạn..."
+                          style="width: 100%; height: 60px; padding: 10px; box-sizing: border-box;"></textarea>
+            </div>`;
+        });
+
+        htmlContent += `
+        <div style="text-align: right; margin-top: 15px;">
+            <button type="button" onclick="closeReviewModal()" style="background:#95a5a6; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer; margin-right:10px;">Hủy</button>
+            <button type="submit" style="background:#27ae60; color:white; padding:10px 30px; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Gửi Đánh Giá</button>
+        </div>
+    </form>`;
+
+        container.innerHTML = htmlContent;
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
     }
-    // Thêm vào trong thẻ <script> của bạn
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('statusUpdate') === 'success') {
-        alert("Thao tác thành công! Sản phẩm đã được hoàn trả lại kho.");
-    }
+</script>
+<script>
+    // --- 1. HIỆN CHI TIẾT ĐƠN HÀNG ---
+
     function showUserOrderDetail(id) {
+
         const modal = document.getElementById('orderDetailModal');
         const container = modal.querySelector('.order-modal-content');
+        const dataDiv = document.getElementById('data-order-' + id);
 
-        // Lấy nội dung từ div ẩn
-        const data = document.getElementById('data-order-' + id).innerHTML;
+        if (dataDiv && modal) {
+            container.innerHTML =
+                '<span class="order-close" onclick="closeOrderDetail()">&times;</span>' +
+                dataDiv.innerHTML;
 
-        // Chèn vào modal (thêm nút đóng)
-        container.innerHTML = '<span class="order-close" onclick="closeOrderDetail()">&times;</span>' + data;
-
-        // Hiện modal
-        modal.style.display = 'block';
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
     }
+
+
+
+    // --- 2. NÚT "VIẾT ĐÁNH GIÁ" (JSP GỌI HÀM NÀY) ---
+
+    function openReviewModal(orderId) {
+        switchToReviewForm(orderId);
+    }
+
+
+
+    // --- 3. CHUYỂN SANG FORM ĐÁNH GIÁ ---
+
+    function switchToReviewForm(orderId) {
+
+        const container = document.querySelector('#orderDetailModal .order-modal-content');
+        const sourceData = document.getElementById('data-order-' + orderId);
+
+        if (!sourceData || !container) return;
+
+        const items = sourceData.querySelectorAll('table tbody tr');
+
+        let formHtml = `
+        <span class="order-close" onclick="closeOrderDetail()">&times;</span>
+
+        <h2 style="margin-bottom:20px;color:#27ae60">Đánh giá sản phẩm</h2>
+
+        <form action="ReviewServlet" method="post">
+        <input type="hidden" name="orderId" value="${orderId}">
+
+        <div style="max-height:400px;overflow:auto">
+    `;
+
+        items.forEach(item => {
+
+            const productName = item.cells[0].innerText;
+            const productId = item.dataset.pid;
+
+            formHtml += `
+        <div style="border:1px solid #eee;padding:10px;margin-bottom:10px">
+
+            <b>${productName}</b>
+
+            <br><br>
+
+            <select name="rating_${productId}">
+                <option value="5">⭐⭐⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="1">⭐</option>
+            </select>
+
+            <br><br>
+
+            <textarea name="comment_${productId}" style="width:100%"></textarea>
+
+        </div>`;
+        });
+
+        formHtml += `
+        </div>
+
+        <div style="text-align:right">
+            <button type="button" onclick="showUserOrderDetail(${orderId})">Quay lại</button>
+            <button type="submit">Gửi đánh giá</button>
+        </div>
+
+        </form>
+    `;
+
+        container.innerHTML = formHtml;
+    }
+
+
+
+    // --- 4. ĐÓNG MODAL ---
 
     function closeOrderDetail() {
         document.getElementById('orderDetailModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
     }
 
-    // Đóng modal khi click ra ngoài vùng trắng
-    window.onclick = function(event) {
+
+
+    // --- 5. CLICK NGOÀI MODAL ---
+
+    window.onclick = function(e) {
         const modal = document.getElementById('orderDetailModal');
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    }
-</script>
+        if (e.target === modal) closeOrderDetail();
+    };
 
+    document.querySelectorAll("[data-rated='true']").forEach(btn=>{
+        btn.innerText="✔ Đã đánh giá";
+        btn.disabled=true;
+    });
+
+</script>
 </html>

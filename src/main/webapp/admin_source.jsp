@@ -42,7 +42,7 @@
                             <th class="col-id">ID</th>
                             <th class="col-name">Tên Nguồn Hàng</th>
                             <th class="col-product">Số Sản Phẩm</th>
-                            <th class="col-product-count">Tổng tồn kho </th>
+<%--                            <th class="col-product-count">Tổng tồn kho </th>--%>
                             <th class="col-actions">Thao tác</th>
                         </tr>
                         </thead>
@@ -55,7 +55,8 @@
                                         ${productCountMap[s.id] != null ? productCountMap[s.id] : 0}
                                 </td>
 
-                                <td class="col-product-count">${s.totalInventory}</td>   <!-- ← sửa ở đây -->                                <td class="col-actions">
+<%--                                <td class="col-product-count">${s.totalInventory}</td>   <!-- ← sửa ở đây -->  --%>
+                                <td class="col-actions">
                                         <%-- Cập nhật hàm gọi: openSourceModal và deleteSource --%>
                                     <i class="fa-solid fa-pen-to-square"
                                        onclick="openSourceModal('edit', '${s.id}', '${s.sourceName}')"

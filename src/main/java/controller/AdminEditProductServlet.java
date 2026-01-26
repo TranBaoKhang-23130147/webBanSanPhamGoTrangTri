@@ -98,7 +98,8 @@ public class AdminEditProductServlet extends HttpServlet {
                 int vid = Integer.parseInt(variantIds[i]);
                 newVariantIds.add(vid);
 
-                dao.updateVariant(
+                dao.updateVariant
+                        (
                         vid,
                         Double.parseDouble(prices[i]),
                         Integer.parseInt(stocks[i])
