@@ -81,7 +81,7 @@ public class CartServlet extends HttpServlet {
                     response.setStatus(400); // Trả về lỗi 400 để Ajax bắt được
                     response.getWriter().write("{\"success\":false, \"message\":\"Số lượng vượt quá tồn kho hiện có (" + dbVariant.getInventory_quantity() + ")\"}");
                     response.getWriter().flush();
-                    return; // Dừng xử lý, không cập nhật giỏ hàng nữa
+                    return;
                 }
 
 
