@@ -132,7 +132,53 @@
                         </div>
 
 <%--ỏi mk--%>
+                        <div class="settings-card" id="password">
+                            <%
+                                // Lấy thông báo từ request
+                                String successMessage = (String) request.getAttribute("successMessage");
+                                String errorMessage = (String) request.getAttribute("errorMessage");
+                            %>
+                            <h2>Đổi mật khẩu</h2>
+                            <% if (successMessage != null) { %>
+                            <div class="alert alert-success" style="color: green; border: 1px solid green; padding: 10px; margin: 10px 0;">
+                                <strong>Thành công:</strong> <%= successMessage %>
 
+                            </div>
+                            <% } %>
+                            <% if (errorMessage != null) { %>
+                            <div class="alert alert-danger" style="color: red; border: 1px solid red; padding: 10px; margin: 10px 0;">
+                                <strong>Lỗi:</strong> <%= errorMessage %>
+                            </div>
+                            <% } %>
+                            <form action="${pageContext.request.contextPath}/ChangePasswordServlet" method="post">
+                                <div class="form-group">
+                                    <label for="current-password">Mật khẩu hiện tại</label>
+                                    <input type="password" id="current-password" name="currentPassword">
+                                </div>
+                                <div class="form-group">
+                                    <label for="new-password">Mật khẩu mới</label>
+                                    <input type="password" id="new-password" name="newPassword">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm-password">Nhập lại mật khẩu mới</label>
+                                    <input type="password" id="confirm-password" name="confirmPassword">
+                                </div>
+
+                                <div class="password-requirements">
+                                    <h4>Yêu cầu bảo mật:</h4>
+                                    <ul>
+                                        <li>Ít nhất 8 ký tự — càng dài càng tốt</li>
+                                        <li>Ít nhất một ký tự viết thường</li>
+                                        <li>Ít nhất một ký tự viết hoa</li>
+                                        <li>Ít nhất một số, ký hiệu hoặc khoảng trắng</li>
+                                    </ul>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                                </div>
+                            </form>
+                        </div>
                         <div class="settings-card" id="notification">
                             <h2>Thông báo</h2>
 
@@ -180,6 +226,7 @@
                                 <button class="btn btn-primary">Lưu thay đổi</button>
                             </div>
                         </div>
+
 
 
 

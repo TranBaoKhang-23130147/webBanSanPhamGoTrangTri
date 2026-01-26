@@ -5,6 +5,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import model.User;
+import utils.PasswordUtils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,98 +15,75 @@ import java.util.Map;
 @WebServlet(name = "ChangePasswordServlet", value = "/ChangePasswordServlet")
 public class ChangePasswordServlet extends HttpServlet {
     private final UserDao userDao = new UserDao();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
 
-
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        resp.setContentType("application/json;charset=UTF-8");
-
-        // Debug: log method, content-type and all parameters
-        getServletContext().log("ChangePasswordServlet: method=" + req.getMethod() + ", contentType=" + req.getContentType());
-        Map<String, String[]> pmap = req.getParameterMap();
-        if (pmap.isEmpty()) {
-            getServletContext().log("ChangePasswordServlet: parameter map is empty");
-        } else {
-            for (Map.Entry<String, String[]> e : pmap.entrySet()) {
-                getServletContext().log("param: " + e.getKey() + " = " + Arrays.toString(e.getValue()));
-            }
-        }
+        // Không cần setContentType JSON nếu bạn muốn chuyển hướng trang truyền thống
 
         HttpSession session = req.getSession(false);
-        Integer userId = null;
-        User user = null;
+        User user = (session != null) ? (User) session.getAttribute("LOGGED_USER") : null;
 
-        if (session != null) {
-            Object obj = session.getAttribute("LOGGED_USER");
-            if (obj instanceof User) {
-                user = (User) obj;
-                userId = user.getId();
-            } else {
-                Object uid = session.getAttribute("userId");
-                if (uid instanceof Integer) userId = (Integer) uid;
-                else if (uid instanceof String) userId = Integer.valueOf((String) uid);
-            }
+        if (user == null) {
+            resp.sendRedirect("login.jsp");
+            return;
         }
 
+        int userId = user.getId();
+        String current = req.getParameter("currentPassword");
+        String next = req.getParameter("newPassword");
+        String confirm = req.getParameter("confirmPassword");
 
-        try (PrintWriter out = resp.getWriter()) {
-            if (userId == null) {
-                resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                out.print("{\"success\":false,\"message\":\"Not logged in\"}");
+        String errorMsg = null;
+
+        // 1. Kiểm tra tính hợp lệ của dữ liệu đầu vào
+        if (current == null || next == null || confirm == null || current.isEmpty() || next.isEmpty()) {
+            errorMsg = "Vui lòng điền đầy đủ thông tin.";
+        } else if (!next.equals(confirm)) {
+            errorMsg = "Mật khẩu mới và xác nhận mật khẩu không khớp.";
+        } else if (next.length() < 8) { // Khớp với yêu cầu trong JSP của bạn
+            errorMsg = "Mật khẩu phải có ít nhất 8 ký tự.";
+        }
+
+        if (errorMsg != null) {
+            req.setAttribute("errorMessage", errorMsg);
+            req.getRequestDispatcher("admin_setting.jsp#password").forward(req, resp);
+            return;
+        }
+
+        try {
+            // 2. Lấy mật khẩu đã băm từ DB để so sánh
+            String dbPassHash = userDao.getPasswordById(userId);
+
+            // Sử dụng PasswordUtils bạn đã cung cấp
+            if (dbPassHash == null || !PasswordUtils.checkPassword(current, dbPassHash)) {
+                req.setAttribute("errorMessage", "Mật khẩu hiện tại không chính xác.");
+                req.getRequestDispatcher("admin_setting.jsp#password").forward(req, resp);
                 return;
             }
 
-            String current = req.getParameter("currentPassword");
-            String next = req.getParameter("newPassword");
-            String confirm = req.getParameter("confirmPassword");
-
-            // keep logging the specific parameters for clarity
-            getServletContext().log("ChangePasswordServlet: current=" + current + ", new=" + next + ", confirm=" + confirm);
-
-            if (current == null || next == null || confirm == null) {
-                out.print("{\"success\":false,\"message\":\"Missing parameters\"}");
-                return;
-            }
-            if (!next.equals(confirm)) {
-                out.print("{\"success\":false,\"message\":\"New password and confirm do not match\"}");
-                return;
-            }
-            if (next.length() < 6) {
-                out.print("{\"success\":false,\"message\":\"Password too short\"}");
-                return;
-            }
-
-            String dbPass = userDao.getPasswordById(userId);
-            if (dbPass == null || !dbPass.equals(current)) {
-                out.print("{\"success\":false,\"message\":\"Current password is incorrect\"}");
-                return;
-            }
-
+            // 3. Cập nhật mật khẩu mới (Hàm updatePassword của bạn đã gọi PasswordUtils.hashPassword rồi)
             boolean ok = userDao.updatePassword(userId, next);
-            String targetPage = "/mypage_user.jsp"; // mặc định user
-
-            if (user != null && "admin".equalsIgnoreCase(user.getRole())) {
-                targetPage = "/admin_setting.jsp";
-            }
 
             if (ok) {
-                session.setAttribute("msg", "Đổi mật khẩu thành công.");
-                resp.sendRedirect("MyPageServlet?tab=bao-mat");
+                // Dùng request attribute để JSP hiển thị thông báo thành công
+                req.setAttribute("successMessage", "Đổi mật khẩu thành công.");
             } else {
-                session.setAttribute("error", "Cập nhật thất bại. Vui lòng thử lại.");
-                resp.sendRedirect("MyPageServlet?tab=bao-mat");
+                req.setAttribute("errorMessage", "Lỗi hệ thống. Không thể cập nhật mật khẩu.");
             }
 
-
+            // Quay lại trang setting và nhảy đến tab mật khẩu
+            req.getRequestDispatcher("admin_setting.jsp#password").forward(req, resp);
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            resp.sendRedirect("error.jsp");
         }
-    }}
+    }
+}
