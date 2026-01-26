@@ -41,9 +41,16 @@
     <div class="sidebar">
         <div class="user-info">
             <div class="avatar-container">
-                <img src="https://i.pinimg.com/474x/f1/7a/28/f17a28e82524a427ea89fd3c1b5f9266.jpg" alt="Avatar" class="avatar-img"/>
+                <img
+                <%-- Dùng LOGGED_USER để đồng bộ ngay sau khi nhấn Lưu --%>
+                        src="${pageContext.request.contextPath}${not empty LOGGED_USER.avatarUrl ? LOGGED_USER.avatarUrl : '/img/logo.png'}"
+                        alt="Avatar"
+                        class="avatar-img"
+                        onerror="this.src='${pageContext.request.contextPath}/img/logo.png';"
+                        style="width: 60px; height: 60px; object-fit: cover; border-radius: 50%;" />
             </div>
-            <div class="user-name"><%= user.getUsername() %></div>
+            <%-- Hiển thị tên từ Session --%>
+            <div class="user-name">${LOGGED_USER.username}</div>
         </div>
 
         <div class="menu-list">
@@ -89,8 +96,18 @@
                 <div class="profile-container">
                     <div class="profile-left">
                         <div class="avatar-edit">
-                            <img src="${not empty user.avatarUrl ? user.avatarUrl : 'https://i.pinimg.com/474x/f1/7a/28/f17a28e82524a427ea89fd3c1b5f9266.jpg'}" class="main-avatar"/>
-                            <button type="button" class="camera-btn"><i class="fas fa-camera"></i></button>
+                            <img id="user-avatar-display"
+                                 src="${pageContext.request.contextPath}${not empty LOGGED_USER.avatarUrl ? LOGGED_USER.avatarUrl : '/img/logo.png'}"
+                                 alt="Avatar"
+                                 class="avatar-img"
+                                 style="width:150px; height:150px; object-fit:cover; border-radius:50%;"
+                                 onerror="this.src='${pageContext.request.contextPath}/img/logo.png';" />
+
+                            <button type="button" class="camera-btn" onclick="selectAvatarWithCKFinder()">
+                                <i class="fas fa-camera"></i>
+                            </button>
+
+                            <input type="hidden" name="avatar_id" id="user-avatar-url" value="${LOGGED_USER.avatarUrl}">
                         </div>
                         <div class="form-group">
                             <label for="ho-ten">Tên hiển thị:</label>
@@ -534,26 +551,49 @@
                     </c:if>
 
                         <%-- 2. Nút HOÀN HÀNG: Hiện khi 'Đã giao' và trong vòng 7 ngày --%>
-                    <c:if test="${order.status == 'Đã giao'}">
-                        <jsp:useBean id="now" class="java.util.Date" />
-                        <c:set var="diff" value="${now.time - order.createAt.time}" />
-                        <c:set var="days" value="${diff / (1000 * 60 * 60 * 24)}" />
+                                <%-- Kiểm tra Đơn đã giao VÀ đã thanh toán --%>
+                            <div class="order-actions" style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+                                    <%-- 1. Nút HỦY ĐƠN: Hiện khi trạng thái là 'Chờ xác nhận' --%>
+                                <c:if test="${order.status == 'Chờ xác nhận'}">
+                                    <form action="MyPageServlet" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')">
+                                        <input type="hidden" name="action" value="cancelOrder">
+                                        <input type="hidden" name="orderId" value="${order.id}">
+                                        <button type="submit" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                                            Hủy Đơn Hàng
+                                        </button>
+                                    </form>
+                                </c:if>
 
-                        <c:choose>
-                            <c:when test="${days <= 7}">
-                                <form action="MyPageServlet" method="post" onsubmit="return confirm('Bạn muốn yêu cầu hoàn hàng cho đơn hàng này?')">
-                                    <input type="hidden" name="action" value="returnOrder">
-                                    <input type="hidden" name="orderId" value="${order.id}">
-                                    <button type="submit" style="background: #f39c12; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                                        Yêu Cầu Hoàn Hàng
-                                    </button>
-                                </form>
-                            </c:when>
-                            <c:otherwise>
-                                <span style="color: #888; font-style: italic; font-size: 0.9em;">(Đã hết thời hạn hoàn hàng 7 ngày)</span>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:if>
+                                        <c:if test="${order.status == 'Đã giao'}">
+                                            <jsp:useBean id="now" class="java.util.Date" />
+                                            <c:set var="diff" value="${now.time - order.createAt.time}" />
+                                            <c:set var="days" value="${diff / (1000 * 60 * 60 * 24)}" />
+
+                                            <div style="display: flex; gap: 10px; align-items: center;">
+                                                    <%-- Nút VIẾT ĐÁNH GIÁ: Luôn hiện khi đã giao --%>
+                                                <a href="ReviewServlet?orderId=${order.id}"
+                                                   style="background: #27ae60; color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 14px;">
+                                                    Viết Đánh Giá
+                                                </a>
+
+                                                    <%-- Nút HOÀN HÀNG: Chỉ hiện trong vòng 7 ngày --%>
+                                                <c:choose>
+                                                    <c:when test="${days <= 7}">
+                                                        <form action="MyPageServlet" method="post" onsubmit="return confirm('Bạn muốn yêu cầu hoàn hàng cho đơn hàng này?')" style="margin: 0;">
+                                                            <input type="hidden" name="action" value="returnOrder">
+                                                            <input type="hidden" name="orderId" value="${order.id}">
+                                                            <button type="submit" style="background: #f39c12; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                                                                Yêu Cầu Hoàn Hàng
+                                                            </button>
+                                                        </form>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span style="color: #888; font-style: italic; font-size: 0.9em;">(Hết hạn hoàn hàng)</span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </div>
+                                        </c:if>
+                            </div>
                 </div>
 
             </div>
@@ -725,5 +765,62 @@
         }
     }
 </script>
+<%-- 1. Khai báo thư viện CKFinder (đảm bảo đúng đường dẫn) --%>
+<script src="${pageContext.request.contextPath}/ckfinder/ckfinder.js"></script>
 
+<script>
+    function selectAvatarWithCKFinder() {
+        var finder = new CKFinder();
+        finder.basePath = '${pageContext.request.contextPath}/ckfinder/';
+
+        finder.selectActionFunction = function(fileUrl) {
+            console.log("CKFinder gốc trả về:", fileUrl);  // debug để xem fileUrl thực tế là gì
+
+            var contextPath = "${pageContext.request.contextPath}" || "";  // tránh lỗi nếu contextPath rỗng
+            var relativeUrl = fileUrl || "";
+
+            // Loại bỏ context path nếu có ở đầu
+            if (contextPath && relativeUrl.startsWith(contextPath)) {
+                relativeUrl = relativeUrl.substring(contextPath.length);
+            }
+
+            // Đảm bảo luôn bắt đầu bằng dấu /
+            if (relativeUrl && !relativeUrl.startsWith('/')) {
+                relativeUrl = '/' + relativeUrl;
+            }
+
+            // Nếu CKFinder trả về đường dẫn thiếu phần /img/... thì thêm lại (tùy cấu trúc upload của bạn)
+            // Ví dụ: nếu bạn biết ảnh luôn nằm trong /img/products/images/
+            if (!relativeUrl.includes('/img/') && !relativeUrl.includes('/products/')) {
+                var fileName = relativeUrl.split('/').pop();  // lấy tên file cuối cùng
+                relativeUrl = '/img/products/images/' + fileName;  // chỉnh đường dẫn gốc của bạn nếu khác
+            }
+
+            console.log("Context Path:", contextPath);
+            console.log("Relative URL sau khi xử lý:", relativeUrl);
+
+            // Cập nhật input hidden để gửi về server
+            var input = document.getElementById('user-avatar-url');
+            if (input) {
+                input.value = relativeUrl;
+            } else {
+                console.error("Không tìm thấy input #user-avatar-url");
+            }
+
+            // Cập nhật preview ảnh ngay lập tức
+            var preview = document.getElementById('user-avatar-display');
+            if (preview) {
+                preview.src = contextPath + relativeUrl;
+                preview.onerror = function() {
+                    this.src = contextPath + '/img/logo.png';  // fallback nếu ảnh lỗi
+                    console.warn("Preview lỗi, fallback về logo");
+                };
+            } else {
+                console.error("Không tìm thấy img #user-avatar-display");
+            }
+        };
+
+        finder.popup();
+    }
+</script>
 </html>

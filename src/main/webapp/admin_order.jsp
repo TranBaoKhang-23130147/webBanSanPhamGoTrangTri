@@ -35,13 +35,15 @@
                     <div class="search-filters">
                         <div class="search-input-wrapper">
                             <i class="fas fa-search search-icon"></i>
-                            <input type="text" placeholder="Tìm kiếm" class="search-input-order">
+                            <input type="text" id="orderSearch" placeholder="Tìm theo mã đơn (#)..." class="search-input-order" onkeyup="filterOrders()">
                         </div>
-                        <select class="filter-select">
-                            <option selected>Mặc Định</option>
-                            <option>Đã Gửi</option>
-                            <option>Đang Xử Lý</option>
-                            <option>Đã Hủy</option>
+                        <select class="filter-select" id="statusFilter" onchange="filterOrders()">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="Chờ xác nhận">Chờ xác nhận</option>
+                            <option value="Đang giao">Đang giao</option>
+                            <option value="Đã giao">Đã giao</option>
+                            <option value="Đã hủy">Đã hủy</option>
+                            <option value="Hoàn hàng">Hoàn hàng</option>
                         </select>
                     </div>
 
@@ -62,7 +64,7 @@
                         </thead>
                         <tbody>
                         <c:forEach items="${listOrders}" var="o">
-                            <tr>
+                            <tr class="order-row" data-status="${o.status}">
                                 <td><b>#${o.id}</b></td>
                                 <td>${o.fullName}</td>
                                 <td><fmt:formatDate value="${o.createAt}" pattern="dd/MM/yyyy HH:mm"/></td>
@@ -130,11 +132,12 @@
                                                 <div style="display: flex; gap: 10px;">
                                                     <div style="flex: 1;">
                                                         <label style="font-size: 0.85em; font-weight: bold;">Trạng thái đơn hàng:</label>
-                                                        <select name="status" class="filter-select" style="width: 100%; padding: 8px; margin-top: 5px;">
+                                                        <select name="status" class="filter-select">
                                                             <option value="Chờ xác nhận" ${o.status == 'Chờ xác nhận' ? 'selected' : ''}>Chờ xác nhận</option>
                                                             <option value="Đang giao" ${o.status == 'Đang giao' ? 'selected' : ''}>Đang giao</option>
                                                             <option value="Đã giao" ${o.status == 'Đã giao' ? 'selected' : ''}>Đã giao</option>
                                                             <option value="Đã hủy" ${o.status == 'Đã hủy' ? 'selected' : ''}>Đã hủy</option>
+                                                            <option value="Hoàn hàng" ${o.status == 'Hoàn hàng' ? 'selected' : ''}>Hoàn hàng</option>
                                                         </select>
                                                     </div>
 
@@ -317,6 +320,34 @@
 
     function closeModal() {
         document.getElementById('orderModal').style.display = 'none';
+    }
+    function filterOrders() {
+        // 1. Lấy giá trị từ ô tìm kiếm và ô chọn trạng thái
+        let searchValue = document.getElementById('orderSearch').value.toUpperCase();
+        let statusValue = document.getElementById('statusFilter').value;
+
+        // 2. Lấy tất cả các dòng dữ liệu trong bảng
+        let rows = document.querySelectorAll('.order-row');
+
+        rows.forEach(row => {
+            // Lấy mã đơn hàng ở cột đầu tiên (td[0])
+            let orderId = row.getElementsByTagName('td')[0].textContent.toUpperCase();
+            // Lấy trạng thái từ thuộc tính data-status mình đã gắn
+            let orderStatus = row.getAttribute('data-status');
+
+            // Điều kiện khớp mã: mã đơn hàng chứa từ khóa tìm kiếm
+            let matchId = orderId.indexOf(searchValue) > -1;
+
+            // Điều kiện khớp trạng thái: Nếu chọn "Tất cả" hoặc giá trị khớp chính xác
+            let matchStatus = (statusValue === "") || (orderStatus === statusValue);
+
+            // Nếu thỏa mãn cả 2 thì hiện, không thì ẩn
+            if (matchId && matchStatus) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
     }
 </script>
 </html>

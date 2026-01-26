@@ -17,6 +17,7 @@
         private String avatarUrl;
 
 
+
         private Integer avatarId;       // ID ảnh đại diện (khóa ngoại)
         private Date createAt;// Giới tính// Ngày sinh
         private Address address;
@@ -79,7 +80,7 @@
             this.email = email;
         }
 
-        public int getId() {
+        public  int getId() {
             return id;
         }
 
