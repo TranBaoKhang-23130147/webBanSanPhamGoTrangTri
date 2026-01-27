@@ -13,15 +13,44 @@
 
             <p>HOME DECOR</p>
 
-            <p><i class="fa-solid"></i> Địa chỉ: Trường Đại học Nông Lâm Thành phố Hồ Chí Minh</p>
-            <p><i class="fa-solid"></i> Số điện thoại: 0944459364</p>
-            <p><i class="fa-solid"></i> Email: 23130082@st.hcmuaf.edu.vn</p>
+            <p>
+                Số điện thoại: ${contactSettings.phone}
+            </p>
+
+            <p>
+                Email: ${contactSettings.email}
+            </p>
+
+            <p>
+                Địa chỉ: ${contactSettings.address}
+            </p>
+
 
             <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <c:if test="${not empty contactSettings.facebookUrl}">
+                    <a href="${contactSettings.facebookUrl}" target="_blank">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                </c:if>
+
+                <c:if test="${not empty contactSettings.instagramUrl}">
+                    <a href="${contactSettings.instagramUrl}" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </c:if>
+
+                <c:if test="${not empty contactSettings.twitterUrl}">
+                    <a href="${contactSettings.twitterUrl}" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </c:if>
+                <c:if test="${not empty contactSettings.googleUrl}">
+                    <a href="${contactSettings.googleUrl}" target="_blank" title="Google">
+                        <i class="fab fa-google"></i>
+                    </a>
+                </c:if>
             </div>
+
         </div>
 
 

@@ -126,10 +126,10 @@
                                 </td>
 
                                 <td class="col-actions">
-                                    <a href="admin/edit-product?id=${p.id}" title="Sửa">
-                                        <i class="fa-solid fa-pen-to-square edit-icon"></i>
-                                    </a>
-
+                                <td class="col-actions">
+                                <a href="${pageContext.request.contextPath}/admin-edit-product?id=${p.id}" title="Sửa">
+                                    <i class="fa-solid fa-pen-to-square edit-icon"></i>
+                                </a>
                                     <a href="#" onclick="confirmDelete(${p.id}); return false;" title="Xóa">
                                         <i class="fa-solid fa-trash-can delete-icon"></i>
                                     </a>

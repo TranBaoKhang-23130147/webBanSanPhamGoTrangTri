@@ -657,6 +657,19 @@ public boolean adminInsertUser(String username, String email, String phone, Stri
 //            return false;
 //        }
 //    }
+
+    public boolean updateUserAvatarId(int userId, int imageId) {
+        String sql = "UPDATE users SET avatar_id = ? WHERE id = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, imageId);
+            ps.setInt(2, userId);
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
     public boolean updateUserProfile(User u) {
         // Câu lệnh SQL phải cập nhật avatar_id
         String sql = "UPDATE users SET full_name=?, display_name=?, phone=?, gender=?, birth_date=?, avatar_id=? WHERE id=?";

@@ -25,6 +25,7 @@
             </li>
             <li><a href="${pageContext.request.contextPath}/admin/customers"> Khách hàng</a></li>
             <li><a href="${pageContext.request.contextPath}/admin-management"> Quan tri vien</a></li>
+            <li><a href="${pageContext.request.contextPath}/update-contact-settings"> Lien He</a></li>
             <li><a href="${pageContext.request.contextPath}/AdminProfileServlet"> Hồ sơ</a></li>
 
             <li class="${activePage == 'setting' ? 'active' : ''}">
