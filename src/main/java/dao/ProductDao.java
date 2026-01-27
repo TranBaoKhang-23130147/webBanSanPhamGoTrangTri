@@ -1821,4 +1821,20 @@ public class ProductDao {
         } catch (Exception e) { e.printStackTrace(); }
         return p;
     }
+
+    // Thêm đánh giá sản phẩm
+    public boolean addReview(Reviews review) {
+        String sql = "INSERT INTO reviews (user_id, product_id, rate, comment, createAt) VALUES (?, ?, ?, ?, GETDATE())";
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, review.getUserId());
+            ps.setInt(2, review.getProductId());
+            ps.setInt(3, review.getRating());
+            ps.setString(4, review.getComment());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

@@ -4,6 +4,7 @@ public class OrderDetail {
     private int id;
     private int orderId;
     private int productVariantId;
+    private int productId;  // ← Thêm field này
     private int quantity;
     private double total;
     private String productImage; // 👈 THÊM DÒNG NÀY
@@ -31,6 +32,9 @@ public class OrderDetail {
 
     public int getProductVariantId() { return productVariantId; }
     public void setProductVariantId(int productVariantId) { this.productVariantId = productVariantId; }
+
+    public int getProductId() { return productId; }
+    public void setProductId(int productId) { this.productId = productId; }
 
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }

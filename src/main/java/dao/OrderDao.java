@@ -278,7 +278,7 @@ public class OrderDao {
     public List<OrderDetail> getDetailsByOrderId(int orderId) {
         List<OrderDetail> details = new ArrayList<>();
         String sql = """
-        SELECT od.*, p.name_product, p.primary_image_id
+        SELECT od.*, p.name_product, p.primary_image_id, pv.product_id
         FROM order_details od 
         JOIN product_variants pv ON od.product_variant_id = pv.id 
         JOIN products p ON pv.product_id = p.id 
@@ -290,6 +290,10 @@ public class OrderDao {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 OrderDetail d = new OrderDetail();
+                d.setId(rs.getInt("id"));
+                d.setOrderId(rs.getInt("order_id"));
+                d.setProductVariantId(rs.getInt("product_variant_id"));
+                d.setProductId(rs.getInt("product_id"));
                 d.setProductName(rs.getString("name_product"));
                 d.setProductImg(rs.getString("primary_image_id"));
                 d.setQuantity(rs.getInt("quantity"));

@@ -80,6 +80,43 @@ public class ProductDetailServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Xử lý thêm vào giỏ hàng hoặc gửi bình luận ở đây
+        String action = request.getParameter("action");
+        
+        if ("addReview".equals(action)) {
+            // Xử lý thêm đánh giá
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("LOGGED_USER");
+            
+            if (user == null) {
+                response.sendRedirect(request.getContextPath() + "/login.jsp");
+                return;
+            }
+            
+            try {
+                int productId = Integer.parseInt(request.getParameter("productId"));
+                int rating = Integer.parseInt(request.getParameter("rating"));
+                String comment = request.getParameter("comment");
+                
+                // Tạo object Reviews
+                Reviews review = new Reviews();
+                review.setUserId(user.getId());
+                review.setProductId(productId);
+                review.setRating(rating);
+                review.setComment(comment != null && !comment.trim().isEmpty() ? comment : "");
+                
+                // Lưu vào database
+                ProductDao dao = new ProductDao();
+                if (dao.addReview(review)) {
+                    session.setAttribute("successMessage", "Cảm ơn bạn đã đánh giá sản phẩm!");
+                } else {
+                    session.setAttribute("errorMessage", "Không thể thêm đánh giá!");
+                }
+            } catch (Exception e) {
+                session.setAttribute("errorMessage", "Lỗi: " + e.getMessage());
+            }
+            
+            // Redirect lại trang sản phẩm hiện tại
+            response.sendRedirect(request.getContextPath() + "/detail?id=" + request.getParameter("productId"));
+        }
     }
 }

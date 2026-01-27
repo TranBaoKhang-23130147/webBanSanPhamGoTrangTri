@@ -184,80 +184,137 @@
         </ul>
     </div>
 </div>
-<section class="review-section">
+<section class="review-section" id="reviewArea">
     <h2 class="review-title">Đánh giá sản phẩm</h2>
+
+    <!-- ===== MESSAGE ===== -->
+
+    <c:if test="${not empty sessionScope.successMessage}">
+        <div style="color:green;font-weight:bold;margin-bottom:15px">
+                ${sessionScope.successMessage}
+        </div>
+        <c:remove var="successMessage" scope="session"/>
+    </c:if>
+
+    <c:if test="${not empty sessionScope.errorMessage}">
+        <div style="color:red;font-weight:bold;margin-bottom:15px">
+                ${sessionScope.errorMessage}
+        </div>
+        <c:remove var="errorMessage" scope="session"/>
+    </c:if>
+
+    <!-- ===== SUMMARY ===== -->
 
     <div class="review-summary">
         <div class="score-box">
-            <div class="rating">
-                <%-- Sao cho điểm trung bình tổng --%>
-                <c:forEach begin="1" end="5" var="i">
-                    <i class="${i <= p.averageRating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
-                </c:forEach>
-                <span style="font-size: 20px; font-weight: bold; margin-left: 10px;">
-            ${p.averageRating > 0 ? p.averageRating : '0.0'} / 5
-        </span>
-            </div>
-            <%-- CẬP NHẬT DÒNG NÀY --%>
-            <p>Tổng <strong>${p.reviewList.size()}</strong> đánh giá từ khách hàng</p>
-        </div>
+            <c:forEach begin="1" end="5" var="i">
+                <i class="${i <= p.averageRating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
+            </c:forEach>
 
-        <div class="score-bars">
-            <%-- Phần này thường cần logic tính % từ Servlet, tạm thời để hiển thị --%>
-            <div class="bar-item"><span>5 sao</span><div class="bar"><div style="width:${p.totalReviews > 0 ? (count5/p.totalReviews)*100 : 0}%"></div></div></div>
-            <div class="bar-item"><span>4 sao</span><div class="bar"><div style="width:${p.totalReviews > 0 ? (count4/p.totalReviews)*100 : 0}%"></div></div></div>
-            <div class="bar-item"><span>3 sao</span><div class="bar"><div style="width:0%"></div></div></div>
-            <div class="bar-item"><span>2 sao</span><div class="bar"><div style="width:0%"></div></div></div>
-            <div class="bar-item"><span>1 sao</span><div class="bar"><div style="width:0%"></div></div></div>
+            <strong style="margin-left:10px">
+                <fmt:formatNumber value="${p.averageRating}" maxFractionDigits="1"/> / 5
+            </strong>
+
+            <p>${p.reviewList.size()} đánh giá</p>
         </div>
     </div>
 
-    <div class="review-filter">
-        <label>Lọc xem theo: </label>
-        <select onchange="filterReviews(this.value)">
-            <option value="all">Tất cả đánh giá</option>
-            <option value="5">5 sao</option>
-            <option value="4">4 sao</option>
-            <option value="3">3 sao</option>
-            <option value="2">2 sao</option>
-            <option value="1">1 sao</option>
-        </select>
-    </div>
+    <!-- ===== NÚT VIẾT ĐÁNH GIÁ ===== -->
+
+    <c:if test="${not empty sessionScope.LOGGED_USER}">
+
+    </c:if>
+
+    <!-- ===== FORM REVIEW (CHỈ HIỆN KHI review=true) ===== -->
+
+    <c:if test="${not empty sessionScope.LOGGED_USER && param.review == 'true'}">
+
+        <div style="margin:25px 0;background:#fff;padding:20px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
+
+            <h3>Viết đánh giá của bạn</h3>
+
+            <form method="post" action="${pageContext.request.contextPath}/ReviewServlet">
+
+                <input type="hidden" name="productId" value="${p.id}">
+
+                <div style="margin-bottom:10px">
+                    <select name="rating" required style="padding:8px;width:100%">
+                        <option value="">-- Chọn sao --</option>
+                        <option value="5">⭐⭐⭐⭐⭐</option>
+                        <option value="4">⭐⭐⭐⭐</option>
+                        <option value="3">⭐⭐⭐</option>
+                        <option value="2">⭐⭐</option>
+                        <option value="1">⭐</option>
+                    </select>
+                </div>
+
+                <textarea name="comment" rows="4" required
+                          placeholder="Nhập tối thiểu 10 ký tự..."
+                          style="width:100%;padding:10px;border:1px solid #ddd;border-radius:6px"></textarea>
+
+                <button type="submit"
+                        style="margin-top:10px;background:#8B5E3C;color:white;padding:10px 25px;border:none;border-radius:6px">
+                    Gửi đánh giá
+                </button>
+
+            </form>
+        </div>
+    </c:if>
+
+    <!-- ===== CHƯA LOGIN ===== -->
+
+    <c:if test="${empty sessionScope.LOGGED_USER}">
+        <p>
+            <a href="${pageContext.request.contextPath}/login.jsp">
+                Đăng nhập để đánh giá
+            </a>
+        </p>
+    </c:if>
+
+    <!-- ===== LIST REVIEW ===== -->
 
     <div class="review-list">
+
         <c:choose>
             <c:when test="${not empty p.reviewList}">
                 <c:forEach var="rev" items="${p.reviewList}">
-                    <div class="review-item">
-                        <div class="review-user">
-                            <img src="img/default-avatar.png" class="avatar" alt="User">
-                            <div>
-                                <h4>${userNames[rev.userId]}</h4>
-                                <div class="rating stars small">
-                                        <%-- SỬA TẠI ĐÂY: Dùng rev.rating cho khớp với Model Reviews của bạn --%>
-                                    <c:forEach begin="1" end="5" var="i">
-                                        <i class="${i <= rev.rating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
-                                    </c:forEach>
 
-                                    <span class="review-date" style="font-size: 12px; color: #999; margin-left: 10px;">
-                                    <fmt:formatDate value="${rev.createAt}" pattern="dd/MM/yyyy" />
-                                </span>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="review-text">${rev.comment}</p>
+                    <div class="review-item">
+
+                        <h4>${userNames[rev.userId]}</h4>
+
+                        <c:forEach begin="1" end="5" var="i">
+                            <i class="${i <= rev.rating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
+                        </c:forEach>
+
+                        <span style="font-size:12px;color:#999">
+<fmt:formatDate value="${rev.createAt}" pattern="dd/MM/yyyy"/>
+</span>
+
+                        <p>${rev.comment}</p>
+
                     </div>
+
                 </c:forEach>
             </c:when>
+
             <c:otherwise>
-                <div style="text-align: center; padding: 40px; color: #888;">
-                    <i class="ri-chat-history-line" style="font-size: 48px;"></i>
-                    <p>Sản phẩm này chưa có đánh giá nào. Hãy là người đầu tiên!</p>
-                </div>
+                <p>Chưa có đánh giá nào.</p>
             </c:otherwise>
+
         </c:choose>
+
     </div>
+
 </section>
+
+<!-- AUTO SCROLL -->
+
+<c:if test="${param.review == 'true'}">
+    <script>
+        document.getElementById("reviewArea")?.scrollIntoView({behavior:"smooth"});
+    </script>
+</c:if>
 
 <jsp:include page="footer.jsp"></jsp:include>
 <script>
@@ -382,8 +439,20 @@
     }
 
 </script>
-<div style="background: #fff3cd; border: 1px solid #ffeeba; padding: 10px; color: #856404;">
 </div>
+<script>
+    function filterReviews(star) {
+        document.querySelectorAll('.review-item').forEach(item => {
+            const rating = item.querySelectorAll('.ri-star-s-fill').length;
+
+            if (star === "all" || rating == star) {
+                item.style.display = "block";
+            } else {
+                item.style.display = "none";
+            }
+        });
+    }
+</script>
 
 </body>
 </html>

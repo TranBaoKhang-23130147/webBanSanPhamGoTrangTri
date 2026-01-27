@@ -82,7 +82,8 @@
             </div>
             <a href="MyPageServlet?tab=don-hang" class="menu-link ${activeTab == 'don-hang' ? 'active' : ''}">
                 <i class="fas fa-shopping-cart"></i> Đơn hàng
-            </a>            <a href="#" class="tab-link menu-link" data-tab="tin-nhan"><i class="fas fa-comment-dots"></i> Tin nhắn</a>
+            </a>
+
         </div>
     </div>
 
@@ -402,7 +403,7 @@
 
 <div id="don-hang" class="tab-content ${activeTab == 'don-hang' ? 'active' : ''}">
     <h2 style="margin-bottom: 20px; color: #333;">Đơn hàng của tôi</h2>
-
+    <a href="#" class="tab-link menu-link" data-tab="tin-nhan">Đánh giá sản phẩm </a>
     <div class="order-dashboard-summary" style="display: flex; gap: 20px; margin-bottom: 30px;">
         <div class="summary-item" style="background: #e3f2fd; padding: 20px; border-radius: 10px; flex: 1; text-align: center;">
             <span class="num" style="display: block; font-size: 1.5em; font-weight: bold; color: #1976d2;">${countOrder}</span>
@@ -611,8 +612,64 @@
     <p>Không có thông báo mới.</p>
 </div>
 <div id="tin-nhan" class="tab-content">
-    <h2>Tin nhắn</h2>
-    <p>Không có tin nhắn nào.</p>
+    <h2 style="color: #333; border-bottom: 2px solid #27ae60; padding-bottom: 10px;">Sản phẩm cần đánh giá</h2>
+    <p style="color: #666; font-size: 14px; margin-bottom: 20px;">Danh sách sản phẩm từ đơn hàng đã giao và thanh toán xong</p>
+    
+    <%
+        java.util.Map<String, model.OrderDetail> reviewProducts = new java.util.LinkedHashMap<>();
+        List<Order> allOrders = (List<Order>) request.getAttribute("allOrders");
+        
+        if (allOrders != null) {
+            for (Order order : allOrders) {
+                // Chỉ lấy đơn hàng đã giao (Đã giao) và thanh toán (Đã thanh toán)
+                if ("Đã giao".equals(order.getStatus()) && "Đã thanh toán".equals(order.getPaymentStatus())) {
+                    List<OrderDetail> details = order.getDetails();
+                    if (details != null) {
+                        for (OrderDetail detail : details) {
+                            // Tạo key unique cho mỗi sản phẩm + variant + order
+                            String key = detail.getProductVariantId() + "_" + order.getId();
+                            if (!reviewProducts.containsKey(key)) {
+                                reviewProducts.put(key, detail);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    %>
+    
+    <% if (reviewProducts.isEmpty()) { %>
+        <div style="text-align: center; padding: 40px 20px; background: #f9f9f9; border-radius: 8px;">
+            <i class="fas fa-check-circle" style="font-size: 48px; color: #27ae60; margin-bottom: 20px; display: block;"></i>
+            <p style="font-size: 1.1em; color: #666;">Bạn đã đánh giá hết tất cả sản phẩm!</p>
+        </div>
+    <% } else { %>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+            <%
+                for (String key : reviewProducts.keySet()) {
+                    OrderDetail detail = reviewProducts.get(key);
+                    String[] parts = key.split("_");
+                    int orderId = Integer.parseInt(parts[parts.length - 1]);
+            %>
+                <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                    <div style="margin-bottom: 10px;">
+                        <strong style="color: #8B5E3C; font-size: 1.05em;">📦 <%= detail.getProductName() %></strong>
+                    </div>
+                    <div style="color: #666; font-size: 0.9em; margin-bottom: 8px;">
+                        <p style="margin: 5px 0;"><strong>Đơn hàng:</strong> #<%= orderId %></p>
+                        <p style="margin: 5px 0;"><strong>Số lượng:</strong> <%= detail.getQuantity() %> cái</p>
+                        <p style="margin: 5px 0;"><strong>Giá:</strong> <fmt:formatNumber value="<%= detail.getTotal() / detail.getQuantity() %>" pattern="#,###"/> VND</p>
+                    </div>
+                    <a href="${pageContext.request.contextPath}/detail?id=<%= detail.getProductId() %>&review=true&orderId=<%= orderId %>">
+    <span style="display: inline-block; background: #8B5E3C; color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; width: 100%; text-align: center;">
+        ✍️ Viết đánh giá
+    </span>
+                    </a>
+
+                </div>
+            <% } %>
+        </div>
+    <% } %>
 </div>
 
 </main>
@@ -729,64 +786,7 @@
         </form>
     </div>
 </div>
-<%--<script>--%>
-<%--    function openOrderDetail(orderId) {--%>
-<%--        const modal = document.getElementById('orderDetailModal');--%>
-<%--        const content = modal.querySelector('.order-modal-content');--%>
 
-<%--        modal.style.display = 'block'; // Hiện modal ngay lập tức--%>
-<%--        content.innerHTML = '<div style="padding:20px; text-align:center;"><i class="fas fa-sync fa-spin"></i> Đang tải...</div>';--%>
-
-<%--        fetch(`OrderDetailServlet?orderId=${orderId}`)--%>
-<%--            .then(response => {--%>
-<%--                if (!response.ok) throw new Error("Lỗi Server (500)");--%>
-<%--                return response.text();--%>
-<%--            })--%>
-<%--            .then(html => {--%>
-<%--                content.innerHTML = html; // Đổ dữ liệu từ ajax_order_detail.jsp vào--%>
-<%--            })--%>
-<%--            .catch(err => {--%>
-<%--                content.innerHTML = `<span class="order-close" onclick="closeOrderDetail()">&times;</span>--%>
-<%--                                 <p style="color:red; padding:20px; text-align:center;">${err.message}. Kiểm tra lại Console của Java!</p>`;--%>
-<%--            });--%>
-<%--    }--%>
-<%--    function closeOrderDetail() {--%>
-<%--        const modal = document.getElementById('orderDetailModal');--%>
-<%--        modal.style.display = 'none';--%>
-<%--    }--%>
-<%--    // Thêm vào trong thẻ <script> của bạn--%>
-<%--    const urlParams = new URLSearchParams(window.location.search);--%>
-<%--    if (urlParams.get('statusUpdate') === 'success') {--%>
-<%--        alert("Thao tác thành công! Sản phẩm đã được hoàn trả lại kho.");--%>
-<%--    }--%>
-<%--    function showUserOrderDetail(id) {--%>
-<%--        const modal = document.getElementById('orderDetailModal');--%>
-<%--        const container = modal.querySelector('.order-modal-content');--%>
-
-<%--        // Lấy nội dung từ div ẩn--%>
-<%--        const data = document.getElementById('data-order-' + id).innerHTML;--%>
-
-<%--        // Chèn vào modal (thêm nút đóng)--%>
-<%--        container.innerHTML = '<span class="order-close" onclick="closeOrderDetail()">&times;</span>' + data;--%>
-
-<%--        // Hiện modal--%>
-<%--        modal.style.display = 'block';--%>
-<%--    }--%>
-
-<%--    function closeOrderDetail() {--%>
-<%--        document.getElementById('orderDetailModal').style.display = 'none';--%>
-<%--    }--%>
-
-<%--    // Đóng modal khi click ra ngoài vùng trắng--%>
-<%--    window.onclick = function(event) {--%>
-<%--        const modal = document.getElementById('orderDetailModal');--%>
-<%--        if (event.target == modal) {--%>
-<%--            modal.style.display = 'none';--%>
-<%--        }--%>
-<%--    }--%>
-
-<%--</script>--%>
-<%-- 1. Khai báo thư viện CKFinder (đảm bảo đúng đường dẫn) --%>
 <script src="${pageContext.request.contextPath}/ckfinder/ckfinder.js"></script>
 
 <script>
@@ -843,82 +843,7 @@
 
         finder.popup();
     }
-    function openReviewModal(orderId) {
-        const modal = document.getElementById('orderDetailModal');
-        const content = modal.querySelector('.order-modal-content');
 
-        modal.style.display = 'block';
-        content.innerHTML = '<div style="padding:20px; text-align:center;"><i class="fas fa-sync fa-spin"></i> Đang tải form đánh giá...</div>';
-
-        // Gọi Servlet bằng phương thức GET để lấy form
-        fetch(`ReviewServlet?orderId=${orderId}`)
-            .then(response => {
-                if (!response.ok) throw new Error("Không thể tải form đánh giá");
-                return response.text();
-            })
-            .then(html => {
-                // Chèn form vào modal kèm nút đóng
-                content.innerHTML = '<span class="order-close" onclick="closeOrderDetail()">&times;</span>' + html;
-            })
-            .catch(err => {
-                content.innerHTML = `<span class="order-close" onclick="closeOrderDetail()">&times;</span>
-                                 <p style="color:red; padding:20px; text-align:center;">${err.message}</p>`;
-            });
-    }
-    function openReviewModal(orderId) {
-        const modal = document.getElementById('reviewModal');
-        const container = document.getElementById('reviewFormContainer');
-
-        // 1. Lấy div ẩn chứa chi tiết đơn hàng
-        const sourceData = document.getElementById('data-order-' + orderId);
-        if (!sourceData) return;
-
-        // 2. Lấy danh sách các dòng sản phẩm (tr)
-        const items = sourceData.querySelectorAll('table tbody tr');
-
-        // Bắt đầu dựng HTML Form
-        let htmlContent = `<form action="ReviewServlet" method="post">
-                        <input type="hidden" name="orderId" value="${orderId}">`;
-
-        items.forEach((item) => {
-            const productName = item.cells[0].innerText; // Cột 1: Tên SP
-
-            // MẸO: Con cần lấy được ProductID.
-            // Nếu trong bảng chi tiết con chưa có ID, hãy gắn nó vào thẻ <tr> ở phần JSP cũ:
-            // Ví dụ: <tr data-pid="${d.productId}">
-            const productId = item.getAttribute('data-pid');
-
-            htmlContent += `
-            <div class="review-item" style="border: 1px solid #eee; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
-                <div style="margin-bottom: 10px;">
-                    <strong style="color: #27ae60;">${productName}</strong>
-                </div>
-                <div style="margin: 10px 0;">
-                    <label>Chất lượng:</label>
-                    <select name="rating_${productId}" style="padding: 5px; margin-left: 10px;">
-                        <option value="5">⭐⭐⭐⭐⭐ 5 Sao</option>
-                        <option value="4">⭐⭐⭐⭐ 4 Sao</option>
-                        <option value="3">⭐⭐⭐ 3 Sao</option>
-                        <option value="2">⭐⭐ 2 Sao</option>
-                        <option value="1">⭐ 1 Sao</option>
-                    </select>
-                </div>
-                <textarea name="comment_${productId}" placeholder="Cảm nhận của bạn..."
-                          style="width: 100%; height: 60px; padding: 10px; box-sizing: border-box;"></textarea>
-            </div>`;
-        });
-
-        htmlContent += `
-        <div style="text-align: right; margin-top: 15px;">
-            <button type="button" onclick="closeReviewModal()" style="background:#95a5a6; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer; margin-right:10px;">Hủy</button>
-            <button type="submit" style="background:#27ae60; color:white; padding:10px 30px; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Gửi Đánh Giá</button>
-        </div>
-    </form>`;
-
-        container.innerHTML = htmlContent;
-        modal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
-    }
 </script>
 <script>
     // --- 1. HIỆN CHI TIẾT ĐƠN HÀNG ---
@@ -951,66 +876,7 @@
 
     // --- 3. CHUYỂN SANG FORM ĐÁNH GIÁ ---
 
-    function switchToReviewForm(orderId) {
 
-        const container = document.querySelector('#orderDetailModal .order-modal-content');
-        const sourceData = document.getElementById('data-order-' + orderId);
-
-        if (!sourceData || !container) return;
-
-        const items = sourceData.querySelectorAll('table tbody tr');
-
-        let formHtml = `
-        <span class="order-close" onclick="closeOrderDetail()">&times;</span>
-
-        <h2 style="margin-bottom:20px;color:#27ae60">Đánh giá sản phẩm</h2>
-
-        <form action="ReviewServlet" method="post">
-        <input type="hidden" name="orderId" value="${orderId}">
-
-        <div style="max-height:400px;overflow:auto">
-    `;
-
-        items.forEach(item => {
-
-            const productName = item.cells[0].innerText;
-            const productId = item.dataset.pid;
-
-            formHtml += `
-        <div style="border:1px solid #eee;padding:10px;margin-bottom:10px">
-
-            <b>${productName}</b>
-
-            <br><br>
-
-            <select name="rating_${productId}">
-                <option value="5">⭐⭐⭐⭐⭐</option>
-                <option value="4">⭐⭐⭐⭐</option>
-                <option value="3">⭐⭐⭐</option>
-                <option value="2">⭐⭐</option>
-                <option value="1">⭐</option>
-            </select>
-
-            <br><br>
-
-            <textarea name="comment_${productId}" style="width:100%"></textarea>
-
-        </div>`;
-        });
-
-        formHtml += `
-        </div>
-
-        <div style="text-align:right">
-            <button type="button" onclick="showUserOrderDetail(${orderId})">Quay lại</button>
-            <button type="submit">Gửi đánh giá</button>
-        </div>
-
-        </form>
-    `;
-
-        container.innerHTML = formHtml;
-    }
 
 
 
