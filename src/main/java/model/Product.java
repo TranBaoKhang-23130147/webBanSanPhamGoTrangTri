@@ -13,7 +13,28 @@ public class Product {
     private int productTypeId;
     private double price;
     private int totalStock; // Thêm trường này
+    // Thêm trường này vào danh sách thuộc tính
+    private Information information;
 
+    // Thêm Getter và Setter tương ứng
+    public Information getInformation() {
+        return information;
+    }
+
+    public void setInformation(Information information) {
+        this.information = information;
+    }
+    // Thêm vào trong class Product.java
+    private List<String> listImages; // Để sửa lỗi setListImages
+    private String imagesRaw;       // Để sửa lỗi setImagesRaw
+
+    // Tạo Getter và Setter cho chúng
+
+    public List<String> getListImages() { return listImages; }
+    public void setListImages(List<String> listImages) { this.listImages = listImages; }
+
+    public String getImagesRaw() { return imagesRaw; }
+    public void setImagesRaw(String imagesRaw) { this.imagesRaw = imagesRaw; }
     private int primaryImageId;
     private int isActive;
     private Date mfgDate;
@@ -113,6 +134,9 @@ public class Product {
     public void setProductTypeName(String productTypeName) {
     }
 
+
+
+
     // Getter & Setter
     public int getTotalImported() {
         return totalImported;
@@ -137,5 +161,6 @@ public class Product {
 
     public Product(String name, double price, int catId, int typeId, int sourceId, String mfgDate) {
     }
+
 
 }

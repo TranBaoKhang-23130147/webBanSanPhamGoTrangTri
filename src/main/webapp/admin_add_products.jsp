@@ -192,51 +192,37 @@
     </div>
 </div>
 
+
 <script src="${pageContext.request.contextPath}/ckfinder/ckfinder.js"></script>
 <script>
+    // 1. Quản lý Ảnh với CKFinder
     function selectImagesWithCKFinder(targetInputId, targetPreviewId) {
         var finder = new CKFinder();
-        // Giữ nguyên basePath có contextPath để mở được cửa sổ CKFinder
         finder.basePath = '${pageContext.request.contextPath}/ckfinder/';
-
         finder.selectActionFunction = function(fileUrl, data, allFiles) {
             let urls = [];
             let html = '';
-
-            if (allFiles && allFiles.length > 0) {
-                allFiles.forEach(file => {
-                    // KHÔNG nối thêm contextPath vì file.url đã có sẵn rồi
-                    var finalUrl = file.url;
-                    urls.push(finalUrl);
-                    html += `<img src="${finalUrl}" style="width:100px;height:100px;object-fit:cover;border:1px solid #ddd;border-radius:5px;margin-right:5px;">`;
-                });
-            } else {
-                // Tương tự cho trường hợp chọn 1 file
-                var finalUrl = fileUrl;
-                urls.push(finalUrl);
-                html += `<img src="${finalUrl}" style="width:100px;height:100px;object-fit:cover;border:1px solid #ddd;border-radius:5px;margin-right:5px;">`;
-            }
-
+            allFiles.forEach(file => {
+                urls.push(file.url);
+                html += `<img src="${file.url}" style="width:100px;height:100px;object-fit:cover;border:1px solid #ddd;border-radius:5px;margin-right:5px;">`;
+            });
             document.getElementById(targetInputId).value = urls.join(',');
             document.getElementById(targetPreviewId).innerHTML = html;
         };
         finder.popup();
     }
-</script>
-<script>
+
+    // 2. Hàm Thêm Biến Thể Mới
     function addVariant() {
         const container = document.getElementById('variant-container');
-
-        // Tạo một khối variant-item mới (copy cấu trúc từ khối mẫu)
         const newVariant = document.createElement('div');
         newVariant.className = 'card variant-item';
         newVariant.innerHTML = `
             <h2 class="card-title">Biến thể</h2>
-            <span class="remove-variant" onclick="this.parentElement.remove()">
+            <span class="remove-variant" onclick="this.parentElement.remove(); checkDuplicateLive();">
                 <i class="fas fa-trash"></i>
             </span>
-
-            <div class="variant-grid">
+             <div class="variant-grid">
                 <div class="form-group sku-group">
                     <label>Mã SKU:</label>
                     <input type="text" name="variantSKU[]" required placeholder="Ví dụ: BG-PB-01">
@@ -271,159 +257,67 @@
                 </div>
             </div>
         `;
-
-        // Thêm khối mới vào container
         container.appendChild(newVariant);
 
-        // Hiện nút xóa cho khối mới (khối đầu tiên có display:none)
-        const removeBtn = newVariant.querySelector('.remove-variant');
-        if (removeBtn) removeBtn.style.display = 'block';
     }
 
-    // Tùy chọn: Hiện nút xóa cho khối biến thể đầu tiên (nếu muốn cho phép xóa luôn khối mặc định)
-    window.onload = function() {
-        const firstRemove = document.querySelector('.variant-item .remove-variant');
-        if (firstRemove) firstRemove.style.display = 'block';
-    };
-</script>
-<script>
-    // Hàm kiểm tra trùng variant (color + size) - gọi trước khi submit
+    // 3. Kiểm tra Trùng Lặp (Gọi khi Submit)
     function validateVariants() {
-        const variantItems = document.querySelectorAll('.variant-item');
-        const seenCombinations = new Set(); // Lưu {colorId-sizeId}
-        let hasDuplicate = false;
-        let errorMsg = '';
+        const items = document.querySelectorAll('.variant-item');
+        const seen = new Set();
+        let errorMsg = "";
 
-        for (let i = 0; i < variantItems.length; i++) {
-            const colorSelect = variantItems[i].querySelector('select[name="colorId[]"]');
-            const sizeSelect = variantItems[i].querySelector('select[name="sizeId[]"]');
+        for (let i = 0; i < items.length; i++) {
+            const colorId = items[i].querySelector('select[name="colorId[]"]').value;
+            const sizeId = items[i].querySelector('select[name="sizeId[]"]').value;
 
-            if (colorSelect && sizeSelect) {
-                const colorId = colorSelect.value;
-                const sizeId = sizeSelect.value;
-
-                if (colorId && sizeId) { // Chỉ check nếu đã chọn cả 2
-                    const combination = `${colorId}-${sizeId}`;
-
-                    if (seenCombinations.has(combination)) {
-                        hasDuplicate = true;
-                        errorMsg += `Biến thể ${i+1}: Màu "${colorSelect.options[colorSelect.selectedIndex].text}" + Kích thước "${sizeSelect.options[sizeSelect.selectedIndex].text}" đã trùng!\n`;
-                    } else {
-                        seenCombinations.add(combination);
-                    }
-                }
+            if (!colorId || !sizeId) {
+                alert("Vui lòng chọn đầy đủ Màu và Size cho biến thể số " + (i + 1));
+                return false;
             }
+
+            const combo = colorId + "-" + sizeId;
+            if (seen.has(combo)) {
+                const colorName = items[i].querySelector('select[name="colorId[]"] option:checked').text;
+                const sizeName = items[i].querySelector('select[name="sizeId[]"] option:checked').text;
+                errorMsg += `- Dòng ${i+1}: Trùng cặp [${colorName} - ${sizeName}]\n`;
+            }
+            seen.add(combo);
         }
 
-        if (hasDuplicate) {
-            alert('LỖI: Các biến thể sau bị TRÙNG (cùng màu + kích thước):\n\n' + errorMsg + '\n\nVui lòng sửa lại!');
+        if (errorMsg) {
+            alert("LỖI TRÙNG BIẾN THỂ:\n" + errorMsg);
             return false;
         }
-
-        // Check thêm: bắt buộc ít nhất 1 variant
-        if (variantItems.length === 0) {
-            alert('Vui lòng thêm ít nhất 1 biến thể!');
-            return false;
-        }
-
         return true;
     }
 
-    // Gắn event cho form submit
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.querySelector('form[action="admin-add-product"]');
-        if (form) {
-            form.addEventListener('submit', function(e) {
-                if (!validateVariants()) {
-                    e.preventDefault(); // Ngăn submit
-                }
-            });
-        }
-    });
-
-    // Real-time warning khi user thay đổi color/size (optional - UX tốt hơn)
-    function checkDuplicateLive(container) {
-        const items = container.querySelectorAll('.variant-item');
+    // 4. Cảnh báo thời gian thực (Đổi màu khung khi trùng)
+    function checkDuplicateLive() {
+        const items = document.querySelectorAll('.variant-item');
         const seen = new Set();
-
         items.forEach(item => {
-            const colorSel = item.querySelector('select[name="colorId[]"]');
-            const sizeSel = item.querySelector('select[name="sizeId[]"]');
-            if (colorSel && sizeSel && colorSel.value && sizeSel.value) {
-                const combo = `${colorSel.value}-${sizeSel.value}`;
-                if (seen.has(combo)) {
-                    item.style.border = '2px solid red';
-                    item.title = 'Trùng màu + kích thước!';
+            const cId = item.querySelector('select[name="colorId[]"]').value;
+            const sId = item.querySelector('select[name="sizeId[]"]').value;
+            if (cId && sId) {
+                const key = cId + "-" + sId;
+                if (seen.has(key)) {
+                    item.style.border = "2px solid red";
                 } else {
-                    seen.add(combo);
-                    item.style.border = '';
-                    item.title = '';
+                    item.style.border = "1px solid #eee";
+                    seen.add(key);
                 }
             }
         });
     }
 
-    // Gắn real-time check cho tất cả select color/size
-    document.addEventListener('change', function(e) {
-        if (e.target.name === 'colorId[]' || e.target.name === 'sizeId[]') {
-            checkDuplicateLive(document.getElementById('variant-container'));
-        }
-    });
-
-    // Hàm addVariant() (đã có từ trước, cải tiến thêm)
-    function addVariant() {
-        const container = document.getElementById('variant-container');
-        const newVariant = document.createElement('div');
-        newVariant.className = 'card variant-item';
-        newVariant.innerHTML = `
-            <h2 class="card-title">Biến thể</h2>
-            <span class="remove-variant" onclick="this.parentElement.remove(); checkDuplicateLive(document.getElementById('variant-container'));">
-                <i class="fas fa-trash"></i>
-            </span>
-            <div class="variant-grid">
-                <div class="form-group sku-group">
-                    <label>Mã SKU:</label>
-                    <input type="text" name="variantSKU[]" required placeholder="Ví dụ: BG-PB-01">
-                </div>
-                <div class="form-group">
-                    <label>Màu sắc:</label>
-                    <select name="colorId[]" onchange="checkDuplicateLive(document.getElementById('variant-container'));">
-                        <option value="">-- Chọn màu --</option>
-                        <c:forEach var="c" items="${listColors}">
-                            <option value="${c.id}">${c.colorName}</option>
-                        </c:forEach>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Kích thước:</label>
-                    <select name="sizeId[]" onchange="checkDuplicateLive(document.getElementById('variant-container'));">
-                        <option value="">-- Chọn size --</option>
-                        <c:forEach var="sz" items="${listSizes}">
-                            <option value="${sz.id}">${sz.size_name}</option>
-                        </c:forEach>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Giá biến thể (VND):</label>
-                    <input type="number" name="variantPrice[]" required placeholder="0.00" step="0.01" min="0">
-                </div>
-                <div class="form-group">
-                    <label>Số lượng kho:</label>
-                    <input type="number" name="variantStock[]" required placeholder="0" min="0">
-                </div>
-            </div>
-        `;
-        container.appendChild(newVariant);
-
-        // Check duplicate ngay sau khi add
-        setTimeout(() => checkDuplicateLive(container), 100);
-    }
-
-    // Cho phép xóa variant đầu tiên
+    // Gán sự kiện submit cho form
     document.addEventListener('DOMContentLoaded', function() {
-        const firstRemove = document.querySelector('.remove-variant');
-        if (firstRemove) firstRemove.style.display = 'block';
+        const form = document.querySelector('form');
+        form.onsubmit = function() {
+            return validateVariants();
+        };
     });
 </script>
-    </body>
+</body>
 </html>

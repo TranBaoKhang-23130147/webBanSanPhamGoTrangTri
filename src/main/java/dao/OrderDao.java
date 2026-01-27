@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import model.CartItem;
 import model.Order;
 import model.OrderDetail;
+import model.Product;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -388,4 +390,5 @@ public class OrderDao {
         }
         return 0.0;
     }
+
 }

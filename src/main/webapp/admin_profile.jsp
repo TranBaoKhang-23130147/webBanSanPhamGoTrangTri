@@ -24,19 +24,39 @@
         <main class="main-content">
             <div class="profile-header-section">
                 <div class="cover-image-container">
+                    <button  type="button" onclick="openAdminFinder()" style="position: absolute; bottom: 0; right: 0; cursor: pointer;">
+                        <i class="fas fa-camera"></i>Thay đổi ảnh đại diện</i>
+                    </button>
                     <img src="https://i.pinimg.com/736x/68/7a/95/687a9516347d14f79b5b3246070fa77c.jpg" alt="Cover Image" class="cover-image">
-                    <button class="change-cover-btn"><i class="fas fa-camera"></i> Thay đổi ảnh bìa</button>
+
+
                 </div>
 
                 <div class="profile-info-bar">
-                    <div class="profile-avatar-container">
-                        <img src="https://i.pinimg.com/736x/df/9c/29/df9c295c536ad53c490e02c99c73f8c3.jpg" alt="Company Logo" class="profile-avatar">
+                    <div class="profile-avatar-container" style="position: relative; display: inline-block;">
+                        <img id="admin-avatar-display"
+                             src="${pageContext.request.contextPath}${not empty admin.avatarUrl ? admin.avatarUrl : '/img/logo.png'}"
+                             class="profile-avatar" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
+
+
                     </div>
+
+                    <form id="adminAvatarForm" action="AdminProfileServlet" method="POST" style="display: none;">
+                        <input type="hidden" name="adminAvatarUrl" id="adminAvatarInput">
+                    </form>
+
+
                     <div class="user-details">
                         <h1 class="user-name">
                             <c:out value="${admin.username}" default="Admin Name" />
                             <i class="fas fa-check-circle verified-icon"></i>
                         </h1>
+                        <p class="user-meta">
+                            <i class="fas fa-map-marker-alt"></i>
+                            ${not empty admin.address ? admin.address.province : "Việt Nam"} |
+                            <i class="fas fa-calendar-alt"></i>
+                            Tham gia <fmt:formatDate value="${admin.createAt}" pattern="MMMM 'năm' yyyy" />
+                        </p>
                         <p><i class="fas fa-clock"></i> Đăng nhập lúc: <span id="loginTime"></span></p>
 
                         </span>
@@ -45,20 +65,23 @@
             </div>
 
             <div class="profile-content-section">
-                <div class="profile-tabs">
-                    <span class="tab-item active-tab">Hồ sơ</span>
-                </div>
+
+
+
+
+
 
 
                 <div class="profile-details-wrapper">
 
                     <div class="profile-details-left">
-
+                        <h3 class="section-title">Hồ Sơ</h3>
                         <div class="info-group">
                             <label>Họ và tên:</label>
                             <p class="info-text">${admin.username}</p>
                         </div>
-
+                        <div class="info-group">  <label>Chức vụ: </label>
+                             <p class="info-text">${admin.role}</p></div>
                         <div class="info-group">
                             <label>Điện thoại</label>
                             <p class="info-text">${admin.phone}</p>
@@ -68,28 +91,28 @@
                             <label>Email</label>
                             <p class="info-text">${admin.email}</p>
                         </div>
+                        <div class="info-group">
 
-<%--                        <div class="info-group">--%>
-<%--                            <label>Ngày tạo tài khoản</label>--%>
-<%--                            <p class="info-text">--%>
-<%--                                <fmt:formatDate value="${admin.createAt}" pattern="dd.MM.yyyy" />--%>
-<%--                            </p>--%>
-<%--                        </div>--%>
+                            <label>Ngày tạo tài khoản</label>
+                            <p class="info-text">
+                                <fmt:formatDate value="${admin.createAt}" pattern="dd.MM.yyyy" />
+                            </p>
 
-<%--                        <div class="info-group">--%>
-<%--                            <label>Địa chỉ</label>--%>
-<%--                            <p class="info-text">--%>
-<%--                                <c:choose>--%>
-<%--                                    <c:when test="${not empty admin.address}">--%>
-<%--                                        ${admin.address.fullAddress}--%>
-<%--                                    </c:when>--%>
-<%--                                    <c:otherwise>--%>
-<%--                                        <span style="color: #999;">Chưa cập nhật địa chỉ</span>--%>
-<%--                                    </c:otherwise>--%>
-<%--                                </c:choose>--%>
-<%--                            </p>--%>
-<%--                        </div>--%>
                     </div>
+                        <div class="info-group">
+                            <label>Địa chỉ</label>
+                            <p class="info-text">
+                                <c:choose>
+                                    <c:when test="${not empty admin.address}">
+                                        <%-- Gọi hàm getFullAddress() từ model Address --%>
+                                        ${admin.address.fullAddress}
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span style="color: #999;">Chưa cập nhật địa chỉ</span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </p>
+                        </div> </div>
 
                     <div class="profile-details-right">
                         <h3 class="section-title">Quyền Hạn Hệ Thống</h3>
@@ -164,4 +187,36 @@
     </div>
 </div>
 </body>
+<script src="${pageContext.request.contextPath}/ckfinder/ckfinder.js"></script>
+<script>
+    function openAdminFinder() { // Đổi tên hàm cho khớp với onclick của button
+        var finder = new CKFinder();
+        finder.basePath = '${pageContext.request.contextPath}/ckfinder/';
+
+        finder.selectActionFunction = function(fileUrl) {
+            var contextPath = "${pageContext.request.contextPath}" || "";
+            var relativeUrl = fileUrl || "";
+
+            // 1. Xử lý đường dẫn tương đối
+            if (contextPath && relativeUrl.startsWith(contextPath)) {
+                relativeUrl = relativeUrl.substring(contextPath.length);
+            }
+
+            // 2. Cập nhật preview ảnh ngay lập tức
+            var preview = document.getElementById('admin-avatar-display');
+            if (preview) {
+                preview.src = contextPath + relativeUrl;
+            }
+
+            // 3. Gán vào input hidden và tự động SUBMIT form
+            var input = document.getElementById('adminAvatarInput');
+            var form = document.getElementById('adminAvatarForm');
+            if (input && form) {
+                input.value = relativeUrl;
+                form.submit(); // Tự động gửi lên Servlet doPost
+            }
+        };
+        finder.popup();
+    }
+</script>
 </html>

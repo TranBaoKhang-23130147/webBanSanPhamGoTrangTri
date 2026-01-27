@@ -100,7 +100,7 @@
                         <tr>
                             <th>Top</th>
                             <th>Sản Phẩm</th>
-                            <th>Lượt Mua</th>
+                            <th>Giá Tiền</th>
                             <th>Đánh Giá</th>
                         </tr>
                         </thead>
