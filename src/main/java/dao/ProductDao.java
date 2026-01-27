@@ -1080,63 +1080,37 @@ public class ProductDao {
     }
 
     public boolean deleteFullProduct(int productId) {
-        Connection conn = null;
-        try {
-            conn = new DBContext().getConnection();
+
+        try (Connection conn = new DBContext().getConnection()) {
+
             conn.setAutoCommit(false);
 
-            // 1. Lấy description_id, information_id
-            int descId = -1, infoId = -1;
-            String q = """
-            SELECT d.id AS descId, i.id AS infoId
-            FROM products p
-            JOIN descriptions d ON p.description_id = d.id
-            JOIN informations i ON d.information_id = i.id
-            WHERE p.id = ?
-        """;
-            PreparedStatement ps = conn.prepareStatement(q);
-            ps.setInt(1, productId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                descId = rs.getInt("descId");
-                infoId = rs.getInt("infoId");
-            }
-
-            // 2. Xóa biến thể
+            // 1. variants
             conn.prepareStatement(
-                    "DELETE FROM product_variants WHERE product_id = " + productId
-            ).executeUpdate();
+                            "DELETE FROM product_variants WHERE product_id=?")
+                    .executeUpdate();
 
-            // 3. Xóa ảnh
-            conn.prepareStatement(
-                    "DELETE i FROM images i JOIN product_images pi ON i.id = pi.image_id WHERE pi.product_id = " + productId
-            ).executeUpdate();
+            // 2. images mapping
+            PreparedStatement ps1 = conn.prepareStatement(
+                    "DELETE FROM product_images WHERE product_id=?");
+            ps1.setInt(1, productId);
+            ps1.executeUpdate();
 
-            conn.prepareStatement(
-                    "DELETE FROM product_images WHERE product_id = " + productId
-            ).executeUpdate();
-
-            // 4. Xóa product
-            conn.prepareStatement(
-                    "DELETE FROM products WHERE id = " + productId
-            ).executeUpdate();
-
-            // 5. Xóa mô tả + thông tin
-            if (descId > 0)
-                conn.prepareStatement("DELETE FROM descriptions WHERE id = " + descId).executeUpdate();
-
-            if (infoId > 0)
-                conn.prepareStatement("DELETE FROM informations WHERE id = " + infoId).executeUpdate();
+            // 3. product
+            PreparedStatement ps2 = conn.prepareStatement(
+                    "DELETE FROM products WHERE id=?");
+            ps2.setInt(1, productId);
+            ps2.executeUpdate();
 
             conn.commit();
             return true;
 
         } catch (Exception e) {
             e.printStackTrace();
-            try { if (conn != null) conn.rollback(); } catch (Exception ignored) {}
             return false;
         }
     }
+
 
 
     public int getTotalStockByProductId(int productId) {
@@ -1837,4 +1811,27 @@ public class ProductDao {
         }
         return false;
     }
+
+    public double getAverageRating(int productId) {
+
+        String sql = "SELECT IFNULL(AVG(rate),0) FROM reviews WHERE product_id=?";
+
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, productId);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getDouble(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
 }

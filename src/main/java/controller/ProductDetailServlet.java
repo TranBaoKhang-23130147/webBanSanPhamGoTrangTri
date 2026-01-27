@@ -59,6 +59,8 @@ public class ProductDetailServlet extends HttpServlet {
 
         List<Reviews> reviewList = dao.getProductReviews(productId);
         p.setReviewList(reviewList);
+        double avgRating = dao.getAverageRating(productId);
+        p.setAverageRating(avgRating);
 
         Map<Integer, String> userNames = new HashMap<>();
         if (reviewList != null) {

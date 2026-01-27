@@ -63,8 +63,8 @@
                     </a>
 
                     <div class="action-buttons">
-                        <a href="detail?id=${p.id}" class="add-cart">Thêm giỏ hàng</a>
-                        <a href="detail?id=${p.id}" class="buy-now">Mua hàng</a>
+                        <a href="detail?id=${p.id}" class="add-cart" style="text-decoration: none;">Thêm giỏ hàng</a>
+                        <a href="detail?id=${p.id}" class="buy-now" style="text-decoration: none;">Mua hàng</a>
                     </div>
                 </div>
             </c:forEach>

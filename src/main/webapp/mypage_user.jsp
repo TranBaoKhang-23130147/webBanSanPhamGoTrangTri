@@ -142,33 +142,57 @@
                     <div class="profile-right">
                         <h3>Thông tin liên hệ</h3>
                         <div class="contact-item">
-                            <label>Số điện thoại :</label>
-
-                            <%-- Thay span thành input để người dùng nhập được sđt mới --%>
-                            <input type="text" name="phone" value="<%= user.getPhone() != null ? user.getPhone() : "" %>" placeholder="Số điện thoại">
+                            <label>Số điện thoại:</label>
+                            <input type="text" class="input-field" name="phone"
+                                   value="<%= user.getPhone() != null ? user.getPhone() : "" %>"
+                                   placeholder="Nhập số điện thoại">
                         </div>
+<style>/* Container chung */
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-family: 'Arial', sans-serif;
+}
+
+.contact-item label {
+    width: 120px; /* Độ rộng cố định cho nhãn để thẳng hàng */
+    font-weight: bold;
+    color: #333;
+}
+
+/* Style cho ô nhập số điện thoại */
+.input-field {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input-field:focus {
+    border-color: #8b5e3c; /* Màu nâu gỗ giống logo của bạn */
+    box-shadow: 0 0 5px rgba(139, 94, 60, 0.2);
+}
+
+/* Style cho ô Email (chỉ đọc) */
+.input-readonly {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    background: transparent;
+    color: #666;
+    font-style: italic;
+    cursor: default;
+    outline: none;
+}</style>
                         <div class="contact-item">
-                            <label>Email :</label>
+                            <label>Email:</label>
+                            <input type="email" class="input-readonly" name="email"
+                                   value="<%= user.getEmail() %>" readonly>
+                        </div>
 
-                            <%-- Email thường cố định, để readonly --%>
-                            <input type="email" name="email" value="<%= user.getEmail() %>" readonly style="border:none; background:none;">
-                        </div>
-                        <h3>Liên kết</h3>
-                        <div class="contact-item link-item">
-                            <i class="fab fa-facebook-square"></i>
-                            <span>Facebook</span>
-                            <button class="link-btn">Liên kết</button>
-                        </div>
-                        <div class="contact-item link-item">
-                            <i class="fab fa-google"></i>
-                            <span>Google</span>
-                            <button class="delete-btn">Xóa</button>
-                        </div>
-                        <div class="contact-item link-item">
-                            <i class="fas fa-comments"></i>
-                            <span>Zalo</span>
-                            <button class="delete-btn">Xóa</button>
-                        </div>
                     </div>
                 </div>
             </form>
@@ -561,9 +585,9 @@
                                 <form action="MyPageServlet" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')">
                                     <input type="hidden" name="action" value="cancelOrder">
                                     <input type="hidden" name="orderId" value="${order.id}">
-                                    <button type="submit" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                                        Hủy Đơn Hàng
-                                    </button>
+<%--                                    <button type="submit" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">--%>
+<%--                                        Hủy Đơn Hàng--%>
+<%--                                    </button>--%>
                                 </form>
                             </c:if>
 
@@ -575,11 +599,11 @@
                                 <div style="display: flex; gap: 10px; align-items: center;">
                                         <%-- Nút VIẾT ĐÁNH GIÁ: Luôn hiện khi đã giao --%>
                                         <%-- Nút VIẾT ĐÁNH GIÁ: Gọi hàm JS truyền vào Order ID --%>
-                                    <button type="button"
-                                            onclick="openReviewModal(${order.id})"
-                                            style="background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                                        Viết Đánh Giá
-                                    </button>
+<%--                                    <button type="button"--%>
+<%--                                            onclick="openReviewModal(${order.id})"--%>
+<%--                                            style="background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">--%>
+<%--                                        Viết Đánh Giá--%>
+<%--                                    </button>--%>
                                         <%-- Nút HOÀN HÀNG: Chỉ hiện trong vòng 7 ngày --%>
                                     <c:choose>
                                         <c:when test="${days <= 7}">
@@ -653,7 +677,7 @@
             %>
                 <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
                     <div style="margin-bottom: 10px;">
-                        <strong style="color: #8B5E3C; font-size: 1.05em;">📦 <%= detail.getProductName() %></strong>
+                        <strong style="color: #8B5E3C; font-size: 1.05em;"><%= detail.getProductName() %></strong>
                     </div>
                     <div style="color: #666; font-size: 0.9em; margin-bottom: 8px;">
                         <p style="margin: 5px 0;"><strong>Đơn hàng:</strong> #<%= orderId %></p>
@@ -662,7 +686,7 @@
                     </div>
                     <a href="${pageContext.request.contextPath}/detail?id=<%= detail.getProductId() %>&review=true&orderId=<%= orderId %>">
     <span style="display: inline-block; background: #8B5E3C; color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; width: 100%; text-align: center;">
-        ✍️ Viết đánh giá
+         Viết đánh giá
     </span>
                     </a>
 

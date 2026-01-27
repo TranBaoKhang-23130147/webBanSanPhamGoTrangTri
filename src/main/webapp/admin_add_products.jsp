@@ -139,6 +139,7 @@
                                     <input type="hidden" id="imageUrls" name="productImages">
                                 </div>
                                 <div id="image-preview" style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;"></div>
+
                             </div>
                         </div> <div class="form-column-right">
                         <div id="variant-container">
@@ -198,22 +199,40 @@
 
 <script src="${pageContext.request.contextPath}/ckfinder/ckfinder.js"></script>
 <script>
-    // 1. Quản lý Ảnh với CKFinder
     function selectImagesWithCKFinder(targetInputId, targetPreviewId) {
         var finder = new CKFinder();
         finder.basePath = '${pageContext.request.contextPath}/ckfinder/';
+        finder.selectMultiple = true;
+
         finder.selectActionFunction = function(fileUrl, data, allFiles) {
-            let urls = [];
-            let html = '';
-            allFiles.forEach(file => {
-                urls.push(file.url);
-                html += `<img src="${file.url}" style="width:100px;height:100px;object-fit:cover;border:1px solid #ddd;border-radius:5px;margin-right:5px;">`;
+
+            const input = document.getElementById(targetInputId);
+            const preview = document.getElementById(targetPreviewId);
+
+            const files = (allFiles && allFiles.length) ? allFiles : [{url: fileUrl}];
+            const names = [];
+
+            files.forEach(file => {
+                let fullPath = decodeURIComponent(file.url);
+                let fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1);
+                fileName = fileName.split('?')[0];
+                names.push(fileName);
             });
-            document.getElementById(targetInputId).value = urls.join(',');
-            document.getElementById(targetPreviewId).innerHTML = html;
+
+            // lưu tên ảnh vào hidden input
+            input.value = names.join(",");
+
+            // chỉ hiển thị text
+            preview.innerHTML = `
+            <span style="color:green;font-weight:600;">
+                ✔ Đã thêm ${names.length} ảnh thành công
+            </span>
+        `;
         };
+
         finder.popup();
     }
+
 
     // 2. Hàm Thêm Biến Thể Mới
     function addVariant() {

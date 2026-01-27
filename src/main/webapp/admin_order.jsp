@@ -276,6 +276,21 @@
                                                 margin: 2% auto !important; /* Đẩy modal lên sát trên hơn */
                                                 width: 60% !important; /* Nới rộng chiều ngang một chút để tránh bị quá dài */
                                             }
+                                            .user-table-container {
+                                                max-height: 500px;       /* chỉnh cao thấp tùy bạn */
+                                                overflow-y: auto;
+                                                border: 1px solid #ddd;
+                                                border-radius: 8px;
+                                            }
+
+                                            /* giữ header đứng yên */
+                                            .user-table-container thead th {
+                                                position: sticky;
+                                                top: 0;
+                                                background: white;
+                                                z-index: 2;
+                                            }
+
                                         </style>
 
 
@@ -286,15 +301,15 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="pagination-footer">
-                    <div class="pagination">
-                        <button class="page-link disabled">Quay lại</button>
-                        <button class="page-link active-page">1</button>
-                        <button class="page-link">2</button>
-                        <button class="page-link">3</button>
-                        <button class="page-link">Tiếp Theo</button>
-                    </div>
-                </div>
+<%--                <div class="pagination-footer">--%>
+<%--                    <div class="pagination">--%>
+<%--                        <button class="page-link disabled">Quay lại</button>--%>
+<%--                        <button class="page-link active-page">1</button>--%>
+<%--                        <button class="page-link">2</button>--%>
+<%--                        <button class="page-link">3</button>--%>
+<%--                        <button class="page-link">Tiếp Theo</button>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
 
             </div>
         </main>

@@ -83,6 +83,7 @@
                     <span>(${p.averageRating})</span>
                 </div>
 
+
                 <div class="price">
                     <fmt:formatNumber value="${p.price}" type="number" groupingUsed="true"/> VNĐ
                 </div>

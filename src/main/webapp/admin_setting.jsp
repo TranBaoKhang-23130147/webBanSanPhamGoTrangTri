@@ -40,15 +40,7 @@
                             <h2>Thông tin cơ bản</h2>
                             <form action="${pageContext.request.contextPath}/UpdateSettingServlet" method="post" class="basic-info-form">
 
-                                <!-- Avatar -->
-                                <c:choose>
-                                    <c:when test="${not empty user.avatarUrl}">
-                                        <img src="${user.avatarUrl}" alt="Avatar" class="profile-avatar">
-                                    </c:when>
-                                    <c:otherwise>
-                                        <img src="img/default-avatar.png" alt="Default Avatar" class="profile-avatar">
-                                    </c:otherwise>
-                                </c:choose>
+
 
                                 <!-- Họ tên & Tên hiển thị -->
                                 <div class="form-row">

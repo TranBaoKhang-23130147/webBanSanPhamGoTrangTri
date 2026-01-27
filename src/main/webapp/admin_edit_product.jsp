@@ -178,23 +178,38 @@
     function selectImagesWithCKFinder(targetInputId, targetPreviewId) {
         var finder = new CKFinder();
         finder.basePath = '${pageContext.request.contextPath}/ckfinder/';
+        finder.selectMultiple = true;
+
         finder.selectActionFunction = function(fileUrl, data, allFiles) {
-            let urls = [];
-            let html = '';
-            if (allFiles && allFiles.length > 0) {
-                allFiles.forEach(file => {
-                    urls.push(file.url);
-                    html += `<img src="${file.url}">`;
-                });
-            } else {
-                urls.push(fileUrl);
-                html += `<img src="${fileUrl}">`;
-            }
-            document.getElementById(targetInputId).value = urls.join(',');
-            document.getElementById(targetPreviewId).innerHTML = html;
+
+            const input = document.getElementById(targetInputId);
+            const preview = document.getElementById(targetPreviewId);
+
+            const files = (allFiles && allFiles.length) ? allFiles : [{url: fileUrl}];
+            const names = [];
+
+            files.forEach(file => {
+                let fullPath = decodeURIComponent(file.url);
+                let fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1);
+                fileName = fileName.split('?')[0];
+                names.push(fileName);
+            });
+
+            // lưu ảnh vào hidden input
+            input.value = names.join(",");
+
+            // chỉ hiển thị chữ
+            preview.innerHTML = `
+            <div style="margin-top:10px;color:#27ae60;font-weight:600;">
+                <i class="fas fa-check-circle"></i>
+                Đã cập nhật ${names.length} ảnh thành công
+            </div>
+        `;
         };
+
         finder.popup();
     }
+
 
     // 2. Thêm biến thể mới - Lưu ý name phải khớp variantColor[], variantSize[]...
     function addVariant() {

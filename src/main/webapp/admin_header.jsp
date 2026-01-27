@@ -5,17 +5,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%
-    // 1. Lấy user từ session
-    User admin = (User) session.getAttribute("LOGGED_USER");
-    if (admin != null) {
-        NotificationDao notiDAO = new NotificationDao();
-        // 2. Lấy danh sách từ DB
-        List<Notification> notifications = notiDAO.getTopNotifications(admin.getId());
-        // 3. Đẩy vào request để JSTL bên dưới sử dụng
-        request.setAttribute("notifications", notifications);
-    }
-%>
+<%--<%--%>
+<%--    // 1. Lấy user từ session--%>
+<%--    User admin = (User) session.getAttribute("LOGGED_USER");--%>
+<%--    if (admin != null) {--%>
+<%--        NotificationDao notiDAO = new NotificationDao();--%>
+<%--        // 2. Lấy danh sách từ DB--%>
+<%--        List<Notification> notifications = notiDAO.getTopNotifications(admin.getId());--%>
+<%--        // 3. Đẩy vào request để JSTL bên dưới sử dụng--%>
+<%--        request.setAttribute("notifications", notifications);--%>
+<%--    }--%>
+<%--%>--%>
 <header class="header">
     <div class="logo-placeholder">
         <img src="${pageContext.request.contextPath}/img/logo.png" alt="Logo Modern Homes">

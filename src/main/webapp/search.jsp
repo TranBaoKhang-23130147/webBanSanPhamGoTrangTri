@@ -32,11 +32,11 @@
                    value="${txtS}"
                    placeholder="Nhập tên sản phẩm...">
 
-            <select name="category">
-                <option value="all" ${catS == 'all' ? 'selected' : ''}>Phân loại</option>
-                <option value="Bàn ghế" ${catS == 'Bàn ghế' ? 'selected' : ''}>Bàn ghế</option>
-                <option value="Kệ" ${catS == 'Kệ' ? 'selected' : ''}>Kệ</option>
-            </select>
+<%--            <select name="category">--%>
+<%--                <option value="all" ${catS == 'all' ? 'selected' : ''}>Phân loại</option>--%>
+<%--                <option value="Bàn ghế" ${catS == 'Bàn ghế' ? 'selected' : ''}>Bàn ghế</option>--%>
+<%--                <option value="Kệ" ${catS == 'Kệ' ? 'selected' : ''}>Kệ</option>--%>
+<%--            </select>--%>
 
             <button type="submit"><i class="fas fa-search"></i></button>
         </form>
