@@ -36,25 +36,30 @@
         <%-- Phần hiển thị thông báo trong header.jsp --%>
         <div class="notification-dropdown">
             <i class="fa-solid fa-bell notification-icon"></i>
-            <span class="badge">${notifications.size()}</span> <div id="notificationMenuContent" class="dropdown-content notification-content">
-            <div class="dropdown-header">
-                Thông Báo Mới (${notifications != null ? notifications.size() : 0})
-            </div>
 
-            <c:forEach var="n" items="${notifications}">
-                <a href="ViewContactDetail?id=${n.relatedId}">
-                    <div class="noti-item ${n.isRead() ? '' : 'unread'}">
+            <span class="badge">
+        <c:out value="${notifications != null ? notifications.size() : 0}" />
+    </span>
+
+            <div id="notificationMenuContent" class="dropdown-content notification-content">
+                <div class="dropdown-header">
+                    Thông Báo Mới
+                </div>
+
+                <c:forEach var="n" items="${notifications}">
+                    <div class="noti-item ${n.read ? '' : 'unread'}">
                         📩 ${n.content}
-                        <br><small>${n.createAt}</small>
+                        <br>
+                        <small>${n.createAt}</small>
                     </div>
-                </a>
-            </c:forEach>
+                </c:forEach>
 
-            <c:if test="${empty notifications}">
-                <p class="no-messages-text">Không có thông báo mới.</p>
-            </c:if>
+                <c:if test="${empty notifications}">
+                    <p class="no-messages-text">Không có thông báo mới.</p>
+                </c:if>
+            </div>
         </div>
-        </div>
+
 
         <div class="user-dropdown">
             <i class="fas fa-user-circle user-logo" ></i>

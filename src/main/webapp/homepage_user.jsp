@@ -74,32 +74,32 @@
         <p>Từng đường vân, sắc màu và cảm hứng từ thiên nhiên được chúng tôi tỉ mỉ chọn lọc và chăm chút, mang đến cảm giác ấm áp, tinh tế và gần gũi – tạo nên không gian hài hòa, chan hòa với thiên nhiên.</p>
     </div>
 
-<%--    <section class="products">--%>
-<%--        <c:forEach items="${products}" var="p">--%>
-<%--            <div class="product-card">--%>
+    <section class="products">
+        <c:forEach items="${products}" var="p">
+            <div class="product-card">
 
-<%--                <a href="product-detail?id=${p.id}">--%>
-<%--                    <img src="${p.imageUrl}" alt="${p.nameProduct}">--%>
-<%--                    <h2>${p.nameProduct}</h2>--%>
-<%--                </a>--%>
+                <a href="product-detail?id=${p.id}">
+                    <img src="${p.imageUrl}" alt="${p.nameProduct}">
+                    <h2>${p.nameProduct}</h2>
+                </a>
 
-<%--                <div class="rating">--%>
-<%--                    <i class="ri-star-s-fill"></i>--%>
-<%--                    <span>(${p.averageRating})</span>--%>
-<%--                </div>--%>
+                <div class="rating">
+                    <i class="ri-star-s-fill"></i>
+                    <span>(${p.averageRating})</span>
+                </div>
 
-<%--                <div class="price">--%>
-<%--                    <fmt:formatNumber value="${p.price}" type="currency" currencySymbol="VNĐ"/>--%>
-<%--                </div>--%>
+                <div class="price">
+                    <fmt:formatNumber value="${p.price}" type="currency" currencySymbol="VNĐ"/>
+                </div>
 
-<%--                <div class="action-buttons">--%>
-<%--                    <a href="add-to-cart?id=${p.id}" class="add-cart">Thêm giỏ hàng</a>--%>
-<%--                    <a href="buy-now?id=${p.id}" class="buy-now">Mua hàng</a>--%>
-<%--                </div>--%>
+                <div class="action-buttons">
+                    <a href="add-to-cart?id=${p.id}" class="add-cart">Thêm giỏ hàng</a>
+                    <a href="buy-now?id=${p.id}" class="buy-now">Mua hàng</a>
+                </div>
 
-<%--            </div>--%>
-<%--        </c:forEach>--%>
-<%--    </section>--%>
+            </div>
+        </c:forEach>
+    </section>
     <div class="products">
         <c:forEach items="${top3Products}" var="p">
             <div class="product-card">

@@ -22,7 +22,7 @@
 <jsp:include page="header.jsp"></jsp:include>
 <c:if test="${not empty sessionScope.ADD_CART_SUCCESS}">
     <div id="cartAlert"
-         >
+    >
         <i class="ri-checkbox-circle-fill"></i>
             ${sessionScope.ADD_CART_SUCCESS}
     </div>
@@ -59,20 +59,19 @@
         <h2 class="product-title">${p.nameProduct}</h2>
         <%-- Trong vòng lặp c:forEach --%>
         <p>Số lượng còn lại: <strong>${p.totalQuantity}</strong> sản phẩm</p>        <div class="rating-price-wrapper">
-            <div class="rating">
-                <c:forEach begin="1" end="5" var="i">
-                    <i class="${i <= p.averageRating ? 'ri-star-s-fill' : 'ri-star-s-line'}" style="color: #ffcc00;"></i>
-                </c:forEach>
-                <span>(<fmt:formatNumber value="${p.averageRating}" maxFractionDigits="1"/>)</span>
-                <span>| ${p.totalReviews} đánh giá</span>
-            </div>
-            <div class="product-price-section">
-                <%-- Hiển thị giá (Nếu có biến thể thì lấy giá biến thể đầu tiên làm mặc định) --%>
-                <div class="product-price">
-                    <fmt:formatNumber value="${p.price}" pattern="#,###"/> VND
-                </div>
+        <div class="rating">
+            <c:forEach begin="1" end="5" var="i">
+                <i class="${i <= p.averageRating ? 'ri-star-s-fill' : 'ri-star-s-line'}" style="color: #ffcc00;"></i>
+            </c:forEach>
+            <span>(<fmt:formatNumber value="${p.averageRating}" maxFractionDigits="1"/>)</span>
+            <span>| ${p.totalReviews} đánh giá</span>
+        </div>
+        <div class="product-price-section">
+            <div class="product-price">
+                <span id="dynamic-price"><fmt:formatNumber value="${p.price}" pattern="#,###"/></span> VND
             </div>
         </div>
+    </div>
 
         <ul class="benefit-list">
             <li><span class="label">Thanh toán:</span> Gía sản phẩm chưa bao gồm chi phí vận chuyển và lắp đặt</li>
@@ -129,27 +128,27 @@
 
 
             <div class="purchase-actions">
-            <div class="quantity-select">
-                <div class=" quantity-row">
-                    <p>Số Lượng:</p>
-                    <div class="quantity-controls">
-                        <button type="button" class="qty-btn"
-                                onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
-                        <input type="number" id="qtyInput" value="1" min="1" max="100" />
+                <div class="quantity-select">
+                    <div class=" quantity-row">
+                        <p>Số Lượng:</p>
+                        <div class="quantity-controls">
+                            <button type="button" class="qty-btn"
+                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                            <input type="number" id="qtyInput" value="1" min="1" max="100" />
 
-                        <button type="button" class="qty-btn"
-                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                            <button type="button" class="qty-btn"
+                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="button-group">
-                <button type="submit" class="add-to-cart">
-                    Thêm vào giỏ hàng
-                </button>
-                <button class="buy-now">Mua Ngay</button>
+                <div class="button-group">
+                    <button type="submit" class="add-to-cart">
+                        Thêm vào giỏ hàng
+                    </button>
+                    <button class="buy-now">Mua Ngay</button>
+                </div>
             </div>
-        </div>
         </form>
     </div>
 </div>
@@ -261,36 +260,36 @@
 <jsp:include page="footer.jsp"></jsp:include>
 <script>
     // 1. Chuyển dữ liệu biến thể từ Java sang JavaScript JSON
-    // Thay thế đoạn từ dòng 186 đến 195 bằng đoạn này:
     const allVariants = [
         <c:forEach var="v" items="${p.variants}" varStatus="status">
         {
             id: "${v.id}",
             colorId: "${v.color.id}",
             sizeId: "${v.size.id}",
-            price: ${v.variant_price},
-            // Đảm bảo lấy đúng trường inventory_quantity từ database
-            stock: ${v.inventory_quantity}
+            price: ${v.variant_price != null ? v.variant_price : 0},
+            stock: ${v.inventory_quantity != null ? v.inventory_quantity : 0}
         }${!status.last ? ',' : ''}
         </c:forEach>
     ];
+
     let selectedColorId = null;
     let selectedSizeId = null;
 
+    // 2. Hàm chọn màu
     function selectColor(colorId) {
-        // Nếu nhấn lại chính nó thì bỏ chọn
         selectedColorId = (selectedColorId === colorId) ? null : colorId;
         updateUI();
     }
 
+    // 3. Hàm chọn kích thước
     function selectSize(sizeId) {
         selectedSizeId = (selectedSizeId === sizeId) ? null : sizeId;
         updateUI();
     }
 
-    // Thay thế hàm updateUI() cũ bằng đoạn này:
+    // 4. Hàm cập nhật giao diện (Giá, Kho, Trạng thái nút)
     function updateUI() {
-        // 1. Cập nhật class Active cho nút
+        // Cập nhật trạng thái Active cho các nút
         document.querySelectorAll('.color-btn').forEach(btn => {
             btn.classList.toggle('active', btn.getAttribute('data-color-id') === selectedColorId);
         });
@@ -298,78 +297,89 @@
             btn.classList.toggle('active', btn.getAttribute('data-size-id') === selectedSizeId);
         });
 
-        // 2. Vô hiệu hóa các nút không hợp lệ (Logic cũ của bạn)
+        // Logic ẩn/hiện các nút không khả dụng dựa trên lựa chọn hiện tại
         document.querySelectorAll('.size-btn').forEach(btn => {
             const sizeId = btn.getAttribute('data-size-id');
             const exists = selectedColorId ? allVariants.some(v => v.colorId === selectedColorId && v.sizeId === sizeId) : true;
-            btn.disabled = !exists;
             btn.style.opacity = exists ? "1" : "0.3";
+            btn.style.pointerEvents = exists ? "auto" : "none";
         });
 
         document.querySelectorAll('.color-btn').forEach(btn => {
             const colorId = btn.getAttribute('data-color-id');
             const exists = selectedSizeId ? allVariants.some(v => v.sizeId === selectedSizeId && v.colorId === colorId) : true;
-            btn.disabled = !exists;
             btn.style.opacity = exists ? "1" : "0.3";
+            btn.style.pointerEvents = exists ? "auto" : "none";
         });
 
+        // Tìm biến thể khớp hoàn toàn cả Màu và Size
         const activeVariant = allVariants.find(v => v.colorId === selectedColorId && v.sizeId === selectedSizeId);
+
         const stockDisplay = document.querySelector('.product-info p strong');
-        const qtyInput = document.getElementById('qtyInput'); // Ô nhập số lượng
+        const priceDisplay = document.getElementById('dynamic-price'); // Bạn cần thêm id này vào thẻ giá
+        const qtyInput = document.getElementById('qtyInput');
+        const addToCartBtn = document.querySelector('.add-to-cart');
 
         if (activeVariant) {
-            stockDisplay.innerText = activeVariant.stock;
+            // Cập nhật GIÁ TIỀN
+            const formattedPrice = new Intl.NumberFormat('vi-VN').format(activeVariant.price);
+            if(priceDisplay) priceDisplay.innerText = formattedPrice;
 
-            // CẬP NHẬT TẠI ĐÂY: Gán giới hạn max cho ô input
+            // Cập nhật SỐ LƯỢNG KHO
+            stockDisplay.innerText = activeVariant.stock;
             qtyInput.max = activeVariant.stock;
 
-            // Nếu số lượng hiện tại đang lớn hơn kho (do đổi biến thể), tự động giảm về max
-            if (parseInt(qtyInput.value) > activeVariant.stock) {
-                qtyInput.value = activeVariant.stock;
-            }
-
+            // Kiểm tra trạng thái Hết hàng
             if (activeVariant.stock <= 0) {
                 stockDisplay.style.color = "red";
                 stockDisplay.innerText = "Hết hàng";
-                qtyInput.value = 0; // Hết hàng thì để 0
-                document.querySelector('.add-to-cart').disabled = true;
+                qtyInput.value = 0;
+                addToCartBtn.disabled = true;
+                addToCartBtn.style.backgroundColor = "#ccc";
             } else {
                 stockDisplay.style.color = "inherit";
-                document.querySelector('.add-to-cart').disabled = false;
+                addToCartBtn.disabled = false;
+                addToCartBtn.style.backgroundColor = ""; // Trả về màu CSS gốc
+                if (parseInt(qtyInput.value) <= 0) qtyInput.value = 1;
+                if (parseInt(qtyInput.value) > activeVariant.stock) qtyInput.value = activeVariant.stock;
             }
         } else {
+            // Trạng thái khi chưa chọn đủ Màu + Size
+            if(priceDisplay) priceDisplay.innerText = new Intl.NumberFormat('vi-VN').format(${p.price});
             stockDisplay.innerText = "${p.totalQuantity}";
-            qtyInput.max = 100; // Reset về mặc định nếu chưa chọn biến thể
+            stockDisplay.style.color = "inherit";
+            qtyInput.max = 100;
         }
     }
+
+    // 5. Hàm xử lý trước khi Submit vào Giỏ hàng
     function submitAddToCart() {
-
         if (!selectedColorId || !selectedSizeId) {
-            alert("Vui lòng chọn đầy đủ Màu sắc và Kích thước");
+            Swal.fire({
+                icon: 'warning',
+                title: 'Thông báo',
+                text: 'Vui lòng chọn đầy đủ Màu sắc và Kích thước!'
+            });
             return false;
         }
 
-        const variant = allVariants.find(v =>
-            v.colorId === selectedColorId && v.sizeId === selectedSizeId
-        );
+        const variant = allVariants.find(v => v.colorId === selectedColorId && v.sizeId === selectedSizeId);
 
-        if (!variant) {
-            alert("Biến thể không hợp lệ");
-            return false;
-        }
-        // Thêm đoạn này vào trong hàm submitAddToCart() trước dòng return true;
-        if (variant.stock <= 0) {
-            alert("Sản phẩm này hiện đã hết hàng, vui lòng chọn mẫu khác!");
+        if (!variant || variant.stock <= 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: 'Sản phẩm hiện đã hết hàng!'
+            });
             return false;
         }
 
+        // Gán dữ liệu vào các hidden input để gửi về Servlet
         document.getElementById("variantIdInput").value = variant.id;
-        document.getElementById("quantityInput").value =
-            document.getElementById("qtyInput").value;
+        document.getElementById("quantityInput").value = document.getElementById("qtyInput").value;
 
         return true;
     }
-
 </script>
 <div style="background: #fff3cd; border: 1px solid #ffeeba; padding: 10px; color: #856404;">
 </div>

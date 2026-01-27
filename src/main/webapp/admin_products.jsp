@@ -65,6 +65,7 @@
                         <button class="add-new-product-btn">
                             <i class="fa-solid fa-plus"></i> Thêm Sản Phẩm Mới
                         </button>
+
                     </div>
                 </div>
                 <div class="product-table-wrapper">
@@ -146,6 +147,25 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const promoBtn = document.querySelector('.add-uu-dai');
+        const modal = document.getElementById('promotionModal');
+        const overlay = document.getElementById('modalOverlay');
+
+        // MỞ modal
+        promoBtn.addEventListener('click', function () {
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+        });
+
+        // ĐÓNG khi click nền mờ
+        overlay.addEventListener('click', function () {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+    });
+</script>
 
 <script>
     function toggleActive(productId, willBeActive) {   // ← đổi tên tham số cho dễ hiểu
@@ -251,6 +271,13 @@
         });
 
     }
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+    });
+
 </script>
 </body>
 </html>

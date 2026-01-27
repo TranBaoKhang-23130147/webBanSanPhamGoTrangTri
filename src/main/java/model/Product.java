@@ -162,5 +162,4 @@ public class Product {
     public Product(String name, double price, int catId, int typeId, int sourceId, String mfgDate) {
     }
 
-
-}
+    }

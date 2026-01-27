@@ -23,6 +23,8 @@
             <li class="${activePage == ' ' ? 'active' : ''}">
                 <a href="${pageContext.request.contextPath}/admin-orders">don hang </a>
             </li>
+            <li><a href="${pageContext.request.contextPath}/admin-banners"> Benner</a></li>
+
             <li><a href="${pageContext.request.contextPath}/admin/customers"> Khách hàng</a></li>
             <li><a href="${pageContext.request.contextPath}/admin-management"> Quan tri vien</a></li>
             <li><a href="${pageContext.request.contextPath}/update-contact-settings"> Lien He</a></li>

@@ -1,6 +1,7 @@
 package model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class ProductVariants {
     private int id;
@@ -55,4 +56,62 @@ public class ProductVariants {
 
     public BigDecimal getVariant_price() { return variant_price; }
     public void setVariant_price(BigDecimal variant_price) { this.variant_price = variant_price; }
+    // 👉 thêm cho ưu đãi
+    private int discount_percent;
+    private Date discount_end_date;
+
+
+    // Constructor không tham số
+
+    // Constructor đầy đủ
+    public ProductVariants(int id, int product_id, int color_id, int size_id,
+                           String sku, int inventory_quantity,
+                           BigDecimal variant_price,
+                           int discount_percent, Date discount_end_date) {
+        this.id = id;
+        this.product_id = product_id;
+        this.color_id = color_id;
+        this.size_id = size_id;
+        this.sku = sku;
+        this.inventory_quantity = inventory_quantity;
+        this.variant_price = variant_price;
+        this.discount_percent = discount_percent;
+        this.discount_end_date = discount_end_date;
+    }
+
+    public int getDiscount_percent() { return discount_percent; }
+    public void setDiscount_percent(int discount_percent) {
+        this.discount_percent = discount_percent;
+    }
+
+    public Date getDiscount_end_date() { return discount_end_date; }
+    public void setDiscount_end_date(Date discount_end_date) {
+        this.discount_end_date = discount_end_date;
+    }
+
+
+    // ===== Tiện ích =====
+
+    // Giá sau giảm
+    public BigDecimal getFinal_price() {
+        if (discount_percent > 0 && discount_end_date != null
+                && discount_end_date.after(new java.util.Date())) {
+
+            BigDecimal discount = variant_price
+                    .multiply(BigDecimal.valueOf(discount_percent))
+                    .divide(BigDecimal.valueOf(100));
+
+            return variant_price.subtract(discount);
+        }
+        return variant_price;
+    }
+
+    // Kiểm tra có đang giảm không
+    public boolean isDiscountActive() {
+        return discount_percent > 0
+                && discount_end_date != null
+                && discount_end_date.after(new java.util.Date());
+    }
+
+
 }

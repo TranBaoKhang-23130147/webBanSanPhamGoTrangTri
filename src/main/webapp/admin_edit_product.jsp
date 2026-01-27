@@ -203,6 +203,7 @@
         const newVariant = document.createElement('div');
         newVariant.className = 'card variant-item';
         newVariant.innerHTML = `
+        <input type="hidden" name="variantId[]" value="0">
             <h2 class="card-title">Biến thể #${count}</h2>
             <span class="remove-variant" onclick="removeVariant(this)">
                 <i class="fas fa-trash"></i>
