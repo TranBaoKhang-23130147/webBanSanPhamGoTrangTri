@@ -26,7 +26,7 @@ public class SourceServlet extends HttpServlet {
                 request.getSession().setAttribute("msg", "Lỗi xóa nguồn hàng!");
                 request.getSession().setAttribute("msgType", "error");
             }
-            response.sendRedirect("source-manager");
+            response.sendRedirect(request.getContextPath() + "/AdminCountProductSourceServlet");
             return;
         }
 
@@ -74,6 +74,7 @@ public class SourceServlet extends HttpServlet {
                 request.getSession().setAttribute("msgType", "error");
             }
         }
-        response.sendRedirect("source-manager");
+        response.sendRedirect(request.getContextPath() + "/AdminCountProductSourceServlet");
     }
+
 }

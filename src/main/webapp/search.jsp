@@ -1,13 +1,7 @@
     <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="model.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%
-    User user = (User) session.getAttribute("LOGGED_USER");
-    if (user == null) {
-        response.sendRedirect(request.getContextPath() + "/login.jsp");
-        return;
-    }
-%>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -15,7 +9,8 @@
     <title>HOME DECOR - TÌM KIẾM</title>
     <link rel="icon" type="image/png" href="img/logo.png" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="css/search_style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/search_style.css">
+
     <link
             href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
             rel="stylesheet"

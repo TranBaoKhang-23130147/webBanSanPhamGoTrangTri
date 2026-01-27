@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.*;
 import model.*;
 
 import java.io.IOException;
-@WebFilter(urlPatterns = {"/AdminDeleteCustomerServlet","/admin/delete-product", "/DeleteCustomerServlet","/add-product-type", "/delete-product-type", "/admin-add-product"})
+@WebFilter(urlPatterns = {"/AdminDeleteCustomerServlet","/admin/delete-product", "/DeleteCustomerServlet","/add-product-type", "/delete-product-type", "/admin-add-product, /admin-management"})
 public class AdminSecurityFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

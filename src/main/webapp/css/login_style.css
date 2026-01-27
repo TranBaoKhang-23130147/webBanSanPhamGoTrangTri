@@ -306,6 +306,103 @@ p {
     width: 350px;
     text-align: center;
 }
+/* Lớp nền mờ */
+.otp-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Giảm độ tối một chút */
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+}
 
+.otp-modal.show {
+    display: flex;
+}
 
+/* Hộp OTP nhỏ gọn hơn */
+.otp-box {
+    background: #ffffff;
+    padding: 30px 25px; /* Thu nhỏ padding */
+    border-radius: 15px; /* Bo góc vừa phải */
+    width: 90%; /* Co giãn trên mobile */
+    max-width: 320px; /* Thu nhỏ chiều ngang từ 400px xuống 320px */
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.otp-box h3 {
+    color: #333;
+    font-size: 20px; /* Thu nhỏ tiêu đề */
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.otp-box .note {
+    font-size: 13px; /* Thu nhỏ text mô tả */
+    color: #888;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+/* Thông báo lỗi gọn hơn */
+.otp-box .error {
+    background: #fff1f0;
+    color: #d93025;
+    border: 1px solid #ffa39e;
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 12px;
+}
+
+/* Ô nhập mã OTP gọn gàng */
+.otp-box input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 1.5px solid #eee;
+    border-radius: 8px;
+    font-size: 18px;
+    text-align: center;
+    letter-spacing: 3px;
+    outline: none;
+    margin-bottom: 15px;
+    transition: all 0.2s;
+}
+
+.otp-box input[type="text"]:focus {
+    border-color: #8B5E3C;
+    background-color: #fcfaf8;
+}
+
+/* Nút xác nhận thanh thoát (Chữ trắng nền nâu) */
+.otp-box button {
+    width: 100%;
+    padding: 12px;
+    background-color: #8B5E3C !important; /* Màu nâu cafe */
+    color: #ffffff !important; /* Chữ trắng */
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.otp-box button:hover {
+    background-color: #333333 !important; /* Chuyển đen khi hover */
+    transform: translateY(-1px);
+}
 

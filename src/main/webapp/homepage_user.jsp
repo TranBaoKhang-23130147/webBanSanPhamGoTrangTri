@@ -11,19 +11,15 @@
     <meta charset="UTF-8">
     <title>HOME DECOR - TRANG CHỦ</title>
     <link rel="icon" type="image/png"  href="img/logo.png" >
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="css/homepage_style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/homepage_style.css">
     <link
             href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
             rel="stylesheet"
     />
-
-
-
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
-
 <div class="banner">
     <button class="pause-play-btn" id="pausePlayBtn">
         <i class="fas fa-pause"></i>
@@ -74,32 +70,6 @@
         <p>Từng đường vân, sắc màu và cảm hứng từ thiên nhiên được chúng tôi tỉ mỉ chọn lọc và chăm chút, mang đến cảm giác ấm áp, tinh tế và gần gũi – tạo nên không gian hài hòa, chan hòa với thiên nhiên.</p>
     </div>
 
-    <section class="products">
-        <c:forEach items="${products}" var="p">
-            <div class="product-card">
-
-                <a href="product-detail?id=${p.id}">
-                    <img src="${p.imageUrl}" alt="${p.nameProduct}">
-                    <h2>${p.nameProduct}</h2>
-                </a>
-
-                <div class="rating">
-                    <i class="ri-star-s-fill"></i>
-                    <span>(${p.averageRating})</span>
-                </div>
-
-                <div class="price">
-                    <fmt:formatNumber value="${p.price}" type="currency" currencySymbol="VNĐ"/>
-                </div>
-
-                <div class="action-buttons">
-                    <a href="add-to-cart?id=${p.id}" class="add-cart">Thêm giỏ hàng</a>
-                    <a href="buy-now?id=${p.id}" class="buy-now">Mua hàng</a>
-                </div>
-
-            </div>
-        </c:forEach>
-    </section>
     <div class="products">
         <c:forEach items="${top3Products}" var="p">
             <div class="product-card">
@@ -118,8 +88,8 @@
                 </div>
 
                 <div class="action-buttons">
-                    <a href="add-to-cart?id=${p.id}" class="add-cart">Thêm giỏ hàng</a>
-                    <a href="buy-now?id=${p.id}" class="buy-now">Mua hàng</a>
+                    <a href="detail?id=${p.id}" class="add-cart">Thêm giỏ hàng</a>
+                    <a href="detail?id=${p.id}" class="buy-now">Mua hàng</a>
                 </div>
             </div>
         </c:forEach>
@@ -130,7 +100,9 @@
             <div class="intro-text">
                 <h2>An tâm mua sắm với chính sách hỗ trợ toàn diện</h2>
                 <p>Chúng tôi luôn đặt lợi ích khách hàng lên hàng đầu. Tìm hiểu về Chính sách Bảo hành, Vận chuyển và Đổi trả để yên tâm lựa chọn sản phẩm ưng ý.</p>
-                <button class="intro-btn">Tìm hiểu ngay</button>
+                <a class="menu" href="${pageContext.request.contextPath}/purchasing_policy_user.jsp">
+                    Tìm hiểu thêm
+                </a>
             </div>
 
             <div class="intro-image">
@@ -144,11 +116,9 @@
     <button class="nav-btn next-btn">❯</button>
 </div>
 
-
 <section class="san-pham-moi">
     <h2 class="title">SẢN PHẨM BÁN CHẠY</h2>
     <p class="section-desc">Những sản phẩm được khách hàng yêu thích nhất tại Home Decor.</p>
-
     <div class="san-pham-nb">
         <c:forEach items="${products}" var="p">
             <div class="product-card">
@@ -156,65 +126,21 @@
                     <img src="${p.imageUrl}" alt="${p.nameProduct}">
                     <h2>${p.nameProduct}</h2>
                 </a>
-
                 <div class="rating">
                     <i class="ri-star-s-fill"></i>
                     <span>(${p.averageRating})</span>
                 </div>
-
                 <div class="price">
                     <fmt:formatNumber value="${p.price}" type="number" groupingUsed="true"/> VNĐ
                 </div>
-
                 <div class="action-buttons">
-                    <a href="add-to-cart?id=${p.id}" class="add-cart">Thêm giỏ hàng</a>
-                    <a href="buy-now?id=${p.id}" class="buy-now">Mua hàng</a>
+                    <a href="detail?id=${p.id}" class="add-cart">Thêm giỏ hàng</a>
+                    <a href="detail?id=${p.id}" class="buy-now">Mua hàng</a>
                 </div>
             </div>
         </c:forEach>
     </div>
 </section>
-
-<!--<section class="blog-section">-->
-<!--    <div class="blog-header">-->
-<!--        <h2>Bài Viết Gần Đây</h2>-->
-<!--        <p>Khám phá những câu chuyện, mẹo trang trí và cảm hứng thiết kế nội thất mới nhất từ WIS Decor.</p>-->
-<!--    </div>-->
-
-<!--    <div class="blog-slider">-->
-<!--        <div class="blog-card">-->
-<!--            <img src="https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg" alt="Decor Chair">-->
-<!--            <div class="blog-info">-->
-<!--                <h3>Ghế Mộc Tinh Tế Cho Không Gian Tối Giản</h3>-->
-<!--                <p>Chiếc ghế đơn giản nhưng mang lại điểm nhấn tinh tế cho căn phòng của bạn.</p>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="blog-card">-->
-<!--            <img src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg" alt="Living Room">-->
-<!--            <div class="blog-info">-->
-<!--                <h3>Trang Trí Phòng Khách Với Tông Màu Ấm</h3>-->
-<!--                <p>Sự kết hợp giữa gỗ tự nhiên và ánh sáng vàng mang lại cảm giác ấm áp, gần gũi.</p>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="blog-card">-->
-<!--            <img src="https://images.pexels.com/photos/1571463/pexels-photo-1571463.jpeg" alt="Bedroom Decor">-->
-<!--            <div class="blog-info">-->
-<!--                <h3>Phòng Ngủ Thư Giãn Với Chất Liệu Tự Nhiên</h3>-->
-<!--                <p>Không gian nghỉ ngơi nhẹ nhàng, mang đậm hơi thở của thiên nhiên.</p>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="blog-card">-->
-<!--            <img src="https://images.pexels.com/photos/1457841/pexels-photo-1457841.jpeg" alt="Dining Room">-->
-<!--            <div class="blog-info">-->
-<!--                <h3>Góc Ăn Uống Ấm Cúng Cho Gia Đình</h3>-->
-<!--                <p>Tạo cảm giác sum vầy bằng cách lựa chọn nội thất phù hợp với phong cách sống.</p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</section>-->
 
 <section class="about-section">
     <div class="about-content">
@@ -229,7 +155,7 @@
             <div class="about-signature">
                 <p><strong>Tran Thi Thuy Kieu</strong><br>Founder & CEO, HOME Decor</p>
             </div>
-            <button class="about-btn">Tìm Hiểu Thêm</button>
+
         </div>
 
         <div class="about-images">
@@ -245,7 +171,6 @@
                         <h4>Xuân Mai</h4>
                         <p>Khách hàng thân thiết</p>
                     </div>
-
                     <i class="ri-star-s-fill rating"></i><span>(4.9) </span>
                 </div>
                 <p>

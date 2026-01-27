@@ -26,7 +26,7 @@ public class CategoryServlet extends HttpServlet {
                 request.getSession().setAttribute("msg", "Không thể xóa! Danh mục này đang chứa sản phẩm.");
                 request.getSession().setAttribute("msgType", "error");
             }
-            response.sendRedirect("category-manager");
+            response.sendRedirect(request.getContextPath() + "/AdminCountProductCategoryServlet");
             return;
         }
 
@@ -36,12 +36,13 @@ public class CategoryServlet extends HttpServlet {
         List<Category> listC = dao.getAllCategoriesWithTotalInventory(keyword);
 
         request.setAttribute("listC", listC);
-        request.setAttribute("keyword", keyword != null ? keyword : "");
+        if (keyword == null) keyword = "";
 
 
         request.setAttribute("listC", listC);
         request.setAttribute("keyword", keyword);
-        request.setAttribute("activePage", "category"); // Để active menu
+        request.setAttribute("activePage", "category"); // Đã có lệnh này để active menu
+
         request.getRequestDispatcher("/admin_category.jsp").forward(request, response);
     }
 
@@ -59,6 +60,5 @@ public class CategoryServlet extends HttpServlet {
             request.getSession().setAttribute("msg", "Thêm danh mục thất bại!");
             request.getSession().setAttribute("msgType", "error");
         }
-        response.sendRedirect("category-manager");
-    }
+        response.sendRedirect(request.getContextPath() + "/AdminCountProductCategoryServlet");    }
 }

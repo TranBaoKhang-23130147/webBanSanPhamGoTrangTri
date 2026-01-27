@@ -23,52 +23,82 @@
     </div>
 
     <div class="header-icons">
-        <div class="gmail-dropdown">
-            <i class="fa-solid fa-envelope gmail-icon"></i>
-            <div id="gmailMenuContent" class="dropdown-content gmail-content">
-                <div class="dropdown-header">Gmail</div>
-                <p class="no-messages-text">Không có Gmail nào.</p>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="view-all-link">Mở Gmail</a>
-            </div>
-        </div>
+<%--        <div class="gmail-dropdown">--%>
+<%--            <i class="fa-solid fa-envelope gmail-icon"></i>--%>
+<%--            <div id="gmailMenuContent" class="dropdown-content gmail-content">--%>
+<%--                <div class="dropdown-header">Gmail</div>--%>
+<%--                <p class="no-messages-text">Không có Gmail nào.</p>--%>
+<%--                <div class="dropdown-divider"></div>--%>
+<%--                <a href="#" class="view-all-link">Mở Gmail</a>--%>
+<%--            </div>--%>
+<%--        </div>--%>
 
         <%-- Phần hiển thị thông báo trong header.jsp --%>
-        <div class="notification-dropdown">
-            <i class="fa-solid fa-bell notification-icon"></i>
+<%--        <div class="notification-dropdown">--%>
+<%--            <i class="fa-solid fa-bell notification-icon"></i>--%>
 
-            <span class="badge">
-        <c:out value="${notifications != null ? notifications.size() : 0}" />
-    </span>
+<%--            <span class="badge">--%>
+<%--        <c:out value="${notifications != null ? notifications.size() : 0}" />--%>
+<%--    </span>--%>
 
-            <div id="notificationMenuContent" class="dropdown-content notification-content">
-                <div class="dropdown-header">
-                    Thông Báo Mới
-                </div>
+<%--            <div id="notificationMenuContent" class="dropdown-content notification-content">--%>
+<%--                <div class="dropdown-header">--%>
+<%--                    Thông Báo Mới--%>
+<%--                </div>--%>
 
-                <c:forEach var="n" items="${notifications}">
-                    <div class="noti-item ${n.read ? '' : 'unread'}">
-                        📩 ${n.content}
-                        <br>
-                        <small>${n.createAt}</small>
-                    </div>
-                </c:forEach>
+<%--                <c:forEach var="n" items="${notifications}">--%>
+<%--                    <div class="noti-item ${n.read ? '' : 'unread'}">--%>
+<%--                        📩 ${n.content}--%>
+<%--                        <br>--%>
+<%--                        <small>${n.createAt}</small>--%>
+<%--                    </div>--%>
+<%--                </c:forEach>--%>
 
-                <c:if test="${empty notifications}">
-                    <p class="no-messages-text">Không có thông báo mới.</p>
-                </c:if>
-            </div>
-        </div>
+<%--                <c:if test="${empty notifications}">--%>
+<%--                    <p class="no-messages-text">Không có thông báo mới.</p>--%>
+<%--                </c:if>--%>
+<%--            </div>--%>
+<%--        </div>--%>
 
-
-        <div class="user-dropdown">
-            <i class="fas fa-user-circle user-logo" ></i>
-            <div id="userMenuContent" class="dropdown-content">
-                <a href="admin_thong_tin_tai_khoan.html"> Thông tin tài khoản</a>
-                <a href="#"> Đổi mật khẩu</a>
-                <div class="dropdown-divider"></div>
-                <a href="login.jsp" class="logout-link"> Đăng xuất</a>
-            </div>
-        </div>
+    <div class="user-logout-wrapper">
+        <a href="login.jsp" class="logout-btn">
+           Đăng xuất
+        </a>
     </div>
+    <style>
+        .user-logout-wrapper {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+
+        /* Thiết kế nút Đăng xuất */
+        .logout-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #000000 !important;           /* Chữ trắng tuyệt đối */
+            padding: 10px 20px;
+            border-radius: 8px;                  /* Bo góc mượt mà */
+            text-decoration: none !important;    /* Bỏ gạch chân */
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        /* Hiệu ứng khi di chuột qua */
+
+        /* Icon đăng xuất */
+
+    </style>
+<%--        <div class="user-dropdown">--%>
+<%--            <i class="fas fa-user-circle user-logo" ></i>--%>
+<%--            <div id="userMenuContent" class="dropdown-content">--%>
+<%--                <a href="admin_thong_tin_tai_khoan.html"> Thông tin tài khoản</a>--%>
+<%--                <a href="#"> Đổi mật khẩu</a>--%>
+<%--                <div class="dropdown-divider"></div>--%>
+<%--                <a href="login.jsp" class="logout-link"> Đăng xuất</a>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 </header>

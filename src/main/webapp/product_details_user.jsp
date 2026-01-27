@@ -67,8 +67,10 @@
             <span>| ${p.totalReviews} đánh giá</span>
         </div>
         <div class="product-price-section">
-            <div class="product-price">
-                <span id="dynamic-price"><fmt:formatNumber value="${p.price}" pattern="#,###"/></span> VND
+            <%-- Hiển thị giá (Nếu có biến thể thì lấy giá biến thể đầu tiên làm mặc định) --%>
+                <div class="product-price" id="productPrice">
+
+                <fmt:formatNumber value="${p.price}" pattern="#,###"/> VND
             </div>
         </div>
     </div>
@@ -260,36 +262,36 @@
 <jsp:include page="footer.jsp"></jsp:include>
 <script>
     // 1. Chuyển dữ liệu biến thể từ Java sang JavaScript JSON
+    // Thay thế đoạn từ dòng 186 đến 195 bằng đoạn này:
     const allVariants = [
         <c:forEach var="v" items="${p.variants}" varStatus="status">
         {
             id: "${v.id}",
             colorId: "${v.color.id}",
             sizeId: "${v.size.id}",
-            price: ${v.variant_price != null ? v.variant_price : 0},
-            stock: ${v.inventory_quantity != null ? v.inventory_quantity : 0}
+            price: ${v.variant_price},
+            // Đảm bảo lấy đúng trường inventory_quantity từ database
+            stock: ${v.inventory_quantity}
         }${!status.last ? ',' : ''}
         </c:forEach>
     ];
-
     let selectedColorId = null;
     let selectedSizeId = null;
 
-    // 2. Hàm chọn màu
     function selectColor(colorId) {
+        // Nếu nhấn lại chính nó thì bỏ chọn
         selectedColorId = (selectedColorId === colorId) ? null : colorId;
         updateUI();
     }
 
-    // 3. Hàm chọn kích thước
     function selectSize(sizeId) {
         selectedSizeId = (selectedSizeId === sizeId) ? null : sizeId;
         updateUI();
     }
 
-    // 4. Hàm cập nhật giao diện (Giá, Kho, Trạng thái nút)
+    // Thay thế hàm updateUI() cũ bằng đoạn này:
     function updateUI() {
-        // Cập nhật trạng thái Active cho các nút
+        // 1. Cập nhật class Active cho nút
         document.querySelectorAll('.color-btn').forEach(btn => {
             btn.classList.toggle('active', btn.getAttribute('data-color-id') === selectedColorId);
         });
@@ -297,89 +299,88 @@
             btn.classList.toggle('active', btn.getAttribute('data-size-id') === selectedSizeId);
         });
 
-        // Logic ẩn/hiện các nút không khả dụng dựa trên lựa chọn hiện tại
+        // 2. Vô hiệu hóa các nút không hợp lệ (Logic cũ của bạn)
         document.querySelectorAll('.size-btn').forEach(btn => {
             const sizeId = btn.getAttribute('data-size-id');
             const exists = selectedColorId ? allVariants.some(v => v.colorId === selectedColorId && v.sizeId === sizeId) : true;
+            btn.disabled = !exists;
             btn.style.opacity = exists ? "1" : "0.3";
-            btn.style.pointerEvents = exists ? "auto" : "none";
         });
 
         document.querySelectorAll('.color-btn').forEach(btn => {
             const colorId = btn.getAttribute('data-color-id');
             const exists = selectedSizeId ? allVariants.some(v => v.sizeId === selectedSizeId && v.colorId === colorId) : true;
+            btn.disabled = !exists;
             btn.style.opacity = exists ? "1" : "0.3";
-            btn.style.pointerEvents = exists ? "auto" : "none";
         });
 
-        // Tìm biến thể khớp hoàn toàn cả Màu và Size
         const activeVariant = allVariants.find(v => v.colorId === selectedColorId && v.sizeId === selectedSizeId);
-
         const stockDisplay = document.querySelector('.product-info p strong');
-        const priceDisplay = document.getElementById('dynamic-price'); // Bạn cần thêm id này vào thẻ giá
-        const qtyInput = document.getElementById('qtyInput');
-        const addToCartBtn = document.querySelector('.add-to-cart');
+        const qtyInput = document.getElementById('qtyInput'); // Ô nhập số lượng
+        const priceDisplay = document.getElementById('productPrice');
 
         if (activeVariant) {
-            // Cập nhật GIÁ TIỀN
-            const formattedPrice = new Intl.NumberFormat('vi-VN').format(activeVariant.price);
-            if(priceDisplay) priceDisplay.innerText = formattedPrice;
-
-            // Cập nhật SỐ LƯỢNG KHO
             stockDisplay.innerText = activeVariant.stock;
+
+            // ✅ SET GIÁ THEO BIẾN THỂ
+            priceDisplay.innerText =
+                new Intl.NumberFormat('vi-VN').format(activeVariant.price) + " VND";
+
             qtyInput.max = activeVariant.stock;
 
-            // Kiểm tra trạng thái Hết hàng
+            if (parseInt(qtyInput.value) > activeVariant.stock) {
+                qtyInput.value = activeVariant.stock;
+            }
+
             if (activeVariant.stock <= 0) {
                 stockDisplay.style.color = "red";
                 stockDisplay.innerText = "Hết hàng";
                 qtyInput.value = 0;
-                addToCartBtn.disabled = true;
-                addToCartBtn.style.backgroundColor = "#ccc";
+                document.querySelector('.add-to-cart').disabled = true;
             } else {
                 stockDisplay.style.color = "inherit";
-                addToCartBtn.disabled = false;
-                addToCartBtn.style.backgroundColor = ""; // Trả về màu CSS gốc
-                if (parseInt(qtyInput.value) <= 0) qtyInput.value = 1;
-                if (parseInt(qtyInput.value) > activeVariant.stock) qtyInput.value = activeVariant.stock;
+                document.querySelector('.add-to-cart').disabled = false;
             }
+
         } else {
-            // Trạng thái khi chưa chọn đủ Màu + Size
-            if(priceDisplay) priceDisplay.innerText = new Intl.NumberFormat('vi-VN').format(${p.price});
             stockDisplay.innerText = "${p.totalQuantity}";
-            stockDisplay.style.color = "inherit";
+
+            // 🔁 RESET GIÁ VỀ GIÁ GỐC
+            priceDisplay.innerText =
+                new Intl.NumberFormat('vi-VN').format(${p.price}) + " VND";
+
             qtyInput.max = 100;
         }
+
     }
-
-    // 5. Hàm xử lý trước khi Submit vào Giỏ hàng
     function submitAddToCart() {
+
         if (!selectedColorId || !selectedSizeId) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Thông báo',
-                text: 'Vui lòng chọn đầy đủ Màu sắc và Kích thước!'
-            });
+            alert("Vui lòng chọn đầy đủ Màu sắc và Kích thước");
             return false;
         }
 
-        const variant = allVariants.find(v => v.colorId === selectedColorId && v.sizeId === selectedSizeId);
+        const variant = allVariants.find(v =>
+            v.colorId === selectedColorId && v.sizeId === selectedSizeId
+        );
 
-        if (!variant || variant.stock <= 0) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Lỗi',
-                text: 'Sản phẩm hiện đã hết hàng!'
-            });
+        if (!variant) {
+            alert("Biến thể không hợp lệ");
+            return false;
+        }
+        // Thêm đoạn này vào trong hàm submitAddToCart() trước dòng return true;
+        if (variant.stock <= 0) {
+            alert("Sản phẩm này hiện đã hết hàng, vui lòng chọn mẫu khác!");
             return false;
         }
 
-        // Gán dữ liệu vào các hidden input để gửi về Servlet
         document.getElementById("variantIdInput").value = variant.id;
-        document.getElementById("quantityInput").value = document.getElementById("qtyInput").value;
+        document.getElementById("quantityInput").value =
+            document.getElementById("qtyInput").value;
 
         return true;
     }
+
 </script>
 <div style="background: #fff3cd; border: 1px solid #ffeeba; padding: 10px; color: #856404;">
 </div>

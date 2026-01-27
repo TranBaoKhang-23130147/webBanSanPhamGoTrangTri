@@ -10,8 +10,11 @@
     <title>HOME DECOR - QUẢN LÝ SẢN PHẨM</title>
     <link rel="icon" type="image/png"  href="img/logo.png" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/admin_products.css">
-    <link rel="stylesheet" href="css/admin_profile_style.css">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_products.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_profile_style.css">
+
+
 </head>
 <body>
 
@@ -127,7 +130,7 @@
                                 </td>
 
                                 <td class="col-actions">
-                                <td class="col-actions">
+
                                 <a href="${pageContext.request.contextPath}/admin-edit-product?id=${p.id}" title="Sửa">
                                     <i class="fa-solid fa-pen-to-square edit-icon"></i>
                                 </a>
@@ -135,6 +138,7 @@
                                         <i class="fa-solid fa-trash-can delete-icon"></i>
                                     </a>
                                 </td>
+
                             </tr>
                         </c:forEach>
                         </tbody>

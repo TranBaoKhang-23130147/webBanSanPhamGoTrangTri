@@ -3,36 +3,41 @@
     <nav class="sidebar-nav">
         <ul>
 
-            <li class="${activePage == '#' ? 'active' : ''}">
+            <li class="${activePage == '' ? 'active' : ''}">
                 <a href="${pageContext.request.contextPath}/AdminOverviewOrderServlet">Tổng quan</a>
             </li>
 
-            <li class="${activePage == 'products' ? 'active' : ''}">
+            <li class="${activePage == '' ? 'active' : ''}">
                 <a href="${pageContext.request.contextPath}/products">sản phẩm</a>
             </li>
-            <li class="${activePage == 'productType' ? 'active' : ''}">
+            <li class="${activePage == '' ? 'active' : ''}">
                 <a href="${pageContext.request.contextPath}/AdminProductTypeServlet">Loại sản phẩm</a>
             </li>
-            <li class="${activePage == 'category' ? 'active' : ''}">
-                <a href="${pageContext.request.contextPath}/AdminCountProductCategoryServlet"> Danh mục</a>
+                <li class="${activePage == '' ? 'active' : ''}">
+                    <a href="${pageContext.request.contextPath}/AdminCountProductCategoryServlet"> Danh mục</a>
+                </li>
+
+            <li class="${activePage == '' ? 'active' : ''}">
+                <a href="${pageContext.request.contextPath}/AdminProductTypeServlet"> Nhà cung cấp</a>
+            </li>
+            <li class="${activePage == '' ? 'active' : ''}">
+                <a href="${pageContext.request.contextPath}/admin-orders">Đơn hàng</a>
+            </li>
+            <li class="${activePage == '' ? 'active' : ''}">
+                <a href="${pageContext.request.contextPath}/admin-management"> Quản trị viên</a>
+            </li>
+            <li class="${activePage == '' ? 'active' : ''}">
+                <a href="${pageContext.request.contextPath}/update-contact-settings"> Liên hệ</a>
+            </li>
+            <li class="${activePage == '' ? 'active' : ''}">
+                <a href="${pageContext.request.contextPath}/AdminProfileServlet"> Hồ sơ</a>
             </li>
 
-            <li class="${activePage == 'source' ? 'active' : ''}">
-                <a href="${pageContext.request.contextPath}/AdminCountProductSourceServlet"> Nhà cung cấp</a>
-            </li>
-            <li class="${activePage == ' ' ? 'active' : ''}">
-                <a href="${pageContext.request.contextPath}/admin-orders">don hang </a>
-            </li>
-            <li><a href="${pageContext.request.contextPath}/admin-banners"> Benner</a></li>
 
-            <li><a href="${pageContext.request.contextPath}/admin/customers"> Khách hàng</a></li>
-            <li><a href="${pageContext.request.contextPath}/admin-management"> Quan tri vien</a></li>
-            <li><a href="${pageContext.request.contextPath}/update-contact-settings"> Lien He</a></li>
-            <li><a href="${pageContext.request.contextPath}/AdminProfileServlet"> Hồ sơ</a></li>
-
-            <li class="${activePage == 'setting' ? 'active' : ''}">
+            <li class="${activePage == '' ? 'active' : ''}">
                 <a href="${pageContext.request.contextPath}/UpdateSettingServlet"> Cài đặt</a>
             </li>
+
         </ul>
     </nav>
 </aside>

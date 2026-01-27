@@ -9,8 +9,9 @@
     <title>HOME DECOR - SẢN PHẨM</title>
     <link rel="icon" type="image/png"  href="img/logo.png" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="css/decorate_style.css">
-    <link rel="stylesheet" href="css/product_all_style.css">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/decorate_style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/product_all_style.css">
 
     <link
             href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
@@ -36,7 +37,6 @@
     </div>
 </section>
 <section id="productSection">
-    <!--    <h3 class="titleProduct">Sản phẩm dành cho phòng khách</h3>-->
     <div class="product-container">
         <jsp:include page="filter.jsp"></jsp:include>
         <div class="product">
@@ -50,7 +50,6 @@
                             <h2>${p.nameProduct}</h2>
 
                             <div class="rating">
-                                    <%-- Sửa logic hiển thị sao dựa trên số thực --%>
                                 <c:forEach begin="1" end="5" var="i">
                                     <i class="${i <= p.averageRating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
                                 </c:forEach>
@@ -64,13 +63,12 @@
                     </a>
 
                     <div class="action-buttons">
-                        <button class="add-cart" onclick="addToCart(${p.id})">Thêm giỏ hàng</button>
-                        <button class="buy-now">Mua hàng</button>
+                        <a href="detail?id=${p.id}" class="add-cart">Thêm giỏ hàng</a>
+                        <a href="detail?id=${p.id}" class="buy-now">Mua hàng</a>
                     </div>
                 </div>
             </c:forEach>
 
-            <%-- Hiển thị thông báo nếu không có sản phẩm nào --%>
             <c:if test="${empty listP}">
                 <p style="text-align: center; width: 100%;">Không tìm thấy sản phẩm nào phù hợp.</p>
             </c:if>
@@ -116,5 +114,6 @@
 
 
 </body>
-<script src="js/decorate.js"></script>
+<script src="${pageContext.request.contextPath}/js/decorate.js"></script>
+
 </html>

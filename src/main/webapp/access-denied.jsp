@@ -18,8 +18,8 @@
 <div class="card">
     <div class="icon"><i class="fas fa-user-lock"></i></div>
     <h1>Dừng lại!</h1>
-    <p>Bạn không có quyền quản trị để thực hiện hành động này. Vui lòng liên hệ Admin nếu đây là một sự nhầm lẫn.</p>
-    <a href="${pageContext.request.contextPath}/AdminProfileServlet" class="btn">Thoat</a>
+    <p>Bạn không có quyền quản trị để thực hiện hành động này. Vui lòng đăng nhập tài khoản admin tại đây.</p>
+    <a href="${pageContext.request.contextPath}/AdminProfileServlet" class="btn">Tiếp tục</a>
 </div>
 </body>
 </html>

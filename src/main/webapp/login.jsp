@@ -10,7 +10,9 @@
     <link rel="icon" type="image/png"  href="img/logo.png" >
     <title>HOME DECOR - ĐĂNG NHẬP </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="css/login_style.css">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login_style.css">
+
 </head>
 <body>
 
@@ -66,7 +68,7 @@
      </div>
      <div class="form-container sign-in-container">
          <form action="<%= request.getContextPath() %>/LoginServlet" method="post">
-             <h1></h1>
+             <h1>Đăng nhập</h1>
              <div class="social-container">
                  <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
                  <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=http://localhost:8080/demo/google-login&response_type=code&client_id=1089942878583-pq5ui5eubco8s2lav650ln4gn19gogfe.apps.googleusercontent.com&approval_prompt=force" class="social">
@@ -84,10 +86,7 @@
                  <label for="login_password" class="visually-hidden"></label>
              </div>
              <div class="remember-forgot">
-                 <label>
-                     <input type="checkbox" name="remember">
-                     Ghi nhớ đăng nhập
-                 </label>
+
                  <a href="login_forgot_password.jsp" class="forgot">Quên mật khẩu?</a>
              </div>
 

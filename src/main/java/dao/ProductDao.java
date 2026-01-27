@@ -8,7 +8,6 @@ import model.Images;
 import model.Product;
 import model.Reviews;
 import java.sql.*;
-import java.util.Date;
 
 import model.*;
 
@@ -1282,7 +1281,7 @@ public class ProductDao {
             e.printStackTrace();
         }
     }
-//    public void updateFullProduct(Product p, Information info, Description desc) {
+    //    public void updateFullProduct(Product p, Information info, Description desc) {
 //
 //        String sqlProduct = """
 //        UPDATE products
@@ -1620,10 +1619,8 @@ public class ProductDao {
             }
 
             // Bước 4: Xử lý ảnh (xóa cũ → insert mới)
-            PreparedStatement psDelImg = conn.prepareStatement(
-                    "DELETE FROM product_images WHERE product_id = ?");
-            psDelImg.setInt(1, p.getId());
-            psDelImg.executeUpdate();
+            conn.prepareStatement("DELETE FROM product_images WHERE product_id = ?")
+                    .executeUpdate();  // Không cần check rows vì có thể rỗng
 
             Integer primaryImageId = null;
             if (imagePaths != null && !imagePaths.isEmpty()) {
@@ -1824,6 +1821,4 @@ public class ProductDao {
         } catch (Exception e) { e.printStackTrace(); }
         return p;
     }
-
-
 }

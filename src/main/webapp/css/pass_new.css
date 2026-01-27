@@ -1,110 +1,93 @@
 :root {
-    --grad-clr1: #8B5E3C;
-    --grad-clr2: #5A3E2A;
-    --linear-grad: linear-gradient(to right, #8B5E3C, #5A3E2A);
+    --primary-clr: #8B5E3C; /* Màu nâu cafe thương hiệu */
+    --secondary-clr: #333333; /* Màu đen xám */
+    --bg-clr: #f4f1ee;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
     height: 100vh;
-    display: grid;
-    place-content: center;
-    background: #f6f5f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-clr);
 }
 
-/* ===== CONTAINER ===== */
+/* ===== KHUNG CONTAINER ===== */
 .container {
-    width: 400px;
-    background: #fff;
-    padding: 40px 50px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px; /* Bo góc mượt mà */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
     text-align: center;
 }
 
-/* ===== TITLE ===== */
 h1 {
-    color: var(--grad-clr1);
-    font-size: 26px;
+    color: var(--secondary-clr);
+    font-size: 24px;
     margin-bottom: 25px;
+    font-weight: 700;
 }
 
-/* ===== ERROR MESSAGE ===== */
+/* ===== THÔNG BÁO LỖI ===== */
 .error-msg {
     color: #d93025;
-    background-color: #fdecea;
-    border: 1px solid #f5c2c7;
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 15px;
+    background-color: #fff1f0;
+    border: 1px solid #ffa39e;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
     font-size: 14px;
     text-align: center;
 }
 
-/* ===== INPUT FIELD ===== */
-.infield {
+/* ===== Ô NHẬP LIỆU ===== */
+input[type="password"] {
     width: 100%;
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-input {
-    width: 100%;
-    padding: 12px 12px;
-    border: none;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    font-size: 16px;
     outline: none;
-    background: #f3f3f3;
-    border-radius: 6px;
-    font-size: 14px;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
-input:focus {
-    background: #fff;
-    border: 1px solid var(--grad-clr1);
-    box-shadow: 0 0 5px rgba(139, 94, 60, 0.4);
+input[type="password"]:focus {
+    border-color: var(--primary-clr);
+    box-shadow: 0 0 8px rgba(139, 94, 60, 0.1);
 }
 
-/* ===== BUTTON ===== */
-button {
+/* ===== NÚT ĐẶT LẠI MẬT KHẨU (CHỮ TRẮNG) ===== */
+button[type="submit"] {
     width: 100%;
-    padding: 12px 0;
+    padding: 15px;
+    background-color: var(--primary-clr) !important; /* Màu nâu cafe */
+    color: #ffffff !important; /* Ép chữ màu trắng */
     border: none;
-    border-radius: 20px;
-    background: var(--grad-clr2);
-    color: #fff;
+    border-radius: 12px;
+    font-size: 16px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
     margin-top: 10px;
 }
 
-button:hover {
-    background: #fff;
-    color: var(--grad-clr1);
-    border: 1px solid var(--grad-clr1);
+button[type="submit"]:hover {
+    background-color: var(--secondary-clr) !important; /* Chuyển đen khi hover */
+    transform: translateY(-2px);
 }
 
-/* ===== BACK LINK ===== */
-.back-link-wrapper {
-    margin-top: 20px;
-}
-
-.back-link-wrapper a {
-    color: var(--grad-clr1);
-    text-decoration: none;
-    font-size: 14px;
-    transition: 0.2s;
-}
-
-.back-link-wrapper a:hover {
-    color: var(--grad-clr2);
+button[type="submit"]:active {
+    transform: translateY(0);
 }

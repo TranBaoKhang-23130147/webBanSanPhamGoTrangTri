@@ -89,8 +89,8 @@
                 </div>
 
                 <div class="action-buttons">
-                    <a href="add-to-cart?id=${p.id}" class="add-cart">Thêm giỏ hàng</a>
-                    <a href="buy-now?id=${p.id}" class="buy-now">Mua hàng</a>
+                    <a href="detail?id=${p.id}" class="add-cart">Thêm giỏ hàng</a>
+                    <a href="detail?id=${p.id}" class="buy-now">Mua hàng</a>
                 </div>
             </div>
         </c:forEach>
@@ -102,7 +102,9 @@
             <div class="intro-text">
                 <h2>An tâm mua sắm với chính sách hỗ trợ toàn diện</h2>
                 <p>Chúng tôi luôn đặt lợi ích khách hàng lên hàng đầu. Tìm hiểu về Chính sách Bảo hành, Vận chuyển và Đổi trả để yên tâm lựa chọn sản phẩm ưng ý.</p>
-                <button class="intro-btn">Tìm hiểu ngay</button>
+                <a class="menu" href="${pageContext.request.contextPath}/purchasing_policy_user.jsp">
+                    Tìm hiểu thêm
+                </a>
             </div>
 
             <div class="intro-image">
@@ -139,54 +141,13 @@
                 </div>
 
                 <div class="action-buttons">
-                    <a href="add-to-cart?id=${p.id}" class="add-cart">Thêm giỏ hàng</a>
-                    <a href="buy-now?id=${p.id}" class="buy-now">Mua hàng</a>
+                    <a href="detail?id=${p.id}" class="add-cart">Thêm giỏ hàng</a>
+                    <a href="detail?id=${p.id}" class="buy-now">Mua hàng</a>
                 </div>
             </div>
         </c:forEach>
     </div>
 </section>
-
-<!--<section class="blog-section">-->
-<!--    <div class="blog-header">-->
-<!--        <h2>Bài Viết Gần Đây</h2>-->
-<!--        <p>Khám phá những câu chuyện, mẹo trang trí và cảm hứng thiết kế nội thất mới nhất từ WIS Decor.</p>-->
-<!--    </div>-->
-
-<!--    <div class="blog-slider">-->
-<!--        <div class="blog-card">-->
-<!--            <img src="https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg" alt="Decor Chair">-->
-<!--            <div class="blog-info">-->
-<!--                <h3>Ghế Mộc Tinh Tế Cho Không Gian Tối Giản</h3>-->
-<!--                <p>Chiếc ghế đơn giản nhưng mang lại điểm nhấn tinh tế cho căn phòng của bạn.</p>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="blog-card">-->
-<!--            <img src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg" alt="Living Room">-->
-<!--            <div class="blog-info">-->
-<!--                <h3>Trang Trí Phòng Khách Với Tông Màu Ấm</h3>-->
-<!--                <p>Sự kết hợp giữa gỗ tự nhiên và ánh sáng vàng mang lại cảm giác ấm áp, gần gũi.</p>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="blog-card">-->
-<!--            <img src="https://images.pexels.com/photos/1571463/pexels-photo-1571463.jpeg" alt="Bedroom Decor">-->
-<!--            <div class="blog-info">-->
-<!--                <h3>Phòng Ngủ Thư Giãn Với Chất Liệu Tự Nhiên</h3>-->
-<!--                <p>Không gian nghỉ ngơi nhẹ nhàng, mang đậm hơi thở của thiên nhiên.</p>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="blog-card">-->
-<!--            <img src="https://images.pexels.com/photos/1457841/pexels-photo-1457841.jpeg" alt="Dining Room">-->
-<!--            <div class="blog-info">-->
-<!--                <h3>Góc Ăn Uống Ấm Cúng Cho Gia Đình</h3>-->
-<!--                <p>Tạo cảm giác sum vầy bằng cách lựa chọn nội thất phù hợp với phong cách sống.</p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</section>-->
 
 <section class="about-section">
     <div class="about-content">
@@ -201,7 +162,6 @@
             <div class="about-signature">
                 <p><strong>Tran Thi Thuy Kieu</strong><br>Founder & CEO, HOME Decor</p>
             </div>
-            <button class="about-btn">Tìm Hiểu Thêm</button>
         </div>
 
         <div class="about-images">
@@ -229,51 +189,7 @@
     </div>
 </section>
 
-<%--<div class="footer">--%>
-<%--    <div class="footer-container">--%>
 
-<%--        <div class="footer-col">--%>
-<%--            <h3>Về chúng tôi</h3>--%>
-
-
-<%--            <p>HOME DECOR</p>--%>
-
-<%--            <p><i class="fa-solid"></i> Địa chỉ: Trường Đại học Nông Lâm Thành phố Hồ Chí Minh</p>--%>
-<%--            <p><i class="fa-solid"></i> Số điện thoại: 0944459364</p>--%>
-<%--            <p><i class="fa-solid"></i> Email: 23130082@st.hcmuaf.edu.vn</p>--%>
-
-<%--            <div class="social-icons">--%>
-<%--                <a href="#"><i class="fab fa-facebook"></i></a>--%>
-<%--                <a href="#"><i class="fab fa-instagram"></i></a>--%>
-<%--                <a href="#"><i class="fab fa-tiktok"></i></a>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-
-
-<%--        <div class="footer-col">--%>
-<%--            <h3>Chính sách</h3>--%>
-<%--            <a href="introduce_user.html">Về tụi mình</a>--%>
-<%--            <a href="purchasing_policy_user.html">Chính sách Thanh toán</a>--%>
-<%--            <a href="purchasing_policy_user.html">Chính sách Giao hàng</a>--%>
-<%--            <a href="purchasing_policy_user.html">Chính sách Đổi trả</a>--%>
-<%--        </div>--%>
-
-
-<%--        <div class="footer-col">--%>
-<%--            <h3>Hỗ trợ khách hàng</h3>--%>
-<%--            <a href="product_all_user.html">Tất cả sản phẩm</a>--%>
-<%--        </div>--%>
-
-
-<%--        <div class="footer-col">--%>
-<%--            <h3>Liên kiết nhanh</h3>--%>
-<%--            <a href="homepage_user.jsp">Trang chủ</a>--%>
-<%--            <a href="purchasing_policy_user.html">Chính sách mua hàng</a>--%>
-<%--            <a href="introduce_user.html">Giới thiệu</a>--%>
-<%--            <a href="contact_user.html">Liên hệ</a>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
 <script src="js/homepage.js"></script>
