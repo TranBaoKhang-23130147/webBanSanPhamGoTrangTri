@@ -70,6 +70,7 @@ public class MyPageServlet extends HttpServlet {
         request.setAttribute("listO", displayList);           // Danh sách hiển thị theo filter
         request.setAttribute("countOrder", countQualifiedOrders); // Số lượng đơn thỏa mãn 2 điều kiện
         request.setAttribute("totalSpent", totalSpent);       // Tổng tiền thỏa mãn 2 điều kiện
+        request.setAttribute("allOrders", allOrders);         // Tất cả đơn hàng (cho tab đánh giá)
     }
     else if ("dia-chi".equals(tab)) {
             AddressDao dao = new AddressDao();

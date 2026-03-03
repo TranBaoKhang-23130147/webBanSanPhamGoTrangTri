@@ -9,7 +9,8 @@
     <title>HOME DECOR - NHẬP MÃ XÁC NHẬP</title>
     <link rel="icon" type="image/png"  href="img/logo.png" >
 
-    <link rel="stylesheet" href="css/otp_pass.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/otp_pass.css">
+
 </head>
 <body>
 
@@ -30,29 +31,6 @@
         <a href="login_forgot_password.jsp">Quay lại</a>
     </form>
 </div>
-
-<!--<script>-->
-<!--    const inputs = document.querySelectorAll('.otp-input');-->
-<!--    inputs.forEach((input, index) => {-->
-<!--        input.addEventListener('keyup', (e) => {-->
-<!--            if (input.value.length === 1 && index < inputs.length - 1) {-->
-<!--                inputs[index + 1].focus();-->
-<!--            }-->
-<!--        });-->
-<!--    });-->
-
-<!--    let time = 59;-->
-<!--    const countdownEl = document.getElementById('countdown');-->
-
-<!--    const interval = setInterval(() => {-->
-<!--        countdownEl.textContent = time + ' giây';-->
-<!--        time&#45;&#45;;-->
-<!--        if (time < 0) {-->
-<!--            clearInterval(interval);-->
-<!--            countdownEl.innerHTML = '<a href="#" class="resend-link">Gửi lại mã</a>';-->
-<!--        }-->
-<!--    }, 1000);-->
-<!--</script>-->
 
 </body>
 </html>

@@ -307,7 +307,7 @@ public class UserDao {
         }
         return false;
     }
-//    public boolean updatePasswordByEmail(String email, String newPassword) {
+    //    public boolean updatePasswordByEmail(String email, String newPassword) {
 //        String sql = "UPDATE users SET password = ? WHERE email = ?";
 //        try (Connection conn = DBContext.getConnection();
 //             PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -321,23 +321,23 @@ public class UserDao {
 //        }
 //        return false;
 //    }
-public boolean updatePasswordByEmail(String email, String newPassword) {
-    String sql = "UPDATE users SET password = ? WHERE email = ?";
-    try (Connection conn = DBContext.getConnection();
-         PreparedStatement ps = conn.prepareStatement(sql)) {
+    public boolean updatePasswordByEmail(String email, String newPassword) {
+        String sql = "UPDATE users SET password = ? WHERE email = ?";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        // CẦN SỬA: Băm mật khẩu mới ở đây
-        String hashedPassword = PasswordUtils.hashPassword(newPassword);
+            // CẦN SỬA: Băm mật khẩu mới ở đây
+            String hashedPassword = PasswordUtils.hashPassword(newPassword);
 
-        ps.setString(1, hashedPassword);
-        ps.setString(2, email);
+            ps.setString(1, hashedPassword);
+            ps.setString(2, email);
 
-        return ps.executeUpdate() == 1;
-    } catch (Exception e) {
-        e.printStackTrace();
+            return ps.executeUpdate() == 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
-    return false;
-}
     public boolean updatePasswordById(int userId, String newPassword) {
         String sql = "UPDATE users SET password = ? WHERE id = ?";
         try (Connection conn = DBContext.getConnection();
@@ -355,32 +355,32 @@ public boolean updatePasswordByEmail(String email, String newPassword) {
         }
         return false;
     }
-//    hien thi ng dung admin
-public List<User> getAllCustomers() {
-    List<User> list = new ArrayList<>();
-    String sql = "SELECT * FROM users WHERE role = 'User'"; // Dùng * để lấy hết các cột bao gồm createAt
-    try (Connection conn = DBContext.getConnection();
-         PreparedStatement ps = conn.prepareStatement(sql);
-         ResultSet rs = ps.executeQuery()) {
-        while (rs.next()) {
-            User u = new User();
-            u.setId(rs.getInt("id"));
-            u.setUsername(rs.getString("full_name"));
-            u.setDisplayName(rs.getString("display_name"));
-            u.setEmail(rs.getString("email"));
-            u.setPhone(rs.getString("phone"));
-            u.setStatus(rs.getString("status"));
+    //    hien thi ng dung admin
+    public List<User> getAllCustomers() {
+        List<User> list = new ArrayList<>();
+        String sql = "SELECT * FROM users WHERE role = 'User'"; // Dùng * để lấy hết các cột bao gồm createAt
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setUsername(rs.getString("full_name"));
+                u.setDisplayName(rs.getString("display_name"));
+                u.setEmail(rs.getString("email"));
+                u.setPhone(rs.getString("phone"));
+                u.setStatus(rs.getString("status"));
 
-            // QUAN TRỌNG: Phải có dòng này thì JSP mới nhận được ngày
-            u.setCreateAt(rs.getDate("createAt"));
+                // QUAN TRỌNG: Phải có dòng này thì JSP mới nhận được ngày
+                u.setCreateAt(rs.getDate("createAt"));
 
-            list.add(u);
+                list.add(u);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+        return list;
     }
-    return list;
-}
     public User getAdminProfile(int userId) {
         // Thêm u.role vào câu lệnh SELECT nếu u.* không lấy hết
         String sql = "SELECT u.*, i.urlImage FROM users u " +
@@ -452,33 +452,6 @@ public List<User> getAllCustomers() {
         return 0;
     }
 
-    public List<User> getAllAdmins() {
-        List<User> list = new ArrayList<>();
-        // Lọc những người dùng có quyền là 'Admin'
-        String sql = "SELECT * FROM users WHERE role = 'Admin'";
-
-        try (Connection conn = DBContext.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                User u = new User();
-                u.setId(rs.getInt("id"));
-                u.setUsername(rs.getString("full_name"));
-                u.setDisplayName(rs.getString("display_name"));
-                u.setEmail(rs.getString("email"));
-                u.setPhone(rs.getString("phone"));
-                u.setRole(rs.getString("role"));
-                u.setStatus(rs.getString("status"));
-                u.setCreateAt(rs.getDate("createAt"));
-
-                list.add(u);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
 
 
     public Integer getFirstAdminId() {
@@ -507,23 +480,23 @@ public List<User> getAllCustomers() {
         return false;
     }
 
-public boolean adminInsertUser(String username, String email, String phone, String password, String role) {
-    String sql = "INSERT INTO users (full_name, email, phone, password, role, status, createAt) VALUES (?, ?, ?, ?, ?, 'Active', NOW())";
-    try (Connection conn = DBContext.getConnection();
-         PreparedStatement ps = conn.prepareStatement(sql)) {
+    public boolean adminInsertUser(String username, String email, String phone, String password, String role) {
+        String sql = "INSERT INTO users (full_name, email, phone, password, role, status, createAt) VALUES (?, ?, ?, ?, ?, 'Active', NOW())";
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        ps.setString(1, username);
-        ps.setString(2, email);
-        ps.setString(3, phone);
-        ps.setString(4, PasswordUtils.hashPassword(password)); // HASH Ở ĐÂY
-        ps.setString(5, role);
+            ps.setString(1, username);
+            ps.setString(2, email);
+            ps.setString(3, phone);
+            ps.setString(4, PasswordUtils.hashPassword(password)); // HASH Ở ĐÂY
+            ps.setString(5, role);
 
-        return ps.executeUpdate() > 0;
-    } catch (Exception e) {
-        e.printStackTrace();
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
-    return false;
-}
     /**
      * Lấy hoặc tạo mới ID ảnh từ bảng images dựa trên urlImage
      */
@@ -753,7 +726,7 @@ public boolean adminInsertUser(String username, String email, String phone, Stri
 
         return false;
 
-}public void updateOrderRatedStatus(int orderId, boolean status) {
+    }public void updateOrderRatedStatus(int orderId, boolean status) {
 
         String sql = "UPDATE orders SET is_rated=? WHERE id=?";
 
@@ -817,5 +790,48 @@ public boolean adminInsertUser(String username, String email, String phone, Stri
         }
         return false;
     }
+
+public boolean updateAdminRole(int adminId, String newRole) {
+        String sql = "UPDATE users SET role = ? WHERE id = ?";
+        try (Connection conn = DBContext.getConnection(); // Thay bằng cách lấy connection của bạn
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, newRole);
+            ps.setInt(2, adminId);
+
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public List<User> getAllAdmins() {
+        List<User> list = new ArrayList<>();
+        // Lọc những người dùng có quyền là 'Admin'
+        String sql = "SELECT * FROM users WHERE role = 'Admin' or role = 'Staff'";
+
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt("id"));
+                u.setUsername(rs.getString("full_name"));
+                u.setDisplayName(rs.getString("display_name"));
+                u.setEmail(rs.getString("email"));
+                u.setPhone(rs.getString("phone"));
+                u.setRole(rs.getString("role"));
+                u.setStatus(rs.getString("status"));
+                u.setCreateAt(rs.getDate("createAt"));
+
+                list.add(u);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 }
 

@@ -26,7 +26,7 @@
                     request.getSession().setAttribute("msg", "Không thể xóa! Loại sản phẩm này đang có sản phẩm tồn tại.");
                     request.getSession().setAttribute("msgType", "error"); // Màu đỏ
                 }
-                response.sendRedirect("product-type-manager");
+                response.sendRedirect(request.getContextPath() + "/AdminProductTypeServlet");
                 return;
             }
             String keyword = request.getParameter("keyword");
@@ -62,5 +62,5 @@
                 request.getSession().setAttribute("msgType", "error");
             }
 
-            response.sendRedirect("product-type-manager");
+            response.sendRedirect(request.getContextPath() + "/AdminProductTypeServlet");
         }}

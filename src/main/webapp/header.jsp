@@ -14,7 +14,6 @@
 
         <a class="menu" id="home" href="HomeServlet"> TRANG CHỦ</a>
         <div class="menu product-menu">
-            <%-- Nhấn vào đây ra trang Tất cả sản phẩm --%>
             <a id="product" href="ProductAllServlet">SẢN PHẨM</a>
 
                 <div class="submenu">
@@ -27,7 +26,6 @@
         </div>
 
                 <a class="menu" id=" " href="purchasing_policy_user.jsp" >CHÍNH SÁCH MUA HÀNG</a>
-
 
         <a class="menu" id="introduce" href="introduce_user.jsp" >GIỚI THIỆU</a>
         <a class="menu" id="contact" href="contact_user.jsp">LIÊN HỆ</a>
@@ -46,11 +44,9 @@
             <i class="fas fa-user"></i>
             <div class="user">
                 <% if (user != null) { %>
-<%--                <span style="display:block; padding: 5px 10px; font-weight:bold; color:#8B4513;">--%>
-<%--                Chào, <%= user.getUsername() %>--%>
             </span>
 
-                <a class="nav_item" id="myPage" href="${pageContext.request.contextPath}/MyPageServlet">Trang cuả tôi</a>
+                <a class="nav_item" id="myPage" href="${pageContext.request.contextPath}/MyPageServlet">Trang của tôi</a>
                 <a class="nav-item" href="LogoutServlet" id="login-register">Đăng xuất</a>
                 <% } else { %>
                 <a class="nav-item" href="login.jsp" id="login-register">Đăng nhập</a>

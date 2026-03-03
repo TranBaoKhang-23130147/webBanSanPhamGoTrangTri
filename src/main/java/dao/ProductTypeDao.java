@@ -136,4 +136,29 @@ public class ProductTypeDao {
         }
         return list;
     }
+    public List<Integer> getProductIdsInOrder(int orderId) {
+        List<Integer> list = new ArrayList<>();
+
+        String sql = """
+        SELECT DISTINCT pv.product_id
+        FROM order_detail od
+        JOIN product_variant pv ON od.variant_id = pv.id
+        WHERE od.order_id = ?
+    """;
+
+        try (Connection con = DBContext.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(rs.getInt("product_id"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 }

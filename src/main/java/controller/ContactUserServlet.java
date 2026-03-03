@@ -1,9 +1,13 @@
 package controller;
 
+import dao.NotificationDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import model.Notification;
+
 import java.io.IOException;
+import java.sql.Timestamp;
 
 @WebServlet("/contact-user")
 public class ContactUserServlet extends HttpServlet {
@@ -33,9 +37,23 @@ public class ContactUserServlet extends HttpServlet {
         boolean sent = mail.sendEmail(adminEmail, subject, body);
 
         if (sent) {
+            Notification noti = new Notification();
+            noti.setAdminId(1); // ID admin (hoặc lấy từ DB)
+            noti.setType("CONTACT");
+            noti.setRelatedId(0); // không có contactId nữa
+            noti.setContent("Khách hàng " + name + " vừa gửi liên hệ");
+            noti.setRead(false);
+
+            NotificationDao notiDAO = new NotificationDao();
+            notiDAO.insert(noti);
+        }
+
+        // ===== 3. REDIRECT =====
+        if (sent) {
             resp.sendRedirect(req.getContextPath() + "/contact_user.jsp?success=true");
         } else {
             resp.sendRedirect(req.getContextPath() + "/contact_user.jsp?error=true");
         }
     }
+
 }

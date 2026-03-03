@@ -642,3 +642,19 @@ margin-top: 28px;
 .set{
     padding: 20px;
 }
+.product-card a {
+    text-decoration: none !important;
+    color: inherit;
+}
+
+.product-card h2 {
+    color: #333;
+    font-size: 16px;
+    margin-top: 10px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.product-card a:hover h2 {
+    color: #8b5e3c;
+}

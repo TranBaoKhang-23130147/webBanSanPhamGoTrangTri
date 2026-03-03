@@ -79,7 +79,19 @@
                                         <br><small style="color: #888;">@${a.username}</small>
                                     </td>
                                     <td>${a.email}</td>
-                                    <td><span class="role-admin-tag">Administrator</span></td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${a.role == 'Admin'}">
+                                                <span class="role-admin-tag">Quản trị viên</span>
+                                            </c:when>
+                                            <c:when test="${a.role == 'Staff'}">
+                                                <span class="role-staff-tag">Nhân viên</span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <span class="role-user-tag">${a.role}</span>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
                                     <td>
                                         <span class="status ${a.status == 'Active' ? 'active-status' : 'inactive-status'}">
                                                 ${a.status == 'Active' ? 'Hoạt Động' : 'Đang Khóa'}
@@ -88,8 +100,8 @@
                                     <td class="col-actions">
                                         <i class="fa-solid fa-user-pen"
                                            title="Sửa quyền hạn"
-                                           onclick="location.href='edit-admin?id=${a.id}'"
-                                           style="cursor:pointer; color: #4e73df;"></i>
+                                           onclick="openEditModal('${a.id}', '${a.displayName != null ? a.displayName : a.username}', 'Admin')"
+                                           style="cursor:pointer; color: #8B5E3C; font-size: 18px;"></i>
 
                                         <c:if test="${a.id != sessionScope.LOGGED_USER.id}">
                                             <i class="fa-solid fa-trash-can"
@@ -108,7 +120,33 @@
         </main>
     </div>
 </div>
-
+<div id="editAdminModal" class="modal-overlay" style="display:none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); align-items: center; justify-content: center;">
+    <div class="modal-box" style="background: #fff; width: 400px; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+        <div style="background: #8B5E3C; color: white; padding: 15px 20px; display: flex; justify-content: space-between;">
+            <h3 style="margin: 0;">Chỉnh Sửa Quyền Hạn</h3>
+            <span onclick="closeEditModal()" style="cursor: pointer; font-size: 24px;">&times;</span>
+        </div>
+        <form id="editAdminForm" style="padding: 20px;">
+            <input type="hidden" name="adminId" id="edit_admin_id">
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Tên Admin:</label>
+                <input type="text" id="edit_admin_name" readonly style="width:100%; padding: 10px; border: 1px solid #eee; background: #f9f9f9; border-radius: 8px; outline: none;">
+            </div>
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 600;">Vai trò mới:</label>
+                <select name="newRole" id="edit_admin_role" style="width:100%; padding: 10px; border: 2px solid #eee; border-radius: 8px; outline: none; cursor: pointer;">
+                    <option value="Admin">Admin (Toàn quyền)</option>
+                    <option value="Staff">Staff (Nhân viên)</option>
+                    <option value="User">User (Khách hàng)</option>
+                </select>
+            </div>
+            <div style="text-align: right; border-top: 1px solid #eee; padding-top: 15px;">
+                <button type="button" onclick="closeEditModal()" style="padding: 10px 15px; background: #eee; border: none; border-radius: 8px; cursor: pointer;">Hủy</button>
+                <button type="button" onclick="submitEditRole()" style="padding: 10px 20px; background: #8B5E3C; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Cập Nhật</button>
+            </div>
+        </form>
+    </div>
+</div>
 <script>
     function confirmDeleteAdmin(id, name) {
         Swal.fire({
@@ -317,6 +355,64 @@
                 console.error(err);
                 Swal.fire('Lỗi', 'Không thể lưu dữ liệu. Vui lòng thử lại!', 'error');
                 btnSubmit.innerHTML = 'Lưu Người Dùng';
+                btnSubmit.disabled = false;
+            });
+    }
+
+    function openEditModal(id, name, currentRole) {
+        document.getElementById('edit_admin_id').value = id;
+        document.getElementById('edit_admin_name').value = name;
+        document.getElementById('edit_admin_role').value = currentRole;
+        document.getElementById('editAdminModal').style.display = 'flex';
+    }
+
+    function closeEditModal() {
+        document.getElementById('editAdminModal').style.display = 'none';
+    }
+    function submitEditRole() {
+        const id = document.getElementById('edit_admin_id').value;
+        const role = document.getElementById('edit_admin_role').value;
+        const btnSubmit = event.target; // Lấy nút vừa nhấn
+
+        // Hiệu ứng chờ khi đang gửi dữ liệu
+        btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang lưu...';
+        btnSubmit.disabled = true;
+
+        const url = "${pageContext.request.contextPath}/AdminUpdateRoleServlet";
+
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'id=' + encodeURIComponent(id) + '&role=' + encodeURIComponent(role)
+        })
+            .then(res => {
+                if (!res.ok) throw new Error('Lỗi mạng');
+                return res.json();
+            })
+            .then(data => {
+                if(data.status === "success") {
+                    // --- BƯỚC QUAN TRỌNG: Đóng Form ngay lập tức ---
+                    closeEditModal();
+
+                    // Hiển thị thông báo thành công
+                    Swal.fire({
+                        title: 'Thành công!',
+                        text: 'Đã cập nhật vai trò mới.',
+                        icon: 'success',
+                        confirmButtonColor: '#8B5E3C'
+                    }).then(() => {
+                        location.reload(); // Tải lại trang để thấy thay đổi trong bảng
+                    });
+                } else {
+                    Swal.fire('Lỗi', data.message || 'Không thể cập nhật', 'error');
+                    btnSubmit.innerHTML = 'Cập Nhật';
+                    btnSubmit.disabled = false;
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                Swal.fire('Lỗi', 'Lỗi kết nối server!', 'error');
+                btnSubmit.innerHTML = 'Cập Nhật';
                 btnSubmit.disabled = false;
             });
     }

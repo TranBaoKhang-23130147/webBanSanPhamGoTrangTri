@@ -53,98 +53,107 @@ public class AdminEditProductServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
         try {
-            // 1. Lấy thông tin cơ bản
+            // ================== 1. ID ==================
             int productId = Integer.parseInt(req.getParameter("productId"));
-            int infoId = Integer.parseInt(req.getParameter("infoId"));
-            int descId = Integer.parseInt(req.getParameter("descId"));
+            int infoId    = Integer.parseInt(req.getParameter("infoId"));
+            int descId    = Integer.parseInt(req.getParameter("descId"));
 
-            String name = req.getParameter("productName");
-            double price = Double.parseDouble(req.getParameter("price"));
-            int categoryId = Integer.parseInt(req.getParameter("categoryId"));
-            int sourceId = Integer.parseInt(req.getParameter("sourceId"));
-            int typeId = Integer.parseInt(req.getParameter("productTypeId"));
-            Date mfgDate = Date.valueOf(req.getParameter("mfgDate"));
+            // ================== 2. PRODUCT ==================
+            Product p = new Product();
+            p.setId(productId);
+            p.setNameProduct(req.getParameter("productName"));
+            p.setPrice(Double.parseDouble(req.getParameter("price")));
+            p.setCategoryId(Integer.parseInt(req.getParameter("categoryId")));
+            p.setSourceId(Integer.parseInt(req.getParameter("sourceId")));
+            p.setProductTypeId(Integer.parseInt(req.getParameter("productTypeId")));
+            p.setMfgDate(Date.valueOf(req.getParameter("mfgDate")));
 
-            // 2. Tạo đối tượng Information & Description
+            // ================== 3. INFORMATION ==================
             Information info = new Information();
             info.setId(infoId);
             info.setMaterial(req.getParameter("material"));
             info.setGuarantee(req.getParameter("guarantee"));
 
+            // ================== 4. DESCRIPTION ==================
             Description desc = new Description();
             desc.setId(descId);
             desc.setIntroduce(req.getParameter("introduce"));
             desc.setHighlights(req.getParameter("highlights"));
 
-            // 3. Tạo đối tượng Product
-            Product p = new Product();
-            p.setId(productId);
-            p.setNameProduct(name);
-            p.setPrice(price);
-            p.setCategoryId(categoryId);
-            p.setSourceId(sourceId);
-            p.setProductTypeId(typeId);
-            p.setMfgDate(mfgDate);
-
-            // 4. Xử lý Ảnh
+            // ================== 5. IMAGES ==================
             String imageRaw = req.getParameter("productImages");
-            List<String> imagePaths;
+            List<String> imagePaths = new ArrayList<>();
+
             if (imageRaw != null && !imageRaw.trim().isEmpty()) {
                 imagePaths = Arrays.asList(imageRaw.split(","));
             } else {
-                Product oldProduct = productDao.getFullProductById(productId);
-                imagePaths = oldProduct != null ? oldProduct.getListImages() : new ArrayList<>();
+                Product old = productDao.getFullProductById(productId);
+                if (old != null) imagePaths = old.getListImages();
             }
 
-            // 5. Thu thập danh sách Biến thể (đã thêm variantId[])
+            // ================== 6. VARIANTS ==================
             String[] variantIds   = req.getParameterValues("variantId[]");
+            String[] skus         = req.getParameterValues("variantSKU[]");
             String[] colorIds     = req.getParameterValues("variantColor[]");
             String[] sizeIds      = req.getParameterValues("variantSize[]");
-            String[] skus         = req.getParameterValues("variantSKU[]");
             String[] quantities   = req.getParameterValues("variantStock[]");
-            String[] vPrices      = req.getParameterValues("variantPrice[]");
+            String[] prices       = req.getParameterValues("variantPrice[]");
+
+            if (skus == null || skus.length == 0) {
+                throw new RuntimeException("Phải có ít nhất 1 biến thể");
+            }
 
             List<ProductVariants> variants = new ArrayList<>();
-            if (colorIds != null && colorIds.length > 0) {
-                for (int i = 0; i < colorIds.length; i++) {
-                    ProductVariants v = new ProductVariants();
-                    v.setProduct_id(productId);
 
-                    // Xử lý id biến thể (cũ hoặc mới)
-                    String idStr = (variantIds != null && i < variantIds.length) ? variantIds[i].trim() : "";
-                    if (!idStr.isEmpty() && !idStr.equals("0")) {
-                        v.setId(Integer.parseInt(idStr));
-                    } // else: biến thể mới → id = 0 hoặc null
+            int n = skus.length;   // 🔥 MẢNG CHUẨN
 
-                    v.setColor_id(Integer.parseInt(colorIds[i]));
-                    v.setSize_id(Integer.parseInt(sizeIds[i]));
-                    v.setSku(skus[i].trim());
-                    v.setInventory_quantity(Integer.parseInt(quantities[i]));
-                    v.setVariant_price(new BigDecimal(vPrices[i].trim()));
+            for (int i = 0; i < n; i++) {
+                ProductVariants v = new ProductVariants();
+                v.setProduct_id(productId);
 
-                    variants.add(v);
+                // ---- ID biến thể ----
+                String idStr = (variantIds != null && i < variantIds.length)
+                        ? variantIds[i].trim()
+                        : "0";
+
+                v.setId(Integer.parseInt(idStr)); // 0 = biến thể mới
+
+                // ---- Validate ----
+                if (skus[i] == null || skus[i].trim().isEmpty()) {
+                    throw new RuntimeException("SKU không được rỗng (biến thể #" + (i + 1) + ")");
                 }
+
+                // ---- Set dữ liệu ----
+                v.setSku(skus[i].trim());
+                v.setColor_id(Integer.parseInt(colorIds[i]));
+                v.setSize_id(Integer.parseInt(sizeIds[i]));
+                v.setInventory_quantity(Integer.parseInt(quantities[i]));
+                v.setVariant_price(new BigDecimal(prices[i]));
+
+                variants.add(v);
             }
 
-            // 6. Gọi DAO update
-            boolean success = productDao.updateFullProduct(p, desc, info, variants, imagePaths);
+            // ================== 7. UPDATE ==================
+            boolean success = productDao.updateFullProduct(
+                    p, desc, info, variants, imagePaths
+            );
 
             if (success) {
-                resp.sendRedirect("products?status=success");
+                resp.sendRedirect("products?update=success");
             } else {
-                req.setAttribute("message", "Lỗi: Không thể cập nhật cơ sở dữ liệu. Vui lòng kiểm tra SKU có trùng không.");
+                req.setAttribute("message", "Cập nhật thất bại (SKU trùng hoặc lỗi dữ liệu)");
                 doGet(req, resp);
             }
-        } catch (NumberFormatException | NullPointerException e) {
-            e.printStackTrace();
-            req.setAttribute("message", "Lỗi dữ liệu đầu vào: " + e.getMessage());
-            doGet(req, resp);
+
         } catch (Exception e) {
             e.printStackTrace();
-            req.setAttribute("message", "Lỗi hệ thống: " + e.getMessage());
+            req.setAttribute("message", "Lỗi: " + e.getMessage());
             doGet(req, resp);
         }
     }
+
 }

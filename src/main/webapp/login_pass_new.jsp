@@ -9,7 +9,8 @@
     <title>HOME DECOR - NHẬP MẬT KHẨU MỚI</title>
     <link rel="icon" type="image/png"  href="img/logo.png" >
 
-    <link rel="stylesheet" href="css/pass_new.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pass_new.css">
+
 </head>
 <body>
 <div class="container">

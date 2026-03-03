@@ -10,8 +10,11 @@
     <title>HOME DECOR - QUẢN LÝ SẢN PHẨM</title>
     <link rel="icon" type="image/png"  href="img/logo.png" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/admin_products.css">
-    <link rel="stylesheet" href="css/admin_profile_style.css">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_products.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_profile_style.css">
+
+
 </head>
 <body>
 
@@ -58,13 +61,21 @@
                         </button>
                     </form>
 
-                    <div class="action-buttons" style="display: flex; gap: 10px;">
-                        <button class="export-product-btn">
-                            <i class="fa-solid fa-file-export"></i> Thêm màu sắc và kích thướt
-                        </button>
+                        <div class="action-buttons" style="display: flex; gap: 10px;">
+                            <a href="${pageContext.request.contextPath}/admin-attribute" style="text-decoration: none;">
+                                <button class="export-product-btn">
+                                    <i class="fa-solid fa-file-export"></i>
+                                    Thêm màu sắc và kích thước
+                                </button>
+                            </a>
+                        </div>
+
+
+
                         <button class="add-new-product-btn">
                             <i class="fa-solid fa-plus"></i> Thêm Sản Phẩm Mới
                         </button>
+
                     </div>
                 </div>
                 <div class="product-table-wrapper">
@@ -126,7 +137,7 @@
                                 </td>
 
                                 <td class="col-actions">
-                                <td class="col-actions">
+
                                 <a href="${pageContext.request.contextPath}/admin-edit-product?id=${p.id}" title="Sửa">
                                     <i class="fa-solid fa-pen-to-square edit-icon"></i>
                                 </a>
@@ -134,18 +145,39 @@
                                         <i class="fa-solid fa-trash-can delete-icon"></i>
                                     </a>
                                 </td>
+
                             </tr>
                         </c:forEach>
                         </tbody>
 
                     </table>
                 </div>
-            </div>
+
+
         </main>
 
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const promoBtn = document.querySelector('.add-uu-dai');
+        const modal = document.getElementById('promotionModal');
+        const overlay = document.getElementById('modalOverlay');
+
+        // MỞ modal
+        promoBtn.addEventListener('click', function () {
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+        });
+
+        // ĐÓNG khi click nền mờ
+        overlay.addEventListener('click', function () {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+    });
+</script>
 
 <script>
     function toggleActive(productId, willBeActive) {   // ← đổi tên tham số cho dễ hiểu
@@ -199,16 +231,7 @@
         }
 
         // Nút "Thêm màu sắc và kích thước" - tùy theo chức năng bạn muốn
-        const colorSizeBtn = document.querySelector('.export-product-btn');
-        if (colorSizeBtn) {
-            colorSizeBtn.addEventListener('click', function() {
-                Swal.fire({
-                    title: 'Chức năng đang phát triển',
-                    text: 'Tính năng quản lý màu sắc & kích thước sẽ được thêm sau.',
-                    icon: 'info'
-                });
-            });
-        }
+
     });
     function confirmDelete(productId) {
         Swal.fire({
@@ -244,13 +267,76 @@
                     });
             }
         });
-        Swal.fire({
+         Swal.fire({
             title: 'Không thể xóa',
             text: 'Sản phẩm đã phát sinh đơn hàng. Bạn chỉ có thể ngưng bán.',
             icon: 'info'
         });
 
     }
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+    });
+
 </script>
+<style>.product-table-wrapper{
+    max-height:500px;        /* chiều cao vùng bảng */
+    overflow-y:auto;
+}
+
+/* Thanh cuộn mịn */
+.product-table-wrapper::-webkit-scrollbar{
+    width:6px;
+}
+
+.product-table-wrapper::-webkit-scrollbar-thumb{
+    background:#fff0f0;
+    border-radius:10px;
+}
+.product-table-wrapper{
+    max-height:500px;
+    overflow-y:auto;
+
+    border-left:1px solid #fff;
+    border-right:1px solid #fff;
+}
+
+/* ===== Scrollbar ===== */
+
+.product-table-wrapper::-webkit-scrollbar{
+    width:12px;
+}
+
+.product-table-wrapper::-webkit-scrollbar-track{
+    background:#f1f1f1;
+    border-left:1px solid #ddd;
+    border-right:1px solid #ddd;
+}
+
+.product-table-wrapper::-webkit-scrollbar-thumb{
+    background:#a0a0a0;
+    border-radius:10px;
+    border:3px solid #a0a0a0;
+}
+
+
+table {
+    background: white !important;
+}
+
+table thead tr,
+table tbody tr {
+    background: white !important;
+}
+
+table td, table th {
+    background: white !important;
+}
+
+
+</style>
 </body>
 </html>

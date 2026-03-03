@@ -1,128 +1,100 @@
+
 :root {
-    --grad-clr1: #8B5E3C;
-    --grad-clr2: #5A3E2A;
-    --linear-grad: linear-gradient(to right, #8B5E3C, #5A3E2A);
+    --primary-clr: #8B5E3C;
+    --secondary-clr: #333333;
+    --bg-clr: #f4f1ee;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
 body {
     height: 100vh;
-    display: grid;
-    place-content: center;
-    background: #f6f5f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-clr);
 }
 
-/* ===== CONTAINER ===== */
+/* ===== KHUNG CONTAINER ===== */
 .container {
-    width: 400px;
-    background: #fff;
-    padding: 40px 45px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 15px; /* Bo góc mượt mà */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     text-align: center;
 }
 
-/* ===== TITLE ===== */
 h1 {
-    color: var(--grad-clr1);
-    font-size: 26px;
-    margin-bottom: 10px;
-}
-
-p {
-    font-size: 14px;
-    color: #555;
+    color: var(--secondary-clr);
+    font-size: 24px;
     margin-bottom: 25px;
+    font-weight: 700;
 }
 
-/* ===== ERROR MESSAGE ===== */
+/* ===== THÔNG BÁO LỖI ===== */
 .error-msg {
     color: #d93025;
-    background-color: #fdecea;
-    border: 1px solid #f5c2c7;
+    background-color: #fff1f0;
+    border: 1px solid #ffa39e;
     padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
     font-size: 14px;
-    text-align: center;
 }
 
-/* ===== OTP INPUTS ===== */
-.otp-inputs {
-    display: flex;
-    justify-content: space-between;
-    width: 80%;
-    margin: 0 auto 25px auto;
-}
-
-.otp-input {
-    width: 55px;
-    height: 55px;
-    font-size: 24px;
-    text-align: center;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    outline: none;
-    transition: 0.3s;
-}
-
-.otp-input:focus {
-    border-color: var(--grad-clr1);
-    box-shadow: 0 0 6px rgba(139, 94, 60, 0.4);
-}
-
-/* ===== RESEND INFO ===== */
-.resend-info {
-    font-size: 12px;
-    color: #777;
-    margin-bottom: 25px;
-}
-
-.resend-link {
-    color: var(--grad-clr1);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-/* ===== BUTTON ===== */
-button {
+/* ===== Ô NHẬP LIỆU ===== */
+input[type="text"] {
     width: 100%;
-    padding: 12px 0;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    font-size: 16px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: var(--primary-clr);
+}
+
+
+button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--primary-clr) !important;
+    color: #ffffff !important;
     border: none;
-    border-radius: 20px;
-    background: var(--grad-clr2);
-    color: #fff;
+    border-radius: 10px;
+    font-size: 16px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: background 0.3s;
+    margin-bottom: 15px;
 }
 
-button:hover {
-    background: #fff;
-    color: var(--grad-clr1);
-    border: 1px solid var(--grad-clr1);
+button[type="submit"]:hover {
+    background-color: var(--secondary-clr) !important;
 }
 
-/* ===== BACK LINK ===== */
-.back-link-wrapper {
-    margin-top: 20px;
-}
-
-.back-link-wrapper a {
-    color: var(--grad-clr1);
+a {
+    display: inline-block;
+    color: #888;
     text-decoration: none;
     font-size: 14px;
-    transition: 0.2s;
+    transition: color 0.3s;
 }
 
-.back-link-wrapper a:hover {
-    color: var(--grad-clr2);
+a:hover {
+    color: var(--primary-clr);
+    text-decoration: underline;
 }

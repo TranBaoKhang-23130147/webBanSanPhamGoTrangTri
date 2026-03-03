@@ -10,10 +10,10 @@
     <meta charset="UTF-8">
 
     <title>HOME DECOR - SẢN PHẨM</title>
-    <link rel="icon" type="image/png" sizes="9992x9992" href="img/p.png" class="lo">
+    <link rel="icon" type="image/png"  href="img/logo.png" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="css/product_all_style.css">
-    <link rel="stylesheet" href="css/decorate_style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/product_all_style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/decorate_style.css">
     <link
             href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
             rel="stylesheet"
@@ -42,7 +42,6 @@
 <section class="product-all">
     <h2 class="titleProduct">TẤT CẢ SẢN PHẨM</h2>
     <div class="product-container">
-<%--        <jsp:include page="filter.jsp"></jsp:include>--%>
 
         <jsp:include page="filter.jsp"></jsp:include>
         <div class="products">
@@ -70,13 +69,12 @@
                     </a>
 
                     <div class="action-buttons">
-                        <button class="add-cart" onclick="addToCart(${p.id})">Thêm giỏ hàng</button>
-                        <button class="buy-now">Mua hàng</button>
+                        <a href="detail?id=${p.id}" class="add-cart">Thêm giỏ hàng</a>
+                        <a href="detail?id=${p.id}" class="buy-now">Mua hàng</a>
                     </div>
                 </div>
             </c:forEach>
 
-            <%-- Hiển thị thông báo nếu không có sản phẩm nào --%>
             <c:if test="${empty listP}">
                 <div style="grid-column: 1 / -1; width: 100%; text-align: center; padding: 100px 0;">
                     <p style="font-size: 18px; color: #888;">
@@ -129,5 +127,6 @@
 
 
 </body>
-<script src="js/decorate.js"></script>
+<script src="${pageContext.request.contextPath}/js/decorate.js"></script>
+
 </html>

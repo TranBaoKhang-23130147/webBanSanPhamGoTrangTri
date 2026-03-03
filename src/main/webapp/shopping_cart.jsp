@@ -184,7 +184,7 @@
             </div>
 
             <div class="form-group">
-                <label>Địa chỉ nhận hàng: <span style="color:#e74c3c; font-size:0.9em;">(chọn từ danh sách đã lưu)</span></label>
+                <label>Địa chỉ nhận hàng: </label>
                 <select name="address_id" id="addressSelect" required>
                     <c:forEach var="a" items="${addresses}">
                         <option value="${a.id}">

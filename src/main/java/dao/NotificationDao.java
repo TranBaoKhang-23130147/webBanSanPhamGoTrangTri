@@ -60,4 +60,26 @@ public class NotificationDao {
         }
         return list;
     }
+    public void insert(Notification n) {
+        String sql = """
+        INSERT INTO notifications
+        (admin_id, type, related_id, content, createAt, isRead)
+        VALUES (?, 'CONTACT', ?, ?, ?, ?)
+    """;
+
+        try (Connection con = DBContext.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, n.getAdminId());
+            ps.setInt(2, n.getRelatedId());
+            ps.setString(3, n.getContent());
+            ps.setTimestamp(4, n.getCreateAt());
+            ps.setBoolean(5, n.isRead());
+
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

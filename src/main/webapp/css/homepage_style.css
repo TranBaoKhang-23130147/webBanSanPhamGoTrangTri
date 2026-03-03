@@ -1121,14 +1121,22 @@ body {
 }
 /**/
 
-/* Đảm bảo .blog-slider không bị ảnh hưởng bởi các nút */
 .blog-slider {
-    /* Các thuộc tính hiện tại của bạn */
+
     display: flex;
-    justify-content: flex-start; /* Thay đổi từ center sang flex-start */
+    justify-content: flex-start;
     align-items: stretch;
     gap: 5px;
     overflow-x: auto;
     scroll-behavior: smooth;
     padding-bottom: 20px;
+}
+
+ .action-buttons a {
+     color: #ffffff !important;
+
+ }
+
+.action-buttons a:hover {
+    color: #ffffff !important;
 }

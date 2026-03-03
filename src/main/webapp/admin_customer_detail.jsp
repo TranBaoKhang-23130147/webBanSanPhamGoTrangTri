@@ -24,9 +24,7 @@
         <%@ include file="admin_sidebar.jsp" %>
         <main class="content-area">
             <a href="customers" class="back-btn"><i class="fas fa-arrow-left"></i> Quay lại danh sách</a>
-            <a href="${pageContext.request.contextPath}/AdminOrderHistoryController?userId=${customer.id}" class="history-btn">
-                <i class="fas fa-shopping-cart"></i> Xem lịch sử mua hàng
-            </a>
+
             <div class="detail-card">
                 <h2 style="color: #4e73df; margin-bottom: 25px; border-bottom: 2px solid #f1f1f1; padding-bottom: 10px;">
                     Hồ Sơ Khách Hàng: ${customer.displayName}
@@ -60,6 +58,14 @@
                                         <i class="fas fa-shield-alt" style="width: 20px;"></i> Mật khẩu và bảo mật
                                     </a>
                                 </li>
+                                <li style="margin-bottom: 10px;margin-top: 10px;">
+                                <a href="${pageContext.request.contextPath}/AdminOrderHistoryController?userId=${customer.id}"
+                                   style="text-decoration: none; color: #4e73df; font-size: 14px; display:flex; align-items:center;">
+                                    <i class="fas fa-shopping-cart" style="width: 20px;"></i>
+                                    Xem lịch sử mua hàng
+                                </a>
+                            </li>
+
                             </ul>
                         </div>
                     </div>

@@ -82,7 +82,8 @@
             </div>
             <a href="MyPageServlet?tab=don-hang" class="menu-link ${activeTab == 'don-hang' ? 'active' : ''}">
                 <i class="fas fa-shopping-cart"></i> Đơn hàng
-            </a>            <a href="#" class="tab-link menu-link" data-tab="tin-nhan"><i class="fas fa-comment-dots"></i> Tin nhắn</a>
+            </a>
+
         </div>
     </div>
 
@@ -131,25 +132,25 @@
                                 <label for="khac">Khác</label>
                             </div>
                         </div>
-                    <div class="form-group">
-                        <label>Ngày sinh :</label>
-                        <%-- Để đơn giản, dùng date input sẽ tự động có Ngày/Tháng/Năm mà không cần code phức tạp --%>
-                        <input type="date" name="birthDate" value="<%= user.getBirthDate() %>" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                        <div class="form-group">
+                            <label>Ngày sinh :</label>
+                            <%-- Để đơn giản, dùng date input sẽ tự động có Ngày/Tháng/Năm mà không cần code phức tạp --%>
+                            <input type="date" name="birthDate" value="<%= user.getBirthDate() %>" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                        </div>
+                        <button type="submit" class="save-btn">Lưu</button>
                     </div>
-                    <button type="submit" class="save-btn">Lưu</button>
-                </div>
                     <div class="profile-right">
                         <h3>Thông tin liên hệ</h3>
                         <div class="contact-item">
                             <label>Số điện thoại :</label>
 
-                        <%-- Thay span thành input để người dùng nhập được sđt mới --%>
+                            <%-- Thay span thành input để người dùng nhập được sđt mới --%>
                             <input type="text" name="phone" value="<%= user.getPhone() != null ? user.getPhone() : "" %>" placeholder="Số điện thoại">
                         </div>
                         <div class="contact-item">
                             <label>Email :</label>
 
-                        <%-- Email thường cố định, để readonly --%>
+                            <%-- Email thường cố định, để readonly --%>
                             <input type="email" name="email" value="<%= user.getEmail() %>" readonly style="border:none; background:none;">
                         </div>
                         <h3>Liên kết</h3>
@@ -262,31 +263,31 @@
             </div>
         </div>
 
-            <div id="addForm" style="display:none; background: #fff; padding: 20px; border: 1px solid #eee; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                <form action="AddPaymentServlet" method="post">
-                    <h3 style="margin-bottom: 20px; color: #333;"><i class="fas fa-plus-circle"></i> Thêm phương thức thanh toán</h3>
-                    <div class="form-group">
-                        <label>Loại thẻ:</label>
-                        <select name="type" class="input-style">
-                            <option value="Visa">Visa</option>
-                            <option value="MasterCard">MasterCard</option>
-                            <option value="JCB">JCB</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Số thẻ:</label>
-                        <input type="text" name="cardNumber" placeholder="**** **** **** ****" required class="input-style">
-                    </div>
-                    <div class="form-group">
-                        <label>Ngày hết hạn:</label>
-                        <input type="date" name="duration" required class="input-style">
-                    </div>
-                    <div style="margin-top: 20px;">
-                        <button type="submit" class="save-btn">Xác nhận thêm</button>
-                        <button type="button" class="delete-btn" onclick="document.getElementById('addForm').style.display='none'">Hủy bỏ</button>
-                    </div>
-                </form>
-            </div>
+        <div id="addForm" style="display:none; background: #fff; padding: 20px; border: 1px solid #eee; margin-bottom: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <form action="AddPaymentServlet" method="post">
+                <h3 style="margin-bottom: 20px; color: #333;"><i class="fas fa-plus-circle"></i> Thêm phương thức thanh toán</h3>
+                <div class="form-group">
+                    <label>Loại thẻ:</label>
+                    <select name="type" class="input-style">
+                        <option value="Visa">Visa</option>
+                        <option value="MasterCard">MasterCard</option>
+                        <option value="JCB">JCB</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Số thẻ:</label>
+                    <input type="text" name="cardNumber" placeholder="**** **** **** ****" required class="input-style">
+                </div>
+                <div class="form-group">
+                    <label>Ngày hết hạn:</label>
+                    <input type="date" name="duration" required class="input-style">
+                </div>
+                <div style="margin-top: 20px;">
+                    <button type="submit" class="save-btn">Xác nhận thêm</button>
+                    <button type="button" class="delete-btn" onclick="document.getElementById('addForm').style.display='none'">Hủy bỏ</button>
+                </div>
+            </form>
+        </div>
 
 
 
@@ -366,35 +367,35 @@
         </div>
 
         <div id="bao-mat" class="tab-content"<%= "bao-mat".equals(activeTab) ? "active" : "" %>">
-            <h2>Bảo mật</h2>
-            <h3>Đổi mật khẩu</h3>
+        <h2>Bảo mật</h2>
+        <h3>Đổi mật khẩu</h3>
 
-            <form action="ChangePasswordServlet" method="post" class="password-change-form">
-                <div class="form-group">
-                    <label>Mật khẩu hiện tại *</label>
-                    <input type="password" name="currentPassword" required>
-                </div>
+        <form action="ChangePasswordServlet" method="post" class="password-change-form">
+            <div class="form-group">
+                <label>Mật khẩu hiện tại *</label>
+                <input type="password" name="currentPassword" required>
+            </div>
 
-                <div class="form-group">
-                    <label>Mật khẩu mới *</label>
-                    <input type="password" name="newPassword" required>
-                </div>
+            <div class="form-group">
+                <label>Mật khẩu mới *</label>
+                <input type="password" name="newPassword" required>
+            </div>
 
-                <div class="form-group">
-                    <label>Xác nhận mật khẩu *</label>
-                    <input type="password" name="confirmPassword" required>
-                </div>
+            <div class="form-group">
+                <label>Xác nhận mật khẩu *</label>
+                <input type="password" name="confirmPassword" required>
+            </div>
 
-                <button type="submit" class="save-btn">Lưu</button>
-            </form>
+            <button type="submit" class="save-btn">Lưu</button>
+        </form>
 
-            <c:if test="${not empty msg}">
-                <p style="color: green">${msg}</p>
-            </c:if>
+        <c:if test="${not empty msg}">
+        <p style="color: green">${msg}</p>
+        </c:if>
 
-            <c:if test="${not empty error}">
-                <p style="color: red">${error}</p>
-            </c:if>
+        <c:if test="${not empty error}">
+        <p style="color: red">${error}</p>
+        </c:if>
         <c:remove var="msg" scope="session"/>
         <c:remove var="error" scope="session"/>
 
@@ -402,7 +403,7 @@
 
 <div id="don-hang" class="tab-content ${activeTab == 'don-hang' ? 'active' : ''}">
     <h2 style="margin-bottom: 20px; color: #333;">Đơn hàng của tôi</h2>
-
+    <a href="#" class="tab-link menu-link" data-tab="tin-nhan">Đánh giá sản phẩm </a>
     <div class="order-dashboard-summary" style="display: flex; gap: 20px; margin-bottom: 30px;">
         <div class="summary-item" style="background: #e3f2fd; padding: 20px; border-radius: 10px; flex: 1; text-align: center;">
             <span class="num" style="display: block; font-size: 1.5em; font-weight: bold; color: #1976d2;">${countOrder}</span>
@@ -446,176 +447,232 @@
     </style>
     <div class="orders-grid">
 
-    <c:forEach items="${listO}" var="order">
-        <div class="order-item-card">
-                                <div class="card-header">
-                                    <span class="order-id">#${order.id}</span>
-                                    <span class="order-status status-${order.status}">${order.status}</span>
-                                </div>
+        <c:forEach items="${listO}" var="order">
+            <div class="order-item-card">
+                <div class="card-header">
+                    <span class="order-id">#${order.id}</span>
+                    <span class="order-status status-${order.status}">${order.status}</span>
+                </div>
 
-                                <div class="card-body">
-                                    <div class="info-row">
-                                        <i class="far fa-calendar-alt"></i>
-                                        <span><fmt:formatDate value="${order.createAt}" pattern="dd/MM/yyyy HH:mm"/></span>
-                                    </div>
-                                    <div class="info-row">
-                                        <i class="fas fa-credit-card"></i>
-                                        <span>${order.paymentStatus}</span>
-                                    </div>
-                                    <div class="price-box">
-                                        <span class="label">Tổng thanh toán:</span>
-                                        <span class="amount"><fmt:formatNumber value="${order.totalOrder}" pattern="#,###"/> VND</span>
-                                    </div>
-                                </div>
-
-            <div class="card-footer">
-                <a href="javascript:void(0)" class="btn-detail" onclick="showUserOrderDetail(${order.id})">
-                    Xem chi tiết <i class="fas fa-chevron-right"></i>
-                </a>
-            </div>
-
-            <div id="data-order-${order.id}" style="display: none;">
-                <h3 style="border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">
-                    Chi tiết đơn hàng #${order.id}
-                </h3>
-
-                <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9em;">
-                    <div>
-                        <p><strong>Người nhận:</strong> <%= user.getUsername() %></p>
-                        <p><strong>Số điện thoại:</strong> <%= user.getPhone() %></p>
+                <div class="card-body">
+                    <div class="info-row">
+                        <i class="far fa-calendar-alt"></i>
+                        <span><fmt:formatDate value="${order.createAt}" pattern="dd/MM/yyyy HH:mm"/></span>
                     </div>
-                    <div style="text-align: right;">
-                        <p><strong>Ngày đặt:</strong> <fmt:formatDate value="${order.createAt}" pattern="dd/MM/yyyy HH:mm"/></p>
-                        <p><strong>Trạng thái:</strong> <span class="order-status status-${order.status}">${order.status}</span></p>
+                    <div class="info-row">
+                        <i class="fas fa-credit-card"></i>
+                        <span>${order.paymentStatus}</span>
+                    </div>
+                    <div class="price-box">
+                        <span class="label">Tổng thanh toán:</span>
+                        <span class="amount"><fmt:formatNumber value="${order.totalOrder}" pattern="#,###"/> VND</span>
                     </div>
                 </div>
 
-                <div class="modal-body-scroll" style="max-height: 400px; overflow-y: auto;">
-                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-                        <thead>
-                        <tr style="background: #f8f9fa; border-bottom: 2px solid #dee2e6;">
-                            <th style="padding: 10px; text-align: left;">Sản phẩm</th>
-                            <th style="padding: 10px; text-align: center;">SL</th>
-                            <th style="padding: 10px; text-align: right;">Đơn giá</th>
-                            <th style="padding: 10px; text-align: right;">Thành tiền</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach items="${order.details}" var="d">
-                            <tr style="border-bottom: 1px solid #eee;" >
+                <div class="card-footer">
+                    <a href="javascript:void(0)" class="btn-detail" onclick="showUserOrderDetail(${order.id})">
+                        Xem chi tiết <i class="fas fa-chevron-right"></i>
+                    </a>
+                </div>
 
-                            <td style="padding: 10px;">${d.productName}</td>
+                <div id="data-order-${order.id}" style="display: none;">
+                    <h3 style="border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">
+                        Chi tiết đơn hàng #${order.id}
+                    </h3>
 
-                                <td style="padding: 10px; text-align: center;">x${d.quantity}</td>
-                                <td style="padding: 10px; text-align: right;">
-                                    <fmt:formatNumber value="${d.total / d.quantity}" pattern="#,###"/>
-                                </td>
-                                <td style="padding: 10px; text-align: right; font-weight: bold;">
-                                    <fmt:formatNumber value="${d.total}" pattern="#,###"/>
-                                </td>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9em;">
+                        <div>
+                            <p><strong>Người nhận:</strong> <%= user.getUsername() %></p>
+                            <p><strong>Số điện thoại:</strong> <%= user.getPhone() %></p>
+                        </div>
+                        <div style="text-align: right;">
+                            <p><strong>Ngày đặt:</strong> <fmt:formatDate value="${order.createAt}" pattern="dd/MM/yyyy HH:mm"/></p>
+                            <p><strong>Trạng thái:</strong> <span class="order-status status-${order.status}">${order.status}</span></p>
+                        </div>
+                    </div>
+
+                    <div class="modal-body-scroll" style="max-height: 400px; overflow-y: auto;">
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                            <thead>
+                            <tr style="background: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                                <th style="padding: 10px; text-align: left;">Sản phẩm</th>
+                                <th style="padding: 10px; text-align: center;">SL</th>
+                                <th style="padding: 10px; text-align: right;">Đơn giá</th>
+                                <th style="padding: 10px; text-align: right;">Thành tiền</th>
                             </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${order.details}" var="d">
+                                <tr style="border-bottom: 1px solid #eee;" >
+
+                                    <td style="padding: 10px;">${d.productName}</td>
+
+                                    <td style="padding: 10px; text-align: center;">x${d.quantity}</td>
+                                    <td style="padding: 10px; text-align: right;">
+                                        <fmt:formatNumber value="${d.total / d.quantity}" pattern="#,###"/>
+                                    </td>
+                                    <td style="padding: 10px; text-align: right; font-weight: bold;">
+                                        <fmt:formatNumber value="${d.total}" pattern="#,###"/>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="summary-horizontal-card">
+                        <div class="summary-section">
+                            <span class="summary-title">Tạm tính</span>
+                            <span class="summary-amount"><fmt:formatNumber value="${order.subTotal}" pattern="#,###"/></span>
+                        </div>
+
+                        <div class="summary-section">
+                            <span class="summary-title">Thuế (8%)</span>
+                            <span class="summary-amount"><fmt:formatNumber value="${order.taxAmount}" pattern="#,###"/></span>
+                        </div>
+
+                        <div class="summary-section">
+                            <span class="summary-title">Phí ship</span>
+                            <span class="summary-amount"><fmt:formatNumber value="${order.shippingFee}" pattern="#,###"/></span>
+                        </div>
+
+                        <div class="summary-section total-box">
+                            <span class="summary-title">Tổng cộng</span>
+                            <span class="summary-amount total-final"><fmt:formatNumber value="${order.totalOrder}" pattern="#,###"/> VND</span>
+                        </div>
+                    </div>
+                    <div class="order-actions" style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+                            <%-- 1. Nút HỦY ĐƠN: Hiện khi trạng thái là 'Chờ xác nhận' --%>
+                        <c:if test="${order.status == 'Chờ xác nhận'}">
+                            <form action="MyPageServlet" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')">
+                                <input type="hidden" name="action" value="cancelOrder">
+                                <input type="hidden" name="orderId" value="${order.id}">
+                                <button type="submit" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                                    Hủy Đơn Hàng
+                                </button>
+                            </form>
+                        </c:if>
+
+                            <%-- 2. Nút HOÀN HÀNG: Hiện khi 'Đã giao' và trong vòng 7 ngày --%>
+                            <%-- Kiểm tra Đơn đã giao VÀ đã thanh toán --%>
+                        <div class="order-actions" style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
+                                <%-- 1. Nút HỦY ĐƠN: Hiện khi trạng thái là 'Chờ xác nhận' --%>
+                            <c:if test="${order.status == 'Chờ xác nhận'}">
+                                <form action="MyPageServlet" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')">
+                                    <input type="hidden" name="action" value="cancelOrder">
+                                    <input type="hidden" name="orderId" value="${order.id}">
+                                    <button type="submit" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                                        Hủy Đơn Hàng
+                                    </button>
+                                </form>
+                            </c:if>
+
+                            <c:if test="${order.status == 'Đã giao'}">
+                                <jsp:useBean id="now" class="java.util.Date" />
+                                <c:set var="diff" value="${now.time - order.createAt.time}" />
+                                <c:set var="days" value="${diff / (1000 * 60 * 60 * 24)}" />
+
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                        <%-- Nút VIẾT ĐÁNH GIÁ: Luôn hiện khi đã giao --%>
+                                        <%-- Nút VIẾT ĐÁNH GIÁ: Gọi hàm JS truyền vào Order ID --%>
+                                    <button type="button"
+                                            onclick="openReviewModal(${order.id})"
+                                            style="background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                                        Viết Đánh Giá
+                                    </button>
+                                        <%-- Nút HOÀN HÀNG: Chỉ hiện trong vòng 7 ngày --%>
+                                    <c:choose>
+                                        <c:when test="${days <= 7}">
+                                            <form action="MyPageServlet" method="post" onsubmit="return confirm('Bạn muốn yêu cầu hoàn hàng cho đơn hàng này?')" style="margin: 0;">
+                                                <input type="hidden" name="action" value="returnOrder">
+                                                <input type="hidden" name="orderId" value="${order.id}">
+                                                <button type="submit" style="background: #f39c12; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                                                    Yêu Cầu Hoàn Hàng
+                                                </button>
+                                            </form>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span style="color: #888; font-style: italic; font-size: 0.9em;">(Hết hạn hoàn hàng)</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </c:if>
+                        </div>
+                    </div>
+
                 </div>
-
-                <div class="summary-horizontal-card">
-                    <div class="summary-section">
-                        <span class="summary-title">Tạm tính</span>
-                        <span class="summary-amount"><fmt:formatNumber value="${order.subTotal}" pattern="#,###"/></span>
-                    </div>
-
-                    <div class="summary-section">
-                        <span class="summary-title">Thuế (8%)</span>
-                        <span class="summary-amount"><fmt:formatNumber value="${order.taxAmount}" pattern="#,###"/></span>
-                    </div>
-
-                    <div class="summary-section">
-                        <span class="summary-title">Phí ship</span>
-                        <span class="summary-amount"><fmt:formatNumber value="${order.shippingFee}" pattern="#,###"/></span>
-                    </div>
-
-                    <div class="summary-section total-box">
-                        <span class="summary-title">Tổng cộng</span>
-                        <span class="summary-amount total-final"><fmt:formatNumber value="${order.totalOrder}" pattern="#,###"/> VND</span>
-                    </div>
-                </div>
-                <div class="order-actions" style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
-                        <%-- 1. Nút HỦY ĐƠN: Hiện khi trạng thái là 'Chờ xác nhận' --%>
-                    <c:if test="${order.status == 'Chờ xác nhận'}">
-                        <form action="MyPageServlet" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')">
-                            <input type="hidden" name="action" value="cancelOrder">
-                            <input type="hidden" name="orderId" value="${order.id}">
-                            <button type="submit" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                                Hủy Đơn Hàng
-                            </button>
-                        </form>
-                    </c:if>
-
-                        <%-- 2. Nút HOÀN HÀNG: Hiện khi 'Đã giao' và trong vòng 7 ngày --%>
-                                <%-- Kiểm tra Đơn đã giao VÀ đã thanh toán --%>
-                            <div class="order-actions" style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
-                                    <%-- 1. Nút HỦY ĐƠN: Hiện khi trạng thái là 'Chờ xác nhận' --%>
-                                <c:if test="${order.status == 'Chờ xác nhận'}">
-                                    <form action="MyPageServlet" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')">
-                                        <input type="hidden" name="action" value="cancelOrder">
-                                        <input type="hidden" name="orderId" value="${order.id}">
-                                        <button type="submit" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                                            Hủy Đơn Hàng
-                                        </button>
-                                    </form>
-                                </c:if>
-
-                                        <c:if test="${order.status == 'Đã giao'}">
-                                            <jsp:useBean id="now" class="java.util.Date" />
-                                            <c:set var="diff" value="${now.time - order.createAt.time}" />
-                                            <c:set var="days" value="${diff / (1000 * 60 * 60 * 24)}" />
-
-                                            <div style="display: flex; gap: 10px; align-items: center;">
-                                                    <%-- Nút VIẾT ĐÁNH GIÁ: Luôn hiện khi đã giao --%>
-                                                            <%-- Nút VIẾT ĐÁNH GIÁ: Gọi hàm JS truyền vào Order ID --%>
-                                                        <button type="button"
-                                                                onclick="openReviewModal(${order.id})"
-                                                                style="background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                                                            Viết Đánh Giá
-                                                        </button>
-                                                    <%-- Nút HOÀN HÀNG: Chỉ hiện trong vòng 7 ngày --%>
-                                                <c:choose>
-                                                    <c:when test="${days <= 7}">
-                                                        <form action="MyPageServlet" method="post" onsubmit="return confirm('Bạn muốn yêu cầu hoàn hàng cho đơn hàng này?')" style="margin: 0;">
-                                                            <input type="hidden" name="action" value="returnOrder">
-                                                            <input type="hidden" name="orderId" value="${order.id}">
-                                                            <button type="submit" style="background: #f39c12; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                                                                Yêu Cầu Hoàn Hàng
-                                                            </button>
-                                                        </form>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <span style="color: #888; font-style: italic; font-size: 0.9em;">(Hết hạn hoàn hàng)</span>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </div>
-                                        </c:if>
-                            </div>
-                </div>
-
             </div>
-        </div>
-    </c:forEach>
+        </c:forEach>
     </div>
 </div>
 
 
-        <div id="thong-bao" class="tab-content">
-            <h2>Thông báo</h2>
-            <p>Không có thông báo mới.</p>
+<div id="thong-bao" class="tab-content">
+    <h2>Thông báo</h2>
+    <p>Không có thông báo mới.</p>
+</div>
+<div id="tin-nhan" class="tab-content">
+    <h2 style="color: #333; border-bottom: 2px solid #27ae60; padding-bottom: 10px;">Sản phẩm cần đánh giá</h2>
+    <p style="color: #666; font-size: 14px; margin-bottom: 20px;">Danh sách sản phẩm từ đơn hàng đã giao và thanh toán xong</p>
+    
+    <%
+        java.util.Map<String, model.OrderDetail> reviewProducts = new java.util.LinkedHashMap<>();
+        List<Order> allOrders = (List<Order>) request.getAttribute("allOrders");
+        
+        if (allOrders != null) {
+            for (Order order : allOrders) {
+                // Chỉ lấy đơn hàng đã giao (Đã giao) và thanh toán (Đã thanh toán)
+                if ("Đã giao".equals(order.getStatus()) && "Đã thanh toán".equals(order.getPaymentStatus())) {
+                    List<OrderDetail> details = order.getDetails();
+                    if (details != null) {
+                        for (OrderDetail detail : details) {
+                            // Tạo key unique cho mỗi sản phẩm + variant + order
+                            String key = detail.getProductVariantId() + "_" + order.getId();
+                            if (!reviewProducts.containsKey(key)) {
+                                reviewProducts.put(key, detail);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    %>
+    
+    <% if (reviewProducts.isEmpty()) { %>
+        <div style="text-align: center; padding: 40px 20px; background: #f9f9f9; border-radius: 8px;">
+            <i class="fas fa-check-circle" style="font-size: 48px; color: #27ae60; margin-bottom: 20px; display: block;"></i>
+            <p style="font-size: 1.1em; color: #666;">Bạn đã đánh giá hết tất cả sản phẩm!</p>
         </div>
-        <div id="tin-nhan" class="tab-content">
-            <h2>Tin nhắn</h2>
-            <p>Không có tin nhắn nào.</p>
-        </div>
+    <% } else { %>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+            <%
+                for (String key : reviewProducts.keySet()) {
+                    OrderDetail detail = reviewProducts.get(key);
+                    String[] parts = key.split("_");
+                    int orderId = Integer.parseInt(parts[parts.length - 1]);
+            %>
+                <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                    <div style="margin-bottom: 10px;">
+                        <strong style="color: #8B5E3C; font-size: 1.05em;"><%= detail.getProductName() %></strong>
+                    </div>
+                    <div style="color: #666; font-size: 0.9em; margin-bottom: 8px;">
+                        <p style="margin: 5px 0;"><strong>Đơn hàng:</strong> #<%= orderId %></p>
+                        <p style="margin: 5px 0;"><strong>Số lượng:</strong> <%= detail.getQuantity() %> cái</p>
+                        <p style="margin: 5px 0;"><strong>Giá:</strong> <fmt:formatNumber value="<%= detail.getTotal() / detail.getQuantity() %>" pattern="#,###"/> VND</p>
+                    </div>
+                    <a href="${pageContext.request.contextPath}/detail?id=<%= detail.getProductId() %>&review=true&orderId=<%= orderId %>">
+    <span style="display: inline-block; background: #8B5E3C; color: white; padding: 8px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; width: 100%; text-align: center;">
+         Viết đánh giá
+    </span>
+                    </a>
 
-    </main>
+                </div>
+            <% } %>
+        </div>
+    <% } %>
+</div>
+
+</main>
 </div>
 
 <jsp:include page="footer.jsp"></jsp:include>
@@ -647,15 +704,15 @@
             </div>
 
 
-                <div class="form-group">
-                    <label>Phường / Xã</label>
-                    <input name="commune" id="addr-commune" placeholder="Nhập tên Phường / Xã" required>
-                </div>
+            <div class="form-group">
+                <label>Phường / Xã</label>
+                <input name="commune" id="addr-commune" placeholder="Nhập tên Phường / Xã" required>
+            </div>
 
-                <div class="form-group">
-                    <label>Quận / Huyện</label>
-                    <input name="district" id="addr-district" placeholder="Nhập tên Quận / Huyện " required>
-                </div>
+            <div class="form-group">
+                <label>Quận / Huyện</label>
+                <input name="district" id="addr-district" placeholder="Nhập tên Quận / Huyện " required>
+            </div>
 
 
             <div class="form-group">
@@ -729,64 +786,7 @@
         </form>
     </div>
 </div>
-<%--<script>--%>
-<%--    function openOrderDetail(orderId) {--%>
-<%--        const modal = document.getElementById('orderDetailModal');--%>
-<%--        const content = modal.querySelector('.order-modal-content');--%>
 
-<%--        modal.style.display = 'block'; // Hiện modal ngay lập tức--%>
-<%--        content.innerHTML = '<div style="padding:20px; text-align:center;"><i class="fas fa-sync fa-spin"></i> Đang tải...</div>';--%>
-
-<%--        fetch(`OrderDetailServlet?orderId=${orderId}`)--%>
-<%--            .then(response => {--%>
-<%--                if (!response.ok) throw new Error("Lỗi Server (500)");--%>
-<%--                return response.text();--%>
-<%--            })--%>
-<%--            .then(html => {--%>
-<%--                content.innerHTML = html; // Đổ dữ liệu từ ajax_order_detail.jsp vào--%>
-<%--            })--%>
-<%--            .catch(err => {--%>
-<%--                content.innerHTML = `<span class="order-close" onclick="closeOrderDetail()">&times;</span>--%>
-<%--                                 <p style="color:red; padding:20px; text-align:center;">${err.message}. Kiểm tra lại Console của Java!</p>`;--%>
-<%--            });--%>
-<%--    }--%>
-<%--    function closeOrderDetail() {--%>
-<%--        const modal = document.getElementById('orderDetailModal');--%>
-<%--        modal.style.display = 'none';--%>
-<%--    }--%>
-<%--    // Thêm vào trong thẻ <script> của bạn--%>
-<%--    const urlParams = new URLSearchParams(window.location.search);--%>
-<%--    if (urlParams.get('statusUpdate') === 'success') {--%>
-<%--        alert("Thao tác thành công! Sản phẩm đã được hoàn trả lại kho.");--%>
-<%--    }--%>
-<%--    function showUserOrderDetail(id) {--%>
-<%--        const modal = document.getElementById('orderDetailModal');--%>
-<%--        const container = modal.querySelector('.order-modal-content');--%>
-
-<%--        // Lấy nội dung từ div ẩn--%>
-<%--        const data = document.getElementById('data-order-' + id).innerHTML;--%>
-
-<%--        // Chèn vào modal (thêm nút đóng)--%>
-<%--        container.innerHTML = '<span class="order-close" onclick="closeOrderDetail()">&times;</span>' + data;--%>
-
-<%--        // Hiện modal--%>
-<%--        modal.style.display = 'block';--%>
-<%--    }--%>
-
-<%--    function closeOrderDetail() {--%>
-<%--        document.getElementById('orderDetailModal').style.display = 'none';--%>
-<%--    }--%>
-
-<%--    // Đóng modal khi click ra ngoài vùng trắng--%>
-<%--    window.onclick = function(event) {--%>
-<%--        const modal = document.getElementById('orderDetailModal');--%>
-<%--        if (event.target == modal) {--%>
-<%--            modal.style.display = 'none';--%>
-<%--        }--%>
-<%--    }--%>
-
-<%--</script>--%>
-<%-- 1. Khai báo thư viện CKFinder (đảm bảo đúng đường dẫn) --%>
 <script src="${pageContext.request.contextPath}/ckfinder/ckfinder.js"></script>
 
 <script>
@@ -843,82 +843,7 @@
 
         finder.popup();
     }
-    function openReviewModal(orderId) {
-        const modal = document.getElementById('orderDetailModal');
-        const content = modal.querySelector('.order-modal-content');
 
-        modal.style.display = 'block';
-        content.innerHTML = '<div style="padding:20px; text-align:center;"><i class="fas fa-sync fa-spin"></i> Đang tải form đánh giá...</div>';
-
-        // Gọi Servlet bằng phương thức GET để lấy form
-        fetch(`ReviewServlet?orderId=${orderId}`)
-            .then(response => {
-                if (!response.ok) throw new Error("Không thể tải form đánh giá");
-                return response.text();
-            })
-            .then(html => {
-                // Chèn form vào modal kèm nút đóng
-                content.innerHTML = '<span class="order-close" onclick="closeOrderDetail()">&times;</span>' + html;
-            })
-            .catch(err => {
-                content.innerHTML = `<span class="order-close" onclick="closeOrderDetail()">&times;</span>
-                                 <p style="color:red; padding:20px; text-align:center;">${err.message}</p>`;
-            });
-    }
-    function openReviewModal(orderId) {
-        const modal = document.getElementById('reviewModal');
-        const container = document.getElementById('reviewFormContainer');
-
-        // 1. Lấy div ẩn chứa chi tiết đơn hàng
-        const sourceData = document.getElementById('data-order-' + orderId);
-        if (!sourceData) return;
-
-        // 2. Lấy danh sách các dòng sản phẩm (tr)
-        const items = sourceData.querySelectorAll('table tbody tr');
-
-        // Bắt đầu dựng HTML Form
-        let htmlContent = `<form action="ReviewServlet" method="post">
-                        <input type="hidden" name="orderId" value="${orderId}">`;
-
-        items.forEach((item) => {
-            const productName = item.cells[0].innerText; // Cột 1: Tên SP
-
-            // MẸO: Con cần lấy được ProductID.
-            // Nếu trong bảng chi tiết con chưa có ID, hãy gắn nó vào thẻ <tr> ở phần JSP cũ:
-            // Ví dụ: <tr data-pid="${d.productId}">
-            const productId = item.getAttribute('data-pid');
-
-            htmlContent += `
-            <div class="review-item" style="border: 1px solid #eee; padding: 15px; margin-bottom: 15px; border-radius: 8px;">
-                <div style="margin-bottom: 10px;">
-                    <strong style="color: #27ae60;">${productName}</strong>
-                </div>
-                <div style="margin: 10px 0;">
-                    <label>Chất lượng:</label>
-                    <select name="rating_${productId}" style="padding: 5px; margin-left: 10px;">
-                        <option value="5">⭐⭐⭐⭐⭐ 5 Sao</option>
-                        <option value="4">⭐⭐⭐⭐ 4 Sao</option>
-                        <option value="3">⭐⭐⭐ 3 Sao</option>
-                        <option value="2">⭐⭐ 2 Sao</option>
-                        <option value="1">⭐ 1 Sao</option>
-                    </select>
-                </div>
-                <textarea name="comment_${productId}" placeholder="Cảm nhận của bạn..."
-                          style="width: 100%; height: 60px; padding: 10px; box-sizing: border-box;"></textarea>
-            </div>`;
-        });
-
-        htmlContent += `
-        <div style="text-align: right; margin-top: 15px;">
-            <button type="button" onclick="closeReviewModal()" style="background:#95a5a6; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer; margin-right:10px;">Hủy</button>
-            <button type="submit" style="background:#27ae60; color:white; padding:10px 30px; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Gửi Đánh Giá</button>
-        </div>
-    </form>`;
-
-        container.innerHTML = htmlContent;
-        modal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
-    }
 </script>
 <script>
     // --- 1. HIỆN CHI TIẾT ĐƠN HÀNG ---
@@ -951,66 +876,7 @@
 
     // --- 3. CHUYỂN SANG FORM ĐÁNH GIÁ ---
 
-    function switchToReviewForm(orderId) {
 
-        const container = document.querySelector('#orderDetailModal .order-modal-content');
-        const sourceData = document.getElementById('data-order-' + orderId);
-
-        if (!sourceData || !container) return;
-
-        const items = sourceData.querySelectorAll('table tbody tr');
-
-        let formHtml = `
-        <span class="order-close" onclick="closeOrderDetail()">&times;</span>
-
-        <h2 style="margin-bottom:20px;color:#27ae60">Đánh giá sản phẩm</h2>
-
-        <form action="ReviewServlet" method="post">
-        <input type="hidden" name="orderId" value="${orderId}">
-
-        <div style="max-height:400px;overflow:auto">
-    `;
-
-        items.forEach(item => {
-
-            const productName = item.cells[0].innerText;
-            const productId = item.dataset.pid;
-
-            formHtml += `
-        <div style="border:1px solid #eee;padding:10px;margin-bottom:10px">
-
-            <b>${productName}</b>
-
-            <br><br>
-
-            <select name="rating_${productId}">
-                <option value="5">⭐⭐⭐⭐⭐</option>
-                <option value="4">⭐⭐⭐⭐</option>
-                <option value="3">⭐⭐⭐</option>
-                <option value="2">⭐⭐</option>
-                <option value="1">⭐</option>
-            </select>
-
-            <br><br>
-
-            <textarea name="comment_${productId}" style="width:100%"></textarea>
-
-        </div>`;
-        });
-
-        formHtml += `
-        </div>
-
-        <div style="text-align:right">
-            <button type="button" onclick="showUserOrderDetail(${orderId})">Quay lại</button>
-            <button type="submit">Gửi đánh giá</button>
-        </div>
-
-        </form>
-    `;
-
-        container.innerHTML = formHtml;
-    }
 
 
 
