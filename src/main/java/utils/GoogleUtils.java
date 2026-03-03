@@ -12,8 +12,8 @@ public class GoogleUtils {
         String response = Request.Post("https://accounts.google.com/o/oauth2/token")
                 .bodyForm(Form.form()
                         .add("client_id", "1089942878583-pq5ui5eubco8s2lav650ln4gn19gogfe.apps.googleusercontent.com")
-                        .add("client_secret", "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")
-                        .add("redirect_uri", "http://localhost:8080/demo/google-login")
+                        .add("client_secret", "")
+                        .add("redirect_uri", "http://localhost:8080/webBanSanPhamGoTrangTri_war_exploded/google-login")
                         .add("code", code)
                         .add("grant_type", "authorization_code").build())
                 .execute().returnContent().asString();

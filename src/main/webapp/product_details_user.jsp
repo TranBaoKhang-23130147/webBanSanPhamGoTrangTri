@@ -64,9 +64,7 @@
                 <i class="${i <= p.averageRating ? 'ri-star-s-fill' : 'ri-star-s-line'}" style="color: #ffcc00;"></i>
             </c:forEach>
             <span>(<fmt:formatNumber value="${p.averageRating}" maxFractionDigits="1"/>)</span>
-            <span>| ${p.reviewList.size()}đánh giá</span>
-
-
+            <span>| ${p.totalReviews} đánh giá</span>
         </div>
         <div class="product-price-section">
             <%-- Hiển thị giá (Nếu có biến thể thì lấy giá biến thể đầu tiên làm mặc định) --%>
@@ -209,7 +207,9 @@
 
     <div class="review-summary">
         <div class="score-box">
-                <i class='ri-star-s-fill'></i>
+            <c:forEach begin="1" end="5" var="i">
+                <i class="${i <= p.averageRating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
+            </c:forEach>
 
             <strong style="margin-left:10px">
                 <fmt:formatNumber value="${p.averageRating}" maxFractionDigits="1"/> / 5
@@ -266,7 +266,7 @@
     <c:if test="${empty sessionScope.LOGGED_USER}">
         <p>
             <a href="${pageContext.request.contextPath}/login.jsp">
-               Đăng nhập mua hàng để đánh giá sản phẩm !
+                Đăng nhập để đánh giá
             </a>
         </p>
     </c:if>
