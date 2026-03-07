@@ -14,7 +14,7 @@
     <link rel="icon" href="${pageContext.request.contextPath}/img/logo.png">
     <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bootstrap-4/bootstrap-4.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_contact_settings.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_seting_style.css">
 </head>
 <body>
 <div class="admin-container">

@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/user_admin.css">
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_add_products.css">
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_profile_style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_add_products.css">
+
 
 </head>
 <body>

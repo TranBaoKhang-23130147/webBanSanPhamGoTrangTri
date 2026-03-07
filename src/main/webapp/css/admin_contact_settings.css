@@ -1,0 +1,80 @@
+.admin-contact-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:40px;
+}
+
+.admin-form-container{
+    padding:30px;
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.1);
+}
+
+.admin-form-container h2{
+    text-align:center;
+    color:#2c3e50;
+    margin-bottom:25px;
+    border-bottom:2px solid #27ae60;
+    padding-bottom:10px;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:bold;
+    color:#34495e;
+}
+
+.form-group input{
+    width:100%;
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    font-size:15px;
+}
+
+.form-group input:focus{
+    border-color:#27ae60;
+    outline:none;
+}
+
+.btn-submit{
+    width:100%;
+    padding:12px;
+    background:#27ae60;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn-submit:hover{
+    background:#219653;
+}
+
+.contact-preview{
+    padding:30px;
+    background:#fafafa;
+    border-radius:12px;
+    border:1px solid #eee;
+}
+
+.contact-preview h2{
+    margin-bottom:20px;
+}
+
+.preview-item{
+    margin-bottom:15px;
+}
+
+.preview-item span{
+    font-weight:bold;
+    color:#555;
+}
