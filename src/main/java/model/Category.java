@@ -10,7 +10,6 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    // Getter và Setter
     public long getTotalInventory() {
         return totalInventory;
     }
@@ -19,8 +18,17 @@ public class Category {
         this.totalInventory = totalInventory;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-    public String getCategoryName() { return categoryName; }
-    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    public String getCategoryName() {
+        return categoryName;
+    }
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 }

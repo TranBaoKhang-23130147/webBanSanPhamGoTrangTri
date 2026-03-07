@@ -8,14 +8,8 @@
     <title>CHI TIẾT KHÁCH HÀNG - ${customer.username}</title>
     <link rel="stylesheet" href="../css/admin_customer_style.css">
     <link rel="stylesheet" href="../css/admin_profile_style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_customer_detail.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .detail-card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-top: 20px; }
-        .back-btn { background: #6c757d; color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; margin-bottom: 20px; display: inline-block; }
-        .info-grid { display: grid; grid-template-columns: 300px 1fr; gap: 30px; }
-        .avatar-box { text-align: center; border-right: 1px solid #eee; padding-right: 30px; }
-        .addr-item { background: #f8f9fc; border-radius: 8px; padding: 15px; margin-bottom: 10px; border-left: 4px solid #4e73df; }
-    </style>
 </head>
 <body>
 <div class="admin-container">
@@ -196,108 +190,14 @@
         </form>
     </div>
 </div>
-<style>
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-    .modal-content { background: white; width: 450px; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); animation: slideDown 0.3s ease; }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 20px; }
-    .close-btn { font-size: 28px; cursor: pointer; color: #aaa; }
-    .close-btn:hover { color: red; }
 
-    .avatar-edit { text-align: center; position: relative; margin-bottom: 20px; }
-    .camera-btn { position: absolute; bottom: 0; right: 40%; background: #4e73df; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; }
-
-    .form-grid { display: flex; flex-direction: column; gap: 15px; }
-    .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; font-size: 14px; }
-    .form-group input[type="text"], .form-group input[type="date"] { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-
-    .radio-group { display: flex; gap: 20px; padding: 5px 0; }
-    .modal-footer { margin-top: 25px; display: flex; justify-content: flex-end; gap: 10px; }
-
-    .save-btn-custom { background: #4e73df; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-    .cancel-btn { background: #eee; color: #333; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
-
-    @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-</style>
 </body>
+
 <script>
-    function openEditForm() {
-        document.getElementById('editProfileModal').style.display = 'flex';
-    }
-
-    function closeEditForm() {
-        document.getElementById('editProfileModal').style.display = 'none';
-    }
-
-    // Đóng khi click ra ngoài
-    window.onclick = function(event) {
-        let modal = document.getElementById('editProfileModal');
-        if (event.target == modal) closeEditForm();
-    }
+    const contextPath = "${pageContext.request.contextPath}";
 </script>
-<%-- 1. Khai báo thư viện CKFinder (đảm bảo đúng đường dẫn) --%>
+
 <script src="${pageContext.request.contextPath}/ckfinder/ckfinder.js"></script>
 
-<script>
-    function selectAvatarWithCKFinder() {
-        var finder = new CKFinder();
-        // Đường dẫn đến thư mục ckfinder trong project của bạn
-        finder.basePath = '${pageContext.request.contextPath}/ckfinder/';
-
-        finder.selectActionFunction = function(fileUrl) {
-            var contextPath = "${pageContext.request.contextPath}" || "";
-            var relativeUrl = fileUrl || "";
-
-            // Xử lý cắt Context Path để lấy đường dẫn tương đối
-            if (contextPath && relativeUrl.startsWith(contextPath)) {
-                relativeUrl = relativeUrl.substring(contextPath.length);
-            }
-
-            // Đảm bảo bắt đầu bằng dấu /
-            if (relativeUrl && !relativeUrl.startsWith('/')) {
-                relativeUrl = '/' + relativeUrl;
-            }
-
-            // Cập nhật giá trị vào input hidden để gửi form POST
-            var input = document.getElementById('user-avatar-url');
-            if (input) {
-                input.value = relativeUrl;
-            }
-
-            // Cập nhật ảnh hiển thị ngay lập tức trên giao diện
-            var preview = document.getElementById('user-avatar-display');
-            if (preview) {
-                preview.src = contextPath + relativeUrl;
-            }
-        };
-
-        finder.popup();
-    }
-    function openPassForm() {
-        document.getElementById('changePasswordModal').style.display = 'flex';
-    }
-
-    function closePassForm() {
-        document.getElementById('changePasswordModal').style.display = 'none';
-    }
-
-    // Bổ sung vào sự kiện window.onclick đã có của bạn
-    window.onclick = function(event) {
-        let editModal = document.getElementById('editProfileModal');
-        let passModal = document.getElementById('changePasswordModal');
-
-        if (event.target == editModal) closeEditForm();
-        if (event.target == passModal) closePassForm();
-    }
-
-    // Kiểm tra mật khẩu khớp nhau trước khi submit (Tùy chọn)
-    document.querySelector('#changePasswordModal form').onsubmit = function(e) {
-        let pass = document.getElementById('newPassword').value;
-        let confirm = document.getElementById('confirmPassword').value;
-        if (pass !== confirm) {
-            document.getElementById('passError').style.display = 'block';
-            e.preventDefault();
-            return false;
-        }
-    };
-</script>
+<script src="${pageContext.request.contextPath}/js/admin_customer_detail.js"></script>
 </html>

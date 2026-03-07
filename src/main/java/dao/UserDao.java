@@ -15,15 +15,7 @@ import static dao.DBContext.getConnection;
 
 public class UserDao {
 
-    /**
-     * Kiểm tra thông tin đăng nhập trong DB.
-     *
-     * @param email    Email người dùng
-     * @param password Mật khẩu người dùng
-     * @return Đối tượng User nếu đăng nhập thành công, ngược lại trả về null.
-     */
     public User checkLogin(String email, String password) {
-        // SỬA: Sử dụng LEFT JOIN để lấy thêm cột urlImage từ bảng images
         String sql = """
     SELECT u.id, u.full_name, u.display_name, u.birth_date,
            u.email, u.password, u.phone, u.gender, u.avatar_id,
@@ -42,7 +34,6 @@ public class UserDao {
                 if (rs.next()) {
                     String hashedPasswordFromDB = rs.getString("password");
 
-                    // KIỂM TRA MẬT KHẨU
                     if (PasswordUtils.checkPassword(password, hashedPasswordFromDB)) {
                         User u = new User();
                         u.setId(rs.getInt("id"));
@@ -53,10 +44,8 @@ public class UserDao {
                         u.setPhone(rs.getString("phone"));
                         u.setGender(rs.getString("gender"));
 
-                        // Lấy ID ảnh (dạng số)
                         u.setAvatarId(rs.getObject("avatar_id", Integer.class));
 
-                        // QUAN TRỌNG: Lấy URL ảnh từ bảng images để hiển thị ở Sidebar
                         u.setAvatarUrl(rs.getString("urlImage"));
 
                         u.setRole(rs.getString("role"));
@@ -71,51 +60,6 @@ public class UserDao {
         }
         return null;
     }
-//    public User checkLogin(String email, String password) {
-//
-//        String sql = """
-//        SELECT id, full_name, display_name, birth_date,
-//               email, phone, gender, avatar_id,
-//               role, status, createAt
-//        FROM users
-//        WHERE email = ?
-//    """;
-//
-//        try (Connection conn = DBContext.getConnection();
-//             PreparedStatement ps = conn.prepareStatement(sql)) {
-//
-//            ps.setString(1, email);
-//            ps.setString(2, password);
-//
-//            try (ResultSet rs = ps.executeQuery()) {
-//                if (rs.next()) {
-//                    User u = new User();
-//                    u.setId(rs.getInt("id"));
-//                    u.setUsername(rs.getString("full_name"));
-//                    u.setDisplayName(rs.getString("display_name"));
-//                    u.setBirthDate(rs.getDate("birth_date"));
-//                    u.setEmail(rs.getString("email"));
-//                    u.setPhone(rs.getString("phone"));
-//                    u.setGender(rs.getString("gender"));
-//                    u.setAvatarId(rs.getObject("avatar_id", Integer.class));
-//                    u.setRole(rs.getString("role"));
-//                    u.setStatus(rs.getString("status"));
-//                    u.setCreateAt(rs.getDate("createAt"));
-//                    return u;
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-
-    /**
-     * Kiểm tra xem một email đã tồn tại trong DB chưa.
-     *
-     * @param email Email cần kiểm tra
-     * @return true nếu tồn tại, false nếu chưa.
-     */
     public boolean checkEmailExist(String email) {
         String SQL = "SELECT id FROM users WHERE email = ?";
         try (Connection conn = DBContext.getConnection();
@@ -136,7 +80,6 @@ public class UserDao {
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(SQL)) {
 
-            // BĂM MẬT KHẨU TRƯỚC KHI LƯU
             String hashedPassword = PasswordUtils.hashPassword(password);
 
             ps.setString(1, username);
@@ -148,20 +91,6 @@ public class UserDao {
             e.printStackTrace();
         }
     }
-//    public void signup(String username, String email, String password) {
-//        String SQL = "INSERT INTO users (full_name, email, password, role, status,createAt) VALUES (?, ?, ?, 'User', 'Active',?)";
-//
-//        try (Connection conn = DBContext.getConnection();
-//             PreparedStatement ps = conn.prepareStatement(SQL)) {
-//            ps.setString(1, username);
-//            ps.setString(2, email);
-//            ps.setString(3, password);
-//            ps.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // 👈 THÊM DÒNG NÀY
-//            ps.executeUpdate();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public int countNewUsersLast30Days() {
         String sql = "SELECT COUNT(*) FROM users WHERE (role = 'User') and (createAt IS NULL OR createAt >= ?)";
@@ -215,7 +144,6 @@ public class UserDao {
                     u.setStatus(rs.getString("status"));
                     u.setCreateAt(rs.getDate("createAt"));
 
-                    // --- LẤY ADDRESS NẾU CÓ ---
                     if (rs.getObject("addr_id") != null) {
                         Address addr = new Address();
                         addr.setId(rs.getInt("addr_id"));
@@ -272,7 +200,6 @@ public class UserDao {
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            // CẦN SỬA: Băm mật khẩu mới ở đây
             String hashedPassword = PasswordUtils.hashPassword(newPassword);
 
             ps.setString(1, hashedPassword);
@@ -280,18 +207,8 @@ public class UserDao {
             return ps.executeUpdate() == 1;
         }
     }
-//    public boolean updatePassword(int userId, String newPassword) throws Exception {
-//        String sql = "UPDATE users SET password = ? WHERE id = ?";
-//        try (Connection conn = DBContext.getConnection();
-//             PreparedStatement ps = conn.prepareStatement(sql)) {
-//            ps.setString(1, newPassword);
-//            ps.setInt(2, userId);
-//            return ps.executeUpdate() == 1;
-//        }
-//    }
 
     public boolean updateUser(User user) {
-        // Lưu ý: Tên cột phải chính xác như trong DB (ví dụ: full_name hay fullName)
         String sql = "UPDATE users SET full_name = ?, phone = ?, email = ? WHERE id = ?";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -307,26 +224,11 @@ public class UserDao {
         }
         return false;
     }
-    //    public boolean updatePasswordByEmail(String email, String newPassword) {
-//        String sql = "UPDATE users SET password = ? WHERE email = ?";
-//        try (Connection conn = DBContext.getConnection();
-//             PreparedStatement ps = conn.prepareStatement(sql)) {
-//
-//            ps.setString(1, newPassword);
-//            ps.setString(2, email);
-//
-//            return ps.executeUpdate() == 1;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
     public boolean updatePasswordByEmail(String email, String newPassword) {
         String sql = "UPDATE users SET password = ? WHERE email = ?";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            // CẦN SỬA: Băm mật khẩu mới ở đây
             String hashedPassword = PasswordUtils.hashPassword(newPassword);
 
             ps.setString(1, hashedPassword);
@@ -343,7 +245,6 @@ public class UserDao {
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            // Băm mật khẩu mới bằng PasswordUtils (giống logic đổi theo email của bạn)
             String hashedPassword = PasswordUtils.hashPassword(newPassword);
 
             ps.setString(1, hashedPassword);
@@ -355,10 +256,9 @@ public class UserDao {
         }
         return false;
     }
-    //    hien thi ng dung admin
     public List<User> getAllCustomers() {
         List<User> list = new ArrayList<>();
-        String sql = "SELECT * FROM users WHERE role = 'User'"; // Dùng * để lấy hết các cột bao gồm createAt
+        String sql = "SELECT * FROM users WHERE role = 'User'";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -371,7 +271,6 @@ public class UserDao {
                 u.setPhone(rs.getString("phone"));
                 u.setStatus(rs.getString("status"));
 
-                // QUAN TRỌNG: Phải có dòng này thì JSP mới nhận được ngày
                 u.setCreateAt(rs.getDate("createAt"));
 
                 list.add(u);
@@ -382,7 +281,6 @@ public class UserDao {
         return list;
     }
     public User getAdminProfile(int userId) {
-        // Thêm u.role vào câu lệnh SELECT nếu u.* không lấy hết
         String sql = "SELECT u.*, i.urlImage FROM users u " +
                 "LEFT JOIN images i ON u.avatar_id = i.id WHERE u.id = ?";
         try (Connection con = DBContext.getConnection();
@@ -393,7 +291,7 @@ public class UserDao {
                 User u = new User();
                 u.setId(rs.getInt("id"));
                 u.setUsername(rs.getString("full_name"));
-                u.setRole(rs.getString("role")); // DÒNG QUAN TRỌNG NHẤT: Lấy chữ 'Admin' hoặc 'Staff' từ DB
+                u.setRole(rs.getString("role"));
                 u.setEmail(rs.getString("email"));
                 u.setPhone(rs.getString("phone"));
                 return u;
@@ -408,38 +306,30 @@ public class UserDao {
         String deleteUserSQL = "DELETE FROM users WHERE id = ?";
 
         try (Connection conn = DBContext.getConnection()) {
-            conn.setAutoCommit(false); // Bắt đầu giao dịch
+            conn.setAutoCommit(false);
 
             try (PreparedStatement psAddr = conn.prepareStatement(deleteAddressSQL);
                  PreparedStatement psAvatar = conn.prepareStatement(removeAvatarSQL);
                  PreparedStatement psUser = conn.prepareStatement(deleteUserSQL)) {
 
-                // 1. Xóa tất cả địa chỉ của User này trước
                 psAddr.setInt(1, userId);
                 psAddr.executeUpdate();
 
-                // 2. Gỡ Avatar (Tránh lỗi khóa ngoại nếu ảnh thuộc bảng images)
                 psAvatar.setInt(1, userId);
                 psAvatar.executeUpdate();
 
-                // 3. Xóa bản ghi User
                 psUser.setInt(1, userId);
                 int rows = psUser.executeUpdate();
 
-                conn.commit(); // Thành công thì commit
+                conn.commit();
                 return rows > 0;
 
             } catch (Exception e) {
-                conn.rollback(); // Lỗi thì quay lại trạng thái cũ
+                conn.rollback();
                 throw e;
             }
         }
     }
-
-    /**
-     * Kiểm tra số lượng Admin hiện có.
-     * Dùng để ngăn chặn việc xóa Admin cuối cùng trong hệ thống.
-     */
     public int countAdmin() {
         String sql = "SELECT COUNT(*) FROM users WHERE role = 'Admin'";
         try (Connection conn = DBContext.getConnection();
@@ -451,8 +341,6 @@ public class UserDao {
         }
         return 0;
     }
-
-
 
     public Integer getFirstAdminId() {
         String sql = "SELECT id FROM users WHERE role = 'Admin' LIMIT 1";
@@ -470,7 +358,7 @@ public class UserDao {
     }
     public boolean deleteUser(String id) {
         String sql = "DELETE FROM users WHERE id = ?";
-        try (Connection conn = getConnection(); // Hàm lấy kết nối DB của bạn
+        try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, id);
             return ps.executeUpdate() > 0;
@@ -488,7 +376,7 @@ public class UserDao {
             ps.setString(1, username);
             ps.setString(2, email);
             ps.setString(3, phone);
-            ps.setString(4, PasswordUtils.hashPassword(password)); // HASH Ở ĐÂY
+            ps.setString(4, PasswordUtils.hashPassword(password));
             ps.setString(5, role);
 
             return ps.executeUpdate() > 0;
@@ -497,20 +385,16 @@ public class UserDao {
         }
         return false;
     }
-    /**
-     * Lấy hoặc tạo mới ID ảnh từ bảng images dựa trên urlImage
-     */
     public Integer getImageIdByUrl(String url) {
         if (url == null || url.trim().isEmpty()) {
             System.out.println("getImageIdByUrl: URL null hoặc rỗng, trả về null");
-            return null; // Hoặc trả về ID ảnh mặc định nếu bạn có
+            return null;
         }
 
         String sqlSelect = "SELECT id FROM images WHERE urlImage = ?";
         String sqlInsert = "INSERT INTO images (urlImage) VALUES (?)";
 
         try (Connection conn = DBContext.getConnection()) {
-            // 1. Kiểm tra xem URL đã tồn tại chưa
             try (PreparedStatement psSelect = conn.prepareStatement(sqlSelect)) {
                 psSelect.setString(1, url.trim());
                 try (ResultSet rs = psSelect.executeQuery()) {
@@ -522,7 +406,6 @@ public class UserDao {
                 }
             }
 
-            // 2. Insert mới nếu chưa có
             try (PreparedStatement psInsert = conn.prepareStatement(sqlInsert, PreparedStatement.RETURN_GENERATED_KEYS)) {
                 psInsert.setString(1, url.trim());
                 psInsert.executeUpdate();
@@ -541,14 +424,10 @@ public class UserDao {
         }
 
         System.out.println("getImageIdByUrl: Lỗi, trả về ID mặc định 1");
-        return 1; // ID mặc định nếu có lỗi
+        return 1;
     }
 
-    /**
-     * Lấy User từ DB theo ID, lấy avatar_url trực tiếp từ cột avatar_url
-     */
     public User getUserById(int id) {
-        // Sử dụng LEFT JOIN để lấy URL ảnh từ bảng images
         String sql = "SELECT u.*, i.urlImage FROM users u " +
                 "LEFT JOIN images i ON u.avatar_id = i.id WHERE u.id = ?";
         try (Connection conn = DBContext.getConnection();
@@ -565,71 +444,13 @@ public class UserDao {
                     u.setBirthDate(rs.getDate("birth_date"));
                     u.setEmail(rs.getString("email"));
                     u.setAvatarId(rs.getInt("avatar_id"));
-                    u.setAvatarUrl(rs.getString("urlImage")); // Lấy URL thực tế ở đây
+                    u.setAvatarUrl(rs.getString("urlImage"));
                     return u;
                 }
             }
         } catch (Exception e) { e.printStackTrace(); }
         return null;
     }
-
-    /**
-     * Update profile user, lưu cả avatar_id và avatar_url trực tiếp vào DB
-     */
-//    public boolean updateUserProfile(User u) {
-//        String sql = """
-//        UPDATE users
-//        SET full_name    = ?,
-//            display_name = ?,
-//            phone        = ?,
-//            gender       = ?,
-//            birth_date   = ?,
-//            avatar_id    = ?,
-//            avatar_url   = ?    -- lưu URL trực tiếp vào DB
-//        WHERE id = ?
-//    """;
-//
-//        try (Connection conn = DBContext.getConnection();
-//             PreparedStatement ps = conn.prepareStatement(sql)) {
-//
-//            ps.setString(1, u.getUsername());  // sửa thành getFullName() để khớp schema
-//            ps.setString(2, u.getDisplayName());
-//            ps.setString(3, u.getPhone());
-//            ps.setString(4, u.getGender());
-//
-//            if (u.getBirthDate() != null) {
-//                ps.setDate(5, new java.sql.Date(u.getBirthDate().getTime()));
-//            } else {
-//                ps.setNull(5, java.sql.Types.DATE);
-//            }
-//
-//            if (u.getAvatarId() != null) {
-//                ps.setInt(6, u.getAvatarId());
-//            } else {
-//                ps.setNull(6, java.sql.Types.INTEGER);
-//            }
-//
-//            // Lưu avatar_url trực tiếp vào DB
-//            if (u.getAvatarUrl() != null && !u.getAvatarUrl().trim().isEmpty()) {
-//                ps.setString(7, u.getAvatarUrl().trim());
-//            } else {
-//                ps.setNull(7, java.sql.Types.VARCHAR);
-//            }
-//
-//            ps.setInt(8, u.getId());
-//
-//            int rows = ps.executeUpdate();
-//            System.out.println("updateUserProfile: Updated rows = " + rows
-//                    + " | avatar_id = " + u.getAvatarId()
-//                    + " | avatar_url = " + u.getAvatarUrl());
-//            return rows > 0;
-//
-//        } catch (Exception e) {
-//            System.err.println("Lỗi updateUserProfile cho user ID " + u.getId() + ": " + e.getMessage());
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
 
     public boolean updateUserAvatarId(int userId, int imageId) {
         String sql = "UPDATE users SET avatar_id = ? WHERE id = ?";
@@ -644,7 +465,6 @@ public class UserDao {
         return false;
     }
     public boolean updateUserProfile(User u) {
-        // Câu lệnh SQL phải cập nhật avatar_id
         String sql = "UPDATE users SET full_name=?, display_name=?, phone=?, gender=?, birth_date=?, avatar_id=? WHERE id=?";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -659,7 +479,6 @@ public class UserDao {
                 ps.setNull(5, java.sql.Types.DATE);
             }
 
-            // Lưu avatar_id (khóa ngoại trỏ sang bảng images)
             if (u.getAvatarId() != null && u.getAvatarId() > 0) {
                 ps.setInt(6, u.getAvatarId());
             } else {
@@ -702,7 +521,6 @@ public class UserDao {
     }
 
 
-    // 2. Phương thức lưu đánh giá vào DB
     public boolean insertReview(Reviews r) {
 
         String sql = """
@@ -742,7 +560,6 @@ public class UserDao {
         }
     }
     public User checkLoginGoogle(String email) {
-        // Sử dụng LEFT JOIN để lấy luôn ảnh đại diện nếu có
         String sql = """
         SELECT u.*, i.urlImage 
         FROM users u 
@@ -755,15 +572,14 @@ public class UserDao {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     User user = new User();
-                    // LẤY ĐỦ THÌ MỚI HIỆN ĐỦ
                     user.setId(rs.getInt("id"));
-                    user.setUsername(rs.getString("full_name")); // Đây là tên bạn đã cập nhật
+                    user.setUsername(rs.getString("full_name"));
                     user.setDisplayName(rs.getString("display_name"));
                     user.setEmail(rs.getString("email"));
-                    user.setPhone(rs.getString("phone"));       // Đây là số điện thoại bạn đã cập nhật
+                    user.setPhone(rs.getString("phone"));
                     user.setRole(rs.getString("role"));
                     user.setStatus(rs.getString("status"));
-                    user.setAvatarUrl(rs.getString("urlImage")); // URL ảnh
+                    user.setAvatarUrl(rs.getString("urlImage"));
 
                     return user;
                 }
@@ -774,7 +590,6 @@ public class UserDao {
         return null;
     }
     public boolean insertUserFromGoogle(User user) {
-        // Sửa 'fullname' thành 'full_name' cho khớp với bảng users của bạn
         String sql = "INSERT INTO users (email, full_name, role, status, password, createAt) VALUES (?, ?, ?, ?, ?, NOW())";
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -793,7 +608,7 @@ public class UserDao {
 
 public boolean updateAdminRole(int adminId, String newRole) {
         String sql = "UPDATE users SET role = ? WHERE id = ?";
-        try (Connection conn = DBContext.getConnection(); // Thay bằng cách lấy connection của bạn
+        try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, newRole);
@@ -807,7 +622,6 @@ public boolean updateAdminRole(int adminId, String newRole) {
     }
     public List<User> getAllAdmins() {
         List<User> list = new ArrayList<>();
-        // Lọc những người dùng có quyền là 'Admin'
         String sql = "SELECT * FROM users WHERE role = 'Admin' or role = 'Staff'";
 
         try (Connection conn = DBContext.getConnection();

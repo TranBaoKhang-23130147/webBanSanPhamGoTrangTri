@@ -21,7 +21,7 @@ public class ContactUserServlet extends HttpServlet {
         String lastName = req.getParameter("lastName");
         String firstName = req.getParameter("firstName");
         String email = req.getParameter("email");
-        String phone = req.getParameter("phone"); // Thêm số điện thoại
+        String phone = req.getParameter("phone");
         String message = req.getParameter("message");
         String name = lastName + " " + firstName;
         JavaMailUtil mail = new JavaMailUtil();
@@ -38,9 +38,9 @@ public class ContactUserServlet extends HttpServlet {
 
         if (sent) {
             Notification noti = new Notification();
-            noti.setAdminId(1); // ID admin (hoặc lấy từ DB)
+            noti.setAdminId(1);
             noti.setType("CONTACT");
-            noti.setRelatedId(0); // không có contactId nữa
+            noti.setRelatedId(0);
             noti.setContent("Khách hàng " + name + " vừa gửi liên hệ");
             noti.setRead(false);
 
@@ -48,7 +48,6 @@ public class ContactUserServlet extends HttpServlet {
             notiDAO.insert(noti);
         }
 
-        // ===== 3. REDIRECT =====
         if (sent) {
             resp.sendRedirect(req.getContextPath() + "/contact_user.jsp?success=true");
         } else {

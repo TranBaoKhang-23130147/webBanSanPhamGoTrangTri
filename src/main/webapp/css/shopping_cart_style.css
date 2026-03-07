@@ -1,11 +1,10 @@
 :root {
     --background-color: #FFFFFF;
     --primary-color: #8B5E3C;
-    /*--text-color: #3E2F1C;*/
     --text-color: #3b2f2f;
     --text-color2: #6b5743;
     --btn: #A56B43;
-    --secondary-color: #A56B43; /* Sử dụng biến --btn cho các nút và viền */
+    --secondary-color: #A56B43; 
 }
 
 * {
@@ -28,7 +27,7 @@ body {
     align-items: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     justify-content: space-between;
-    background-color: var(--background-color); /* Dùng biến */
+    background-color: var(--background-color);
     z-index: 999;
 }
 
@@ -82,7 +81,7 @@ body {
     top: 100%;
     right: 0%;
     border: 1px solid #000000;
-    background-color: var(--background-color); /* Dùng biến */
+    background-color: var(--background-color); 
     border-radius: 4px;
     padding: 10px;
     width: 165px;
@@ -95,7 +94,7 @@ body {
 }
 
 #cart-link {
-    color: var(--text-color); /* Dùng biến */
+    color: var(--text-color);
 }
 
 #cart-link:hover {
@@ -103,7 +102,7 @@ body {
 }
 
 #search-link {
-    color: var(--text-color); /* Dùng biến */
+    color: var(--text-color); 
 }
 
 #search-link:hover {
@@ -121,7 +120,7 @@ body {
 .user a {
     display: block;
     padding: 10px 16px;
-    color: var(--text-color); /* Dùng biến */
+    color: var(--text-color); 
     text-decoration: none;
     font-size: 15px;
     font-weight: 500;
@@ -132,12 +131,11 @@ body {
 }
 
 .menu {
-    color: var(--text-color); /* Dùng biến */
+    color: var(--text-color);   
     font-weight: 600;
     transition: 0.3s;
 }
 
-/* Khi hover vào menu */
 .menu:hover {
     color: var(--primary-color);
 }
@@ -156,7 +154,7 @@ body {
 }
 
 #product {
-    color: var(--text-color); /* Dùng biến */
+    color: var(--text-color);   
     text-decoration: none;
 }
 
@@ -170,7 +168,7 @@ body {
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--background-color); /* Dùng biến */
+    background: var(--background-color);   
     border-radius: 20px;
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
     padding: 20px 30px;
@@ -184,7 +182,7 @@ body {
 
 .submenu a {
     display: block;
-    color: var(--text-color); /* Dùng biến */
+    color: var(--text-color);   
     font-size: 15px;
     font-weight: 600;
     padding: 12px 0;
@@ -197,7 +195,6 @@ body {
 .submenu a:hover {
     color: var(--primary-color);
     background: rgba(139, 94, 60, 0.08);
-    /* Sử dụng màu primary cho nền hover nhẹ (8B5E3C với opacity 0.08) */
 }
 
 .cart-title {
@@ -212,7 +209,7 @@ body {
     color: var(--primary-color);
     display: inline-block;
     padding-bottom: 8px;
-    border-bottom: 3px solid var(--secondary-color); /* Dùng biến */
+    border-bottom: 3px solid var(--secondary-color);   
 }
 
 .cart-page-content {
@@ -224,7 +221,6 @@ body {
     margin: 0 auto 80px auto;
 }
 
-/* --- Shopping Cart Table --- */
 .shopping-cart-table {
     flex: 2;
     overflow-x: auto;
@@ -245,65 +241,53 @@ body {
 }
 
 .shopping-cart-table th:nth-child(3) {
-    /* Cột Sản phẩm */
     width: 30%;
 }
 
 .shopping-cart-table th:nth-child(4) {
-    /* Cột Giá */
+
     width: 15%;
 }
 
 .shopping-cart-table th:nth-child(5) {
-    /* Cột Số lượng */
     width: 15%;
 }
 
 .shopping-cart-table th:nth-child(6) {
-    /* Cột Tổng cộng */
     width: 15%;
 }
 
 .shopping-cart-table th:nth-child(7) {
-    /* Cột Xóa (Cuối cùng) */
     width: 10%;
 }
 
 .shopping-cart-table th {
-    background-color: var(--background-color); /* Dùng biến */
+    background-color: var(--background-color);   
     color: var(--primary-color);
     font-size: 14px;
     text-transform: uppercase;
     font-weight: 700;
 }
 
-/* Điều chỉnh độ rộng cột Checkbox trong header */
 .select-col-header {
     width: 5%;
-    /* Chỉ chiếm 5% chiều rộng bảng */
 }
 
-/* Định dạng cột checkbox cho từng sản phẩm */
 .select-col {
     width: 5%;
     text-align: center;
 }
 
-/* Định dạng chung cho checkbox */
 .select-all-checkbox,
 .select-item-checkbox {
-    /* Thiết lập kích thước checkbox đồng bộ */
     width: 18px;
     height: 18px;
     cursor: pointer;
-    /* Tùy chỉnh màu sắc để đồng bộ với theme HOME DECOR */
     accent-color: var(--primary-color);
-    /* Sử dụng màu nâu chủ đạo làm màu đánh dấu */
     vertical-align: middle;
 }
 
 .image-col-header {
-    /* Tiêu đề Ảnh mới */
     width: 10%;
 }
 
@@ -334,7 +318,7 @@ body {
 .product-name {
     font-weight: 600;
     color: var(--text-color);
-    /* Dùng biến */
+      
     font-size: 15px;
 }
 
@@ -342,11 +326,10 @@ body {
 .product-subtotal {
     font-weight: 600;
     color: var(--text-color);
-    /* Dùng biến */
+      
     width: 15%;
 }
 
-/* --- Quantity Control --- */
 .quantity-control {
     display: flex;
     justify-content: center;
@@ -356,9 +339,9 @@ body {
 }
 
 .quantity-btn {
-    background: var(--background-color); /* Dùng biến */
+    background: var(--background-color);   
     border: 1px solid #ccc;
-    color: var(--text-color); /* Dùng biến */
+    color: var(--text-color);   
     width: 30px;
     height: 30px;
     cursor: pointer;
@@ -391,7 +374,6 @@ body {
 .product-name-col {
     width: 30%;
     text-align: left;
-    /* Tên sản phẩm nên căn trái */
     padding-left: 10px;
 }
 
@@ -400,12 +382,10 @@ body {
     margin-right: 0;
 }
 
-/* Cột Giá, Số lượng, Tổng cộng, Xóa */
 .product-price,
 .product-subtotal {
     width: 15%;
     text-align: center;
-    /* Căn giữa nội dung số */
 }
 
 .product-quantity {
@@ -429,29 +409,23 @@ body {
     color: red;
 }
 
-/* --- Cart Summary (OLD/DEFAULT) --- */
 .cart-summary-container {
     flex: 1;
     padding: 20px;
-    /* Padding bên trong viền */
     border: 1px solid #e0e0e0;
-    /* Viền xám nhạt */
     border-radius: 8px;
-    /* Bo góc nhẹ */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    /* Bóng đổ nhẹ */
     background-color: var(--background-color);
-    /* Nền trắng (Dùng biến) */
+
     height: fit-content;
 
-    /* Đảm bảo chiều cao vừa với nội dung */
 }
 
 .cart-summary {
-    background-color: var(--background-color); /* Dùng biến */
-    padding: 0; /* Đã có padding ở container */
+    background-color: var(--background-color);   
+    padding: 0;
     border-radius: 8px;
-    box-shadow: none; /* Đã có box-shadow ở container */
+    box-shadow: none;
 }
 
 .cart-summary h3 {
@@ -459,7 +433,7 @@ body {
     color: var(--primary-color);
     margin-bottom: 25px;
     padding-bottom: 10px;
-    border-bottom: 2px solid var(--secondary-color); /* Dùng biến */
+    border-bottom: 2px solid var(--secondary-color);   
     font-weight: 700;
 }
 
@@ -468,7 +442,7 @@ body {
     justify-content: space-between;
     margin-bottom: 15px;
     font-size: 16px;
-    color: var(--text-color); /* Dùng biến */
+    color: var(--text-color);   
 }
 
 .summary-line.total {
@@ -490,7 +464,7 @@ body {
     width: 100%;
     text-align: center;
     padding: 15px 20px;
-    background-color: var(--secondary-color); /* Dùng biến */
+    background-color: var(--secondary-color);   
     color: #fff;
     text-decoration: none;
     font-weight: 700;
@@ -501,7 +475,7 @@ body {
 }
 
 .checkout-btn:hover {
-    background-color: var(--primary-color); /* Dùng biến */
+    background-color: var(--primary-color);   
 }
 
 .continue-shopping-link {
@@ -518,23 +492,19 @@ body {
 
 .modal {
     display: none;
-    /* Ẩn mặc định */
     position: fixed;
     z-index: 1000;
-    /* Đảm bảo nó nằm trên tất cả */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.6);
-    /* Nền mờ */
 }
 
 .modal-content {
-    background-color: var(--background-color); /* Dùng biến */
+    background-color: var(--background-color);   
     margin: 5% auto;
-    /* 5% từ trên và căn giữa */
     padding: 30px;
     border: 1px solid #888;
     width: 90%;
@@ -549,11 +519,10 @@ body {
     color: var(--primary-color);
     margin-bottom: 30px;
     font-size: 24px;
-    border-bottom: 2px solid var(--secondary-color); /* Dùng biến */
+    border-bottom: 2px solid var(--secondary-color);   
     padding-bottom: 10px;
 }
 
-/* Nút đóng */
 .close-btn {
     color: #aaa;
     float: right;
@@ -571,7 +540,7 @@ body {
     cursor: pointer;
 }
 
-/* Form Styling */
+
 .checkout-form {
     display: flex;
     flex-direction: column;
@@ -579,7 +548,7 @@ body {
 }
 
 .form-section h3 {
-    color: var(--secondary-color); /* Dùng biến */
+    color: var(--secondary-color);   
     margin-bottom: 15px;
     font-size: 18px;
     padding-bottom: 5px;
@@ -627,16 +596,16 @@ body {
     margin-right: 10px;
     width: 18px;
     height: 18px;
-    accent-color: var(--secondary-color); /* Dùng biến */
+    accent-color: var(--secondary-color);   
 }
 
 .payment-option label {
     font-weight: 500;
-    color: var(--text-color); /* Dùng biến */
+    color: var(--text-color);   
 }
 
 .order-summary-modal {
-    background-color: var(--background-color); /* Dùng biến */
+    background-color: var(--background-color);   
     padding: 20px;
     border-radius: 8px;
 }
@@ -649,7 +618,7 @@ body {
 }
 
 .order-summary-modal .final-total {
-    border-top: 1px dashed var(--primary-color); /* Dùng biến */
+    border-top: 1px dashed var(--primary-color);   
     padding-top: 10px;
     margin-top: 15px;
     font-size: 18px;
@@ -675,10 +644,8 @@ body {
 
 .place-order-btn:hover {
     background-color: #6a462b;
-    /* Giữ màu đậm hơn của primary */
 }
 
-/* Ẩn scrollbar khi modal hiện ra */
 .modal-open {
     overflow: hidden;
 }
@@ -712,7 +679,7 @@ body {
     display: block;
     margin-bottom: 8px;
     font-size: 15px;
-    color: var(--text-color); /* Dùng biến */
+    color: var(--text-color);   
     text-decoration: none;
 }
 
@@ -731,7 +698,7 @@ body {
 .social-icons a {
     font-size: 20px;
     margin-right: 10px;
-    color: var(--text-color); /* Dùng biến */
+    color: var(--text-color);   
     text-decoration: none;
 }
 
@@ -740,11 +707,9 @@ body {
     color: var(--primary-color);
 }
 
-/* --- CSS cho Bố cục mới theo hình ảnh --- */
 .cart-page-content-new {
     display: flex;
     max-width: 1200px;
-    /* Điều chỉnh theo kích thước layout của bạn */
     margin: 20px auto;
     padding: 0 20px;
     gap: 30px;
@@ -752,18 +717,16 @@ body {
 
 .shopping-cart-list {
     flex: 2;
-    /* Chiếm khoảng 2/3 không gian */
 }
 
 .cart-summary-container-new {
     flex: 1;
-    /* Chiếm khoảng 1/3 không gian */
+
     padding: 20px;
     border: 1px solid #eee;
-    /* Nếu cần viền */
+
 }
 
-/* --- Phần Giỏ hàng (Trái) --- */
 .cart-header-text {
     font-size: 16px;
     margin-bottom: 20px;
@@ -775,7 +738,6 @@ body {
     padding: 10px 0;
     margin-bottom: 8px;
     background-color: var(--background-color);
-    /* Dùng biến nền trắng, bỏ nền màu */
     border-radius: 4px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
     border: 1px solid #e0f0f0;
@@ -808,37 +770,30 @@ body {
 .product-name-list {
     font-weight: bold;
     font-size: 14px;
-    color: var(--text-color); /* Dùng biến */
+    color: var(--text-color);   
     margin-bottom: 5px;
 }
 
 .product-options {
     font-size: 13px;
-    color: var(--text-color2); /* Dùng biến màu văn bản phụ */
-    /* Điều chỉnh: Hiển thị theo cột (xuống dòng) */
+    color: var(--text-color2);
     display: flex;
     flex-direction: column;
     gap: 3px;
-    /* Tạo khoảng cách nhỏ giữa "Màu Sắc" và "Còn hàng" */
 }
 
 .product-options span {
-    /* Đảm bảo mỗi dòng chiếm đủ chiều rộng */
     width: 100%;
 }
 
 .product-options .stock-status {
     color: green;
-    /* Giữ màu xanh */
+
     font-weight: 500;
     margin-left: 0;
-    /* Loại bỏ margin trái */
     background-color: transparent;
-    /* Loại bỏ nền xanh nhạt */
     padding: 0;
-    /* Loại bỏ padding */
     border-radius: 0;
-    /* Loại bỏ bo góc */
 }
 
 .product-actions-price {
@@ -850,9 +805,8 @@ body {
 
 .product-price-list {
     font-weight: bold;
-    color: var(--text-color); /* Dùng biến */
+    color: var(--text-color);   
     width: 120px;
-    /* Đảm bảo giá luôn ở cùng vị trí */
     text-align: right;
 }
 
@@ -860,28 +814,20 @@ body {
     display: flex;
     align-items: center;
     border: 1px solid #ccc;
-    /* Viền tổng thể */
     border-radius: 20px;
-    /* Góc bo tròn cho toàn bộ khối */
     overflow: hidden;
-    /* Quan trọng để các góc bo tròn hoạt động đúng */
     height: 35px;
-    /* Chiều cao cố định */
 }
 
 .quantity-btn-list {
-    background: var(--background-color); /* Dùng biến */
+    background: var(--background-color);   
     border: none;
     padding: 0 12px;
-    /* Điều chỉnh padding cho nút +/- */
     cursor: pointer;
     font-size: 18px;
-    /* Kích thước font cho dấu +/- */
-    color: var(--text-color2); /* Dùng biến màu văn bản phụ */
+    color: var(--text-color2);
     height: 100%;
-    /* Đảm bảo nút chiếm toàn bộ chiều cao */
     display: flex;
-    /* Dùng flex để căn giữa nội dung */
     align-items: center;
     justify-content: center;
 }
@@ -892,23 +838,16 @@ body {
 
 .quantity-input-list {
     width: 40px;
-    /* Chiều rộng của ô input số lượng */
     text-align: center;
     border: none;
-    /* Bỏ viền riêng của input */
     outline: none;
     padding: 0;
-    /* Bỏ padding riêng của input */
     height: 100%;
-    /* Chiếm toàn bộ chiều cao */
     box-sizing: border-box;
-    /* Tính padding và border vào width/height */
     font-size: 15px;
-    color: var(--text-color); /* Dùng biến */
+    color: var(--text-color);   
     border-left: 1px solid #ccc;
-    /* Viền giữa nút và input */
     border-right: 1px solid #ccc;
-    /* Viền giữa input và nút */
 }
 
 .remove-icon-list {
@@ -917,7 +856,6 @@ body {
     font-size: 18px;
 }
 
-/* Kiểu đặc biệt cho item cuối cùng (không có điều khiển số lượng) */
 .cart-item.no-controls .product-actions-price {
     justify-content: flex-end;
 }
@@ -936,20 +874,16 @@ body {
     background-color: transparent;
     box-shadow: none;
     padding-left: 100px;
-    /* Cân bằng với hình ảnh */
 }
 
 .cart-item.no-controls .product-details {
     margin-left: -50px;
 }
 
-/* --- Phần Tóm tắt (Phải) - NEW STYLE --- */
 .cart-summary-container-new {
     flex: 1;
-    /* Chiếm khoảng 1/3 không gian */
     padding: 20px;
     border: 1px solid #eee;
-    /* Nếu cần viền */
 }
 
 .voucher-input {
@@ -963,7 +897,7 @@ body {
 
 .voucher-input .input-title {
     font-size: 13px;
-    color: var(--text-color2); /* Dùng biến */
+    color: var(--text-color2);   
     white-space: nowrap;
 }
 
@@ -985,7 +919,7 @@ body {
     white-space: nowrap;
 }
 .voucher-input .apply-btn:hover {
-    background-color: var(--btn); /* Cần phải có hai dấu gạch nối: --btn */
+    background-color: var(--btn);
 }
 
 .summary-title {
@@ -1001,18 +935,18 @@ body {
 }
 
 .summary-line-new span:first-child {
-    color: var(--text-color2); /* Dùng biến */
+    color: var(--text-color2);   
 }
 
 .summary-line-new .summary-amount-new {
     font-weight: bold;
-    color: var(--text-color); /* Dùng biến */
+    color: var(--text-color);   
 }
 
 .summary-line-new.total-new {
     font-size: 18px;
     font-weight: bold;
-    color: var(--text-color); /* Dùng biến */
+    color: var(--text-color);   
     margin-top: 15px;
     padding-top: 10px;
     border-top: 1px solid #eee;
@@ -1029,7 +963,7 @@ body {
     display: block;
     width: 100%;
     padding: 15px;
-    background-color: var(--primary-color); /* Dùng primary color cho nút chính */
+    background-color: var(--primary-color);
     color: white;
     text-align: center;
     text-decoration: none;
@@ -1040,7 +974,7 @@ body {
 }
 
 .checkout-btn-new:hover {
-    background-color:#A56B43; /* Màu đậm hơn khi hover */
+    background-color:#A56B43;
 }
 
 .terms-text {
@@ -1052,7 +986,7 @@ body {
 }
 
 .terms-text a {
-    color: var(--primary-color); /* Dùng biến */
+    color: var(--primary-color);   
     text-decoration: none;
 }
 
@@ -1066,7 +1000,7 @@ body {
     align-items: center;
     font-size: 13px;
     margin-bottom: 8px;
-    color: var(--text-color2); /* Dùng biến */
+    color: var(--text-color2);   
 }
 
 .commitment-item i {
@@ -1074,7 +1008,6 @@ body {
     margin-right: 8px;
     font-size: 15px;
 }
-/* Container chính của Modal */
 .modal {
     display: none;
     position: fixed;
@@ -1083,13 +1016,12 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Làm tối nền */
+    background-color: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(4px); /* Làm mờ nền phía sau */
+    backdrop-filter: blur(4px);
 }
 
-/* Nội dung bên trong Modal */
 .modal-content {
     background-color: #fff;
     padding: 30px;
@@ -1097,12 +1029,11 @@ body {
     width: 500px;
     max-width: 90%;
     max-height: 90vh;
-    overflow-y: auto; /* Cuộn nếu nội dung quá dài */
+    overflow-y: auto;
     position: relative;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-/* Nút đóng (X) */
 .close-btn {
     position: absolute;
     right: 20px;
@@ -1126,7 +1057,6 @@ body {
     padding-bottom: 10px;
 }
 
-/* Form groups */
 .form-group {
     margin-bottom: 18px;
 }
@@ -1151,12 +1081,11 @@ body {
 }
 
 .form-group input:focus, .form-group select:focus {
-    border-color: #b19470; /* Màu chủ đạo của decor */
+    border-color: #b19470;
     outline: none;
     box-shadow: 0 0 5px rgba(177, 148, 112, 0.3);
 }
 
-/* Phần chọn phương thức thanh toán & Thẻ */
 .payment-options {
     display: flex;
     flex-direction: column;
@@ -1185,7 +1114,6 @@ body {
     margin-right: 12px;
 }
 
-/* Tổng tiền và Nút xác nhận */
 .total-confirm {
     margin-top: 20px;
     padding: 15px;

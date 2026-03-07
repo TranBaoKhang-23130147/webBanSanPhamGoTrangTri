@@ -22,7 +22,6 @@ public class DeleteCustomerServlet extends HttpServlet {
             int userId = Integer.parseInt(idRaw);
             UserDao dao = new UserDao();
 
-            // Thực hiện xóa
             boolean success = dao.deleteUser(userId);
 
             if (success) {
@@ -37,8 +36,6 @@ public class DeleteCustomerServlet extends HttpServlet {
             session.setAttribute("msgType", "error");
         }
 
-        // ĐIỀU HƯỚNG QUAN TRỌNG:
-        // Quay về đúng URL của CustomerManagerServlet để load lại danh sách mới
         if ("admin".equalsIgnoreCase(type)) {
             response.sendRedirect(request.getContextPath() + "/admin-management");
         } else {

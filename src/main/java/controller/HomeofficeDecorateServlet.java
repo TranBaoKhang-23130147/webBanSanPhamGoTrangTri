@@ -13,7 +13,7 @@ import java.util.List;
 public class HomeofficeDecorateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String categoryKey = request.getParameter("category"); // phong-khach
+        String categoryKey = request.getParameter("category"); 
         int page = 1;
         int pageSize = 12;
 

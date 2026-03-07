@@ -80,16 +80,6 @@
         </div>
     </div>
 </section>
-
-<!--<section class="core-values">-->
-<!--    <h2>Giá trị cốt lõi tạo nên HOME DECOR</h2>-->
-<!--    <div class="value-cards">-->
-<!--        <div class="card">Bền vững & thân thiện môi trường</div>-->
-<!--        <div class="card"> Thiết kế hiện đại – dễ phối kiểu</div>-->
-<!--        <div class="card">Chế tác thủ công tỉ mỉ</div>-->
-<!--        <div class="card">Giá trị theo năm tháng</div>-->
-<!--    </div>-->
-<!--</section>-->
 <section class="core-values">
     <h2>Giá trị cốt lõi của chúng tôi</h2>
     <div class="values-container">
@@ -153,18 +143,6 @@
 </section>
 
 
-<!--<section class="best-seller">-->
-<!--    <h2>Bộ sưu tập nổi bật</h2>-->
-<!--    <p>-->
-<!--        Tại HOME DECOR, bạn có thể tìm thấy những sản phẩm ứng dụng trong mọi không gian:-->
-<!--    </p>-->
-<!--    <div class="gallery">-->
-<!--        <div class="item">🕯 Giá để nến & đèn ngủ gỗ</div>-->
-<!--        <div class="item"> Khung ảnh – đồng hồ nghệ thuật</div>-->
-<!--        <div class="item"> Kệ gỗ treo tường tiện dụng</div>-->
-<!--        <div class="item"> Quà tặng decor theo yêu cầu</div>-->
-<!--    </div>-->
-<!--</section>-->
 
 <section class="vision-future">
     <h2>Định hướng phát triển</h2>

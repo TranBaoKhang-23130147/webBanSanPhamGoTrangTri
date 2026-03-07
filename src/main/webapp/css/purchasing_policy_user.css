@@ -2,7 +2,6 @@
 :root {
     --background-color: #FFFFFF;
     --primary-color: #8B5E3C;
-    /*--text-color: #3E2F1C;*/
     --text-color: #3b2f2f;
     --text-color2:#6b5743;
     --btn:#A56B43;
@@ -140,7 +139,6 @@ body {
     transition: 0.3s;
 }
 
-/* Khi hover vào menu */
 .menu:hover {
     color: var(--btn);
 }
@@ -199,24 +197,20 @@ body {
     color: var(--text-color2);
     background: rgba(139, 94, 60, 0.08);
 }
-/* --- CHÍNH SÁCH THANH TOÁN (PAYMENT POLICY) --- */
 
-/**/
 .banner {
-    /* Đổi URL này thành hình ảnh banner chất lượng cao của bạn */
     background-image: url('https://i.pinimg.com/736x/4d/3d/19/4d3d19e5c90b8e527538943f196b1c1a.jpg');
     background-size: cover;
     background-position: center;
-    height: 500px; /* Chiều cao mong muốn của banner */
+    height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     position: relative;
-    margin-bottom: 40px; /* Tạo khoảng cách với phần nội dung blog */
+    margin-bottom: 40px;
 }
 
-/* Lớp phủ (Overlay) để chữ dễ đọc hơn */
 .banner::before {
     content: "";
     position: absolute;
@@ -224,7 +218,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.45); /* Lớp phủ đen trong suốt */
+    background-color: rgba(0, 0, 0, 0.45);
     z-index: 1;
 }
 
@@ -247,7 +241,6 @@ body {
     font-size: 1.2em;
     font-weight: 300;
 }
-/* DÒNG CHỮ DƯỚI */
 .banner-caption {
     text-align: center;
     font-size: 1.3rem;
@@ -258,9 +251,6 @@ body {
     letter-spacing: 0.5px;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
 }
-/* ======================= */
-/* CÁC SETUP NỔI BẬT */
-/* ======================= */
 
 .setup-section {
     display: grid;
@@ -274,7 +264,6 @@ body {
     max-width: 1100px;
 }
 
-/* Cột trái tiêu đề dọc */
 .setup-left {
     display: flex;
     align-items: center;
@@ -292,7 +281,6 @@ body {
     font-size: 0.95rem;
 }
 
-/* Cột phải nội dung */
 .setup-right h3 {
     color: var(--text-color);
     font-size: 1.25rem;
@@ -306,7 +294,6 @@ body {
     line-height: 1.8;
 }
 
-/* Đường gạch ngang mảnh phía trên */
 .setup-right .divider {
     width: 100%;
     height: 2px;
@@ -315,7 +302,6 @@ body {
     margin-bottom: 15px;
 }
 
-/* Responsive cho màn nhỏ */
 @media (max-width: 768px) {
     .setup-section {
         grid-template-columns: 1fr;
@@ -392,7 +378,6 @@ body {
 .footer-col a:hover {
     color: var(--btn);
 }
-/* --- CÁC THIẾT LẬP CHUNG CHO SETUP SECTION --- */
 .setup-section {
     width: 90%;
     max-width: 1200px;
@@ -402,7 +387,7 @@ body {
 }
 
 .setup-left {
-    flex: 0 0 250px; /* Giữ cột bên trái cố định */
+    flex: 0 0 250px;
     padding-top: 15px;
 }
 
@@ -416,10 +401,9 @@ body {
 }
 
 .setup-right {
-    flex: 1; /* Cột bên phải chiếm phần còn lại */
+    flex: 1;
 }
 
-/* Thanh chia tách nội dung */
 .divider {
     height: 1px;
     background-color: #eee;
@@ -433,9 +417,8 @@ body {
     font-weight: 600;
 }
 
-/* List chính (Bước 1, 2, 3...) */
 .online-process-list {
-    list-style: none; /* Bỏ bullet mặc định */
+    list-style: none;
     padding: 0;
 }
 
@@ -450,7 +433,7 @@ body {
     font-weight: 700;
     color: var(--primary-color);
     display: inline-block;
-    width: 80px; /* Chiều rộng cố định cho chữ "Bước X:" hoặc "X." */
+    width: 80px;
     min-width: 80px;
 }
 
@@ -459,10 +442,9 @@ body {
     font-weight: 700;
 }
 
-/* List con (Nội dung chi tiết) */
 .sub-process-list {
-    list-style: disc; /* Dùng dấu chấm đen cho list con */
-    padding-left: 100px; /* Căn lề để nó thẳng hàng với nội dung bên trên */
+    list-style: disc;
+    padding-left: 100px;
     margin-top: 10px;
 }
 
@@ -472,7 +454,6 @@ body {
     margin-bottom: 8px;
 }
 
-/* --- Media Query cho Mobile/Tablet --- */
 @media (max-width: 900px) {
     .setup-section {
         flex-direction: column;
@@ -487,33 +468,28 @@ body {
 
     .setup-left h2 {
         border-right: none;
-        border-left: 3px solid var(--primary-color); /* Chuyển border sang trái */
+        border-left: 3px solid var(--primary-color);
         padding-left: 15px;
         padding-right: 0;
         text-align: left;
     }
 
     .sub-process-list {
-        padding-left: 20px; /* Giảm padding list con trên di động */
+        padding-left: 20px;
     }
 }
 
-
-/* --- CSS CHO CÁC PHẦN TỬ ĐỘC LẬP (NẰM NGOÀI SECTION) --- */
-
-/* Đảm bảo các phần tử nằm ngoài section cũng có chiều rộng và căn giữa */
 .setup-section,
 .divider,
 .online-process-list,
 .setup-right h3,
-body > h3 { /* Căn chỉnh tiêu đề h3 bị tách ra */
+body > h3 {
     width: 90%;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* Định dạng cho tiêu đề H3 độc lập */
 body > h3 {
     font-size: 1.5rem;
     color: var(--text-color);
@@ -521,12 +497,9 @@ body > h3 {
     font-weight: 700;
     padding-bottom: 5px;
     border-bottom: 2px solid #eee;
-    margin-top: 40px; /* Tăng khoảng cách phía trên */
+    margin-top: 40px;
 }
 
-/* --- TÁI ĐỊNH DẠNG CÁC LIST CON (sub-process-list) --- */
-
-/* Các style này áp dụng cho cả phần Cách thức mua hàng và Chi tiết quy định */
 
 .online-process-list {
     list-style: none;
@@ -548,7 +521,6 @@ body > h3 {
     font-size: 1.1rem;
 }
 
-/* List con (Quy định chi tiết) */
 .sub-process-list {
     list-style: none;
     padding-left: 0;
@@ -557,7 +529,6 @@ body > h3 {
     padding: 15px 15px 5px 15px;
     border-radius: 8px;
     border: 1px solid #f0f0f0;
-    /* Đảm bảo chiều rộng list con không bị tràn ra ngoài */
     margin-left: 0;
     margin-right: 0;
 }
@@ -572,20 +543,18 @@ body > h3 {
 }
 
 .sub-process-list li::before {
-    content: "\2713"; /* Dấu tick */
-    color: #4CAF50; /* Xanh lá cây */
+    content: "\2713";
+    color: #4CAF50;
     font-weight: bold;
     display: inline-block;
     width: 25px;
     flex-shrink: 0;
 }
 
-/* --- MEDIA QUERIES --- */
 @media (max-width: 900px) {
-    /* Đảm bảo phần tử độc lập co giãn đúng */
     .divider,
     .online-process-list,
     body > h3 {
-        width: 95%; /* Hơi rộng hơn trên di động */
+        width: 95%;
     }
 }

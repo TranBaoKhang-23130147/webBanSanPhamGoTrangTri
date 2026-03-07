@@ -12,10 +12,8 @@ public class Notification {
     private Timestamp createAt;
     private boolean isRead;
 
-    // ===== Constructor rỗng =====
    public Notification() {
     }
-    // ===== Getter & Setter =====
     public int getId() {
         return id;
     }

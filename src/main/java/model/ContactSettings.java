@@ -1,7 +1,7 @@
 package model;
 
 public class ContactSettings {
-    private int id = 1;  // mặc định là 1 vì chỉ có 1 bản ghi config
+    private int id = 1;
     private String phone;
     private String email;
     private String address;
@@ -10,10 +10,8 @@ public class ContactSettings {
     private String twitterUrl;
     private String googleUrl;
 
-    // Constructor mặc định
     public ContactSettings() {}
 
-    // Constructor đầy đủ (dùng khi lấy từ DB)
     public ContactSettings(int id, String phone, String email, String address,
                            String facebookUrl, String instagramUrl, String twitterUrl, String googleUrl) {
         this.id = id;
@@ -26,7 +24,6 @@ public class ContactSettings {
         this.googleUrl = googleUrl;
     }
 
-    // Getters & Setters
     public int getId() {
         return id;
     }

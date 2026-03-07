@@ -20,13 +20,12 @@ body {
     background-color: var(--bg-clr);
 }
 
-/* ===== KHUNG CONTAINER ===== */
 .container {
     width: 100%;
     max-width: 400px;
     background: #ffffff;
     padding: 40px;
-    border-radius: 15px; /* Bo góc mượt mà */
+    border-radius: 15px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     text-align: center;
 }
@@ -38,7 +37,6 @@ h1 {
     font-weight: 700;
 }
 
-/* ===== THÔNG BÁO LỖI ===== */
 .error-msg {
     color: #d93025;
     background-color: #fff1f0;
@@ -49,7 +47,6 @@ h1 {
     font-size: 14px;
 }
 
-/* ===== Ô NHẬP LIỆU ===== */
 input[type="text"] {
     width: 100%;
     padding: 15px;

@@ -1,4 +1,3 @@
-/* Đảm bảo Main Content không bị Header che (Header cao 60px) */
 .content {
     flex-grow: 1;
     padding: 20px 30px;
@@ -7,15 +6,13 @@
     min-height: calc(100vh - var(--header-height));
 }
 
-/* Layout chia 2 cột cho phần chi tiết */
 .product-detail-admin {
     display: grid;
-    grid-template-columns: 450px 1fr; /* Cột trái cố định 450px cho ảnh */
+    grid-template-columns: 450px 1fr;
     gap: 40px;
     margin-top: 20px;
 }
 
-/* Ảnh chính */
 .main-image {
     width: 100%;
     height: 450px;
@@ -30,7 +27,6 @@
     object-fit: cover;
 }
 
-/* Thống kê kho hàng dạng bảng nhỏ */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -52,7 +48,6 @@
     color: var(--primary-color);
 }
 
-/* Nút kích thước */
 .size-btn {
     padding: 8px 15px;
     border: 1px solid #ddd;

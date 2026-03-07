@@ -16,7 +16,7 @@ public class AddPaymentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String cardNumber = request.getParameter("cardNumber"); // Lấy số thẻ
+        String cardNumber = request.getParameter("cardNumber");
         String type = request.getParameter("type");
         String duration = request.getParameter("duration");
         User user = (User) request.getSession().getAttribute("LOGGED_USER");

@@ -34,7 +34,6 @@ public class CheckoutServlet extends HttpServlet {
             return;
         }
 
-// 2. Lọc ra danh sách 'cart' - chỉ chứa các món ĐƯỢC CHỌN
         List<CartItem> cart = new ArrayList<>();
         for (String idStr : selectedIds) {
             int id = Integer.parseInt(idStr);
@@ -46,7 +45,6 @@ public class CheckoutServlet extends HttpServlet {
             }
         }
 
-        // 1. Kiểm tra điều kiện cơ bản
         if (user == null) {
             response.sendRedirect("login.jsp?error=not_logged_in");
             return;
@@ -58,7 +56,6 @@ public class CheckoutServlet extends HttpServlet {
         }
 
 
-        // 2. Lấy thông tin từ form
         String fullName      = request.getParameter("fullName");
         String phone         = request.getParameter("phone");
         String addressIdStr  = request.getParameter("address_id");
@@ -66,13 +63,11 @@ public class CheckoutServlet extends HttpServlet {
         String paymentMethod = request.getParameter("paymentMethod");
         String cardIdStr     = request.getParameter("cardId");
 
-        // Bảo vệ: mặc định COD
         if (paymentMethod == null || paymentMethod.trim().isEmpty()) {
             paymentMethod = "COD";
         }
         paymentMethod = paymentMethod.toUpperCase();
 
-        // Xử lý address_id (bắt buộc)
         Integer addressId = null;
         if (addressIdStr != null && !addressIdStr.trim().isEmpty()) {
             try {
@@ -89,7 +84,6 @@ public class CheckoutServlet extends HttpServlet {
             return;
         }
 
-        // Xử lý payment_id (nếu BANK)
         Integer paymentId = null;
         if ("BANK".equals(paymentMethod)) {
             if (cardIdStr != null && !cardIdStr.trim().isEmpty()) {
@@ -105,7 +99,6 @@ public class CheckoutServlet extends HttpServlet {
             }
         }
 
-        // Debug log
         System.out.println("=== CHECKOUT BẮT ĐẦU ===");
         System.out.println("User ID: " + user.getId());
         System.out.println("Cart size: " + cart.size());
@@ -119,7 +112,6 @@ public class CheckoutServlet extends HttpServlet {
         try (Connection conn = DBContext.getConnection()) {
             conn.setAutoCommit(false);
 
-            // 3. Tính tổng tiền backend
             BigDecimal subTotal = BigDecimal.ZERO;
             for (CartItem item : cart) {
                 if (item.getVariant() == null || item.getVariant().getVariant_price() == null) {
@@ -137,7 +129,6 @@ public class CheckoutServlet extends HttpServlet {
             System.out.println("Tổng tiền backend: Subtotal=" + subTotal + " | Tax=" + tax +
                     " | Shipping=" + shipping + " | Total=" + grandTotal);
 
-            // 4. Insert vào bảng orders (đầy đủ cột tiền)
             String sqlOrder = """
     INSERT INTO orders 
     (user_id, fullName, phone, address_id, note, createAt, status, payment_status, payment_id, 
@@ -145,7 +136,6 @@ public class CheckoutServlet extends HttpServlet {
     VALUES (?, ?, ?, ?, ?, NOW(), 'Chờ xác nhận', ?, ?, ?, ?, ?, ?)
 """;
 
-// Xác định trạng thái thanh toán dựa trên phương thức
             String paymentStatus = "COD".equals(paymentMethod) ? "Chưa thanh toán" : "Đã thanh toán";
 
             int orderId;
@@ -155,19 +145,18 @@ public class CheckoutServlet extends HttpServlet {
                 psOrder.setString(3, phone);
                 psOrder.setInt(4, addressId);
                 psOrder.setString(5, note != null ? note : "");
-                psOrder.setString(6, paymentStatus); // payment_status
+                psOrder.setString(6, paymentStatus);
 
-                // XỬ LÝ PAYMENT_ID: Nếu là COD thì ép buộc set null
                 if ("COD".equals(paymentMethod) || paymentId == null) {
-                    psOrder.setNull(7, Types.INTEGER); // payment_id = null
+                    psOrder.setNull(7, Types.INTEGER);
                 } else {
-                    psOrder.setInt(7, paymentId);      // payment_id thực tế từ thẻ ngân hàng
+                    psOrder.setInt(7, paymentId);
                 }
 
-                psOrder.setBigDecimal(8, grandTotal);     // totalOrder
-                psOrder.setBigDecimal(9, subTotal);       // subTotal
-                psOrder.setBigDecimal(10, tax);           // taxAmount
-                psOrder.setBigDecimal(11, shipping);      // shippingFee
+                psOrder.setBigDecimal(8, grandTotal);
+                psOrder.setBigDecimal(9, subTotal);
+                psOrder.setBigDecimal(10, tax);
+                psOrder.setBigDecimal(11, shipping);
 
                 psOrder.executeUpdate();
 
@@ -182,7 +171,6 @@ public class CheckoutServlet extends HttpServlet {
 
             System.out.println("Tạo đơn hàng thành công - Order ID: " + orderId);
 
-            // 5. Insert order_details (batch)
             String sqlDetail = """
                 INSERT INTO order_details 
                 (order_id, product_variant_id, quantity, total)
@@ -203,7 +191,6 @@ public class CheckoutServlet extends HttpServlet {
                 psDetail.executeBatch();
             }
 
-            // 6. Trừ tồn kho (inventory_quantity) trong bảng product_variant
             String sqlUpdateStock = """
                 UPDATE product_variants 
                 SET inventory_quantity = inventory_quantity - ? 
@@ -215,9 +202,9 @@ public class CheckoutServlet extends HttpServlet {
                     int qtyOrdered = item.getQuantity();
                     int variantId = item.getVariant().getId();
 
-                    psUpdate.setInt(1, qtyOrdered);          // trừ số lượng đặt
-                    psUpdate.setInt(2, variantId);           // biến thể nào
-                    psUpdate.setInt(3, qtyOrdered);          // kiểm tra còn đủ không
+                    psUpdate.setInt(1, qtyOrdered);
+                    psUpdate.setInt(2, variantId);
+                    psUpdate.setInt(3, qtyOrdered);
 
                     int rowsAffected = psUpdate.executeUpdate();
 
@@ -231,14 +218,11 @@ public class CheckoutServlet extends HttpServlet {
                 }
             }
 
-            // 7. Commit toàn bộ (đơn hàng + trừ kho)
             conn.commit();
             if (fullCart != null) {
-                // Xóa những món vừa mua ra khỏi giỏ hàng tổng
                 for (CartItem boughtItem : cart) {
                     fullCart.removeIf(item -> item.getVariant().getId() == boughtItem.getVariant().getId());
                 }
-                // Cập nhật lại session với những món còn sót lại
                 session.setAttribute("CART", fullCart);
             }
             response.sendRedirect("MyPageServlet?tab=don-hang&success=1&orderId=" + orderId);

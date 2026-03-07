@@ -32,7 +32,6 @@ public class CartServlet extends HttpServlet {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
 
-            // Debug giỏ hàng ngay đầu
             System.out.println("=== DEBUG FULL CART IN SERVLET (AJAX UPDATE QTY) ===");
             if (cart == null || cart.isEmpty()) {
                 System.out.println("Giỏ hàng NULL hoặc rỗng");
@@ -67,7 +66,6 @@ public class CartServlet extends HttpServlet {
                 int quantity  = Integer.parseInt(quantityRaw);
 
 
-                // --- CHÈN CODE KIỂM TRA TỒN KHO VÀO ĐÂY ---
                 ProductDao pDao = new ProductDao();
                 ProductVariants dbVariant = pDao.getVariantById(variantId);
 
@@ -78,7 +76,7 @@ public class CartServlet extends HttpServlet {
                 }
 
                 if (quantity > dbVariant.getInventory_quantity()) {
-                    response.setStatus(400); // Trả về lỗi 400 để Ajax bắt được
+                    response.setStatus(400);
                     response.getWriter().write("{\"success\":false, \"message\":\"Số lượng vượt quá tồn kho hiện có (" + dbVariant.getInventory_quantity() + ")\"}");
                     response.getWriter().flush();
                     return;
@@ -143,23 +141,18 @@ public class CartServlet extends HttpServlet {
             return;
         }
 
-        // Xử lý action=view
         if ("view".equals(action)) {
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("LOGGED_USER");
 
             if (user != null) {
-                // Khởi tạo các DAO để lấy dữ liệu từ My Page
                 AddressDao addrDao = new AddressDao();
                 PaymentDao payDao = new PaymentDao();
 
-                // 1. Lấy danh sách địa chỉ của user
                 request.setAttribute("addresses", addrDao.getAddressesByUserId(user.getId()));
 
-                // 2. Lấy danh sách thẻ thanh toán của user
                 request.setAttribute("listPayments", payDao.getPaymentsByUserId(user.getId()));
 
-                // 3. (Tùy chọn) Tính tổng tiền giỏ hàng để hiển thị ban đầu
                 List<CartItem> cart = (List<CartItem>) session.getAttribute("CART");
                 BigDecimal subTotal = BigDecimal.ZERO;
                 if (cart != null) {
@@ -182,7 +175,6 @@ public class CartServlet extends HttpServlet {
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
 
-        // Kiểm tra đăng nhập
         if (session.getAttribute("LOGGED_USER") == null) {
             request.setAttribute("ERROR_MESSAGE", "Bạn cần đăng nhập để thực hiện thao tác này!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -203,14 +195,13 @@ public class CartServlet extends HttpServlet {
                 int quantityToAdd = Integer.parseInt(request.getParameter("quantity"));
 
                 ProductVariants variant = dao.getVariantById(variantId);
-                int inventory = variant.getInventory_quantity(); // Lấy tồn kho từ DB
+                int inventory = variant.getInventory_quantity();
 
                 boolean isExisted = false;
                 for (CartItem item : cart) {
                     if (item.getVariant().getId() == variantId) {
                         int newTotalQty = item.getQuantity() + quantityToAdd;
 
-                        // KIỂM TRA TỒN KHO TẠI ĐÂY
                         if (newTotalQty > inventory) {
                             session.setAttribute("ERROR_CART", "Không thể thêm! Tổng số lượng trong giỏ (" + newTotalQty + ") vượt quá tồn kho (" + inventory + ")");
                             response.sendRedirect("detail?id=" + productId);
@@ -224,7 +215,6 @@ public class CartServlet extends HttpServlet {
                 }
 
                 if (!isExisted) {
-                    // Kiểm tra cho sản phẩm mới thêm lần đầu
                     if (quantityToAdd > inventory) {
                         session.setAttribute("ERROR_CART", "Số lượng yêu cầu vượt quá tồn kho hiện có!");
                         response.sendRedirect("detail?id=" + productId);

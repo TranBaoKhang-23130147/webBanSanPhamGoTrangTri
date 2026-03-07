@@ -1,7 +1,6 @@
 :root {
     --background-color: #FFFFFF;
     --primary-color: #8B5E3C;
-    /*--text-color: #3E2F1C;*/
     --text-color: #3b2f2f;
     --text-color2:#6b5743;
     --btn:#A56B43;
@@ -142,7 +141,6 @@ body {
     transition: 0.3s;
 }
 
-/* Khi hover vào menu */
 .menu:hover {
     color: var(--primary-color);
 }
@@ -264,7 +262,6 @@ body {
         border-radius: 50px;
     }
 }
-/*them*/
 
 .filter-sidebar {
     width: 200px;
@@ -399,7 +396,7 @@ body {
 }
 .product-card {
     display:flex;
-    flex-direction: column; /* Sắp xếp theo chiều dọc */
+    flex-direction: column;
     justify-content: space-between;
     background-color: var(--background-color);
     border-radius: 12px;
@@ -504,32 +501,31 @@ body {
 .set{
     padding: 20px;
 }
-/* Đảm bảo thẻ <a> bao phủ toàn bộ vùng 'set' */
 .product-card a.product-link {
-    text-decoration: none; /* Xóa gạch chân */
-    color: inherit; /* Giữ màu chữ (thường là màu đen/text-color) */
-    display: block; /* Quan trọng: làm cho thẻ <a> chiếm toàn bộ chiều rộng/cao của .set */
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 .product-card .set {
-    transition: transform 0.3s ease; /* Thêm hiệu ứng hover vào khối sản phẩm */
+    transition: transform 0.3s ease;
 }
 
 .product-card .set:hover {
-    transform: translateY(-5px); /* Hiệu ứng nhấc lên khi hover */
+    transform: translateY(-5px);
 }
 .ri-star-s-fill, .ri-star-fill {
-    color: #ffcc00 !important; /* Màu vàng */
+    color: #ffcc00 !important;
 }
 .ri-star-s-line, .ri-star-line {
-    color: #ccc !important; /* Màu xám cho sao rỗng */
+    color: #ccc !important;
 }
 .rating i {
     font-size: 18px;
     margin-right: 2px;
 }
 .score-box .rating i {
-    font-size: 24px; /* Sao ở bảng tổng quan to hơn */
+    font-size: 24px;
 }
 .pagination-wrapper {
     margin-top: 50px;
@@ -562,24 +558,20 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Hover */
 .page-btn:hover {
     background: var(--primary-color);
     color: #fff;
 }
 
-/* Trang hiện tại */
 .page-btn.active {
     background: var(--primary-color);
     color: #fff;
     cursor: default;
 }
 
-/* Disable cảm giác cho nút */
 .page-btn:has(span) {
     pointer-events: none;
 }
-/* Tùy chỉnh ô chọn màu sắc */
 .filter-select {
     width: 100%;
     padding: 8px;
@@ -596,7 +588,6 @@ body {
     outline: none;
 }
 
-/* Nút lọc */
 .btn-filter-submit {
     width: 100%;
     padding: 10px;

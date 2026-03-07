@@ -1,23 +1,20 @@
-/* Màu sắc chung và Biến */
 :root {
-    --primary-color: #8B5E3C; /* Màu xanh đậm cho Modern Homes/Primary */
-    --accent-color: #A56B43; /* Màu xanh sáng hơn cho hover */
+    --primary-color: #8B5E3C;
+    --accent-color: #A56B43;
     --text-color: #3b2f2f;
     --secondary-text-color: #6c757d;
     --light-bg: #f4f6f9;
     --border-color: #e0e0e0;
     --sidebar-width: 250px;
     --header-height: 60px;
-    --modern-green: #38c172; /* Trend UP */
-    --modern-red: #e3342f; /* Trend DOWN */
+    --modern-green: #38c172;
+    --modern-red: #e3342f;
     --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     --hover-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Ẩn các class cũ nếu có */
 .kpi-row, .three-cols { display: none; }
 
-/* Reset và Body */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--light-bg);
@@ -32,7 +29,6 @@ body {
     min-height: 100vh;
 }
 
-/* ---------------- HEADER ---------------- */
 .header {
     height: var(--header-height);
     background-color: #fff;
@@ -87,7 +83,6 @@ body {
     font-size: 1.4rem !important;
 }
 
-/* Dropdown Menu */
 .user-dropdown {
     position: relative;
     display: inline-block;
@@ -127,7 +122,6 @@ body {
 
 .show {display: block;}
 
-/* ---------------- MAIN WRAPPER & SIDEBAR ---------------- */
 .main-wrapper {
     display: flex;
     padding-top: var(--header-height);
@@ -168,7 +162,6 @@ body {
     color: var(--primary-color);
 }
 
-/* Style cho mục đang được chọn (active) */
 .sidebar-nav li.active {
     background-color: #f4f6f9;
     border-left: 3px solid var(--primary-color);
@@ -179,28 +172,22 @@ body {
     color: var(--primary-color);
 }
 
-/* ---------------- CONTENT (Nội dung chính) ---------------- */
 
-/* Áp dụng padding và nền xám cho khu vực chứa khối nội dung trắng */
 .content {
     flex-grow: 1;
-    /* Giảm padding để khối trắng có thể gần các cạnh hơn */
     padding: 20px;
     margin-left: var(--sidebar-width);
     transition: margin-left 0.3s ease;
     background-color: var(--light-bg);
 }
 
-/* KHỐI TRẮNG LỚN BAO QUANH TOÀN BỘ NỘI DUNG (Tìm kiếm + Bảng) */
 .product-management-container {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    /* Thêm padding cho nội dung bên trong khối trắng */
     padding: 25px 30px;
 }
 
-/* Tiêu đề trang nằm trong khối trắng */
 .page-title {
     font-size: 1.8rem;
     font-weight: 600;
@@ -208,17 +195,15 @@ body {
     margin-top: 0;
     margin-bottom: 20px;
     padding-bottom: 0;
-    border-bottom: none; /* Bỏ đường kẻ dưới tiêu đề */
+    border-bottom: none;
 }
 
 
-/* ---------------- Thanh công cụ tìm kiếm và lọc ---------------- */
 
 .search-filter-bar {
     display: flex;
     align-items: center;
     gap: 10px;
-    /* Loại bỏ style cũ (nền trắng, bóng đổ, padding) */
     padding: 0;
     margin-bottom: 20px;
     background-color: transparent;
@@ -249,7 +234,6 @@ body {
     color: var(--text-color);
 }
 
-/* Style nút Xuất và Thêm Sản Phẩm Mới (Màu Trắng/Xám, Hover Nâu) */
 .export-product-btn,
 .add-new-product-btn {
     background-color: #fff;
@@ -273,7 +257,6 @@ body {
     border-color: var(--primary-color);
 }
 
-/* Đảm bảo link trong nút Thêm Sản Phẩm Mới không bị gạch chân và kế thừa màu */
 .add-new-product-btn a {
     text-decoration: none;
     color: inherit;
@@ -281,10 +264,8 @@ body {
 }
 
 
-/* ---------------- Bảng sản phẩm ---------------- */
 
 .product-table-wrapper {
-    /* Loại bỏ style cũ (nền trắng, bóng đổ) vì đã có product-management-container lo */
     background-color: transparent;
     border-radius: 0;
     overflow: hidden;
@@ -297,7 +278,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* ĐỊNH DẠNG THEO HÌNH MẪU (Nền xám nhạt, chữ xám xanh) */
 .product-table thead {
     background-color: var(--light-bg);
     color: var(--secondary-text-color);
@@ -313,15 +293,13 @@ body {
 .product-table th {
     font-weight: 500;
     white-space: nowrap;
-    border-bottom: none; /* Bỏ viền dưới thừa */
+    border-bottom: none;
 }
 
-/* Viền ngăn cách giữa header và body */
 .product-table thead tr {
     border-bottom: 1px solid var(--border-color);
 }
 
-/* Đảm bảo hàng đầu tiên của tbody có viền trên mỏng (từ header) */
 .product-table tbody tr:first-child {
     border-top: 1px solid var(--border-color);
 }
@@ -330,7 +308,6 @@ body {
 }
 
 
-/* Kiểu cột đặc biệt */
 .col-image { width: 50px; text-align: center; }
 .col-name { width: 30%; }
 .col-price { width: 100px; text-align: right; }
@@ -346,10 +323,9 @@ body {
 }
 
 .highlight-low {
-    color: var(--modern-red); /* Đỏ cho tồn kho thấp */
+    color: var(--modern-red);
 }
 
-/* ---------------- Switch Toggle (Trạng thái) ---------------- */
 .switch {
     position: relative;
     display: inline-block;
@@ -405,7 +381,6 @@ input:checked + .slider:before {
     border-radius: 50%;
 }
 
-/* ---------------- Thao tác (Icons) ---------------- */
 .col-actions i {
     margin: 0 5px;
     cursor: pointer;
@@ -428,56 +403,43 @@ input:checked + .slider:before {
 .delete-icon:hover {
     opacity: 0.8;
 }
-/* ---------------- CONTENT (Nội dung chính) ---------------- */
 .content {
     flex-grow: 1;
-    /* Giảm padding để khối trắng có thể gần các cạnh hơn */
-    padding: 20px 30px; /* Giảm padding ngang/dọc */
+    padding: 20px 30px;
     margin-left: var(--sidebar-width);
     transition: margin-left 0.3s ease;
     background-color: var(--light-bg);
 }
 
-/* ---------------- Tiêu đề trang (page-title) ---------------- */
 .page-title {
     font-size: 1.8rem;
     font-weight: 600;
     color: var(--text-color);
     margin-top: 0;
-    /* Thêm đường kẻ ngang và nâng chữ lên */
     margin-bottom: 20px;
     padding-bottom: 15px;
-    border-bottom: 1px solid var(--border-color); /* Thêm đường kẻ ngang */
+    border-bottom: 1px solid var(--border-color);
 }
 
 
-/* ---------------- KHỐI TRẮNG LỚN BAO QUANH ---------------- */
 .product-management-container {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    /* Giữ padding cho nội dung bên trong (Thanh tìm kiếm và Bảng) */
     padding: 25px 30px;
 }
 
 
-/* ---------------- Thanh công cụ tìm kiếm và lọc ---------------- */
-/* Cần điều chỉnh lại margin-bottom nếu nó nằm ngay sau tiêu đề */
 .search-filter-bar {
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 0;
-    /* Giữ margin-bottom để cách bảng */
     margin-bottom: 20px;
     background-color: transparent;
     border-radius: 0;
     box-shadow: none;
 }
-/* ... CSS Khối 1 của bạn ... */
-
-/* ---------------- HEADER ---------------- */
-/* ... */
 .header-icons i:hover {
     color: var(--primary-color);
 }
@@ -486,31 +448,27 @@ input:checked + .slider:before {
     font-size: 1.4rem !important;
 }
 
-/* Dropdown Menu - CÁC QUY TẮC BẠN ĐÃ CUNG CẤP */
 .user-dropdown, .notification-dropdown, .gmail-dropdown {
     position: relative;
     display: inline-block;
-    cursor: pointer; /* Thêm con trỏ cho dễ nhìn */
+    cursor: pointer;
 }
 
 .dropdown-content {
-    display: none; /* Đảm bảo nó ẩn mặc định */
+    display: none;
     position: absolute;
-    /* ... các thuộc tính khác của dropdown-content ... */
-    z-index: 1050; /* Tăng z-index */
+    z-index: 1050;
     right: 0;
     top: calc(100% + 5px);
     border-radius: 6px;
     overflow: hidden;
-    max-height: 500px; /* Thêm max-height */
+    max-height: 500px;
 }
 
-/* Định nghĩa lại các thuộc tính đặc biệt cho Notification/Gmail */
 .gmail-content, .notification-content {
     min-width: 250px;
     right: -10px;
 }
-/* Thêm Header cho Dropdown */
 .dropdown-header {
     padding: 10px 15px;
     font-weight: bold;
@@ -518,17 +476,67 @@ input:checked + .slider:before {
     border-bottom: 1px solid var(--border-color);
     font-size: 0.9rem;
     display: block;
-    position: sticky; /* Để header dính khi cuộn */
+    position: sticky;
     top: 0;
     background-color: #fff;
     z-index: 2;
 }
 
-/* QUY TẮC HIỂN THỊ KHI HOVER */
 .user-dropdown:hover .dropdown-content,
 .notification-dropdown:hover .dropdown-content,
 .gmail-dropdown:hover .dropdown-content {
     display: block;
+}
+
+.product-table-wrapper{
+    max-height:500px;
+    overflow-y:auto;
+}
+
+.product-table-wrapper::-webkit-scrollbar{
+    width:6px;
+}
+
+.product-table-wrapper::-webkit-scrollbar-thumb{
+    background:#fff0f0;
+    border-radius:10px;
+}
+.product-table-wrapper{
+    max-height:500px;
+    overflow-y:auto;
+
+    border-left:1px solid #fff;
+    border-right:1px solid #fff;
+}
+
+.product-table-wrapper::-webkit-scrollbar{
+    width:12px;
+}
+
+.product-table-wrapper::-webkit-scrollbar-track{
+    background:#f1f1f1;
+    border-left:1px solid #ddd;
+    border-right:1px solid #ddd;
+}
+
+.product-table-wrapper::-webkit-scrollbar-thumb{
+    background:#a0a0a0;
+    border-radius:10px;
+    border:3px solid #a0a0a0;
+}
+
+
+table {
+    background: white !important;
+}
+
+table thead tr,
+table tbody tr {
+    background: white !important;
+}
+
+table td, table th {
+    background: white !important;
 }
 
 

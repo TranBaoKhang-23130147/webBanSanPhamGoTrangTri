@@ -1,6 +1,5 @@
 function openCategoryModal() {
     const modal = document.getElementById('categoryModal');
-    // Chú ý ID này phải khớp với id="categoryName" trong thẻ <input>
     const input = document.getElementById('categoryName');
     if(input) input.value = '';
     modal.style.display = 'block';
@@ -40,7 +39,6 @@ function deleteCategory(id, name) {
         cancelButtonText: 'Hủy'
     }).then((result) => {
         if (result.isConfirmed) {
-            // Chuyển hướng đến servlet xóa
             window.location.href = "delete-category?id=" + id;
         }
     })

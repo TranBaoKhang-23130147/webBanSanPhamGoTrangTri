@@ -108,14 +108,11 @@ button:hover {
 .back-login i {
     margin-right: 5px;
 }
-/* Style cho liên kết (<a>) đóng vai trò là nút */
 .button-link {
-    /* Đảm bảo liên kết chiếm toàn bộ chiều rộng (như nút) */
     display: block;
     text-align: center;
-    text-decoration: none; /* Bỏ gạch chân mặc định của liên kết */
+    text-decoration: none;
 
-    /* Copy style từ nút <button> */
     width: 100%;
     padding: 12px 0;
     border: none;
@@ -129,7 +126,6 @@ button:hover {
     transition: 0.3s;
 }
 
-/* Hiệu ứng hover cho liên kết (giống nút) */
 .button-link:hover {
     background: #fff;
     color: var(--grad-clr1);

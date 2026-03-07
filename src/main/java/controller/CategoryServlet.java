@@ -30,7 +30,6 @@ public class CategoryServlet extends HttpServlet {
             return;
         }
 
-        // Logic tìm kiếm và hiển thị danh sách (giữ nguyên)
         String keyword = request.getParameter("keyword");
 
         List<Category> listC = dao.getAllCategoriesWithTotalInventory(keyword);
@@ -41,7 +40,7 @@ public class CategoryServlet extends HttpServlet {
 
         request.setAttribute("listC", listC);
         request.setAttribute("keyword", keyword);
-        request.setAttribute("activePage", "category"); // Đã có lệnh này để active menu
+        request.setAttribute("activePage", "category");
 
         request.getRequestDispatcher("/admin_category.jsp").forward(request, response);
     }
@@ -55,7 +54,7 @@ public class CategoryServlet extends HttpServlet {
 
         if (dao.insertCategory(name)) {
             request.getSession().setAttribute("msg", "Đã thêm danh mục: " + name);
-            request.getSession().setAttribute("msgType", "success"); // Quan trọng: Thêm type success
+            request.getSession().setAttribute("msgType", "success");
         } else {
             request.getSession().setAttribute("msg", "Thêm danh mục thất bại!");
             request.getSession().setAttribute("msgType", "error");

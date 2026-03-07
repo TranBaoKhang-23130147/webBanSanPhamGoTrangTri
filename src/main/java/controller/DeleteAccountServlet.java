@@ -32,7 +32,7 @@ public class DeleteAccountServlet extends HttpServlet {
             boolean success = dao.deleteUser(user.getId());
 
             if (success) {
-                session.invalidate(); // 👈 logout luôn
+                session.invalidate(); 
                 response.sendRedirect("login.jsp?msg=account_deleted");
             } else {
                 response.sendRedirect("admin_setting.jsp?error=delete_failed");

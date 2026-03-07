@@ -27,19 +27,16 @@
             ${sessionScope.ADD_CART_SUCCESS}
     </div>
 
-    <%-- Xóa sau khi hiển thị --%>
     <c:remove var="ADD_CART_SUCCESS" scope="session"/>
 </c:if>
 
 <div class="product-detail">
     <div class="product-gallery">
         <div class="main-image">
-            <%-- Thêm ID để JavaScript có thể tìm thấy ảnh này --%>
             <img id="main-product-img" src="${p.imageUrl}" alt="${p.nameProduct}" style="width: 100%;">
         </div>
 
         <div class="thumb-list" style="display: flex; gap: 5px; margin-top: 10px;">
-            <%-- Dùng p.subImages là đúng vì Servlet bạn gán vào đối tượng p --%>
             <c:forEach var="img" items="${p.subImages}">
                 <img src="${img.urlImage}"
                      onclick="changeMainImage(this.src)"
@@ -49,7 +46,6 @@
     </div>
 
     <script>
-        // Hàm này sẽ chạy khi bạn click vào ảnh nhỏ
         function changeMainImage(newSrc) {
             document.getElementById('main-product-img').src = newSrc;
         }
@@ -57,7 +53,6 @@
 
     <div class="product-info">
         <h2 class="product-title">${p.nameProduct}</h2>
-        <%-- Trong vòng lặp c:forEach --%>
         <p>Số lượng còn lại: <strong>${p.totalQuantity}</strong> sản phẩm</p>        <div class="rating-price-wrapper">
         <div class="rating">
             <c:forEach begin="1" end="5" var="i">
@@ -67,7 +62,6 @@
             <span>| ${p.totalReviews} đánh giá</span>
         </div>
         <div class="product-price-section">
-            <%-- Hiển thị giá (Nếu có biến thể thì lấy giá biến thể đầu tiên làm mặc định) --%>
                 <div class="product-price" id="productPrice">
 
                 <fmt:formatNumber value="${p.price}" pattern="#,###"/> VND
@@ -160,7 +154,6 @@
     <div class="description-content">
         <p><strong>${p.nameProduct}</strong></p>
 
-        <%-- Lấy từ bảng Descriptions --%>
         <p>${p.detailDescription.introduce}</p>
 
         <h3>Đặc Điểm Nổi Bật:</h3>
@@ -170,7 +163,6 @@
 
         <h3>Thông tin chi tiết:</h3>
         <ul>
-            <%-- Lấy từ bảng Informations thông qua Description --%>
             <li><strong>Chất liệu:</strong> ${p.detailDescription.information.material}</li>
             <li><strong>Kích thước:</strong> ${p.detailDescription.information.size}</li>
             <li><strong>Màu sắc:</strong> ${p.detailDescription.information.color}</li>
@@ -187,8 +179,6 @@
 <section class="review-section" id="reviewArea">
     <h2 class="review-title">Đánh giá sản phẩm</h2>
 
-    <!-- ===== MESSAGE ===== -->
-
     <c:if test="${not empty sessionScope.successMessage}">
         <div style="color:green;font-weight:bold;margin-bottom:15px">
                 ${sessionScope.successMessage}
@@ -202,8 +192,6 @@
         </div>
         <c:remove var="errorMessage" scope="session"/>
     </c:if>
-
-    <!-- ===== SUMMARY ===== -->
 
     <div class="review-summary">
         <div class="score-box">
@@ -219,13 +207,9 @@
         </div>
     </div>
 
-    <!-- ===== NÚT VIẾT ĐÁNH GIÁ ===== -->
-
     <c:if test="${not empty sessionScope.LOGGED_USER}">
 
     </c:if>
-
-    <!-- ===== FORM REVIEW (CHỈ HIỆN KHI review=true) ===== -->
 
     <c:if test="${not empty sessionScope.LOGGED_USER && param.review == 'true'}">
 
@@ -261,8 +245,6 @@
         </div>
     </c:if>
 
-    <!-- ===== CHƯA LOGIN ===== -->
-
     <c:if test="${empty sessionScope.LOGGED_USER}">
         <p>
             <a href="${pageContext.request.contextPath}/login.jsp">
@@ -270,8 +252,6 @@
             </a>
         </p>
     </c:if>
-
-    <!-- ===== LIST REVIEW ===== -->
 
     <div class="review-list">
 
@@ -308,7 +288,6 @@
 
 </section>
 
-<!-- AUTO SCROLL -->
 
 <c:if test="${param.review == 'true'}">
     <script>
@@ -318,8 +297,6 @@
 
 <jsp:include page="footer.jsp"></jsp:include>
 <script>
-    // 1. Chuyển dữ liệu biến thể từ Java sang JavaScript JSON
-    // Thay thế đoạn từ dòng 186 đến 195 bằng đoạn này:
     const allVariants = [
         <c:forEach var="v" items="${p.variants}" varStatus="status">
         {
@@ -327,7 +304,6 @@
             colorId: "${v.color.id}",
             sizeId: "${v.size.id}",
             price: ${v.variant_price},
-            // Đảm bảo lấy đúng trường inventory_quantity từ database
             stock: ${v.inventory_quantity}
         }${!status.last ? ',' : ''}
         </c:forEach>
@@ -336,7 +312,6 @@
     let selectedSizeId = null;
 
     function selectColor(colorId) {
-        // Nếu nhấn lại chính nó thì bỏ chọn
         selectedColorId = (selectedColorId === colorId) ? null : colorId;
         updateUI();
     }
@@ -346,9 +321,7 @@
         updateUI();
     }
 
-    // Thay thế hàm updateUI() cũ bằng đoạn này:
     function updateUI() {
-        // 1. Cập nhật class Active cho nút
         document.querySelectorAll('.color-btn').forEach(btn => {
             btn.classList.toggle('active', btn.getAttribute('data-color-id') === selectedColorId);
         });
@@ -356,7 +329,6 @@
             btn.classList.toggle('active', btn.getAttribute('data-size-id') === selectedSizeId);
         });
 
-        // 2. Vô hiệu hóa các nút không hợp lệ (Logic cũ của bạn)
         document.querySelectorAll('.size-btn').forEach(btn => {
             const sizeId = btn.getAttribute('data-size-id');
             const exists = selectedColorId ? allVariants.some(v => v.colorId === selectedColorId && v.sizeId === sizeId) : true;
@@ -373,13 +345,11 @@
 
         const activeVariant = allVariants.find(v => v.colorId === selectedColorId && v.sizeId === selectedSizeId);
         const stockDisplay = document.querySelector('.product-info p strong');
-        const qtyInput = document.getElementById('qtyInput'); // Ô nhập số lượng
+        const qtyInput = document.getElementById('qtyInput');
         const priceDisplay = document.getElementById('productPrice');
 
         if (activeVariant) {
             stockDisplay.innerText = activeVariant.stock;
-
-            // ✅ SET GIÁ THEO BIẾN THỂ
             priceDisplay.innerText =
                 new Intl.NumberFormat('vi-VN').format(activeVariant.price) + " VND";
 
@@ -402,7 +372,6 @@
         } else {
             stockDisplay.innerText = "${p.totalQuantity}";
 
-            // 🔁 RESET GIÁ VỀ GIÁ GỐC
             priceDisplay.innerText =
                 new Intl.NumberFormat('vi-VN').format(${p.price}) + " VND";
 
@@ -425,7 +394,6 @@
             alert("Biến thể không hợp lệ");
             return false;
         }
-        // Thêm đoạn này vào trong hàm submitAddToCart() trước dòng return true;
         if (variant.stock <= 0) {
             alert("Sản phẩm này hiện đã hết hàng, vui lòng chọn mẫu khác!");
             return false;

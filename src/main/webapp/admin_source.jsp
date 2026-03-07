@@ -29,7 +29,6 @@
                     <div class="search-input-group" style="flex-grow: 1;">
                         <input type="text" placeholder="Tìm kiếm nguồn hàng..." class="search-input" id="searchInput" value="${keyword}">
                     </div>
-                    <%-- Cập nhật hàm gọi: openSourceModal --%>
                     <button class="add-new-category-btn" onclick="openSourceModal()">
                         <i class="fa-solid fa-plus"></i> Thêm Nguồn Hàng Mới
                     </button>
@@ -42,7 +41,6 @@
                             <th class="col-id">ID</th>
                             <th class="col-name">Tên Nguồn Hàng</th>
                             <th class="col-product">Số Sản Phẩm</th>
-<%--                            <th class="col-product-count">Tổng tồn kho </th>--%>
                             <th class="col-actions">Thao tác</th>
                         </tr>
                         </thead>
@@ -55,9 +53,7 @@
                                         ${productCountMap[s.id] != null ? productCountMap[s.id] : 0}
                                 </td>
 
-<%--                                <td class="col-product-count">${s.totalInventory}</td>   <!-- ← sửa ở đây -->  --%>
                                 <td class="col-actions">
-                                        <%-- Cập nhật hàm gọi: openSourceModal và deleteSource --%>
                                     <i class="fa-solid fa-pen-to-square"
                                        onclick="openSourceModal('edit', '${s.id}', '${s.sourceName}')"
                                        title="Chỉnh sửa"></i>
@@ -73,7 +69,6 @@
                 </div>
             </div>
 
-            <%-- Cập nhật ID Modal: sourceModal --%>
             <div id="sourceModal" class="modal">
                 <div class="modal-content">
                     <span class="close-btn" onclick="closeSourceModal()">&times;</span>

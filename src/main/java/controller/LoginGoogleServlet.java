@@ -28,7 +28,6 @@ public class LoginGoogleServlet extends HttpServlet {
         User user = dao.checkLoginGoogle(email);
 
         if (user == null) {
-            // Lần đầu đăng nhập -> Tạo mới
             User newUser = new User();
             newUser.setEmail(email);
             newUser.setUsername(googlePojo.getName());
@@ -37,13 +36,11 @@ public class LoginGoogleServlet extends HttpServlet {
             newUser.setPassword("GOOGLE_" + System.currentTimeMillis());
 
             if (dao.insertUserFromGoogle(newUser)) {
-                user = dao.checkLoginGoogle(email); // Lấy lại để có ID vừa tạo
+                user = dao.checkLoginGoogle(email);
             }
 
         }
 
-        // BƯỚC 2: XỬ LÝ SESSION VÀ PHÂN QUYỀN (Dành cho cả User cũ và User vừa mới thêm)
-        // Lưu ý: Đoạn này nằm NGOÀI khối if(user == null) ở trên
         if (user != null) {
             if (!"Active".equals(user.getStatus())) {
                 request.setAttribute("ERROR_MESSAGE", "Tài khoản bị khóa!");
@@ -51,11 +48,9 @@ public class LoginGoogleServlet extends HttpServlet {
                 return;
             }
 
-            // GÁN SESSION NHƯ BÌNH THƯỜNG
             HttpSession session = request.getSession();
-            session.setAttribute("LOGGED_USER", user); // Bây giờ tác vụ khác sẽ nhận được session này
+            session.setAttribute("LOGGED_USER", user); 
 
-            // PHÂN QUYỀN
             if ("Admin".equalsIgnoreCase(user.getRole())) {
                 response.sendRedirect(request.getContextPath() + "/admin_homepage.jsp");
             } else if ("Staff".equalsIgnoreCase(user.getRole())) {

@@ -1,9 +1,8 @@
-// xử lý khi ấn nút user
+
 function toggleUserMenu() {
     document.getElementById("userMenuContent").classList.toggle("show");
 }
 
-// Đóng menu nếu người dùng click ra ngoài
 window.onclick = function(event) {
     if (!event.target.matches('.user-logo')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -30,13 +29,10 @@ function openProductModal(isEdit = false) {
 
     } else {
         modalTitleSpan.textContent = 'Thêm';
-        // Đảm bảo form được reset khi thêm mới
         modal.querySelector('.product-form').reset();
     }
-
     modal.style.display = 'flex';
 }
-
 function closeProductModal() {
     document.getElementById('product-modal').style.display = 'none';
 }

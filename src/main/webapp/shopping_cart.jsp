@@ -28,8 +28,6 @@
 <div class="main-content">
     <div class="cart-page-content-new">
 
-
-        <!-- ================= LEFT: CART LIST ================= -->
         <div class="shopping-cart-list">
 
             <div class="cart-header-text">
@@ -63,13 +61,11 @@
 
                     <div class="product-actions-price">
 
-                        <!-- đơn giá -->
                         <span class="item-price"
                               data-price="${item.variant.variant_price}">
             <fmt:formatNumber value="${item.variant.variant_price}" pattern="#,###"/> đ
         </span>
 
-                        <!-- số lượng -->
                         <div class="quantity-control-list">
                             <button type="button"
                                     class="quantity-btn-list"
@@ -105,7 +101,6 @@
         </div>
 
 
-        <!-- ================= RIGHT: SUMMARY ================= -->
         <div class="cart-summary-container">
 
 <%--    <div class="voucher-input">--%>
@@ -164,8 +159,6 @@
         </div>
     </div>
 </div>
-<!-- Modal Thanh toán -->
-<!-- Modal Thanh toán -->
 <div id="checkoutModal" class="modal" style="display: none;">
     <div class="modal-content">
         <span class="close-btn" onclick="closeCheckoutModal()">×</span>
@@ -193,9 +186,7 @@
                             - ${a.name} (${a.phone})
                         </option>
                     </c:forEach>
-                    <!-- KHÔNG có option "Nhập địa chỉ khác" nữa -->
                 </select>
-                <!-- Nếu danh sách rỗng, có thể thêm thông báo -->
                 <c:if test="${empty addresses}">
                     <p style="color:#e74c3c; margin-top:8px; font-size:0.95em;">
                         Bạn chưa có địa chỉ nào. Vui lòng thêm địa chỉ trong trang cá nhân trước khi đặt hàng.
@@ -216,7 +207,6 @@
             </div>
 
             <div id="bankSelection" style="display:none; background:#f4f4f4; padding:12px; border-radius:8px; margin:10px 0;">
-                <!-- phần chọn thẻ giữ nguyên như cũ -->
                 <c:choose>
                     <c:when test="${not empty listPayments}">
                         <c:forEach var="p" items="${listPayments}">
@@ -248,160 +238,7 @@
     </div>
 </div>
 <jsp:include page="footer.jsp"/>
-<script>
-    // Tính phí ship (giữ nguyên)
-    function getShippingFee(subTotal) {
-        if (subTotal < 100000) return 0;
-        if (subTotal < 1000000) return 50000;
-        if (subTotal < 3000000) return 100000;
-        if (subTotal < 5000000) return 200000;
-        if (subTotal < 10000000) return 500000;
-        return 1000000;
-    }
-
-    // Cập nhật tổng tiền (giữ nguyên, nhưng thêm format đẹp hơn)
-    function updateTotal() {
-        let subTotal = 0;
-        const taxRate = 0.08;
-
-        document.querySelectorAll('.cart-item').forEach(item => {
-            const checkbox = item.querySelector('.cart-check');
-            if (checkbox && checkbox.checked) {
-                const price = parseFloat(item.querySelector('.item-price').getAttribute('data-price')) || 0;
-                const qty = parseInt(item.querySelector('.item-qty').value) || 0;
-                subTotal += price * qty;
-            }
-        });
-
-        const taxAmount = subTotal * taxRate;
-        const shippingFee = getShippingFee(subTotal);
-        const finalTotal = subTotal > 0 ? subTotal + taxAmount + shippingFee : 0;
-
-        document.getElementById('sub-total').innerText = subTotal.toLocaleString('vi-VN') + " VND";
-        document.getElementById('tax-amount').innerText = taxAmount.toLocaleString('vi-VN') + " VND";
-        document.getElementById('shipping-fee').innerText = shippingFee.toLocaleString('vi-VN') + " VND";
-        document.getElementById('cart-total').innerText = finalTotal.toLocaleString('vi-VN') + " VND";
-    }
-
-    // Thay đổi số lượng + gửi AJAX (giữ nguyên, nhưng thêm kiểm tra an toàn hơn)
-    function changeQty(btn, delta) {
-        const cartItem = btn.closest('.cart-item');
-        const qtyInput = cartItem.querySelector(".item-qty");
-
-        // Lấy ID và số lượng mới
-        const variantId = cartItem.getAttribute("data-variant-id");
-        let qty = (parseInt(qtyInput.value) || 0) + delta;
-
-        if (qty < 1) return;
-
-        // Cập nhật giao diện trước cho mượt
-        const oldQty = qtyInput.value;
-        qtyInput.value = qty;
-        updateTotal();
-
-        // TẠO URL CHUẨN: Đảm bảo các tham số được nối chính xác
-        const url = "CartServlet?action=updateQtyAjax&variantId=" + variantId + "&quantity=" + qty;
-
-        fetch(url, {
-            method: 'GET',
-            headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (!data.success) {
-                    alert("Lỗi: " + data.message);
-                    qtyInput.value = oldQty;
-                    updateTotal();
-                }
-            })
-            .catch(err => {
-                console.error("AJAX Error:", err);
-                alert("Không thể kết nối đến máy chủ");
-                qtyInput.value = oldQty;
-                updateTotal();
-            });
-    }
-    // Mở modal thanh toán (gộp 2 hàm thành 1)
-    function openCheckoutModal() {
-        const totalText = document.getElementById('cart-total').innerText.trim();
-
-        // 1. Kiểm tra xem có tích chọn món nào không
-        const selectedCheckboxes = document.querySelectorAll('.cart-check:checked');
-
-        if (selectedCheckboxes.length === 0 || totalText === "0 VND") {
-            alert("Vui lòng tích chọn ít nhất một sản phẩm để thanh toán!");
-            return;
-        }
-
-        // 2. Xóa các ID cũ trong form (nếu có) để tránh bị lặp dữ liệu
-        const form = document.getElementById('checkoutForm');
-        const oldHiddenInputs = form.querySelectorAll('input[name="selectedItems"]');
-        oldHiddenInputs.forEach(input => input.remove());
-
-        // 3. Tạo các input hidden mới dựa trên những gì người dùng vừa tích chọn
-        selectedCheckboxes.forEach(cb => {
-            const hiddenInput = document.createElement('input');
-            hiddenInput.type = 'hidden';
-            hiddenInput.name = 'selectedItems';
-            hiddenInput.value = cb.value; // Đây chính là variant.id
-            form.appendChild(hiddenInput);
-        });
-
-        // 4. Hiển thị tổng tiền lên modal và mở modal
-        document.getElementById('modalTotal').innerText = totalText;
-        document.getElementById('checkoutModal').style.display = 'flex';
-    }
-
-    function closeCheckoutModal() {
-        document.getElementById('checkoutModal').style.display = 'none';
-    }
-
-    // Đóng modal khi click bên ngoài
-    window.onclick = function(event) {
-        const modal = document.getElementById('checkoutModal');
-        if (event.target === modal) {
-            closeCheckoutModal();
-        }
-    };
-
-    // Hiển thị/ẩn phần chọn thẻ ngân hàng khi thay đổi phương thức thanh toán
-    function toggleBankSelection() {
-        const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value;
-        const bankSection = document.getElementById('bankSelection');
-        const cardRadios = document.querySelectorAll('input[name="cardId"]');
-
-        if (selectedMethod === 'BANK') {
-            bankSection.style.display = 'block';
-            cardRadios.forEach(r => r.required = true); // Bắt buộc chọn thẻ
-            // ... (phần kiểm tra thẻ rỗng của bạn giữ nguyên)
-        } else {
-            bankSection.style.display = 'none';
-            cardRadios.forEach(r => r.required = false); // Không bắt buộc khi chọn COD
-        }
-    }
-    // Disable nút submit khi đang xử lý
-    document.getElementById('checkoutForm')?.addEventListener('submit', function(e) {
-        const btn = document.getElementById('submitOrderBtn');
-        if (btn) {
-            btn.disabled = true;
-            btn.innerHTML = 'Đang xử lý...';
-        }
-    });
-
-    // Khởi tạo sự kiện khi trang load
-    window.onload = function () {
-        updateTotal();
-
-        // Gắn sự kiện change cho tất cả radio paymentMethod
-        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
-            radio.addEventListener('change', toggleBankSelection);
-        });
-
-        // Gọi lần đầu để hiển thị đúng trạng thái ban đầu (COD)
-        toggleBankSelection();
-    };
-</script>
-
+<script src="${pageContext.request.contextPath}/js/shopping_cart.js"></script>
 
 </body>
 </html>

@@ -18,11 +18,9 @@ public class AdminProductTypeServlet extends HttpServlet {
 
         ProductDao productDao = new ProductDao();
 
-        // Danh sách loại SP
         List<ProductType> listPT = productDao.getAllProductTypes();
 
 
-        // Map<typeId, soLuongSP>
         Map<Integer, Integer> productCountMap = productDao.countProductByType();
 
         request.setAttribute("listPT", listPT);

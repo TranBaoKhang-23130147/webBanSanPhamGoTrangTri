@@ -14,15 +14,13 @@ public class AdminAddCustomerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // PHẢI ĐẶT TRƯỚC out = response.getWriter()
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json"); // Luôn trả về JSON
+        response.setContentType("application/json");
 
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
         PrintWriter out = response.getWriter();
-// Thêm vào đầu phương thức doPost hoặc doGet
         if ("checkEmail".equals(action)) {
             String email = request.getParameter("email");
             UserDao dao = new UserDao();
@@ -31,7 +29,6 @@ public class AdminAddCustomerServlet extends HttpServlet {
             out.flush();
             return;
         }
-        // 1. Xử lý logic Xác nhận mã (verifyOnly)
         if ("verifyOnly".equals(action)) {
             String inputOtp = request.getParameter("otp");
             String sessionOtp = (String) session.getAttribute("OTP");
@@ -45,7 +42,6 @@ public class AdminAddCustomerServlet extends HttpServlet {
             return;
         }
 
-        // 2. Logic Lưu người dùng
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
@@ -63,13 +59,11 @@ public class AdminAddCustomerServlet extends HttpServlet {
                 out.print("{\"status\": \"error\", \"message\": \"Mật khẩu phải có ít nhất 8 ký tự, bao gồm 1 chữ hoa và 1 ký tự đặc biệt.\"}");
                 return;
             }
-            // Kiểm tra dữ liệu đầu vào cơ bản
             if (username == null || email == null || password == null) {
                 out.print("{\"status\": \"error\", \"message\": \"Vui lòng điền đầy đủ thông tin bắt buộc.\"}");
                 return;
             }
 
-            // --- KIỂM TRA OTP ---
             if (sessionOtp == null || otpTime == null) {
                 out.print("{\"status\": \"error\", \"message\": \"Phiên xác thực đã hết hạn.\"}");
                 return;
@@ -86,14 +80,12 @@ public class AdminAddCustomerServlet extends HttpServlet {
                 return;
             }
 
-            // --- LƯU NGƯỜI DÙNG ---
             UserDao dao = new UserDao();
             if (dao.checkEmailExist(email)) {
                 out.print("{\"status\": \"error\", \"message\": \"Email này đã tồn tại trong hệ thống.\"}");
                 return;
             }
 
-            // Thực hiện chèn vào DB
             boolean success = dao.adminInsertUser(username, email, phone, password, role);
 
             if (success) {

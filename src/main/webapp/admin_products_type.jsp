@@ -43,12 +43,10 @@
                             <th class="col-id">ID</th>
                             <th class="col-name">Tên Loại Sản Phẩm</th>
                             <th class="col-product">Số Sản Phẩm</th>
-<%--                            <th class="col-product-count">Tổng tồn kho </th>--%>
                             <th class="col-actions">Thao tác</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <%-- Giả sử Servlet gửi listPT --%>
                         <c:forEach items="${listPT}" var="pt">
                             <tr>
                                 <td class="col-id">${pt.id}</td>
@@ -57,7 +55,6 @@
                                         ${productCountMap[pt.id] != null ? productCountMap[pt.id] : 0}
                                 </td>
 
-<%--                                <td class="col-product-count">${pt.totalInventory}</td>   <!-- ← sửa ở đây -->--%>
                                 <td class="col-actions">
                                     <i class="fa-solid fa-pen-to-square"
                                        onclick="editProductType('${pt.id}', '${pt.productTypeName}')"></i>
@@ -89,7 +86,6 @@
         </main>
     </div>
 </div>
-<%-- Kiểm tra và hiển thị thông báo từ Servlet --%>
 <c:if test="${not empty sessionScope.msg}">
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -116,15 +112,9 @@
         const form = document.getElementById('productTypeForm');
         const inputName = document.getElementById('productTypeName');
 
-        // 1. Hiển thị Modal
         modal.style.display = 'block';
-
-        // 2. Đổi tiêu đề và điền dữ liệu
         modalTitle.innerText = "Chỉnh Sửa Loại Sản Phẩm";
         inputName.value = name;
-
-        // 3. Thay đổi action của form để gửi ID qua URL hoặc thêm hidden input
-        // Cách tốt nhất là thêm một hidden input cho ID
         let hiddenId = document.getElementById('editId');
         if (!hiddenId) {
             hiddenId = document.createElement('input');
@@ -134,14 +124,11 @@
             form.appendChild(hiddenId);
         }
         hiddenId.value = id;
-
-        // 4. Đổi đường dẫn action tới Servlet Update
         form.action = "update-product-type";
     }
 
     function closeProductTypeModal() {
         document.getElementById('productTypeModal').style.display = 'none';
-        // Reset form về trạng thái Thêm mới khi đóng
         document.getElementById('modalTitle').innerText = "Thêm Loại Sản Phẩm Mới";
         document.getElementById('productTypeForm').action = "add-product-type";
         document.getElementById('productTypeForm').reset();

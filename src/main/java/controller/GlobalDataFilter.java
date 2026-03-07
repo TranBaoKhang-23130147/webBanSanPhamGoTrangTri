@@ -9,7 +9,6 @@ import model.ProductType;
 import java.io.IOException;
 import java.util.List;
 
-// WebFilter("/*") có nghĩa là nó sẽ chạy qua tất cả các trang
 @WebFilter("/*")
 public class GlobalDataFilter implements Filter {
 
@@ -20,18 +19,13 @@ public class GlobalDataFilter implements Filter {
         CategoryDao cDao = new CategoryDao();
         ProductDao pDao = new ProductDao();
 
-        // 1. Lấy danh sách danh mục (cho Header)
         List<Category> listCC = cDao.getAllCategory();
 
-        // 2. Lấy danh sách loại sản phẩm (cho Sidebar/Filter nếu cần)
         List<ProductType> listType = pDao.getAllProductTypes();
 
-        // 3. Đẩy vào request
-        // Bây giờ mọi trang JSP đều có thể gọi ${listCC} và ${listType}
         request.setAttribute("listCC", listCC);
         request.setAttribute("listType", listType);
 
-        // Cho phép đi tiếp đến Servlet hoặc JSP mục tiêu
         chain.doFilter(request, response);
     }
 

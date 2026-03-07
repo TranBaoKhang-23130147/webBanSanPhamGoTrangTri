@@ -1,7 +1,6 @@
 :root {
     --background-color: #FFFFFF;
     --primary-color: #8B5E3C;
-    /*--text-color: #3E2F1C;*/
     --text-color: #3b2f2f;
     --text-color2:#6b5743;
     --btn:#A56B43;
@@ -141,7 +140,6 @@ body {
     transition: 0.3s;
 }
 
-/* Khi hover vào menu */
 .menu:hover {
     color: var(--primary-color);
 }
@@ -285,7 +283,6 @@ body {
     font-size: 14px;
 }
 
-/* Categories */
 .categories {
     text-align: center;
     padding: 80px 40px;
@@ -334,7 +331,6 @@ body {
     font-size: 13px;
 }
 
-/* Featured */
 .featured {
     background: #fffaf4;
     text-align: center;
@@ -368,7 +364,6 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
-/* Sale tag */
 .sale-tag {
     position: absolute;
     top: 12px;
@@ -381,7 +376,6 @@ body {
     font-weight: bold;
 }
 
-/* Tên sản phẩm */
 .product-name {
     margin: 12px 0 6px;
     font-size: 15px;
@@ -389,14 +383,12 @@ body {
     color: #333;
 }
 
-/* Rating */
 .rating {
     color: #ff9800;
     font-size: 14px;
     margin-bottom: 8px;
 }
 
-/* Giá */
 .price-block {
     margin-bottom: 12px;
 }
@@ -413,7 +405,6 @@ body {
     margin-left: 6px;
 }
 
-/* Nút */
 .buy-btn, .add-btn {
     width: 100%;
     padding: 10px 0;

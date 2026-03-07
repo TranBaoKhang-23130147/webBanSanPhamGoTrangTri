@@ -1,11 +1,11 @@
 package controller;
 
-import dao.CategoryDao; // THÊM DÒNG NÀY
+import dao.CategoryDao;
 import dao.ProductDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import model.Category; // THÊM DÒNG NÀY
+import model.Category;
 import model.Product;
 
 import java.io.IOException;
@@ -25,18 +25,16 @@ public class ProductAllServlet extends HttpServlet {
         }
 
         ProductDao dao = new ProductDao();
-        CategoryDao cDao = new CategoryDao(); // KHỞI TẠO DAO MỚI
+        CategoryDao cDao = new CategoryDao();
 
         List<Product> list = dao.getProductsByPage(page, pageSize);
-        // LẤY DANH SÁCH CATEGORY TỪ DATABASE
         List<Category> listCC = cDao.getAllCategory();
 
         int totalProducts = dao.countAllProducts();
         int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
 
-        // ĐẨY DỮ LIỆU SANG JSP
-        request.setAttribute("listCC", listCC); // Dùng listCC cho phần Category phía trên
-        request.setAttribute("listType", dao.getAllProductTypes()); // Giữ cho bộ lọc sidebar
+        request.setAttribute("listCC", listCC);
+        request.setAttribute("listType", dao.getAllProductTypes());
         request.setAttribute("listColor", dao.getAllColors());
         request.setAttribute("listP", list);
         request.setAttribute("currentPage", page);

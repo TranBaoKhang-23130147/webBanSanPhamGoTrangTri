@@ -57,12 +57,10 @@ public class AdminEditProductServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            // ================== 1. ID ==================
             int productId = Integer.parseInt(req.getParameter("productId"));
             int infoId    = Integer.parseInt(req.getParameter("infoId"));
             int descId    = Integer.parseInt(req.getParameter("descId"));
 
-            // ================== 2. PRODUCT ==================
             Product p = new Product();
             p.setId(productId);
             p.setNameProduct(req.getParameter("productName"));
@@ -72,19 +70,16 @@ public class AdminEditProductServlet extends HttpServlet {
             p.setProductTypeId(Integer.parseInt(req.getParameter("productTypeId")));
             p.setMfgDate(Date.valueOf(req.getParameter("mfgDate")));
 
-            // ================== 3. INFORMATION ==================
             Information info = new Information();
             info.setId(infoId);
             info.setMaterial(req.getParameter("material"));
             info.setGuarantee(req.getParameter("guarantee"));
 
-            // ================== 4. DESCRIPTION ==================
             Description desc = new Description();
             desc.setId(descId);
             desc.setIntroduce(req.getParameter("introduce"));
             desc.setHighlights(req.getParameter("highlights"));
 
-            // ================== 5. IMAGES ==================
             String imageRaw = req.getParameter("productImages");
             List<String> imagePaths = new ArrayList<>();
 
@@ -95,7 +90,6 @@ public class AdminEditProductServlet extends HttpServlet {
                 if (old != null) imagePaths = old.getListImages();
             }
 
-            // ================== 6. VARIANTS ==================
             String[] variantIds   = req.getParameterValues("variantId[]");
             String[] skus         = req.getParameterValues("variantSKU[]");
             String[] colorIds     = req.getParameterValues("variantColor[]");
@@ -109,25 +103,22 @@ public class AdminEditProductServlet extends HttpServlet {
 
             List<ProductVariants> variants = new ArrayList<>();
 
-            int n = skus.length;   // 🔥 MẢNG CHUẨN
+            int n = skus.length;
 
             for (int i = 0; i < n; i++) {
                 ProductVariants v = new ProductVariants();
                 v.setProduct_id(productId);
 
-                // ---- ID biến thể ----
                 String idStr = (variantIds != null && i < variantIds.length)
                         ? variantIds[i].trim()
                         : "0";
 
-                v.setId(Integer.parseInt(idStr)); // 0 = biến thể mới
+                v.setId(Integer.parseInt(idStr));
 
-                // ---- Validate ----
                 if (skus[i] == null || skus[i].trim().isEmpty()) {
                     throw new RuntimeException("SKU không được rỗng (biến thể #" + (i + 1) + ")");
                 }
 
-                // ---- Set dữ liệu ----
                 v.setSku(skus[i].trim());
                 v.setColor_id(Integer.parseInt(colorIds[i]));
                 v.setSize_id(Integer.parseInt(sizeIds[i]));
@@ -137,7 +128,6 @@ public class AdminEditProductServlet extends HttpServlet {
                 variants.add(v);
             }
 
-            // ================== 7. UPDATE ==================
             boolean success = productDao.updateFullProduct(
                     p, desc, info, variants, imagePaths
             );

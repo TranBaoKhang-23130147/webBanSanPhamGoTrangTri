@@ -14,17 +14,17 @@
         @Override
         protected void doGet(HttpServletRequest request, HttpServletResponse response)
                 throws ServletException, IOException {
-            String action = request.getServletPath(); // Lấy đường dẫn đang gọi
+            String action = request.getServletPath();
             if (action.equals("/delete-product-type")) {
                 int id = Integer.parseInt(request.getParameter("id"));
                 ProductTypeDao dao = new ProductTypeDao();
 
                 if (dao.deleteProductType(id)) {
                     request.getSession().setAttribute("msg", "Đã xóa loại sản phẩm thành công.");
-                    request.getSession().setAttribute("msgType", "success"); // Màu xanh
+                    request.getSession().setAttribute("msgType", "success");
                 } else {
                     request.getSession().setAttribute("msg", "Không thể xóa! Loại sản phẩm này đang có sản phẩm tồn tại.");
-                    request.getSession().setAttribute("msgType", "error"); // Màu đỏ
+                    request.getSession().setAttribute("msgType", "error");
                 }
                 response.sendRedirect(request.getContextPath() + "/AdminProductTypeServlet");
                 return;
@@ -41,7 +41,7 @@
 
 
             request.setAttribute("keyword", keyword);
-            request.setAttribute("activePage", "productType"); // Để active menu
+            request.setAttribute("activePage", "productType");
 
             request.getRequestDispatcher("admin_products_type.jsp").forward(request, response);
         }
@@ -54,9 +54,8 @@
             ProductTypeDao dao = new ProductTypeDao();
 
             if (dao.insertProductType(name)) {
-                // Cần có cả 2 dòng này
                 request.getSession().setAttribute("msg", "Đã thêm loại sản phẩm: " + name);
-                request.getSession().setAttribute("msgType", "success"); // <--- THÊM DÒNG NÀY
+                request.getSession().setAttribute("msgType", "success");
             } else {
                 request.getSession().setAttribute("msg", "Thêm thất bại!");
                 request.getSession().setAttribute("msgType", "error");

@@ -2,13 +2,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
-    // Ngăn chặn trình duyệt lưu cache trang này
-    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
-    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
-    response.setDateHeader("Expires", 0); // Proxies
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
 %>
 <%
-    // Lấy đúng tên biến LOGGED_USER từ Session
     User user = (User) session.getAttribute("LOGGED_USER");
     if (user == null) {
         response.sendRedirect(request.getContextPath() + "/login.jsp");
@@ -42,14 +40,12 @@
         <div class="user-info">
             <div class="avatar-container">
                 <img
-                <%-- Dùng LOGGED_USER để đồng bộ ngay sau khi nhấn Lưu --%>
                         src="${pageContext.request.contextPath}${not empty LOGGED_USER.avatarUrl ? LOGGED_USER.avatarUrl : '/img/logo.png'}"
                         alt="Avatar"
                         class="avatar-img"
                         onerror="this.src='${pageContext.request.contextPath}/img/logo.png';"
                         style="width: 60px; height: 60px; object-fit: cover; border-radius: 50%;" />
             </div>
-            <%-- Hiển thị tên từ Session --%>
             <div class="user-name">${LOGGED_USER.username}</div>
         </div>
 
@@ -92,7 +88,6 @@
             <h2>Hồ sơ</h2>
             <p class="subtitle">Quản lý thông tin hồ sơ để giữ an toàn cho tài khoản của bạn</p>
 
-            <%-- Thêm thẻ form bao toàn bộ container --%>
             <form action="UpdateProfileController" method="post">
                 <div class="profile-container">
                     <div class="profile-left">
@@ -112,18 +107,15 @@
                         </div>
                         <div class="form-group">
                             <label for="ho-ten">Tên hiển thị:</label>
-                            <%-- Thêm name="fullName" --%>
                             <input type="text" name="fullName" value="<%= user.getUsername() != null ? user.getUsername() : "" %>">
                         </div>
                         <div class="form-group">
                             <label for="ten-hien-thi">Tên khác:</label>
-                            <%-- Thêm name="displayName" --%>
                             <input type="text" name="displayName" id="ten-hien-thi" value="<%= user.getDisplayName() != null ? user.getDisplayName() : "" %>">
                         </div>
                         <div class="form-group">
                             <label>Giới tính :</label>
                             <div class="radio-group">
-                                <%-- Sửa name="gender" cho cả 3 cái --%>
                                 <input type="radio" id="nam" name="gender" value="Nam" <%= "Nam".equals(user.getGender()) ? "checked" : "" %>>
                                 <label for="nam">Nam</label>
                                 <input type="radio" id="nu" name="gender" value="Nữ" <%= "Nữ".equals(user.getGender()) || user.getGender() == null ? "checked" : "" %>>
@@ -134,7 +126,6 @@
                         </div>
                         <div class="form-group">
                             <label>Ngày sinh :</label>
-                            <%-- Để đơn giản, dùng date input sẽ tự động có Ngày/Tháng/Năm mà không cần code phức tạp --%>
                             <input type="date" name="birthDate" value="<%= user.getBirthDate() %>" style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
                         </div>
                         <button type="submit" class="save-btn">Lưu</button>
@@ -144,13 +135,10 @@
                         <div class="contact-item">
                             <label>Số điện thoại :</label>
 
-                            <%-- Thay span thành input để người dùng nhập được sđt mới --%>
                             <input type="text" name="phone" value="<%= user.getPhone() != null ? user.getPhone() : "" %>" placeholder="Số điện thoại">
                         </div>
                         <div class="contact-item">
                             <label>Email :</label>
-
-                            <%-- Email thường cố định, để readonly --%>
                             <input type="email" name="email" value="<%= user.getEmail() %>" readonly style="border:none; background:none;">
                         </div>
                         <h3>Liên kết</h3>
@@ -542,7 +530,6 @@
                         </div>
                     </div>
                     <div class="order-actions" style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
-                            <%-- 1. Nút HỦY ĐƠN: Hiện khi trạng thái là 'Chờ xác nhận' --%>
                         <c:if test="${order.status == 'Chờ xác nhận'}">
                             <form action="MyPageServlet" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')">
                                 <input type="hidden" name="action" value="cancelOrder">
@@ -553,10 +540,7 @@
                             </form>
                         </c:if>
 
-                            <%-- 2. Nút HOÀN HÀNG: Hiện khi 'Đã giao' và trong vòng 7 ngày --%>
-                            <%-- Kiểm tra Đơn đã giao VÀ đã thanh toán --%>
                         <div class="order-actions" style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px;">
-                                <%-- 1. Nút HỦY ĐƠN: Hiện khi trạng thái là 'Chờ xác nhận' --%>
                             <c:if test="${order.status == 'Chờ xác nhận'}">
                                 <form action="MyPageServlet" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')">
                                     <input type="hidden" name="action" value="cancelOrder">
@@ -573,14 +557,11 @@
                                 <c:set var="days" value="${diff / (1000 * 60 * 60 * 24)}" />
 
                                 <div style="display: flex; gap: 10px; align-items: center;">
-                                        <%-- Nút VIẾT ĐÁNH GIÁ: Luôn hiện khi đã giao --%>
-                                        <%-- Nút VIẾT ĐÁNH GIÁ: Gọi hàm JS truyền vào Order ID --%>
                                     <button type="button"
                                             onclick="openReviewModal(${order.id})"
                                             style="background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
                                         Viết Đánh Giá
                                     </button>
-                                        <%-- Nút HOÀN HÀNG: Chỉ hiện trong vòng 7 ngày --%>
                                     <c:choose>
                                         <c:when test="${days <= 7}">
                                             <form action="MyPageServlet" method="post" onsubmit="return confirm('Bạn muốn yêu cầu hoàn hàng cho đơn hàng này?')" style="margin: 0;">
@@ -621,12 +602,10 @@
         
         if (allOrders != null) {
             for (Order order : allOrders) {
-                // Chỉ lấy đơn hàng đã giao (Đã giao) và thanh toán (Đã thanh toán)
                 if ("Đã giao".equals(order.getStatus()) && "Đã thanh toán".equals(order.getPaymentStatus())) {
                     List<OrderDetail> details = order.getDetails();
                     if (details != null) {
                         for (OrderDetail detail : details) {
-                            // Tạo key unique cho mỗi sản phẩm + variant + order
                             String key = detail.getProductVariantId() + "_" + order.getId();
                             if (!reviewProducts.containsKey(key)) {
                                 reviewProducts.put(key, detail);
@@ -795,32 +774,27 @@
         finder.basePath = '${pageContext.request.contextPath}/ckfinder/';
 
         finder.selectActionFunction = function(fileUrl) {
-            console.log("CKFinder gốc trả về:", fileUrl);  // debug để xem fileUrl thực tế là gì
+            console.log("CKFinder gốc trả về:", fileUrl);
 
-            var contextPath = "${pageContext.request.contextPath}" || "";  // tránh lỗi nếu contextPath rỗng
+            var contextPath = "${pageContext.request.contextPath}" || "";
             var relativeUrl = fileUrl || "";
 
-            // Loại bỏ context path nếu có ở đầu
             if (contextPath && relativeUrl.startsWith(contextPath)) {
                 relativeUrl = relativeUrl.substring(contextPath.length);
             }
 
-            // Đảm bảo luôn bắt đầu bằng dấu /
             if (relativeUrl && !relativeUrl.startsWith('/')) {
                 relativeUrl = '/' + relativeUrl;
             }
 
-            // Nếu CKFinder trả về đường dẫn thiếu phần /img/... thì thêm lại (tùy cấu trúc upload của bạn)
-            // Ví dụ: nếu bạn biết ảnh luôn nằm trong /img/products/images/
             if (!relativeUrl.includes('/img/') && !relativeUrl.includes('/products/')) {
-                var fileName = relativeUrl.split('/').pop();  // lấy tên file cuối cùng
-                relativeUrl = '/img/products/images/' + fileName;  // chỉnh đường dẫn gốc của bạn nếu khác
+                var fileName = relativeUrl.split('/').pop();
+                relativeUrl = '/img/products/images/' + fileName;
             }
 
             console.log("Context Path:", contextPath);
             console.log("Relative URL sau khi xử lý:", relativeUrl);
 
-            // Cập nhật input hidden để gửi về server
             var input = document.getElementById('user-avatar-url');
             if (input) {
                 input.value = relativeUrl;
@@ -828,12 +802,11 @@
                 console.error("Không tìm thấy input #user-avatar-url");
             }
 
-            // Cập nhật preview ảnh ngay lập tức
             var preview = document.getElementById('user-avatar-display');
             if (preview) {
                 preview.src = contextPath + relativeUrl;
                 preview.onerror = function() {
-                    this.src = contextPath + '/img/logo.png';  // fallback nếu ảnh lỗi
+                    this.src = contextPath + '/img/logo.png';
                     console.warn("Preview lỗi, fallback về logo");
                 };
             } else {
@@ -846,7 +819,6 @@
 
 </script>
 <script>
-    // --- 1. HIỆN CHI TIẾT ĐƠN HÀNG ---
 
     function showUserOrderDetail(id) {
 
@@ -863,33 +835,13 @@
             document.body.style.overflow = 'hidden';
         }
     }
-
-
-
-    // --- 2. NÚT "VIẾT ĐÁNH GIÁ" (JSP GỌI HÀM NÀY) ---
-
     function openReviewModal(orderId) {
         switchToReviewForm(orderId);
     }
-
-
-
-    // --- 3. CHUYỂN SANG FORM ĐÁNH GIÁ ---
-
-
-
-
-
-    // --- 4. ĐÓNG MODAL ---
-
     function closeOrderDetail() {
         document.getElementById('orderDetailModal').style.display = 'none';
         document.body.style.overflow = 'auto';
     }
-
-
-
-    // --- 5. CLICK NGOÀI MODAL ---
 
     window.onclick = function(e) {
         const modal = document.getElementById('orderDetailModal');

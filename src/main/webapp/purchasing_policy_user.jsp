@@ -157,7 +157,6 @@
         </ul>
     </li>
 </ul>
-<!-- FOOTER -->
 <div class="divider"></div>
 <h3>CHÍNH SÁCH VẬN CHUYỂN & GIAO NHẬN</h3>
 <ul class="online-process-list">

@@ -35,11 +35,6 @@
 
         <div class="filter-group">
             <h4>Giá tiền</h4>
-<%--            <label><input type="checkbox" name="price" value="1"> Dưới 1 triệu</label>--%>
-<%--            <label><input type="checkbox" name="price" value="2"> 1 - 3 triệu</label>--%>
-<%--            <label><input type="checkbox" name="price" value="3"> 3 - 5 triệu</label>--%>
-<%--            <label><input type="checkbox" name="price" value="4"> 5 - 10 triệu</label>--%>
-<%--            <label><input type="checkbox" name="price" value="5"> Trên 10 triệu</label>--%>
             <c:set var="prices" value="${fn:join(paramValues.price, ',')}" />
 
             <label>

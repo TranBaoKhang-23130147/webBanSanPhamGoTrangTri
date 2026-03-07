@@ -26,19 +26,18 @@ public class OrderDao {
 
                 if (rs.next()) {
                     int count = rs.getInt("cnt");
-                    System.out.println("Order Count from DB: " + count); // Log giá trị lấy được
+                    System.out.println("Order Count from DB: " + count);
                     return count;
                 }
             }
             return 0;
         } catch (Exception e) {
-            e.printStackTrace(); // In lỗi nếu xảy ra
+            e.printStackTrace();
             throw new Exception("Failed to fetch order count!");
         }
     }
     public List<Order> getOrdersByUserId(int userId) {
         List<Order> list = new ArrayList<>();
-        // Truy vấn đầy đủ các cột tiền đã lưu trong DB
         String sql = "SELECT id, user_id, fullName, phone, status, payment_status, " +
                 "totalOrder, subTotal, taxAmount, shippingFee, createAt " +
                 "FROM orders WHERE user_id = ? ORDER BY createAt DESC";
@@ -55,7 +54,6 @@ public class OrderDao {
                 o.setPaymentStatus(rs.getString("payment_status"));
                 o.setCreateAt(rs.getTimestamp("createAt"));
 
-                // Lấy chính xác giá trị từ các cột trong Database
                 o.setSubTotal(rs.getDouble("subTotal"));
                 o.setTaxAmount(rs.getDouble("taxAmount"));
                 o.setShippingFee(rs.getDouble("shippingFee"));
@@ -65,26 +63,6 @@ public class OrderDao {
         } catch (Exception e) { e.printStackTrace(); }
         return list;
     }
-//    private List<OrderDetail> getDetailsByOrderId(int orderId) {
-//        List<OrderDetail> details = new ArrayList<>();
-//        String sql = "SELECT od.*, p.nameProduct, p.image FROM order_details od " +
-//                "JOIN product_variants pv ON od.product_variant_id = pv.id " +
-//                "JOIN products p ON pv.product_id = p.id WHERE od.order_id = ?";
-//        try (Connection con = DBContext.getConnection();
-//             PreparedStatement ps = con.prepareStatement(sql)) {
-//            ps.setInt(1, orderId);
-//            ResultSet rs = ps.executeQuery();
-//            while (rs.next()) {
-//                OrderDetail d = new OrderDetail();
-//                d.setProductName(rs.getString("nameProduct"));
-//                d.setProductImg(rs.getString("image"));
-//                d.setQuantity(rs.getInt("quantity"));
-//                d.setTotal(rs.getDouble("total"));
-//                details.add(d);
-//            }
-//        } catch (Exception e) { e.printStackTrace(); }
-//        return details;
-//    }
 
     public int insertOrder(int userId, String fullName, String phone, String address,
                            String note, String paymentMethod, List<CartItem> cart) throws Exception {
@@ -96,9 +74,7 @@ public class OrderDao {
         Connection con = null;
         try {
             con = DBContext.getConnection();
-            con.setAutoCommit(false);  // Bắt đầu transaction
-
-            // 1. Insert vào bảng orders
+            con.setAutoCommit(false);
             String sqlOrder = "INSERT INTO orders (user_id, fullName, phone, address, note, status, payment_status, createAt) " +
                     "VALUES (?, ?, ?, ?, ?, 'Chờ xác nhận', ?, NOW())";
 
@@ -109,7 +85,6 @@ public class OrderDao {
             psOrder.setString(4, address);
             psOrder.setString(5, note);
 
-            // Xử lý payment_status
             String payStatus = "cod".equalsIgnoreCase(paymentMethod) ? "Chưa thanh toán" : "Đã thanh toán";
             psOrder.setString(6, payStatus);
 
@@ -118,7 +93,6 @@ public class OrderDao {
                 throw new SQLException("Insert orders thất bại, không có dòng nào được thêm");
             }
 
-            // 2. Lấy orderId vừa insert (cách ổn định với MySQL)
             int orderId = -1;
             try (Statement stmt = con.createStatement();
                  ResultSet rs = stmt.executeQuery("SELECT LAST_INSERT_ID() AS id")) {
@@ -134,7 +108,6 @@ public class OrderDao {
                 throw new SQLException("orderId không hợp lệ: " + orderId);
             }
 
-            // 3. Insert chi tiết đơn hàng (batch để nhanh)
             String sqlDetail = "INSERT INTO order_details (order_id, product_variant_id, quantity, total) " +
                     "VALUES (?, ?, ?, ?)";
             PreparedStatement psDetail = con.prepareStatement(sqlDetail);
@@ -159,14 +132,13 @@ public class OrderDao {
             }
 
             int[] batchResults = psDetail.executeBatch();
-            // Kiểm tra batch (tùy chọn)
             for (int res : batchResults) {
                 if (res == PreparedStatement.EXECUTE_FAILED) {
                     throw new SQLException("Một hoặc nhiều chi tiết đơn hàng insert thất bại");
                 }
             }
 
-            con.commit();  // Thành công → commit
+            con.commit();
             return orderId;
 
         } catch (Exception e) {
@@ -175,7 +147,6 @@ public class OrderDao {
                     con.rollback();
                     System.out.println("Rollback transaction do lỗi: " + e.getMessage());
                 } catch (SQLException rollbackEx) {
-                    // ignore
                 }
             }
             e.printStackTrace();
@@ -220,7 +191,6 @@ public class OrderDao {
 
     public List<Order> getAllOrders() {
         List<Order> list = new ArrayList<>();
-        // JOIN với bảng addresses dựa trên cột address_id (hoặc cột liên kết trong DB của bạn)
         String sql = """
         SELECT o.*, 
                CONCAT(a.detail, ', ', a.commune, ', ', a.district, ', ', a.province) AS full_address
@@ -238,12 +208,10 @@ public class OrderDao {
                 order.setId(rs.getInt("id"));
                 order.setFullName(rs.getString("fullName"));
                 order.setPhone(rs.getString("phone"));
-                order.setSubTotal(rs.getDouble("subTotal"));     // Tiền hàng
-                order.setTaxAmount(rs.getDouble("taxAmount"));   // Thuế 8%
-                order.setShippingFee(rs.getDouble("shippingFee")); // Phí ship
-                // Lấy địa chỉ đầy đủ đã được nối chuỗi từ SQL
+                order.setSubTotal(rs.getDouble("subTotal"));
+                order.setTaxAmount(rs.getDouble("taxAmount"));
+                order.setShippingFee(rs.getDouble("shippingFee"));
                 String addr = rs.getString("full_address");
-                // Nếu đơn hàng không có address_id (địa chỉ cũ), lấy từ cột address của bảng orders
                 if (addr == null || addr.trim().isEmpty() || addr.equals(", , , ")) {
                     order.setAddress(rs.getString("address"));
                 } else {
@@ -317,7 +285,7 @@ public class OrderDao {
             e.printStackTrace();
         }
         return false;
-    }// Cập nhật trạng thái cho người dùng (Hủy/Hoàn hàng)
+    }
     public boolean updateStatusByUser(int orderId, String newStatus) {
         String sql = "UPDATE orders SET status = ? WHERE id = ?";
         try (Connection conn = DBContext.getConnection();
@@ -330,8 +298,6 @@ public class OrderDao {
         }
         return false;
     }
-    // Lấy tổng doanh thu của TẤT CẢ đơn hàng (bao gồm cả chưa giao)
-// Thêm vào class OrderDao
     public boolean cancelOrReturnOrder(int orderId, String newStatus) {
         String sqlUpdateStatus = "UPDATE orders SET status = ? WHERE id = ?";
         String sqlGetDetails = "SELECT product_variant_id, quantity FROM order_details WHERE order_id = ?";
@@ -340,16 +306,14 @@ public class OrderDao {
         Connection conn = null;
         try {
             conn = DBContext.getConnection();
-            conn.setAutoCommit(false); // Bắt đầu Transaction
+            conn.setAutoCommit(false);
 
-            // 1. Cập nhật trạng thái đơn hàng
             try (PreparedStatement ps = conn.prepareStatement(sqlUpdateStatus)) {
                 ps.setString(1, newStatus);
                 ps.setInt(2, orderId);
                 ps.executeUpdate();
             }
 
-            // 2. Lấy danh sách sản phẩm để trả kho
             try (PreparedStatement psGet = conn.prepareStatement(sqlGetDetails)) {
                 psGet.setInt(1, orderId);
                 ResultSet rs = psGet.executeQuery();
@@ -364,7 +328,7 @@ public class OrderDao {
                 }
             }
 
-            conn.commit(); // Thành công hết thì mới lưu
+            conn.commit();
             return true;
         } catch (Exception e) {
             if (conn != null) try { conn.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
@@ -375,7 +339,6 @@ public class OrderDao {
         }
     }
     public double getTotalRevenue() {
-        // Sử dụng tên cột chính xác từ file SQL của bạn: payment_status và status
         String sql = "SELECT SUM(totalOrder) FROM orders WHERE payment_status = ? AND status = ?";
 
         try (Connection conn = DBContext.getConnection();

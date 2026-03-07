@@ -1,9 +1,4 @@
-/**
- * Mở Modal Nguồn Hàng (Source)
- * @param {string} mode - 'edit' hoặc để trống (mặc định là thêm mới)
- * @param {string} id - ID của nguồn hàng (nếu sửa)
- * @param {string} name - Tên nguồn hàng (nếu sửa)
- */
+
 function openSourceModal(mode = 'add', id = '', name = '') {
     const modal = document.getElementById('sourceModal');
     const title = document.getElementById('modalTitle');
@@ -13,12 +8,12 @@ function openSourceModal(mode = 'add', id = '', name = '') {
 
     if (mode === 'edit') {
         title.innerText = 'Chỉnh Sửa Nguồn Hàng';
-        form.action = 'edit-source'; // URL khớp với @WebServlet trong SourceServlet
+        form.action = 'edit-source';
         inputName.value = name;
         inputId.value = id;
     } else {
         title.innerText = 'Thêm Nguồn Hàng Mới';
-        form.action = 'add-source'; // URL khớp với @WebServlet trong SourceServlet
+        form.action = 'add-source';
         inputName.value = '';
         inputId.value = '';
     }
@@ -29,8 +24,6 @@ function openSourceModal(mode = 'add', id = '', name = '') {
 function closeSourceModal() {
     document.getElementById('sourceModal').style.display = 'none';
 }
-
-// Xử lý tìm kiếm nguồn hàng
 const searchInput = document.getElementById('searchInput');
 
 function searchSourceByName() {
@@ -40,8 +33,6 @@ function searchSourceByName() {
     if (keyword) {
         params.append('search', keyword);
     }
-
-    // Chuyển hướng sang servlet quản lý nguồn hàng
     window.location.href = 'source-manager?' + params.toString();
 }
 
@@ -54,9 +45,6 @@ if (searchInput) {
     });
 }
 
-/**
- * Xóa Nguồn Hàng
- */
 function deleteSource(id, name) {
     Swal.fire({
         title: 'Xác nhận xóa?',
@@ -69,13 +57,11 @@ function deleteSource(id, name) {
         cancelButtonText: 'Hủy'
     }).then((result) => {
         if (result.isConfirmed) {
-            // Chuyển hướng đến servlet xóa nguồn hàng
             window.location.href = "delete-source?id=" + id;
         }
     })
 }
 
-// Đóng modal khi click ra ngoài vùng modal-content
 window.onclick = function(event) {
     const modal = document.getElementById('sourceModal');
     if (event.target == modal) {

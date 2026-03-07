@@ -143,7 +143,6 @@ body {
     transition: 0.3s;
 }
 
-/* Khi hover vào menu */
 .menu:hover {
     color: var(--primary-color);
 }
@@ -271,7 +270,6 @@ body {
     box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
-/* ===== BANNER ===== */
 .intro-banner {
     background:
     url('https://png.pngtree.com/thumb_back/fw800/background/20250726/pngtree-minimalist-beige-living-room-with-modern-sofa-wooden-table-and-pampas-image_17648661.webp') center/cover no-repeat;
@@ -297,7 +295,6 @@ body {
     color: var(--text-color);
 }
 
-/* ===== STATS ===== */
 .stats {
     display: flex;
     justify-content: center;
@@ -321,7 +318,6 @@ body {
     color: var(--text-color2);
 }
 
-/* ===== ABOUT ===== */
 .about-wood {
     text-align: center;
     padding: 100px 10%;
@@ -342,7 +338,6 @@ body {
     margin: 10px auto;
 }
 
-/* ===== GALLERY / HISTORY ===== */
 .wood-history {
     text-align: center;
     padding: 80px 8%;
@@ -387,7 +382,6 @@ body {
     line-height: 1.8;
     color: var(--text-color2);
 }
-/* ===== VALUE CARDS ===== */
 .core-values {
     text-align: center;
     padding: 100px 10%;
@@ -417,7 +411,6 @@ body {
     color: #fff;
 }
 
-/* ===== LIST SECTIONS ===== */
 .production-process,
 .best-seller,
 .vision-future,
@@ -505,7 +498,6 @@ body {
 .footer-col a:hover {
     color: #8B5E3C;
 }
-/**/
 .production-process {
     background: #faf8f6;
     padding: 60px 6%;
@@ -535,7 +527,6 @@ body {
     transform: translateX(-50%);
 }
 
-/* ===== STEP ===== */
 .step {
     width: 50%;
     display: flex;
@@ -568,7 +559,6 @@ body {
     margin-bottom: 5px;
 }
 
-/* ===== LEFT / RIGHT ===== */
 .left {
     left: 0;
     justify-content: flex-end;
@@ -593,7 +583,6 @@ body {
 .left::before { right: -8px; }
 .right::before { left: -8px; }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .timeline::after { left: 20px; }
     .step {
@@ -605,23 +594,21 @@ body {
     .step .content { font-size: 13px; }
     .left::before, .right::before { left: 0; }
 }
-/* --- Thiết lập chung cho phần Commitment --- */
 .commitment {
-    text-align: center; /* Căn giữa tiêu đề */
+    text-align: center;
     padding: 60px 20px;
-    background-color: #f7f3ed; /* Màu nền nhẹ nhàng, giống màu gỗ nhạt */
+    background-color: #f7f3ed;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .commitment h2 {
     font-size: 2.2em;
-    color: #4a2c16; /* Màu nâu đậm của gỗ */
+    color: #4a2c16;
     margin-bottom: 40px;
     position: relative;
     padding-bottom: 10px;
 }
 
-/* Kẻ chân tinh tế cho tiêu đề */
 .commitment h2::after {
     content: '';
     position: absolute;
@@ -630,83 +617,77 @@ body {
     transform: translateX(-50%);
     width: 80px;
     height: 3px;
-    background-color: var(--primary-color); /* Màu vàng gỗ/vàng đồng */
+    background-color: var(--primary-color);
     border-radius: 5px;
 }
 
-/* --- Thiết lập danh sách cam kết (Flexbox) --- */
 .commitment-list ul {
     list-style: none;
     padding: 0;
     margin: 0 auto;
-    display: flex; /* Bật Flexbox */
-    flex-wrap: wrap; /* Cho phép xuống hàng khi màn hình nhỏ */
-    justify-content: center; /* Căn giữa các mục */
-    gap: 30px; /* Khoảng cách giữa các card */
-    max-width: 1200px; /* Giới hạn chiều rộng tối đa */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1200px;
 }
 
 .commitment-list ul li {
-    background-color: #ffffff; /* Nền trắng cho từng card */
+    background-color: #ffffff;
     border: 1px solid #e0d8c7;
     border-radius: 10px;
     padding: 30px 20px;
-    width: 100%; /* Mặc định 100% trên di động */
-    max-width: 250px; /* Giới hạn chiều rộng tối đa của mỗi card */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Bóng đổ nhẹ */
+    width: 100%;
+    max-width: 250px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
-    flex-direction: column; /* Xếp icon và chữ dọc theo cột */
-    align-items: center; /* Căn giữa nội dung bên trong */
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    min-height: 150px; /* Đảm bảo chiều cao đồng đều */
+    min-height: 150px;
 }
 
-/* Hiệu ứng khi di chuột (Hover) */
 .commitment-list ul li:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* --- Định dạng Icon --- */
 .commitment-list ul li i {
-    font-size: 2.5em; /* Kích thước icon lớn */
-    color: var(--primary-color); /* Màu vàng gỗ/vàng đồng */
+    font-size: 2.5em;
+    color: var(--primary-color);
     margin-bottom: 15px;
 }
 
-/* Định dạng chữ */
 .commitment-list ul li span {
     font-size: 1.1em;
     font-weight: 600;
-    color: #5d4037; /* Màu chữ nâu ấm */
+    color: #5d4037;
     line-height: 1.4;
 }
 
-/* --- Responsive (tùy chỉnh cho màn hình lớn hơn) --- */
 @media (min-width: 768px) {
     .commitment-list ul li {
-        width: calc(50% - 30px); /* 2 cột trên tablet */
+        width: calc(50% - 30px);
     }
 }
 
 @media (min-width: 1024px) {
     .commitment-list ul li {
-        width: calc(25% - 30px); /* 4 cột trên desktop */
+        width: calc(25% - 30px);
         max-width: 250px;
     }
 }
-/* Styling cho phần Giá trị cốt lõi */
 .core-values {
     padding: 60px 20px;
     text-align: center;
-    background-color: #fff; /* Nền nhẹ nhàng */
+    background-color: #fff;
     font-family: Arial, sans-serif;
 }
 
 .core-values h2 {
     font-size: 2.5em;
-    color: #4a3e36; /* Màu nâu đậm cho tiêu đề */
+    color: #4a3e36;
     margin-bottom: 50px;
     font-weight: bold;
 }
@@ -714,7 +695,7 @@ body {
 .values-container {
     display: flex;
     justify-content: space-around;
-    gap: 30px; /* Khoảng cách giữa các cột */
+    gap: 30px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -724,12 +705,12 @@ body {
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    flex: 1; /* Chia đều không gian */
+    flex: 1;
     transition: transform 0.3s ease-in-out;
 }
 
 .value-item:hover {
-    transform: translateY(-5px); /* Hiệu ứng nổi nhẹ khi rê chuột */
+    transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
@@ -741,7 +722,7 @@ body {
 
 .value-item h3 {
     font-size: 1.4em;
-    color: #795548; /* Màu nâu đất */
+    color: #795548;
     margin-bottom: 10px;
 }
 
@@ -750,41 +731,37 @@ body {
     color: #666;
     line-height: 1.6;
 }
-/**/
-/* ===== GALLERY / HISTORY (CHỈNH SỬA) ===== */
 .wood-history {
     padding: 80px 8%;
     background: var(--soft-bg);
 }
 
 .wood-history h2 {
-    font-size: 32px; /* Tăng kích thước tiêu đề chính */
+    font-size: 32px;
     color: var(--primary-color);
-    margin-bottom: 40px; /* Tăng khoảng cách dưới tiêu đề */
+    margin-bottom: 40px;
     text-align: center;
 }
 
-/* Thiết lập Flexbox để chia nội dung và ảnh thành 2 cột (trên màn hình lớn) */
 .wood-history .container {
     display: flex;
-    align-items: flex-start; /* Căn chỉnh nội dung lên trên */
+    align-items: flex-start;
     gap: 50px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .wood-history .text-box {
-    flex: 2; /* Phần chữ chiếm 2/3 không gian */
+    flex: 2;
     text-align: left;
     padding: 20px 0;
 }
 
 .wood-history .image-box {
-    flex: 1; /* Phần ảnh chiếm 1/3 không gian */
+    flex: 1;
     padding-top: 20px;
 }
 
-/* Các thuộc tính Typography bên trong */
 .wood-history .text-box h2 {
     font-size: 24px;
     color: var(--text-color);
@@ -798,30 +775,28 @@ body {
     margin-bottom: 15px;
 }
 
-/* Thiết lập lại Gallery ảnh (giữ nguyên Flexbox) */
 .wood-collections {
     display: flex;
-    flex-direction: column; /* Xếp ảnh dọc trong cột bên phải */
+    flex-direction: column;
     gap: 20px;
     margin-top: 0;
 }
 
 .collection-item {
-    width: 100%; /* Chiếm toàn bộ chiều rộng cột */
+    width: 100%;
     max-width: none;
 }
 .collection-item img {
-    height: 250px; /* Giảm chiều cao ảnh để dễ xem hơn */
+    height: 250px;
 }
 
-/* Responsive cho phần Gallery/History */
 @media (max-width: 992px) {
     .wood-history .container {
-        flex-direction: column; /* Xếp thành một cột trên tablet */
+        flex-direction: column;
     }
     .wood-collections {
-        flex-direction: row; /* Xếp ảnh ngang trên tablet */
-        overflow-x: auto; /* Thêm cuộn ngang nếu quá nhiều ảnh */
+        flex-direction: row;
+        overflow-x: auto;
         padding-bottom: 15px;
         justify-content: flex-start;
     }
@@ -829,7 +804,6 @@ body {
         min-width: 250px;
     }
 }
-/* ===== VISION & END NOTE (CHỈNH SỬA) ===== */
 .vision-future h2,
 .end-note h2 {
     font-size: 30px;
@@ -838,46 +812,43 @@ body {
 }
 
 .vision-future {
-    max-width: 900px; /* Giới hạn chiều rộng để dễ đọc */
+    max-width: 900px;
 }
 
 .end-note {
     background: var(--light-bg);
     border-radius: 16px;
-    padding: 60px 40px; /* Tăng padding trong khối */
-    margin-bottom: 100px; /* Tăng khoảng cách với footer */
+    padding: 60px 40px;
+    margin-bottom: 100px;
 }
 
 .end-note p {
     font-style: italic;
     color: var(--text-color);
-    font-size: 19px; /* Tăng kích thước cho thông điệp cuối cùng */
+    font-size: 19px;
 }
-/* Tối ưu hóa lại phần Responsive cho timeline */
 @media (max-width: 768px) {
     .timeline::after {
-        left: 20px; /* Giữ đường kẻ bên trái */
+        left: 20px;
     }
     .step {
         width: 100%;
-        left: 0 !important; /* Đảm bảo cả left và right đều nằm bên trái */
-        justify-content: flex-start; /* Nội dung nằm bên trái */
-        padding-left: 50px; /* Tạo khoảng cách cho đường kẻ */
+        left: 0 !important;
+        justify-content: flex-start;
+        padding-left: 50px;
     }
     .step img {
-        position: absolute; /* Đặt ảnh ra bên ngoài để không ảnh hưởng đến nội dung */
+        position: absolute;
         left: 45px;
         width: 70px;
         height: 70px;
-        /* Cần chỉnh lại vị trí ảnh và chấm tròn */
-        display: none; /* Ẩn ảnh trong timeline trên di động để đơn giản hóa */
+        display: none;
     }
     .step .content {
         font-size: 14px;
-        width: 100%; /* Chiếm toàn bộ không gian còn lại */
+        width: 100%;
     }
 
-    /* Chỉnh lại chấm tròn cho cả left và right để nằm trên đường kẻ */
     .left::before, .right::before {
         left: 17px;
         right: auto;

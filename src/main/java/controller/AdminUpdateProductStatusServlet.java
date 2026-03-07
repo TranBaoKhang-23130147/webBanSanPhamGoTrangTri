@@ -23,7 +23,7 @@ public class AdminUpdateProductStatusServlet extends HttpServlet {
 
         try {
             int productId = Integer.parseInt(request.getParameter("id"));
-            int status    = Integer.parseInt(request.getParameter("status"));   // ← đổi thành status
+            int status    = Integer.parseInt(request.getParameter("status"));   
 
             boolean success = productDao.updateProductStatus(productId, status);
 

@@ -12,7 +12,6 @@ public class PaymentDao {
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                // Chú ý thứ tự cột: id=1, user_id=2, card_number=3, duration=4, type=5
                 list.add(new Payment(rs.getInt("id"), rs.getInt("user_id"), rs.getString("card_number"), rs.getDate("duration"), rs.getString("type")));
 
             }
@@ -34,7 +33,7 @@ public class PaymentDao {
         } catch (Exception e) { e.printStackTrace(); }
     }
     public static void main(String[] args) {
-        int testUserId = 1; // Thay đổi user ID theo dữ liệu trong DB
+        int testUserId = 1;
         PaymentDao paymentDao = new PaymentDao();
 
         List<Payment> payments = paymentDao.getPaymentsByUserId(testUserId);
@@ -45,7 +44,7 @@ public class PaymentDao {
     }
     public boolean deletePayment(int id) {
         String sql = "DELETE FROM payments WHERE id = ?";
-        try (Connection conn = DBContext.getConnection(); // Thay bằng cách lấy connection của bạn
+        try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);
@@ -64,7 +63,7 @@ public class PaymentDao {
 
             ps.setString(1, type);
             ps.setString(2, cardNumber);
-            ps.setString(3, duration); // Định dạng yyyy-MM-dd từ input date
+            ps.setString(3, duration);
             ps.setInt(4, id);
 
             return ps.executeUpdate() > 0;

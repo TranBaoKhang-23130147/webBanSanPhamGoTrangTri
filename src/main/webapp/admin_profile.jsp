@@ -65,13 +65,6 @@
             </div>
 
             <div class="profile-content-section">
-
-
-
-
-
-
-
                 <div class="profile-details-wrapper">
 
                     <div class="profile-details-left">
@@ -104,7 +97,6 @@
                             <p class="info-text">
                                 <c:choose>
                                     <c:when test="${not empty admin.address}">
-                                        <%-- Gọi hàm getFullAddress() từ model Address --%>
                                         ${admin.address.fullAddress}
                                     </c:when>
                                     <c:otherwise>
@@ -119,7 +111,6 @@
 
                         <div class="role-status-message ${admin.role eq 'Admin' ? 'msg-admin' : 'msg-staff'}">
                             <c:choose>
-                                <%-- Sử dụng 'eq' và viết hoa đúng như Database --%>
                                 <c:when test="${admin.role eq 'Admin'}">
                                     <i class="fas fa-crown"></i> <strong>Chào Admin!</strong> Bạn có tất cả mọi quyền hạn trong hệ thống.
                                 </c:when>
@@ -189,31 +180,26 @@
 </body>
 <script src="${pageContext.request.contextPath}/ckfinder/ckfinder.js"></script>
 <script>
-    function openAdminFinder() { // Đổi tên hàm cho khớp với onclick của button
+    function openAdminFinder() {
         var finder = new CKFinder();
         finder.basePath = '${pageContext.request.contextPath}/ckfinder/';
 
         finder.selectActionFunction = function(fileUrl) {
             var contextPath = "${pageContext.request.contextPath}" || "";
             var relativeUrl = fileUrl || "";
-
-            // 1. Xử lý đường dẫn tương đối
             if (contextPath && relativeUrl.startsWith(contextPath)) {
                 relativeUrl = relativeUrl.substring(contextPath.length);
             }
 
-            // 2. Cập nhật preview ảnh ngay lập tức
             var preview = document.getElementById('admin-avatar-display');
             if (preview) {
                 preview.src = contextPath + relativeUrl;
             }
-
-            // 3. Gán vào input hidden và tự động SUBMIT form
             var input = document.getElementById('adminAvatarInput');
             var form = document.getElementById('adminAvatarForm');
             if (input && form) {
                 input.value = relativeUrl;
-                form.submit(); // Tự động gửi lên Servlet doPost
+                form.submit();
             }
         };
         finder.popup();

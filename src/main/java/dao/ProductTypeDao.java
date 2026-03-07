@@ -53,7 +53,6 @@ public class ProductTypeDao {
     }
 
     public boolean insertProductType(String name) {
-        // Chỉ insert tên loại sản phẩm
         String sql = "INSERT INTO product_types (product_type_name) VALUES (?)";
         try {
             conn = new DBContext().getConnection();
@@ -73,7 +72,6 @@ public class ProductTypeDao {
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            // Lỗi 1451 thường là lỗi vi phạm ràng buộc khóa ngoại (không thể xóa)
             System.out.println("Lỗi xóa: " + e.getMessage());
             return false;
         } catch (Exception e) {

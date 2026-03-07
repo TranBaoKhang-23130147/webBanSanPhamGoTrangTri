@@ -6,7 +6,6 @@ import java.util.*;
 
 public class ColorDao {
 
-    // ================= GET ALL =================
     public List<Color> getAll() {
 
         List<Color> list = new ArrayList<>();
@@ -32,7 +31,6 @@ public class ColorDao {
         return list;
     }
 
-    // ================= SAVE / UPDATE =================
     public void save(Color c) {
 
         String sql = c.getId() == 0
@@ -55,7 +53,6 @@ public class ColorDao {
         }
     }
 
-    // ================= DELETE =================
     public void delete(int id) {
 
         String sql = "DELETE FROM colors WHERE id=?";
@@ -71,7 +68,6 @@ public class ColorDao {
         }
     }
 
-    // ================= GET BY ID (OPTIONAL) =================
     public Color getById(int id) {
 
         String sql = "SELECT * FROM colors WHERE id=?";

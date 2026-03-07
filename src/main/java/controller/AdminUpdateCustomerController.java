@@ -17,25 +17,22 @@ public class AdminUpdateCustomerController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        // 1. Kiểm tra quyền Admin (Tùy chọn: Bạn nên check session role admin ở đây)
         HttpSession session = request.getSession();
         User admin = (User) session.getAttribute("LOGGED_USER");
-        if (admin == null) { // Thêm điều kiện check role Admin của bạn vào đây
+        if (admin == null) {
             response.sendRedirect("login.jsp");
             return;
         }
 
         UserDao userDao = new UserDao();
-        // Lấy ID khách hàng cần sửa từ input hidden
         String userIdStr = request.getParameter("userId");
         if (userIdStr == null || userIdStr.isEmpty()) {
-            response.sendRedirect("customers"); // Nếu không có ID thì quay về danh sách
+            response.sendRedirect("customers");
             return;
         }
         int customerId = Integer.parseInt(userIdStr);
 
         try {
-            // 2. Lấy dữ liệu từ form modal
             String fullName     = request.getParameter("fullName");
             String displayName  = request.getParameter("displayName");
             String phone        = request.getParameter("phone");
@@ -43,7 +40,6 @@ public class AdminUpdateCustomerController extends HttpServlet {
             String birthDateStr = request.getParameter("birthDate");
             String avatarUrlRaw = request.getParameter("avatar_id");
 
-            // 3. Xử lý chuẩn hóa URL ảnh
             String relativeAvatarUrl = null;
             if (avatarUrlRaw != null && !avatarUrlRaw.trim().isEmpty()) {
                 relativeAvatarUrl = avatarUrlRaw.trim();
@@ -53,7 +49,6 @@ public class AdminUpdateCustomerController extends HttpServlet {
                 }
             }
 
-            // 4. Tạo đối tượng cập nhật khách hàng
             User customerToUpdate = new User();
             customerToUpdate.setId(customerId);
             customerToUpdate.setUsername(fullName);
@@ -65,22 +60,17 @@ public class AdminUpdateCustomerController extends HttpServlet {
                 customerToUpdate.setBirthDate(java.sql.Date.valueOf(birthDateStr));
             }
 
-            // Xử lý avatar_id
             if (relativeAvatarUrl != null) {
                 int realImageId = userDao.getImageIdByUrl(relativeAvatarUrl);
                 customerToUpdate.setAvatarId(realImageId);
             } else {
-                // Nếu không đổi ảnh, lấy lại ảnh hiện tại của khách đó trong DB
                 User currentInfo = userDao.getUserById(customerId);
                 customerToUpdate.setAvatarId(currentInfo.getAvatarId());
             }
 
-            // 5. Cập nhật Database
             boolean success = userDao.updateUserProfile(customerToUpdate);
 
-            // Trong file AdminUpdateCustomerController.java
             if (success) {
-                // Sửa đường dẫn này cho đúng với mapping của CustomerDetailServlet
                 response.sendRedirect(request.getContextPath() + "/admin/customer-detail?id=" + customerId + "&msg=success");
             } else {
                 response.sendRedirect(request.getContextPath() + "/admin/customer-detail?id=" + customerId + "&msg=error");

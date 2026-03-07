@@ -1,6 +1,6 @@
 :root {
-    --primary-clr: #8B5E3C; /* Màu nâu cafe thương hiệu */
-    --secondary-clr: #333333; /* Màu đen xám */
+    --primary-clr: #8B5E3C;
+    --secondary-clr: #333333;
     --bg-clr: #f4f1ee;
 }
 
@@ -19,13 +19,12 @@ body {
     background-color: var(--bg-clr);
 }
 
-/* ===== KHUNG CONTAINER ===== */
 .container {
     width: 100%;
     max-width: 400px;
     background: #ffffff;
     padding: 40px;
-    border-radius: 20px; /* Bo góc mượt mà */
+    border-radius: 20px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.1);
     text-align: center;
 }
@@ -37,7 +36,6 @@ h1 {
     font-weight: 700;
 }
 
-/* ===== THÔNG BÁO LỖI ===== */
 .error-msg {
     color: #d93025;
     background-color: #fff1f0;
@@ -49,7 +47,6 @@ h1 {
     text-align: center;
 }
 
-/* ===== Ô NHẬP LIỆU ===== */
 input[type="password"] {
     width: 100%;
     padding: 15px;
@@ -66,12 +63,11 @@ input[type="password"]:focus {
     box-shadow: 0 0 8px rgba(139, 94, 60, 0.1);
 }
 
-/* ===== NÚT ĐẶT LẠI MẬT KHẨU (CHỮ TRẮNG) ===== */
 button[type="submit"] {
     width: 100%;
     padding: 15px;
-    background-color: var(--primary-clr) !important; /* Màu nâu cafe */
-    color: #ffffff !important; /* Ép chữ màu trắng */
+    background-color: var(--primary-clr) !important;
+    color: #ffffff !important;
     border: none;
     border-radius: 12px;
     font-size: 16px;
@@ -84,7 +80,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: var(--secondary-clr) !important; /* Chuyển đen khi hover */
+    background-color: var(--secondary-clr) !important;
     transform: translateY(-2px);
 }
 

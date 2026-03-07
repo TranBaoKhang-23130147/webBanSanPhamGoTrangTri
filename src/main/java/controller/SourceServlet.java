@@ -39,11 +39,11 @@ public class SourceServlet extends HttpServlet {
         List<Source> listS = dao.getAllSourcesWithTotalInventory(keyword);
 
         request.setAttribute("listS", listS);
-        request.setAttribute("activePage", "source"); // Để active menu
+        request.setAttribute("activePage", "source");
 
         request.setAttribute("keyword", keyword != null ? keyword : "");
 
-        request.getRequestDispatcher("/admin_source.jsp").forward(request, response);  // tên file JSP thực tế
+        request.getRequestDispatcher("/admin_source.jsp").forward(request, response);
     }
 
 
@@ -52,7 +52,7 @@ public class SourceServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getServletPath();
-        String name = request.getParameter("sourceName"); // Khớp với name="sourceName" trong JSP
+        String name = request.getParameter("sourceName");
         SourceDao dao = new SourceDao();
 
         if (action.equals("/add-source")) {

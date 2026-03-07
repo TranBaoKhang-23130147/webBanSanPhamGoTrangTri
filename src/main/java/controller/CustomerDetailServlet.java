@@ -17,7 +17,7 @@ public class CustomerDetailServlet extends HttpServlet {
 
         String idParam = request.getParameter("id");
         if (idParam == null || idParam.isEmpty()) {
-            response.sendRedirect("customers"); // Quay lại nếu không có ID
+            response.sendRedirect("customers");
             return;
         }
 
@@ -26,15 +26,12 @@ public class CustomerDetailServlet extends HttpServlet {
             UserDao userDao = new UserDao();
             AddressDao addressDao = new AddressDao();
 
-            // 1. Lấy thông tin khách hàng
             User customer = userDao.getById(userId);
-            // 2. Lấy danh sách địa chỉ (như trang My Page)
             List<Address> addresses = addressDao.getByUserId(userId);
 
             if (customer != null) {
                 request.setAttribute("customer", customer);
                 request.setAttribute("addresses", addresses);
-                // 3. Chuyển hướng sang trang JSP riêng
                 request.getRequestDispatcher("/admin_customer_detail.jsp").forward(request, response);
             } else {
                 response.sendRedirect("customers");

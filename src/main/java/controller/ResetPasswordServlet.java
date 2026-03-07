@@ -29,14 +29,12 @@
             String password = request.getParameter("password");
             String rePassword = request.getParameter("re_password");
 
-            // 1️⃣ Kiểm tra khớp mật khẩu
             if (!password.equals(rePassword)) {
                 request.setAttribute("ERROR_MESSAGE", "Mật khẩu không khớp!");
                 request.getRequestDispatcher("/login_pass_new.jsp").forward(request, response);
                 return;
             }
 
-            // 2️⃣ Validate mật khẩu mạnh
             String regex = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
             if (!password.matches(regex)) {
@@ -46,7 +44,6 @@
                 return;
             }
 
-            // 3️⃣ Update mật khẩu
             UserDao dao = new UserDao();
             boolean success = dao.updatePasswordByEmail(email, password);
 
@@ -56,7 +53,6 @@
                 return;
             }
 
-            // 4️⃣ Xóa session
             session.invalidate();
 
             request.setAttribute("MESS_SUCCESS", "Đổi mật khẩu thành công! Vui lòng đăng nhập.");

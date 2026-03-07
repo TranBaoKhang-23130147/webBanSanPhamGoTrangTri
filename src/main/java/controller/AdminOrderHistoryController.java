@@ -16,10 +16,8 @@ public class AdminOrderHistoryController extends HttpServlet {
             int userId = Integer.parseInt(userIdStr);
 
             dao.OrderDao orderDao = new dao.OrderDao();
-            // 1. Lấy danh sách đơn hàng cơ bản
             java.util.List<model.Order> listOrders = orderDao.getOrdersByUserId(userId);
 
-            // 2. QUAN TRỌNG: Phải lấy chi tiết cho từng đơn hàng
             for (model.Order o : listOrders) {
                 o.setDetails(orderDao.getDetailsByOrderId(o.getId()));
             }

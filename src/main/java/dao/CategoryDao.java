@@ -11,10 +11,9 @@ public class CategoryDao {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    // 1. Lấy tất cả danh mục để hiển thị
     public List<Category> getAllCategory() {
         List<Category> list = new ArrayList<>();
-        String sql = "SELECT * FROM categories"; // Tên bảng trong DB của bạn
+        String sql = "SELECT * FROM categories";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -28,7 +27,6 @@ public class CategoryDao {
         return list;
     }
 
-    // 2. Thêm danh mục mới
     public boolean insertCategory(String name) {
         String sql = "INSERT INTO categories (category_name) VALUES (?)";
         try {
@@ -41,14 +39,13 @@ public class CategoryDao {
         }
         return false;
     }
-    // Tìm kiếm danh mục theo tên
     public List<Category> searchCategoryByName(String keyword) {
         List<Category> list = new ArrayList<>();
         String sql = "SELECT * FROM categories WHERE category_name LIKE ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setString(1, "%" + keyword + "%"); // Tìm kiếm theo kiểu chứa từ khóa
+            ps.setString(1, "%" + keyword + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Category(rs.getInt("id"), rs.getString("category_name")));
@@ -66,7 +63,6 @@ public class CategoryDao {
             ps.setInt(1, id);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            // Lỗi thường gặp: Danh mục đang được dùng bởi sản phẩm khác
             System.out.println("Lỗi xóa danh mục: " + e.getMessage());
             return false;
         } catch (Exception e) {
@@ -113,7 +109,6 @@ public class CategoryDao {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            // hoặc throw exception tùy dự án
         }
         return list;
     }

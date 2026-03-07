@@ -18,10 +18,8 @@ public class OrderDetailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Lấy tham số từ URL hoặc AJAX request
         String orderIdRaw = request.getParameter("orderId");
 
-        // 1. Kiểm tra an toàn: Tránh lỗi NumberFormatException
         if (orderIdRaw == null || orderIdRaw.trim().isEmpty()) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Lỗi: Không tìm thấy mã đơn hàng!");
             return;
@@ -33,7 +31,6 @@ public class OrderDetailServlet extends HttpServlet {
             OrderDao orderDao = new OrderDao();
             OrderDetailDao detailDao = new OrderDetailDao();
 
-            // 2. Lấy thông tin đơn hàng và danh sách sản phẩm chi tiết
             Order order = orderDao.getOrderById(orderId);
             List<OrderDetail> details = detailDao.getByOrderId(orderId);
 
@@ -42,11 +39,9 @@ public class OrderDetailServlet extends HttpServlet {
                 return;
             }
 
-            // 3. Đẩy dữ liệu sang trang hiển thị (thường dùng AJAX để trả về một đoạn HTML)
             request.setAttribute("order", order);
             request.setAttribute("details", details);
 
-            // Trang này sẽ chỉ chứa nội dung Modal chi tiết
             request.getRequestDispatcher("ajax_order_detail.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {

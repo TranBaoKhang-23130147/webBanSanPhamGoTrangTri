@@ -33,10 +33,6 @@
                     </button>
                 </div>
                 <div class="customer-list-container">
-<!--                    <div class="search-bar">-->
-<!--                        <i class="fas fa-search"></i>-->
-<!--                        <input type="text" placeholder="Tìm kiếm">-->
-<!--                    </div>-->
                     <div class="table-responsive">
                         <table class="data-table">
                             <thead>
@@ -80,9 +76,6 @@
                 </span>
                                     </td>
                                     <td class="col-actions">
-<%--                                        <i class="fa-solid fa-pen-to-square"--%>
-<%--                                           onclick="location.href='edit-customer?id=${u.id}'"--%>
-<%--                                           style="cursor:pointer;"></i>--%>
                                         <i class="fa-solid fa-trash-can"
                                            onclick="deleteUser('${u.id}', '${u.displayName}')"
                                            style="cursor:pointer; color:red; margin-left:10px;"></i>
@@ -92,15 +85,6 @@
                             </tbody>
                         </table>
                     </div>
-<!--                    <div class="pagination">-->
-<!--                        <button class="page-nav prev">Quay lại</button>-->
-<!--                        <div class="page-numbers">-->
-<!--                            <button class="page-num active">1</button>-->
-<!--                            <button class="page-num">2</button>-->
-<!--                            <button class="page-num">3</button>-->
-<!--                        </div>-->
-<!--                        <button class="page-nav next">Tiếp theo</button>-->
-<!--                    </div>-->
                 </div>
             </section>
         </main>
@@ -180,191 +164,8 @@
     </div>
 </div>
 <script>
-    function confirmDeleteAdmin(id, name) {
-        Swal.fire({
-            title: 'Xác nhận xóa?',
-            text: "Bạn đang xóa tài khoản Admin '" + name + "'. Dữ liệu liên quan cũng sẽ bị xóa!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Đúng, xóa ngay!',
-            cancelButtonText: 'Hủy'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Gọi đến Servlet bạn đã tạo
-                window.location.href = "AdminDeleteCustomerServlet?id=" + id + "&type=admin";
-            }
-        })
-    }
-    function deleteUser(id, name) {
-        Swal.fire({
-            title: 'Xác nhận xóa?',
-            text: "Bạn có chắc chắn muốn xóa khách hàng '" + name + "' không? Hành động này không thể hoàn tác!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Đồng ý, xóa!',
-            cancelButtonText: 'Hủy'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Chuyển hướng đến Servlet xử lý xóa
-                window.location.href = "${pageContext.request.contextPath}/DeleteCustomerServlet?id=" + id;            }
-        })
-    }
-
+    const contextPath = "${pageContext.request.contextPath}";
 </script>
-<script>
-    function openAddUserModal() {
-        const modal = document.getElementById('addUserModal');
-        if(modal) modal.style.display = 'flex';
-    }
-
-    function closeAddUserModal() {
-        const modal = document.getElementById('addUserModal');
-        if(modal) modal.style.display = 'none';
-    }
-
-    // Gửi mã OTP - Sửa lỗi 404 bằng contextPath
-    function sendOtpAdmin() {
-        const email = document.getElementById('new_email').value;
-        const btn = document.getElementById('btnSendOtp');
-
-        if (!email) {
-            Swal.fire('Chú ý', 'Vui lòng nhập email!', 'warning');
-            return;
-        }
-
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-        btn.disabled = true;
-
-        const url = "${pageContext.request.contextPath}/RegisterServlet?action=sendOtp&email=" + encodeURIComponent(email);
-
-        fetch(url, { method: 'POST' })
-            .then(res => {
-                if (res.ok) {
-                    Swal.fire('Thành công', 'Mã xác thực đã gửi!', 'success');
-                    btn.innerHTML = 'Gửi lại mã';
-                    btn.style.background = "#1cc88a";
-                } else {
-                    Swal.fire('Lỗi', 'Không thể gửi mail. Kiểm tra lại đường dẫn!', 'error');
-                    btn.innerHTML = 'Gửi mã';
-                }
-            })
-            .finally(() => btn.disabled = false);
-    }
-
-    // Xác nhận mã OTP ngay tại chỗ
-    function verifyOtpOnly() {
-        const otp = document.getElementById('new_otp').value;
-        const btnVerify = document.getElementById('btnVerifyOtp');
-        const btnSubmit = document.getElementById('btnSubmitUser');
-
-        if (!otp) {
-            Swal.fire('Lỗi', 'Vui lòng nhập mã OTP!', 'error');
-            return;
-        }
-
-        // Gọi Servlet để check mã (Bạn cần thêm case "verifyOnly" trong AdminAddCustomerServlet)
-        const url = "${pageContext.request.contextPath}/AdminAddCustomerServlet?action=verifyOnly&otp=" + otp;
-
-        fetch(url, { method: 'POST' })
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === "success") {
-                    Swal.fire('Thành công', 'Mã OTP hợp lệ!', 'success');
-                    btnVerify.innerHTML = '<i class="fas fa-check"></i> Đã xác nhận';
-                    btnVerify.style.background = "#28a745";
-                    btnVerify.disabled = true;
-
-                    // Mở khóa nút Lưu
-                    btnSubmit.disabled = false;
-                    btnSubmit.style.opacity = "1";
-                } else {
-                    Swal.fire('Lỗi', 'Mã OTP không chính xác hoặc hết hạn!', 'error');
-                }
-            });
-    }
-
-    function submitAddUser() {
-        const btnSubmit = document.getElementById('btnSubmitUser');
-        const form = document.getElementById('addUserForm');
-        const pass = document.getElementById('new_password').value;
-        const confirmPass = document.getElementById('confirm_password').value;
-
-        // 1. Kiểm tra khớp mật khẩu
-        if (pass !== confirmPass) {
-            Swal.fire('Lỗi', 'Mật khẩu xác nhận không khớp!', 'error');
-            return;
-        }
-
-        // 2. Kiểm tra định dạng mật khẩu (Client-side)
-        const passRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
-        if (!passRegex.test(pass)) {
-            Swal.fire('Mật khẩu yếu', 'Mật khẩu phải có ít nhất 8 ký tự, 1 chữ hoa và 1 ký tự đặc biệt!', 'warning');
-            return;
-        }
-
-        // 3. Chuẩn bị gửi dữ liệu
-        const formData = new URLSearchParams(new FormData(form));
-        const url = "${pageContext.request.contextPath}/AdminAddCustomerServlet";
-
-        btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang lưu...';
-        btnSubmit.disabled = true;
-
-        fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: formData
-        })
-            .then(response => {
-                if (!response.ok) throw new Error('Lỗi kết nối server');
-                return response.json();
-            })
-            .then(data => {
-                if (data.status === "success") {
-                    // --- BƯỚC QUAN TRỌNG: Đóng form ngay lập tức ---
-                    closeAddUserModal();
-
-                    Swal.fire({
-                        title: 'Thành công!',
-                        text: 'Đã thêm khách hàng mới.',
-                        icon: 'success',
-                        confirmButtonColor: '#4e73df'
-                    }).then(() => {
-                        location.reload();
-                    });
-                } else {
-                    // Nếu lỗi (trùng email, sai OTP...) thì giữ form để sửa
-                    Swal.fire('Lỗi', data.message, 'error');
-                    btnSubmit.innerHTML = 'Lưu Người Dùng';
-                    btnSubmit.disabled = false;
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                Swal.fire('Lỗi', 'Không thể lưu dữ liệu. Vui lòng thử lại!', 'error');
-                btnSubmit.innerHTML = 'Lưu Người Dùng';
-                btnSubmit.disabled = false;
-            });
-    }
-</script>
-
-
-<c:if test="${not empty sessionScope.msg}">
-    <script>
-        Swal.fire({
-            title: "${sessionScope.msgType == 'success' ? 'Thành công!' : 'Lỗi!'}",
-            text: "${sessionScope.msg}",
-            icon: "${sessionScope.msgType}",
-            confirmButtonColor: '#4e73df'
-        });
-
-    </script>
-    <c:remove var="msg" scope="session" />
-    <c:remove var="msgType" scope="session" />
-</c:if>
-
+<script src="${pageContext.request.contextPath}/js/admin_customer.js"></script>
 </body>
 </html>

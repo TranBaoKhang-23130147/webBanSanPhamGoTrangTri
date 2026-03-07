@@ -27,7 +27,7 @@ public class UpdateSettingServlet extends HttpServlet {
         }
 
         UserDao dao = new UserDao();
-        User freshUser = dao.getById(sessionUser.getId()); // ✅ USER MỚI, CÓ avatarUrl
+        User freshUser = dao.getById(sessionUser.getId());
 
         session.setAttribute("LOGGED_USER", freshUser);
 
@@ -47,7 +47,6 @@ public class UpdateSettingServlet extends HttpServlet {
             return;
         }
 
-        // Update thông tin cơ bản của User
         String fullName = req.getParameter("full_name");
         String displayName = req.getParameter("display_name");
         String phone = req.getParameter("phone");
@@ -86,7 +85,6 @@ public class UpdateSettingServlet extends HttpServlet {
             throw new ServletException(e);
         }
 
-        // ----------- XỬ LÝ ĐỊA CHỈ ----------
         String detail = req.getParameter("detail");
         String commune = req.getParameter("commune");
         String district = req.getParameter("district");
@@ -101,21 +99,17 @@ public class UpdateSettingServlet extends HttpServlet {
             address.setProvince(province);
 
             AddressDao addressDao = new AddressDao();
-            addressDao.saveOrUpdate(address); // Ghi lại địa chỉ
+            addressDao.saveOrUpdate(address);
         }
 
-        // cập nhật lại user mới
         User updatedUser = userDao.getById(u.getId());
         session.setAttribute("LOGGED_USER", updatedUser);
 
-        // Trong doPost của UpdateSettingServlet
         String source = req.getParameter("source");
 
         if ("admin_profile".equals(source)) {
-            // Quay lại trang Profile Admin (Sử dụng Admin ID trong session hoặc id cố định)
             resp.sendRedirect(req.getContextPath() + "/AdminProfileServlet?msg=success");
         } else {
-            // Mặc định cho các trường hợp khác
             resp.sendRedirect(req.getContextPath() + "/UpdateSettingServlet?msg=success");
         }
     }

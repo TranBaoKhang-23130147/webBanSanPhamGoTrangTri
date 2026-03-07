@@ -7,9 +7,9 @@ import jakarta.servlet.annotation.*;
 import model.*;
 
 import java.io.IOException;
-import java.util.HashMap; // THÊM DÒNG NÀY
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;      // THÊM DÒNG NÀY
+import java.util.Map;
 
 @WebServlet(name = "ProductDetailServlet", value = "/detail")
 public class ProductDetailServlet extends HttpServlet {
@@ -20,7 +20,6 @@ public class ProductDetailServlet extends HttpServlet {
 
         String idRaw = request.getParameter("id");
 
-        // 🔒 Chốt an toàn
         if (idRaw == null || idRaw.trim().isEmpty()) {
             response.sendRedirect("homepage_user.jsp");
             return;

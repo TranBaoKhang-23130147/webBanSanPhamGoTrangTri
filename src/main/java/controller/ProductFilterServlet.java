@@ -18,11 +18,9 @@ public class ProductFilterServlet extends HttpServlet {
 
         ProductDao dao = new ProductDao();
 
-        // Sidebar
         request.setAttribute("listType", dao.getAllProductTypes());
         request.setAttribute("listColor", dao.getAllColors());
 
-        // Params
         String[] types = request.getParameterValues("type");
         String[] prices = request.getParameterValues("price");
         String[] ratings = request.getParameterValues("rating");
@@ -33,7 +31,6 @@ public class ProductFilterServlet extends HttpServlet {
                 ? Integer.parseInt(cidStr)
                 : null;
 
-        // Filter
         List<Product> listP = dao.filterProductsWithColor(
                 types, prices, ratings, categoryId, colorParam
         );
@@ -44,7 +41,7 @@ public class ProductFilterServlet extends HttpServlet {
         String returnPage = request.getParameter("returnPage");
 
         if (returnPage == null || returnPage.isEmpty()) {
-            returnPage = "product_all_user.jsp"; // fallback
+            returnPage = "product_all_user.jsp"; 
         }
 
         request.getRequestDispatcher(returnPage)

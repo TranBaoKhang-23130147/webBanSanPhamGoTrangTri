@@ -1,23 +1,20 @@
-/* Màu sắc chung và Biến */
 :root {
-    --primary-color: #8B5E3C; /* Màu xanh đậm cho Modern Homes/Primary */
-    --accent-color: #A56B43; /* Màu xanh sáng hơn cho hover */
+    --primary-color: #8B5E3C;
+    --accent-color: #A56B43;
     --text-color: #3b2f2f;
     --secondary-text-color: #6c757d;
     --light-bg: #f4f6f9;
     --border-color: #e0e0e0;
     --sidebar-width: 250px;
     --header-height: 60px;
-    --modern-green: #38c172; /* Trend UP */
-    --modern-red: #e3342f; /* Trend DOWN */
+    --modern-green: #38c172;
+    --modern-red: #e3342f;
     --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     --hover-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Ẩn các class cũ nếu có */
 .kpi-row, .three-cols { display: none; }
 
-/* Reset và Body */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--light-bg);
@@ -32,7 +29,6 @@ body {
     min-height: 100vh;
 }
 
-/* ---------------- HEADER ---------------- */
 .header {
     height: var(--header-height);
     background-color: #fff;
@@ -87,7 +83,6 @@ body {
     font-size: 1.4rem !important;
 }
 
-/* Dropdown Menu */
 .user-dropdown {
     position: relative;
     display: inline-block;
@@ -127,7 +122,6 @@ body {
 
 .show {display: block;}
 
-/* ---------------- MAIN WRAPPER & SIDEBAR ---------------- */
 .main-wrapper {
     display: flex;
     padding-top: var(--header-height);
@@ -168,7 +162,6 @@ body {
     color: var(--primary-color);
 }
 
-/* Style cho mục đang được chọn (active) */
 .sidebar-nav li.active {
     background-color: #f4f6f9;
     border-left: 3px solid var(--primary-color);
@@ -179,7 +172,6 @@ body {
     color: var(--primary-color);
 }
 
-/* ---------------- CONTENT ---------------- */
 .content {
     flex-grow: 1;
     padding: 30px;
@@ -193,7 +185,6 @@ body {
     color: #222;
 }
 
-/* ---------------- KPI MODERN (4 BOX TRÊN) ---------------- */
 .kpi-row-modern {
     display: flex;
     gap: 20px;
@@ -226,7 +217,6 @@ body {
 }
 
 .kpi-value-modern {
-    /* ĐÃ GIẢM KÍCH THƯỚC CHỮ SỐ */
     font-size: 1.8rem;
     font-weight: 700;
     color: var(--text-color);
@@ -257,7 +247,6 @@ body {
 }
 
 
-/* ---------------- BẢNG DỮ LIỆU MODERN ---------------- */
 .widget-full-width {
     margin-top: 20px;
 }
@@ -304,25 +293,21 @@ body {
     border-bottom: none;
 }
 
-/* Căn chỉnh cột Sản phẩm */
 .data-table-modern tbody tr td:nth-child(2) {
     font-weight: 600;
     color: var(--text-color);
 }
 
-/* Đánh giá sao */
 .data-table-modern .fa-star {
     color: #ffc107;
     margin-left: 3px;
     font-size: 0.9rem;
 }
 
-/* Thanh Xu Hướng (Trend Bar) - ẨN HOÀN TOÀN */
 .trend-bar {
     display: none;
 }
 
-/* Trend chữ trong bảng */
 .data-table-modern .trend.up,
 .data-table-modern .trend.down {
     padding: 2px 6px;
@@ -330,40 +315,29 @@ body {
     font-size: 0.8rem;
     font-weight: 500;
 }
-/* Trong phần "MAIN WRAPPER & SIDEBAR" */
 .main-wrapper {
     display: flex;
     padding-top: var(--header-height);
     flex: 1;
 }
 
-/* 1. Thay đổi Padding của Content để nâng tiêu đề lên */
 .content {
     flex-grow: 1;
-    /* Giảm padding-top từ 30px (hoặc giá trị hiện tại) xuống 20px */
     padding: 20px 30px 30px 30px;
     margin-left: var(--sidebar-width);
 }
 
 
-/* Chỉnh sửa style cho tiêu đề trang */
 .page-title {
     font-size: 1.8rem;
     font-weight: 500;
     color: var(--text-color);
-    /* Giảm margin-top và margin-bottom để nâng chữ lên */
     margin-top: 0;
     margin-bottom: 20px;
 
-    /* 2. Thêm đường kẻ ngang dưới nó */
-    padding-bottom: 15px; /* Khoảng cách giữa chữ và đường kẻ */
-    border-bottom: 1px solid var(--border-color); /* Đường kẻ ngang mỏng */
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
 }
-/**/
-/* ... CSS Khối 1 của bạn ... */
-
-/* ---------------- HEADER ---------------- */
-/* ... */
 .header-icons i:hover {
     color: var(--primary-color);
 }
@@ -372,31 +346,27 @@ body {
     font-size: 1.4rem !important;
 }
 
-/* Dropdown Menu - CÁC QUY TẮC BẠN ĐÃ CUNG CẤP */
 .user-dropdown, .notification-dropdown, .gmail-dropdown {
     position: relative;
     display: inline-block;
-    cursor: pointer; /* Thêm con trỏ cho dễ nhìn */
+    cursor: pointer;
 }
 
 .dropdown-content {
-    display: none; /* Đảm bảo nó ẩn mặc định */
+    display: none;
     position: absolute;
-    /* ... các thuộc tính khác của dropdown-content ... */
-    z-index: 1050; /* Tăng z-index */
+    z-index: 1050;
     right: 0;
     top: calc(100% + 5px);
     border-radius: 6px;
     overflow: hidden;
-    max-height: 500px; /* Thêm max-height */
+    max-height: 500px;
 }
 
-/* Định nghĩa lại các thuộc tính đặc biệt cho Notification/Gmail */
 .gmail-content, .notification-content {
     min-width: 250px;
     right: -10px;
 }
-/* Thêm Header cho Dropdown */
 .dropdown-header {
     padding: 10px 15px;
     font-weight: bold;
@@ -404,13 +374,12 @@ body {
     border-bottom: 1px solid var(--border-color);
     font-size: 0.9rem;
     display: block;
-    position: sticky; /* Để header dính khi cuộn */
+    position: sticky;
     top: 0;
     background-color: #fff;
     z-index: 2;
 }
 
-/* QUY TẮC HIỂN THỊ KHI HOVER */
 .user-dropdown:hover .dropdown-content,
 .notification-dropdown:hover .dropdown-content,
 .gmail-dropdown:hover .dropdown-content {

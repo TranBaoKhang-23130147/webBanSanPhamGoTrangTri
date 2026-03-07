@@ -25,7 +25,6 @@ public class ContactSettingsFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
 
-        // Chỉ áp dụng cho user (tránh admin nếu muốn)
         if (!req.getRequestURI().contains("/admin")) {
             ContactSettings settings = dao.getSettings();
             req.setAttribute("contactSettings", settings);

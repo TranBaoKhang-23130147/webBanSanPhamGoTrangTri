@@ -5,11 +5,10 @@ import java.sql.Date;
 public class Payment {
     private int id;
     private int userId;
-    private String cardNumber; // Thêm mới
+    private String cardNumber;
     private Date duration;
     private String type;
 
-    // Cập nhật Constructor
     public Payment(int id, int userId, String cardNumber, Date duration, String type) {
         this.id = id;
         this.userId = userId;

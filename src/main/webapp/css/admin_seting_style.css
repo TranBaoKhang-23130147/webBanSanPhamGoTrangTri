@@ -13,10 +13,8 @@
     --hover-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Ẩn các class cũ nếu có */
 .kpi-row, .three-cols { display: none; }
 
-/* Reset và Body */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--light-bg);
@@ -31,7 +29,6 @@ body {
     min-height: 100vh;
 }
 
-/* ---------------- HEADER ---------------- */
 .header {
     height: var(--header-height);
     background-color: #fff;
@@ -138,7 +135,6 @@ body {
     font-size: 0.9rem;
     display: block;
 
-    /* VỊ TRÍ STICKY */
     position: sticky;
     top: 0;
     background-color: #fff;
@@ -285,10 +281,9 @@ body {
     background-color: var(--light-bg);
 }
 
-/* ---------------- SETTINGS CONTENT (RIGHT SIDE) ---------------- */
 .settings-content {
     flex-grow: 1;
-    max-width: 800px; /* Giới hạn chiều rộng nội dung */
+    max-width: 800px;
 }
 
 .settings-card {
@@ -308,7 +303,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* ---------------- FORM ELEMENTS ---------------- */
 .form-group {
     margin-bottom: 15px;
 }
@@ -330,7 +324,7 @@ select {
     border: 1px solid var(--border-color);
     border-radius: 4px;
     font-size: 0.95rem;
-    box-sizing: border-box; /* Quan trọng để padding không làm tăng chiều rộng */
+    box-sizing: border-box;
     transition: border-color 0.2s;
 }
 
@@ -353,7 +347,6 @@ select:focus {
     flex: 1 1 30%;
 }
 
-/* ---------------- AVATAR ---------------- */
 .avatar-group {
     display: flex;
     flex-direction: column;
@@ -367,7 +360,6 @@ select:focus {
     margin-top: 5px;
 }
 
-/* ---------------- BUTTONS ---------------- */
 .form-actions {
     padding-top: 15px;
     text-align: right;
@@ -385,7 +377,7 @@ select:focus {
 
 .btn-primary {
 
-    background-color: var(--primary-color) ;/* Sử dụng màu xanh theo hình ảnh */
+    background-color: var(--primary-color) ;
     color: #fff;
 }
 
@@ -411,7 +403,6 @@ select:focus {
     background: var(--accent-color);
 }
 
-/* ---------------- PASSWORD REQUIREMENTS ---------------- */
 .password-requirements {
     background-color: var(--light-bg);
     padding: 15px;
@@ -433,9 +424,8 @@ select:focus {
     color: var(--secondary-text-color);
 }
 
-/* ---------------- NOTIFICATION TABLE ---------------- */
 .alert-box {
-    background-color: #fff3cd; /* Màu vàng nhạt */
+    background-color: #fff3cd;
     color: #664d03;
     padding: 12px;
     border-radius: 4px;
@@ -546,7 +536,7 @@ select:focus {
 .connection-details i {
     font-size: 1.5rem;
     color: var(--primary-color);
-    width: 30px; /* Đảm bảo căn chỉnh đều */
+    width: 30px;
     text-align: center;
 }
 
@@ -602,7 +592,7 @@ select:focus {
 }
 
 input:checked + .slider {
-    background-color: var(--modern-green); /* Dùng màu xanh lá cây đã định nghĩa */
+    background-color: var(--modern-green);
 }
 
 input:focus + .slider {
@@ -626,7 +616,7 @@ input:checked + .slider:before {
     align-items: center;
     padding: 15px;
     border-radius: 6px;
-    background-color: #fff0f0; /* Nền rất nhạt màu đỏ */
+    background-color: #fff0f0;
     margin-top: 20px;
 }
 
@@ -646,10 +636,6 @@ input:checked + .slider:before {
     font-size: 0.85rem;
     color: var(--secondary-text-color);
 }
-/* ... CSS Khối 1 của bạn ... */
-
-/* ---------------- HEADER ---------------- */
-/* ... */
 .header-icons i:hover {
     color: var(--primary-color);
 }
@@ -658,31 +644,27 @@ input:checked + .slider:before {
     font-size: 1.4rem !important;
 }
 
-/* Dropdown Menu - CÁC QUY TẮC BẠN ĐÃ CUNG CẤP */
 .user-dropdown, .notification-dropdown, .gmail-dropdown {
     position: relative;
     display: inline-block;
-    cursor: pointer; /* Thêm con trỏ cho dễ nhìn */
+    cursor: pointer;
 }
 
 .dropdown-content {
-    display: none; /* Đảm bảo nó ẩn mặc định */
+    display: none;
     position: absolute;
-    /* ... các thuộc tính khác của dropdown-content ... */
-    z-index: 1050; /* Tăng z-index */
+    z-index: 1050;
     right: 0;
     top: calc(100% + 5px);
     border-radius: 6px;
     overflow: hidden;
-    max-height: 500px; /* Thêm max-height */
+    max-height: 500px;
 }
 
-/* Định nghĩa lại các thuộc tính đặc biệt cho Notification/Gmail */
 .gmail-content, .notification-content {
     min-width: 250px;
     right: -10px;
 }
-/* Thêm Header cho Dropdown */
 .dropdown-header {
     padding: 10px 15px;
     font-weight: bold;
@@ -690,13 +672,12 @@ input:checked + .slider:before {
     border-bottom: 1px solid var(--border-color);
     font-size: 0.9rem;
     display: block;
-    position: sticky; /* Để header dính khi cuộn */
+    position: sticky;
     top: 0;
     background-color: #fff;
     z-index: 2;
 }
 
-/* QUY TẮC HIỂN THỊ KHI HOVER */
 .user-dropdown:hover .dropdown-content,
 .notification-dropdown:hover .dropdown-content,
 .gmail-dropdown:hover .dropdown-content {

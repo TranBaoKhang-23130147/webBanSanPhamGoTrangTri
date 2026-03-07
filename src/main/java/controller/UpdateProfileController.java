@@ -23,14 +23,12 @@ public class UpdateProfileController extends HttpServlet {
         }
 
         UserDao userDao = new UserDao();
-        // 1. Load User từ DB (có LEFT JOIN images) để đảm bảo lấy được URL ảnh mới nhất
         User currentUser = userDao.getUserById(loggedUser.getId());
 
         if (currentUser == null) {
             currentUser = loggedUser;
         }
 
-        // 2. Lấy danh sách đơn hàng để hiển thị Summary
         dao.OrderDao orderDao = new dao.OrderDao();
         java.util.List<model.Order> listOrders = orderDao.getOrdersByUserId(currentUser.getId());
 
@@ -45,7 +43,6 @@ public class UpdateProfileController extends HttpServlet {
             request.setAttribute("totalOrders", 0);
         }
 
-        // 3. Gửi dữ liệu currentUser sang JSP
         request.setAttribute("currentUser", currentUser);
         request.setAttribute("totalSpent", totalSpent);
 
@@ -69,15 +66,13 @@ public class UpdateProfileController extends HttpServlet {
 
         UserDao userDao = new UserDao();
         try {
-            // 1. Lấy dữ liệu từ form
             String fullName     = request.getParameter("fullName");
             String displayName  = request.getParameter("displayName");
             String phone        = request.getParameter("phone");
             String gender       = request.getParameter("gender");
             String birthDateStr = request.getParameter("birthDate");
-            String avatarUrlRaw = request.getParameter("avatar_id"); // Đây là chuỗi URL từ CKFinder
+            String avatarUrlRaw = request.getParameter("avatar_id");
 
-            // 2. Chuẩn hóa Avatar URL (Xóa contextPath nếu có)
             String relativeAvatarUrl = null;
             if (avatarUrlRaw != null && !avatarUrlRaw.trim().isEmpty()) {
                 relativeAvatarUrl = avatarUrlRaw.trim();
@@ -87,10 +82,9 @@ public class UpdateProfileController extends HttpServlet {
                 }
             }
 
-            // 3. Tạo đối tượng cập nhật
             User userToUpdate = new User();
             userToUpdate.setId(loggedUser.getId());
-            userToUpdate.setUsername(fullName); // Giả sử username dùng lưu full_name
+            userToUpdate.setUsername(fullName);
             userToUpdate.setDisplayName(displayName);
             userToUpdate.setPhone(phone);
             userToUpdate.setGender(gender);
@@ -99,22 +93,18 @@ public class UpdateProfileController extends HttpServlet {
                 userToUpdate.setBirthDate(java.sql.Date.valueOf(birthDateStr));
             }
 
-            // 4. Xử lý Khóa ngoại avatar_id: Từ URL tìm ra ID trong bảng images
             if (relativeAvatarUrl != null) {
                 int realImageId = userDao.getImageIdByUrl(relativeAvatarUrl);
                 userToUpdate.setAvatarId(realImageId);
                 userToUpdate.setAvatarUrl(relativeAvatarUrl);
             } else {
-                // Nếu không chọn ảnh mới, giữ lại ảnh cũ từ session
                 userToUpdate.setAvatarId(loggedUser.getAvatarId());
                 userToUpdate.setAvatarUrl(loggedUser.getAvatarUrl());
             }
 
-            // 5. Thực hiện Update DB
             boolean success = userDao.updateUserProfile(userToUpdate);
 
             if (success) {
-                // QUAN TRỌNG: Load lại User từ DB (có JOIN) để cập nhật Session
                 User updatedUser = userDao.getUserById(loggedUser.getId());
                 session.setAttribute("LOGGED_USER", updatedUser);
                 request.setAttribute("currentUser", updatedUser);
@@ -128,7 +118,6 @@ public class UpdateProfileController extends HttpServlet {
             request.setAttribute("error", "Lỗi: " + e.getMessage());
         }
 
-        // Trở lại trang doGet để nạp lại dữ liệu đơn hàng và hiển thị
         doGet(request, response);
     }
 }

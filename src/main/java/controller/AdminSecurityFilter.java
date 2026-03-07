@@ -34,11 +34,9 @@ public class AdminSecurityFilter implements Filter {
 
         User user = (session != null) ? (User) session.getAttribute("LOGGED_USER") : null;
 
-        // Nếu là Admin thì cho đi tiếp (chain.doFilter)
         if (user != null && "Admin".equalsIgnoreCase(user.getRole())) {
             chain.doFilter(request, response);
         } else {
-            // Nếu là Staff hoặc khách: Đuổi ra hoặc báo lỗi
             res.sendRedirect(req.getContextPath() + "/access-denied.jsp");
         }
     }

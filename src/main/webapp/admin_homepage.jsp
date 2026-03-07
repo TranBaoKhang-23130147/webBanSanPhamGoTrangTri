@@ -6,25 +6,16 @@
 <%@ page import="dao.UserDao" %>
 <%@ page import="dao.OrderDao" %>
 
-<%
-    // 1. Kiểm tra session
-    User user = (User) session.getAttribute("LOGGED_USER");
-
-// 2. Nếu chưa đăng nhập hoặc không phải Admin -> Đuổi về trang login
+<%User user = (User) session.getAttribute("LOGGED_USER");
     if (user == null || !"Admin".equalsIgnoreCase(user.getRole())) {
         response.sendRedirect(request.getContextPath() + "/login.jsp");
         return;
     }
-
-// 3. Lấy dữ liệu từ request attributes (được set bởi servlet)
     UserDao userDao = new UserDao();
     int newUsersLast30Days = userDao.countNewUsersLast30Days();
 
-// Lấy orderCount từ request attribute
     Integer orderCountObj = (Integer) request.getAttribute("orderCount");
     int orderCount = 0;
-
-// Nếu không có từ servlet (truy cập trực tiếp JSP), lấy từ database
     if (orderCountObj == null) {
         OrderDao orderDao = new OrderDao();
 
@@ -73,10 +64,6 @@
                         <fmt:formatNumber value="<%= totalRevenue %>" pattern="#,###"/>
                         <span class="unit">VND</span></div>
                 </div>
-                <!--                <div class="kpi-card-modern">-->
-                <!--                    <div class="kpi-label-modern">Tổng Lượt Truy Cập <span class="trend down">▼ 8.2%</span></div>-->
-                <!--                    <div class="kpi-value-modern">320</div>-->
-                <!--                </div>-->
                 <%
                     System.out.println("Order Count (JSP): " + request.getAttribute("orderCount"));
                 %>
@@ -121,8 +108,6 @@
                                 </td>
                             </tr>
                         </c:forEach>
-
-                        <%-- Hiển thị thông báo nếu không có sản phẩm nào --%>
                         <c:if test="${empty topProducts}">
                             <tr>
                                 <td colspan="4" style="text-align: center;">Chưa có dữ liệu bán hàng</td>

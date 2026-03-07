@@ -27,16 +27,12 @@
             <div class="product-management-container">
                 <h2 class="page-title">Quản Lý Sản Phẩm</h2>
                 <div class="search-filter-bar">
-                    <%-- Gửi dữ liệu về @WebServlet("/products") --%>
                     <form action="products" method="GET" style="display: flex; gap: 10px; flex-grow: 1; align-items: center;">
 
                         <div class="search-input-group">
-                            <%-- Giữ lại từ khóa tìm kiếm bằng param.keyword --%>
                             <input type="text" name="keyword" value="${param.keyword}"
                                    placeholder="Tìm kiếm sản phẩm" class="search-input">
                         </div>
-
-                        <%-- Lọc theo Loại sản phẩm: Tự submit khi chọn --%>
                         <select name="typeId" class="filter-select" onchange="this.form.submit()">
                             <option value="">Loại sản phẩm</option>
                             <c:forEach var="type" items="${typeList}">
@@ -45,8 +41,6 @@
                                 </option>
                             </c:forEach>
                         </select>
-
-                        <%-- Lọc theo Danh mục: Tự submit khi chọn --%>
                         <select name="categoryId" class="filter-select" onchange="this.form.submit()">
                             <option value="">Danh mục</option>
                             <c:forEach var="cat" items="${categoryList}">
@@ -55,8 +49,6 @@
                                 </option>
                             </c:forEach>
                         </select>
-
-                        <%-- Nút tìm kiếm icon --%>
                         <button type="submit" style="background: none; border: none; cursor: pointer; color: #666;">
                         </button>
                     </form>
@@ -69,9 +61,6 @@
                                 </button>
                             </a>
                         </div>
-
-
-
                         <button class="add-new-product-btn">
                             <i class="fa-solid fa-plus"></i> Thêm Sản Phẩm Mới
                         </button>
@@ -160,183 +149,8 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const promoBtn = document.querySelector('.add-uu-dai');
-        const modal = document.getElementById('promotionModal');
-        const overlay = document.getElementById('modalOverlay');
-
-        // MỞ modal
-        promoBtn.addEventListener('click', function () {
-            modal.style.display = 'block';
-            overlay.style.display = 'block';
-        });
-
-        // ĐÓNG khi click nền mờ
-        overlay.addEventListener('click', function () {
-            modal.style.display = 'none';
-            overlay.style.display = 'none';
-        });
-    });
+    const contextPath = "${pageContext.request.contextPath}";
 </script>
-
-<script>
-    function toggleActive(productId, willBeActive) {   // ← đổi tên tham số cho dễ hiểu
-        const status = willBeActive ? 1 : 0;
-
-        Swal.fire({
-            title: willBeActive ? 'Kích hoạt sản phẩm?' : 'Tắt sản phẩm?',
-            text: willBeActive ? "Sản phẩm sẽ hiển thị cho khách hàng." : "Sản phẩm sẽ ẩn đi.",
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Đồng ý'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fetch('${pageContext.request.contextPath}/admin/update-product-status', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: 'id=' + productId + '&status=' + status     // ← đổi thành status cho đồng bộ
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            Swal.fire('Thành công!', data.message, 'success');
-                            // location.reload();   // nếu muốn reload để thấy ngay
-                        } else {
-                            Swal.fire('Lỗi!', data.message || 'Không xác định', 'error');
-                            this.checked = !willBeActive;   // hoàn nguyên checkbox
-                        }
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        Swal.fire('Lỗi!', 'Không thể kết nối server', 'error');
-                        this.checked = !willBeActive;
-                    });
-            } else {
-                this.checked = !willBeActive;   // hủy → trả về trạng thái cũ
-            }
-        });
-    }
-
-    // Gắn event cho nút "Thêm Sản Phẩm Mới" (ví dụ)
-    document.addEventListener('DOMContentLoaded', function() {
-        const addBtn = document.querySelector('.add-new-product-btn');
-        if (addBtn) {
-            addBtn.addEventListener('click', function() {
-                window.location.href = '${pageContext.request.contextPath}/admin-add-product';
-            });
-        }
-
-        // Nút "Thêm màu sắc và kích thước" - tùy theo chức năng bạn muốn
-
-    });
-    function confirmDelete(productId) {
-        Swal.fire({
-            title: 'Xác nhận xóa?',
-            text: "Sản phẩm sẽ bị xóa vĩnh viễn!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Xóa ngay',
-            cancelButtonText: 'Hủy'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fetch('${pageContext.request.contextPath}/admin/delete-product', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: 'id=' + productId
-                    // Nếu có CSRF: + '&csrfToken=' + document.querySelector('[name="csrfToken"]').value
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            Swal.fire('Thành công!', data.message, 'success')
-                                .then(() => location.reload());
-                        } else {
-                            Swal.fire('Lỗi!', data.message, 'error');
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire('Lỗi!', 'Không thể xóa sản phẩm. Lỗi: ' + error, 'error');
-                    });
-            }
-        });
-         Swal.fire({
-            title: 'Không thể xóa',
-            text: 'Sản phẩm đã phát sinh đơn hàng. Bạn chỉ có thể ngưng bán.',
-            icon: 'info'
-        });
-
-    }
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
-            modal.style.display = 'none';
-            overlay.style.display = 'none';
-        }
-    });
-
-</script>
-<style>.product-table-wrapper{
-    max-height:500px;        /* chiều cao vùng bảng */
-    overflow-y:auto;
-}
-
-/* Thanh cuộn mịn */
-.product-table-wrapper::-webkit-scrollbar{
-    width:6px;
-}
-
-.product-table-wrapper::-webkit-scrollbar-thumb{
-    background:#fff0f0;
-    border-radius:10px;
-}
-.product-table-wrapper{
-    max-height:500px;
-    overflow-y:auto;
-
-    border-left:1px solid #fff;
-    border-right:1px solid #fff;
-}
-
-/* ===== Scrollbar ===== */
-
-.product-table-wrapper::-webkit-scrollbar{
-    width:12px;
-}
-
-.product-table-wrapper::-webkit-scrollbar-track{
-    background:#f1f1f1;
-    border-left:1px solid #ddd;
-    border-right:1px solid #ddd;
-}
-
-.product-table-wrapper::-webkit-scrollbar-thumb{
-    background:#a0a0a0;
-    border-radius:10px;
-    border:3px solid #a0a0a0;
-}
-
-
-table {
-    background: white !important;
-}
-
-table thead tr,
-table tbody tr {
-    background: white !important;
-}
-
-table td, table th {
-    background: white !important;
-}
-
-
-</style>
+<script src="${pageContext.request.contextPath}/js/admin_products.js"></script>
 </body>
 </html>

@@ -9,7 +9,7 @@ public class EmailUtil {
     public static void sendOTP(String toEmail, String otp) throws Exception {
 
         final String fromEmail = "23130082@st.hcmuaf.edu.vn";
-        final String password = "umcskoycqyflcmsd"; // ❗ KHÔNG DẤU CÁCH
+        final String password = "umcskoycqyflcmsd";
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");

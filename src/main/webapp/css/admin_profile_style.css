@@ -1,22 +1,20 @@
 :root {
-    --primary-color: #8B5E3C; /* Màu nâu đậm cho Modern Homes/Primary */
-    --accent-color: #A56B43; /* Màu nâu sáng hơn cho hover */
-    --text-color: #3b2f2f; /* Màu chữ chính */
-    --secondary-text-color: #6c757d; /* Màu chữ phụ */
-    --light-bg: #f4f6f9; /* Nền sáng */
-    --border-color: #e0e0e0; /* Màu đường viền */
+    --primary-color: #8B5E3C;
+    --accent-color: #A56B43;
+    --text-color: #3b2f2f;
+    --secondary-text-color: #6c757d;
+    --light-bg: #f4f6f9;
+    --border-color: #e0e0e0;
     --sidebar-width: 250px;
     --header-height: 60px;
-    --modern-green: #38c172; /* Icon verified */
-    --modern-red: #e3342f; /* Trend DOWN */
+    --modern-green: #38c172;
+    --modern-red: #e3342f;
     --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     --hover-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Ẩn các class cũ nếu có */
 .kpi-row, .three-cols { display: none; }
 
-/* Reset và Body */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--light-bg);
@@ -31,7 +29,6 @@ body {
     min-height: 100vh;
 }
 
-/* ---------------- HEADER ---------------- */
 .header {
     height: var(--header-height);
     background-color: #fff;
@@ -138,7 +135,6 @@ body {
     font-size: 0.9rem;
     display: block;
 
-    /* VỊ TRÍ STICKY */
     position: sticky;
     top: 0;
     background-color: #fff;
@@ -186,7 +182,6 @@ body {
     flex: 1;
 }
 
-/* ---------------- SIDEBAR ---------------- */
 .sidebar {
     width: var(--sidebar-width);
     background-color: #fff;
@@ -221,7 +216,6 @@ body {
     color: var(--primary-color);
 }
 
-/* Style cho mục đang được chọn (active) */
 .sidebar-nav li.active {
     background-color: #f4f6f9;
     border-left: 3px solid var(--primary-color);
@@ -232,7 +226,6 @@ body {
     color: var(--primary-color);
 }
 
-/* ---------------- MAIN CONTENT ---------------- */
 .main-content {
     margin-left: var(--sidebar-width);
     padding: 20px;
@@ -240,7 +233,6 @@ body {
     max-width: calc(100% - var(--sidebar-width));
 }
 
-/* ---------------- PROFILE HEADER ---------------- */
 
 .profile-header-section {
     background-color: #fff;
@@ -334,7 +326,6 @@ body {
     margin-right: 5px;
 }
 
-/* ---------------- PROFILE CONTENT ---------------- */
 
 .profile-content-section {
     background-color: #fff;
@@ -344,7 +335,6 @@ body {
     position: relative;
 }
 
-/* Tabs */
 .profile-tabs {
     border-bottom: 1px solid var(--border-color);
     margin-bottom: 20px;
@@ -366,7 +356,6 @@ body {
     font-weight: bold;
 }
 
-/* Edit Button */
 .edit-profile-btn {
     position: absolute;
     top: 20px;
@@ -388,7 +377,6 @@ body {
     background-color: var(--accent-color);
 }
 
-/* Details Wrapper */
 .profile-details-wrapper {
     display: flex;
     gap: 40px;
@@ -429,7 +417,6 @@ body {
     font-size: 0.95rem;
 }
 
-/* --- Thống kê nhanh (Quick Stats) --- */
 .quick-stats-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -469,7 +456,6 @@ body {
     margin: 0;
 }
 
-/* --- Link Box --- */
 .share-link-copy p {
     font-size: 0.9rem;
     color: var(--secondary-text-color);
@@ -494,10 +480,6 @@ body {
     cursor: pointer;
     margin-left: 10px;
 }
-/* ... CSS Khối 1 của bạn ... */
-
-/* ---------------- HEADER ---------------- */
-/* ... */
 .header-icons i:hover {
     color: var(--primary-color);
 }
@@ -506,31 +488,26 @@ body {
     font-size: 1.4rem !important;
 }
 
-/* Dropdown Menu - CÁC QUY TẮC BẠN ĐÃ CUNG CẤP */
 .user-dropdown, .notification-dropdown, .gmail-dropdown {
     position: relative;
     display: inline-block;
-    cursor: pointer; /* Thêm con trỏ cho dễ nhìn */
+    cursor: pointer;
 }
 
 .dropdown-content {
-    display: none; /* Đảm bảo nó ẩn mặc định */
+    display: none;
     position: absolute;
-    /* ... các thuộc tính khác của dropdown-content ... */
-    z-index: 1050; /* Tăng z-index */
+    z-index: 1050;
     right: 0;
     top: calc(100% + 5px);
     border-radius: 6px;
     overflow: hidden;
-    max-height: 500px; /* Thêm max-height */
-}
+    max-height: 500px;
 
-/* Định nghĩa lại các thuộc tính đặc biệt cho Notification/Gmail */
 .gmail-content, .notification-content {
     min-width: 250px;
     right: -10px;
 }
-/* Thêm Header cho Dropdown */
 .dropdown-header {
     padding: 10px 15px;
     font-weight: bold;
@@ -538,13 +515,12 @@ body {
     border-bottom: 1px solid var(--border-color);
     font-size: 0.9rem;
     display: block;
-    position: sticky; /* Để header dính khi cuộn */
+    position: sticky;
     top: 0;
     background-color: #fff;
     z-index: 2;
 }
 
-/* QUY TẮC HIỂN THỊ KHI HOVER */
 .user-dropdown:hover .dropdown-content,
 .notification-dropdown:hover .dropdown-content,
 .gmail-dropdown:hover .dropdown-content {
@@ -560,11 +536,10 @@ body {
     margin-top: 5px;
     color: white;
 }
-.role-admin { background-color: #e74c3c; } /* Màu đỏ cho Admin */
-.role-staff { background-color: #3498db; } /* Màu xanh cho Staff */
+.role-admin { background-color: #e74c3c; }
+.role-staff { background-color: #3498db; }
 
 
-/* Hộp thông báo quyền ở đầu */
 .role-status-message {
     padding: 12px 15px;
     border-radius: 8px;
@@ -588,7 +563,6 @@ body {
     border-left: 4px solid #4299e1;
 }
 
-/* Danh sách quyền */
 .permissions-container {
     display: flex;
     flex-direction: column;
@@ -606,7 +580,6 @@ body {
     border: 1px solid transparent;
 }
 
-/* Hiệu ứng hover cho chuyên nghiệp */
 .perm-item:hover {
     transform: translateX(5px);
 }
@@ -619,20 +592,19 @@ body {
 }
 
 .perm-item.granted i {
-    color: #38a169; /* Xanh lá */
+    color: #38a169;
 }
 
 .perm-item.restricted {
     background: #f7fafc;
     color: #a0aec0;
     border-color: #edf2f7;
-    /* Gạch ngang chữ cho Staff thấy quyền bị khóa */
     text-decoration: line-through;
     opacity: 0.8;
 }
 
 .perm-item.restricted i {
-    color: #cbd5e0; /* Màu xám icon khóa */
+    color: #cbd5e0;
 }
 
 .text-success {

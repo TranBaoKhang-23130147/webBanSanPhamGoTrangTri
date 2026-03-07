@@ -19,13 +19,11 @@ public class AdminDeleteProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Thiết lập response là JSON
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
         PrintWriter out = response.getWriter();
 
-        // 1. Lấy và kiểm tra ID
         String idRaw = request.getParameter("id");
         if (idRaw == null || idRaw.trim().isEmpty()) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -44,7 +42,6 @@ public class AdminDeleteProductServlet extends HttpServlet {
             return;
         }
 
-        // 2. Thực hiện xóa
         try {
             boolean success = productDao.deleteFullProduct(productId);
 
@@ -56,7 +53,7 @@ public class AdminDeleteProductServlet extends HttpServlet {
                 out.print("{\"success\": false, \"message\": \"Xóa thất bại! Sản phẩm không tồn tại hoặc đã bị xóa trước đó.\"}");
             }
         } catch (Exception e) {
-            e.printStackTrace(); // Log lỗi để debug
+            e.printStackTrace();
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             out.print("{\"success\": false, \"message\": \"Lỗi hệ thống khi xóa sản phẩm: " + e.getMessage() + "\"}");
         }
@@ -65,7 +62,6 @@ public class AdminDeleteProductServlet extends HttpServlet {
         out.close();
     }
 
-    // Nếu ai đó truy cập GET → trả lỗi hoặc redirect về danh sách
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

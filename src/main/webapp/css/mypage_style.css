@@ -1,17 +1,15 @@
-/* mypage_style.css - Đã cập nhật cho Dropdown, Thẻ thanh toán và Đơn hàng */
 
 :root {
     --background-color: #FFFFFF;
-    --primary-color: #8B5E3C; /* Màu chính: Nút, viền active, icon */
-    --text-color: #3b2f2f; /* Màu chữ chính */
-    --text-color2: #6b5743; /* Màu chữ phụ/mờ */
-    --btn: #A56B43; /* Màu hover của nút */
-    --delete-color: #800000; /* Màu đỏ cho hành động xóa */
-    --success-color: #52c41a; /* Màu xanh lá cho trạng thái thành công */
-    --order-total-color: #007bff; /* Màu xanh dương cho Tổng thanh toán (theo mẫu) */
+    --primary-color: #8B5E3C;
+    --text-color: #3b2f2f;
+    --text-color2: #6b5743;
+    --btn: #A56B43;
+    --delete-color: #800000;
+    --success-color: #52c41a;
+    --order-total-color: #007bff;
 }
 
-/* Tổng thể Dashboard */
 .dashboard-container {
     display: flex;
     max-width: 1200px;
@@ -22,7 +20,6 @@
     color: var(--text-color);
 }
 
-/* --- Sidebar (Menu bên trái) --- */
 .sidebar {
     width: 250px;
     padding-right: 20px;
@@ -79,7 +76,6 @@
     text-align: center;
 }
 
-/* Icon toggle (mũi tên) cho Dropdown */
 .toggle-icon {
     position: absolute;
     right: 0;
@@ -87,12 +83,10 @@
     margin-right: 0 !important;
 }
 
-/* Xoay mũi tên khi menu active */
 .menu-item-dropdown.active .toggle-icon {
     transform: rotate(180deg);
 }
 
-/* Nền active cho các tab (mục con và mục cấp 1) */
 .menu-list .tab-link.active {
     background-color: #f7f3f0;
     color: var(--primary-color);
@@ -100,7 +94,6 @@
     font-weight: bold;
 }
 
-/* Nội dung Dropdown */
 .dropdown-content {
     display: flex;
     flex-direction: column;
@@ -109,14 +102,12 @@
     margin-left: 10px;
     margin-bottom: 10px;
 
-    /* Cấu hình cho hiệu ứng trượt */
     max-height: 500px;
     overflow: hidden;
     transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
     opacity: 1;
 }
 
-/* Khi dropdown không active, ẩn đi */
 .menu-item-dropdown:not(.active) .dropdown-content {
     max-height: 0;
     opacity: 0;
@@ -130,7 +121,6 @@
     color: var(--text-color2);
 }
 
-/* --- Main Content (Nội dung chính) --- */
 .main-content {
 
     flex-grow: 1;
@@ -165,7 +155,6 @@
     margin-bottom: 30px;
 }
 
-/* --- Hồ sơ (Profile) --- */
 .profile-container {
     display: flex;
     gap: 40px;
@@ -295,7 +284,6 @@ color: var(--btn);
 .delete-btn:hover{
     color: var(--btn);
 }
-/* --- Thanh toán (Payment) --- */
 .payment-management {
     margin-top: 20px;
 }
@@ -325,7 +313,6 @@ color: var(--btn);
 }
 
 .card-display {
-    /* Tạo hình ảnh thẻ theo mẫu */
     background: linear-gradient(135deg, #f7f3f0 0%, #fff 50%, #e6e0db 100%);
     border-radius: 8px;
     padding: 20px;
@@ -368,7 +355,6 @@ color: var(--btn);
     background-color: #f0f0f0;
 }
 
-/* --- Địa chỉ (Address) --- */
 .float-right {
     float: right;
     margin-bottom: 20px;
@@ -448,7 +434,6 @@ color: var(--btn);
     display: none;
 }
 
-/* --- Bảo mật (Security) --- */
 .password-change-form {
     max-width: 500px;
 }
@@ -503,7 +488,6 @@ color: var(--btn);
     color: var(--text-color2);
 }
 
-/* --- Đơn hàng (Orders) --- */
 
 .order-summary {
     display: flex;
@@ -538,7 +522,6 @@ color: var(--btn);
     margin: 0 20px;
 }
 
-/* Căn giữa nhóm nút tab */
 .order-tabs {
     display: flex;
     justify-content: center;
@@ -573,9 +556,8 @@ color: var(--btn);
 
 .product-info {
     display: flex;
-    /* Tăng cường độ chiếm không gian để thông tin bên trong có đủ chỗ */
     flex-grow: 1.5;
-    margin: 0 20px 0 0; /* Thêm margin phải để tách biệt với cột Tổng tiền */
+    margin: 0 20px 0 0;
 }
 
 .product-img {
@@ -596,28 +578,23 @@ color: var(--btn);
 
 .product-name {
     font-weight: normal;
-    margin-bottom: 8px; /* Tăng khoảng cách dưới tên sản phẩm */
+    margin-bottom: 8px;
     line-height: 1.3;
     font-size: 1.1em;
 }
 
-/* Các dòng chi tiết sản phẩm (Màu, Kích thước, Số lượng) */
 .product-spec-item {
-    margin: 3px 0; /* Khoảng cách giữa các dòng */
+    margin: 3px 0;
     font-size: 0.9em;
     color: var(--text-color);
-    /* Đảm bảo mỗi mục chiếm hết chiều rộng và xuống dòng */
     display: block;
 }
 
-/* In đậm nhãn (Màu Sắc:, Kích thước:, Số lượng:) */
 .product-spec-item span {
     font-weight: bold;
     color: var(--text-color2);
     margin-right: 5px;
     display: inline-block;
-    /* Dùng width cố định cho label để căn thẳng hàng (optional) */
-    /* width: 80px; */
 }
 
 .delivery-status {
@@ -628,7 +605,7 @@ color: var(--btn);
     font-size: 0.9em;
     display: inline-block;
     margin-right: 0;
-    margin-top: 10px; /* Tách biệt với chi tiết sản phẩm */
+    margin-top: 10px;
 }
 
 .order-total {
@@ -654,7 +631,6 @@ color: var(--btn);
     white-space: nowrap;
 }
 
-/* Nhóm nút hành động */
 .order-actions-group {
     display: flex;
     flex-direction: column;
@@ -698,47 +674,36 @@ color: var(--btn);
 .product-name{
     margin-top: 7px;
 }
-/* --- Nội dung chính: Thêm đường kẻ dưới tiêu đề H2 --- */
 
 .main-content h2 {
     font-size: 2em;
-    margin-top: 0; /* Đảm bảo không có margin trên quá lớn */
-    margin-bottom: 15px; /* Giảm margin dưới để sát với đường kẻ */
+    margin-top: 0;
+    margin-bottom: 15px;
     color: var(--text-color);
 
-    /* DÒNG CSS CẦN THÊM/CHỈNH SỬA: */
-    border-bottom: 1px solid #e0e0e0; /* Đường kẻ xám nhạt */
-    padding-bottom: 10px; /* Khoảng cách giữa chữ và đường kẻ */
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
 }
-/* Điều chỉnh cho đoạn mô tả (subtitle) trong Hồ sơ */
 .subtitle {
     color: var(--text-color2);
-    /* Giảm khoảng cách để subtitle sát với nội dung form bên dưới */
     margin-bottom: 20px;
 }
-/* --- CSS MỚI: Định dạng tiêu đề với nút "Thêm" --- */
-
-/* Wrapper chứa tiêu đề và nút */
 .header-with-button {
     display: flex;
-    justify-content: space-between; /* Đẩy hai phần tử ra hai bên */
-    align-items: center; /* Căn giữa theo chiều dọc */
-    margin-bottom: 20px; /* Khoảng cách với danh sách bên dưới */
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 
-    /* Áp dụng đường kẻ ngang dưới header-with-button */
     border-bottom: 1px solid #e0e0e0;
     padding-bottom: 10px;
 }
 
-/* Tinh chỉnh tiêu đề H2 trong wrapper */
 .header-with-button h2 {
-    /* Hủy bỏ border-bottom cũ trên H2 để tránh 2 đường kẻ */
     border-bottom: none !important;
     padding-bottom: 0 !important;
-    margin-bottom: 0; /* Xóa margin dưới để căn giữa tốt hơn */
+    margin-bottom: 0;
 }
 
-/* Loại bỏ class float-right không cần thiết và chỉnh lại nút thêm chung */
 .add-btn {
     background-color: var(--primary-color);
     color: white;
@@ -748,50 +713,27 @@ color: var(--btn);
     cursor: pointer;
     font-weight: 600;
     transition: background-color 0.2s;
-    /* Đảm bảo style chung cho nút Thêm */
 }
 
 .add-btn:hover {
     background-color: var(--btn);
 }
 
-/* Xóa CSS cũ cho nút "Thêm" ở Địa chỉ */
-.float-right {
-    /* Hủy bỏ đoạn CSS cũ này nếu nó vẫn còn trong file mypage_style.css */
-    /* float: right;
-       margin-bottom: 20px;
-       background: var(--primary-color);
-       color: #fff;
-       width: 100px;
-       height: 30px;
-    */
-}
-
-/* --- Tinh chỉnh .payment-management (cần bỏ float: right) --- */
-/* Vì nút "Thêm" ở Thanh toán cũng sẽ dùng style mới này,
-   bạn nên kiểm tra lại .payment-management trong file CSS của mình: */
 .payment-management {
     margin-top: 20px;
-    /* Xóa float: right và thay bằng header-with-button */
 }
 
-/* Sửa nút Thêm cũ trong payment-management để dùng style chung */
 .payment-management .add-btn {
-    /* Xóa float: right khỏi đây nếu có */
-    /* float: right; */
-    margin-bottom: 0; /* Đảm bảo không có margin dưới thừa */
+    margin-bottom: 0;
 }
 button{
     font-size: 14px;
 }
-/* --- Bảo mật (Security) --- */
 .password-change-form {
     max-width: 500px;
-    /* DÒNG CSS CẦN THÊM/CHỈNH SỬA: */
-    margin: 0 auto; /* Căn giữa khối có giới hạn chiều rộng */
+    margin: 0 auto;
 }
 
-/* Các style khác giữ nguyên */
 .password-change-form .form-group {
     display: flex;
     flex-direction: column;
@@ -808,16 +750,13 @@ button{
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
-/* ... các style khác của form ... */
 .tab-content {
     display: none ;
 }
 
-/* Hiện khi có class active */
 .tab-content.active {
     display: block ;
 }
-/* --- CSS cho Modal Sửa/Thêm Thẻ --- */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -827,7 +766,7 @@ button{
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(2px); /* Làm mờ nền cho chuyên nghiệp */
+    backdrop-filter: blur(2px);
 }
 
 .modal-body {
@@ -870,7 +809,7 @@ button{
     border: 1px solid #ddd;
     border-radius: 6px;
     font-size: 14px;
-    box-sizing: border-box; /* Quan trọng để không bị tràn chiều rộng */
+    box-sizing: border-box;
 }
 
 .modal-actions {
@@ -880,7 +819,6 @@ button{
     margin-top: 25px;
 }
 
-/* Nút Hủy (Style giống nút Support) */
 .btn-cancel {
     background: none;
     border: 1px solid #ccc;
@@ -890,7 +828,6 @@ button{
     cursor: pointer;
 }
 
-/* Nút Lưu (Style giống nút Save chính) */
 .btn-submit {
     background: var(--primary-color);
     color: white;
@@ -981,7 +918,6 @@ button{
     color: #8b5e3c;
     cursor: pointer;
 }
-/* Tối ưu container đơn hàng */
 .orders-container {
     display: flex;
     flex-direction: column;
@@ -1003,7 +939,6 @@ button{
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-/* Header đơn hàng */
 .order-card-header {
     background: #f8f9fa;
     padding: 15px 20px;
@@ -1023,7 +958,6 @@ button{
     font-size: 0.9em;
 }
 
-/* Badge trạng thái */
 .order-status {
     padding: 5px 12px;
     border-radius: 20px;
@@ -1035,7 +969,6 @@ button{
 .badge-Đã\ giao { background: #d4edda; color: #155724; }
 .badge-Đã\ hủy { background: #f8d7da; color: #721c24; }
 
-/* Thân đơn hàng - Danh sách sản phẩm */
 .order-product-item {
     display: flex;
     align-items: center;
@@ -1073,7 +1006,6 @@ button{
     color: #e67e22;
 }
 
-/* Footer đơn hàng */
 .order-card-footer {
     padding: 15px 20px;
     background: #fff;
@@ -1106,15 +1038,13 @@ button{
 .view-detail-btn:hover {
     background: #2980b9;
 }
-/* Container tổng */
 .orders-container {
     display: grid;
-    grid-template-columns: 1fr; /* Một cột nếu muốn kiểu danh sách, hoặc 1fr 1fr nếu muốn chia đôi */
+    grid-template-columns: 1fr;
     gap: 20px;
     padding: 10px 0;
 }
 
-/* Từng ô đơn hàng */
 .order-card {
     background: #fff;
     border-radius: 12px;
@@ -1129,7 +1059,6 @@ button{
     box-shadow: 0 6px 15px rgba(0,0,0,0.1);
 }
 
-/* Đầu ô đơn hàng */
 .order-card-header {
     background: #f8f9fa;
     padding: 12px 20px;
@@ -1142,7 +1071,6 @@ button{
 .order-id { font-weight: bold; color: #333; }
 .order-date { font-size: 0.85em; color: #777; }
 
-/* Trạng thái đơn hàng */
 .order-status {
     font-size: 12px;
     padding: 4px 10px;
@@ -1152,7 +1080,6 @@ button{
 .status-Chờ\ xác\ nhận { background: #fff3cd; color: #856404; }
 .status-Đã\ hoàn\ thành { background: #d4edda; color: #155724; }
 
-/* Nội dung giữa */
 .order-card-body {
     padding: 15px 20px;
 }
@@ -1164,12 +1091,11 @@ button{
 }
 
 .total-price {
-    color: #ee4d2d; /* Màu cam Shopee cho nổi bật */
+    color: #ee4d2d;
     font-size: 1.2em;
     font-weight: bold;
 }
 
-/* Nút bấm ở dưới cùng */
 .order-card-footer {
     padding: 12px 20px;
     border-top: 1px dashed #eee;
@@ -1184,20 +1110,18 @@ button{
 }
 
 .view-detail-link:hover { text-decoration: underline; }
-/* Container chứa các ô */
 .orders-grid {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Khoảng cách giữa các ô */
+    gap: 15px;
     margin-top: 20px;
 }
 
-/* Từng ô đơn hàng */
 .order-item-card {
-    background: #f8f9fa; /* Màu nền nhạt */
+    background: #f8f9fa;
     border-radius: 8px;
     padding: 15px 20px;
-    border-left: 4px solid #4a90e2; /* Đường kẻ xanh đặc trưng */
+    border-left: 4px solid #4a90e2;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
@@ -1205,12 +1129,11 @@ button{
 }
 
 .order-item-card:hover {
-    transform: translateX(5px); /* Hiệu ứng nhích nhẹ khi di chuột */
+    transform: translateX(5px);
     background: #ffffff;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-/* Header của ô */
 .card-header {
     display: flex;
     justify-content: space-between;
@@ -1224,7 +1147,6 @@ button{
     color: #333;
 }
 
-/* Màu sắc trạng thái */
 .order-status {
     font-size: 0.8em;
     padding: 3px 8px;
@@ -1234,7 +1156,6 @@ button{
 }
 .status-Chờ\ xác\ nhận { background: #fff3cd; color: #856404; }
 
-/* Body của ô */
 .card-body .info-row {
     display: flex;
     align-items: center;
@@ -1251,12 +1172,11 @@ button{
 }
 
 .price-box .amount {
-    color: #d0021b; /* Màu đỏ cho giá tiền */
+    color: #d0021b;
     font-weight: bold;
     font-size: 1.2em;
 }
 
-/* Footer của ô */
 .card-footer {
     text-align: right;
     margin-top: 10px;
@@ -1295,10 +1215,9 @@ button{
     font-size: 28px;
     cursor: pointer;
 }
-/* Lớp phủ mờ nền */
 .order-modal {
     position: fixed;
-    z-index: 10001; /* Đảm bảo cao hơn sidebar và header */
+    z-index: 10001;
     left: 0;
     top: 0;
     width: 100%;
@@ -1309,7 +1228,6 @@ button{
     justify-content: center;
 }
 
-/* Hộp nội dung chi tiết */
 .order-modal-content {
     background-color: #fff;
     width: 90%;
@@ -1318,11 +1236,10 @@ button{
     padding: 25px;
     position: relative;
     max-height: 85vh;
-    overflow-y: auto; /* Cuộn nếu danh sách sản phẩm dài */
+    overflow-y: auto;
     margin: 5% auto;
 }
 
-/* Nút đóng (X) */
 .order-close {
     position: absolute;
     right: 20px;
@@ -1331,7 +1248,6 @@ button{
     cursor: pointer;
     color: #888;
 }
-/* Style cho modal giống trang Admin */
 .order-modal {
     display: none;
     position: fixed;
@@ -1362,7 +1278,6 @@ button{
     color: #888;
 }
 
-/* Tái sử dụng style summary từ admin của bạn */
 .summary-horizontal-card {
     display: flex;
     justify-content: space-between;
@@ -1376,22 +1291,20 @@ button{
 .summary-amount { font-weight: bold; font-size: 14px; }
 .total-final { color: #e74c3c; font-size: 16px; }
 .summary-divider-vertical { width: 1px; background: #ddd; margin: 0 10px; }
-/* Container chính của thanh lọc */
 .order-status-filter {
     display: flex;
-    justify-content: space-between; /* Giãn cách đều các nút để phủ kín chiều ngang */
+    justify-content: space-between;
     align-items: center;
     background: #fff;
-    padding: 5px; /* Giảm padding để thanh gọn hơn */
+    padding: 5px;
     border-radius: 8px;
     margin-bottom: 25px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     border: 1px solid #edf2f7;
 }
 
-/* Từng nút lọc */
 .filter-btn {
-    flex: 1; /* Quan trọng: Giúp các nút có độ rộng bằng nhau và chiếm hết không gian ngang */
+    flex: 1;
     text-align: center;
     padding: 12px 5px;
     text-decoration: none;
@@ -1399,24 +1312,22 @@ button{
     font-size: 0.95rem;
     font-weight: 500;
     transition: all 0.2s ease;
-    border-bottom: 3px solid transparent; /* Tạo gạch chân ẩn */
+    border-bottom: 3px solid transparent;
 }
 
-/* Hiệu ứng khi Hover */
+
 .filter-btn:hover {
     color: #3182ce;
     background-color: #f7fafc;
 }
 
-/* Trạng thái nút đang được chọn (Active) */
 .filter-btn.active {
     color: #3182ce;
-    border-bottom-color: #3182ce; /* Hiện gạch chân màu xanh */
+    border-bottom-color: #3182ce;
     background-color: #ebf8ff;
     font-weight: 700;
 }
 
-/* Đảm bảo hiển thị tốt trên điện thoại (Cho phép cuộn ngang nếu màn hình quá nhỏ) */
 @media (max-width: 768px) {
     .order-status-filter {
         justify-content: flex-start;

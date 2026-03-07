@@ -15,7 +15,7 @@ public class LivingroomDecorateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String categoryKey = request.getParameter("category"); // phong-khach
+        String categoryKey = request.getParameter("category");
         int page = 1;
         int pageSize = 12;
 
@@ -30,8 +30,8 @@ public class LivingroomDecorateServlet extends HttpServlet {
         int totalProducts;
 
         if (categoryId == null) {
-            listP = dao.getProductsByPage(page, pageSize);   // ✅ CÓ PAGING
-            totalProducts = dao.countAllProducts();          // ✅ ĐÚNG COUNT
+            listP = dao.getProductsByPage(page, pageSize);
+            totalProducts = dao.countAllProducts();
         } else {
             listP = dao.getProductsByCategoryPaging(categoryId, page, pageSize);
             totalProducts = dao.countProductsByCategory(categoryId);

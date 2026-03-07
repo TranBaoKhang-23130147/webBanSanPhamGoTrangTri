@@ -16,14 +16,13 @@ function showSlide(index) {
 
     for (let i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
-        progressBars[i].style.animation = "none"; // Stop all animations
-        progressBars[i].style.width = "0"; // Reset width to 0 when slide changes
+        progressBars[i].style.animation = "none";
+        progressBars[i].style.width = "0";
     }
 
     slides[slideIndex].style.display = "flex";
 
-    // Start the progress animation for the active slide
-    progressBars[slideIndex].style.animation = "loading 3s linear forwards"; // Change to forwards
+    progressBars[slideIndex].style.animation = "loading 3s linear forwards";
 }
 function startAutoSlide() {
     slideInterval = setInterval(function () {
@@ -31,27 +30,25 @@ function startAutoSlide() {
         showSlide(slideIndex);
     }, 3000);
     isPlaying = true;
-    updateProgressBars(); // Start progress animation when resuming
-    document.getElementById("pausePlayBtn").innerHTML = '<i class="fas fa-pause"></i>'; // Update icon to pause
+    updateProgressBars();
+    document.getElementById("pausePlayBtn").innerHTML = '<i class="fas fa-pause"></i>';
 }
 
 function stopAutoSlide() {
     clearInterval(slideInterval);
-    document.getElementById("pausePlayBtn").innerHTML = '<i class="fas fa-play"></i>'; // Change icon to play
+    document.getElementById("pausePlayBtn").innerHTML = '<i class="fas fa-play"></i>';
     isPlaying = false;
 
-    // Keep the progress width at its current state
     const progressBars = document.querySelectorAll(".progress-loader .progress");
     for (let i = 0; i < progressBars.length; i++) {
-        progressBars[i].style.animation = "none"; // Stop the animation
-        // Optionally, keep the current width by not resetting it
+        progressBars[i].style.animation = "none";
     }
 }
 
 
 function updateProgressBars() {
     const progressBars = document.querySelectorAll(".progress-loader .progress");
-    progressBars[slideIndex].style.animation = "loading 3s linear forwards"; // Resume animation
+    progressBars[slideIndex].style.animation = "loading 3s linear forwards";
 }
 
 document.getElementById("pausePlayBtn").addEventListener("click", function () {
@@ -109,7 +106,6 @@ progressLoaders.forEach((loader, index) => {
         startAutoSlide();
     });
 });
-// Thông báo lỗi khi chưa đăng nhập
 let isLoggedIn = false;
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -119,22 +115,20 @@ document.addEventListener("DOMContentLoaded", function() {
             if (!isLoggedIn) {
                 e.preventDefault();
                 alert("Vui lòng đăng nhập");
-            } // else link will navigate normally
+            }
         });
     }
 });
 
-//
+
 const slider = document.querySelector('.blog-slider');
 const prevBtn = document.querySelector('.prev-btn');
 const nextBtn = document.querySelector('.next-btn');
 
 nextBtn.addEventListener('click', () => {
-    // Cuộn sang phải bằng chiều rộng của một thẻ + khoảng cách (250px + 25px)
     slider.scrollLeft += 275;
 });
 
 prevBtn.addEventListener('click', () => {
-    // Cuộn sang trái
     slider.scrollLeft -= 275;
 });

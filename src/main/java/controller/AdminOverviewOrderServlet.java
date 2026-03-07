@@ -26,7 +26,7 @@ public class AdminOverviewOrderServlet extends HttpServlet {
         }
 
         try {
-            int orderCount = orderDao.getOrderCount(); // OrderDao prints DB value to console
+            int orderCount = orderDao.getOrderCount(); 
             getServletContext().log("AdminOverviewOrderServlet: orderCount=" + orderCount);
             req.setAttribute("orderCount", orderCount);
             req.getRequestDispatcher("/admin_homepage.jsp").forward(req, resp);

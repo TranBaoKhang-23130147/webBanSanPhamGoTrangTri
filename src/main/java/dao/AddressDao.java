@@ -10,7 +10,6 @@ import java.util.List;
 import static dao.DBContext.getConnection;
 
 public class AddressDao {
-    ///admin/address
     public void saveOrUpdate(Address a) {
         String checkSql = "SELECT id FROM addresses WHERE user_id = ? AND isDefault = 1";
 
@@ -21,7 +20,6 @@ public class AddressDao {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                // 👉 UPDATE
                 String updateSql = """
                 UPDATE addresses
                 SET name=?, phone=?, detail=?,
@@ -41,7 +39,6 @@ public class AddressDao {
                 }
 
             } else {
-                // 👉 INSERT
                 String insertSql = """
                 INSERT INTO addresses
                 (user_id, name, phone, detail,
@@ -94,7 +91,6 @@ public class AddressDao {
         return list;
     }
 
-    // 🔹 Thêm địa chỉ
     public void insert(Address a) {
         String sql = """
             INSERT INTO addresses
@@ -120,7 +116,6 @@ public class AddressDao {
         }
     }
 
-    // 🔹 Cập nhật địa chỉ
     public void update(Address a) {
         String sql = """
             UPDATE addresses
@@ -146,7 +141,6 @@ public class AddressDao {
         }
     }
 
-    // 🔹 Xóa địa chỉ
     public void delete(int id, int userId) {
         String sql = "DELETE FROM addresses WHERE id=? AND user_id=?";
 
@@ -162,18 +156,15 @@ public class AddressDao {
         }
     }
 
-    // 🔹 Đặt mặc định
     public void setDefault(int addressId, int userId) {
         try (Connection con = DBContext.getConnection()) {
 
-            // Bỏ mặc định tất cả
             String reset = "UPDATE addresses SET isDefault=0 WHERE user_id=?";
             try (PreparedStatement ps = con.prepareStatement(reset)) {
                 ps.setInt(1, userId);
                 ps.executeUpdate();
             }
 
-            // Set địa chỉ được chọn
             String set = "UPDATE addresses SET isDefault=1 WHERE id=? AND user_id=?";
             try (PreparedStatement ps = con.prepareStatement(set)) {
                 ps.setInt(1, addressId);
@@ -187,7 +178,6 @@ public class AddressDao {
     }
     public List<Address> getAddressesByUserId(int userId) {
         List<Address> list = new ArrayList<>();
-        // Lưu ý: Đổi userId thành user_id để đồng bộ với DB
         String sql = "SELECT * FROM addresses WHERE user_id = ? ORDER BY isDefault DESC";
 
         try (Connection con = DBContext.getConnection();
@@ -208,7 +198,6 @@ public class AddressDao {
                 a.setProvince(rs.getString("province"));
                 a.setIsDefault(rs.getInt("isDefault"));
 
-                // Tạo chuỗi địa chỉ đầy đủ
                 String full = a.getDetail() + ", " + a.getCommune() + ", " +
                         a.getDistrict() + ", " + a.getProvince();
                 a.setFullAddress(full);

@@ -17,7 +17,6 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-        // Thêm đoạn này vào đầu hàm doPost của RegisterServlet.java
         String action = request.getParameter("action");
         if ("sendOtp".equals(action)) {
             String email = request.getParameter("email");
@@ -29,13 +28,12 @@ public class RegisterServlet extends HttpServlet {
                 session.setAttribute("OTP", otp);
                 session.setAttribute("OTP_TIME", System.currentTimeMillis());
 
-                // Trả về trạng thái OK để AJAX nhận diện thành công
                 response.setStatus(HttpServletResponse.SC_OK);
             } catch (Exception e) {
                 e.printStackTrace();
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
-            return; // QUAN TRỌNG: Kết thúc xử lý tại đây, không chạy xuống phần validate đăng ký
+            return;
         }
         String username = request.getParameter("username");
         String email = request.getParameter("email");
@@ -44,7 +42,6 @@ public class RegisterServlet extends HttpServlet {
 
         UserDao dao = new UserDao();
 
-        /* ================== VALIDATE ================== */
 
         if (!password.equals(rePassword)) {
             request.setAttribute("ERROR_MESSAGE", "Mật khẩu xác nhận không khớp!");
@@ -65,7 +62,6 @@ public class RegisterServlet extends HttpServlet {
             request.getRequestDispatcher("/login.jsp").forward(request, response);
             return;
         }
-        /* ================== TẠO OTP ================== */
         String otp = String.valueOf((int) (Math.random() * 900000 + 100000));
 
         try {
@@ -77,16 +73,13 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        /* ================== LƯU SESSION TẠM ================== */
         HttpSession session = request.getSession();
         session.setAttribute("OTP", otp);
         session.setAttribute("OTP_TIME", System.currentTimeMillis());
 
-        // Lưu user tạm (CHƯA ghi DB)
         User tempUser = new User(username, password, "Active", "User", email, 0);
         session.setAttribute("REG_USER", tempUser);
 
-        /* ================== HIỆN FORM OTP ================== */
         request.setAttribute("SHOW_OTP", true);
 
         request.getRequestDispatcher("/login.jsp").forward(request, response);

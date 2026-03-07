@@ -37,7 +37,6 @@ public class UpdateAdminAddressServlet extends HttpServlet {
         AddressDao dao = new AddressDao();
         dao.saveOrUpdate(addr);
 
-        // cập nhật lại user trong session
         user.setAddress(addr);
         req.getSession().setAttribute("LOGGED_USER", user);
 

@@ -1,7 +1,6 @@
 :root {
     --background-color: #FFFFFF;
     --primary-color: #8B5E3C;
-    /*--text-color: #3E2F1C;*/
     --text-color: #3b2f2f;
     --text-color2:#6b5743;
     --btn:#A56B43;
@@ -343,7 +342,6 @@ body {
     background-color: rgba(0,0,0,0.5);
     color: #fff;
     border: none;
-    /*padding: 10px 15px;*/
     font-size: 15px;
     border-radius: 50%;
     cursor: pointer;
@@ -410,9 +408,7 @@ body {
     margin: auto;
     line-height: 1.45;
 }
-/**/
 .san-pham-moi {
-    /*padding: 50px 0;*/
     text-align: center;
     width: 90%;
     margin: 0 auto;
@@ -420,8 +416,8 @@ body {
 }
 .san-pham-nb{
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 cột trên 1 hàng */
-    gap: 30px; /* khoảng cách giữa các sản phẩm */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
     justify-content: center;
 }
 .san-pham-moi .title {
@@ -463,7 +459,6 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
-/* Mô tả dưới tiêu đề */
 .section-desc {
     font-size: 16px;
     color: var(--text-color2);
@@ -472,15 +467,13 @@ body {
     margin-bottom: 20px;
 }
 
-/* Nút xem tất cả */
 .section-btn {
     text-align: center;
-    /*margin-bottom: 10px;*/
 }
 
 .view-all-btn {
     display: inline-block;
-    background-color: var(--primary-color); /* màu nâu gỗ */
+    background-color: var(--primary-color);
     color: #fff;
     padding: 10px 24px;
     border-radius: 25px;
@@ -497,7 +490,6 @@ body {
 }
 
 
-/* --- K --- */
 .intro-section {
     width: 90%;
     margin: 80px auto;
@@ -601,7 +593,6 @@ body {
     }
 }
 
-/* --- NEW PRODUCTS SECTION --- */
 .new-products-section {
     width: 90%;
     margin: 80px auto;
@@ -684,7 +675,6 @@ body {
     background: var(--btn);
     transform: scale(1.05);
 }
-/**/
 .about-section {
     width: 90%;
     margin: 80px auto;
@@ -717,7 +707,7 @@ body {
 }
 
 .about-text h2 span {
-    color: var(--primary-color); /* màu chủ đạo WIS Decor */
+    color: var(--primary-color);
 }
 
 .about-text h3 {
@@ -756,7 +746,6 @@ body {
     transform: scale(1.05);
 }
 
-/* --- IMAGE SIDE --- */
 .about-images {
     flex: 1;
     position: relative;
@@ -778,7 +767,6 @@ body {
     box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
-/* --- CARD --- */
 .about-card {
     position: absolute;
     bottom: -20px;
@@ -842,7 +830,6 @@ body {
         margin-top: 20px;
     }
 }
-/**/
 .blog-section {
     width: 90%;
     margin: 80px auto;
@@ -920,7 +907,6 @@ body {
     display: none;
 }
 
-/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
     .blog-slider {
         gap: 15px;
@@ -988,7 +974,6 @@ body {
     color: #8B5E3C;
 }
 
-/**/
 .products {
     display: flex;
     justify-content: center;
@@ -1058,7 +1043,7 @@ body {
 
 .action-buttons {
     display: flex;
-    flex-direction: column; /* Nút xếp dọc */
+    flex-direction: column;
     align-items: center;
     gap: 10px;
     margin-top: 10px;
@@ -1093,14 +1078,14 @@ body {
 }
 .badge {
     position: absolute;
-    top: 20px; /* Dính sát mép trên ảnh */
-    right: 20px; /* Dính sát bên trái */
-    background-color: #7B3F00; /* đỏ nổi bật */
+    top: 20px;
+    right: 20px;
+    background-color: #7B3F00;
     color: #fff;
     font-size: 13px;
     font-weight: 600;
     padding: 6px 14px;
-    border-radius: 10px; /* Bo theo góc ảnh */
+    border-radius: 10px;
 
 }
 
@@ -1119,7 +1104,6 @@ body {
         grid-template-columns: 1fr;
     }
 }
-/**/
 
 .blog-slider {
 

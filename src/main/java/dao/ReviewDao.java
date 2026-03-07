@@ -32,7 +32,6 @@ public class ReviewDao {
         return false;
     }
 
-    // Lấy danh sách review của 1 sản phẩm
     public List<Reviews> getReviewsByProductId(int productId) {
         List<Reviews> reviews = new ArrayList<>();
         String query = "SELECT * FROM reviews WHERE product_id = ? ORDER BY createAt DESC";
@@ -60,7 +59,6 @@ public class ReviewDao {
         return reviews;
     }
     
-    // Kiểm tra user đã đánh giá sản phẩm này chưa
     public boolean hasUserReviewed(int userId, int productId) {
 
         String sql = """
@@ -88,7 +86,6 @@ public class ReviewDao {
         return false;
     }
 
-    // Lấy rating trung bình của sản phẩm
     public double getAverageRating(int productId) {
         String query = "SELECT AVG(CAST(rate AS FLOAT)) as avg_rating FROM reviews WHERE product_id = ?";
         try (Connection conn = DBContext.getConnection();
@@ -106,7 +103,6 @@ public class ReviewDao {
         return 0.0;
     }
     
-    // Lấy số lượng review của sản phẩm
     public int getReviewCount(int productId) {
         String query = "SELECT COUNT(*) FROM reviews WHERE product_id = ?";
         try (Connection conn = DBContext.getConnection();

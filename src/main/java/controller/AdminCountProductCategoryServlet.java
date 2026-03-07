@@ -20,10 +20,8 @@ public class AdminCountProductCategoryServlet extends HttpServlet {
 
         ProductDao productDao = new ProductDao();
 
-        // Danh sách category
         List<Category> listC = productDao.getAllCategory();
 
-        // Map<categoryId, soLuongSP>
         Map<Integer, Integer> productCountMap = productDao.countProductByCategory();
 
         request.setAttribute("listC", listC);

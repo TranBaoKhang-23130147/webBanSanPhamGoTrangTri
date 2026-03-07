@@ -15,14 +15,10 @@
         private Date birthDate;
         private String gender;
         private String avatarUrl;
-
-
-
-        private Integer avatarId;       // ID ảnh đại diện (khóa ngoại)
-        private Date createAt;// Giới tính// Ngày sinh
+        private Integer avatarId;
+        private Date createAt;
         private Address address;
 
-        // Constructor đầy đủ
         public User(String username, String password, String status, String role, String email, int id) {
             this.username = username;
             this.password = password;
@@ -32,7 +28,6 @@
             this.id = id;
         }
 
-        // Constructor rút gọn
         public User(int id, String username, String status, String password) {
             this.id = id;
             this.username = username;
@@ -40,7 +35,6 @@
             this.password = password;
         }
 
-        // 2. Constructor đầy đủ (Cho việc lấy dữ liệu từ DB)
         public User(int id, String username, String displayName, Date birthDate, String email,
                     String password, String phone, String gender, int avatarId, Date createAt,
                     String role, String status) {
@@ -58,11 +52,8 @@
             this.status = status;
         }
 
-        // Constructor rỗng
         public User() {
         }
-
-        // Getters and Setters
 
         public String getAvatarUrl() {
             return avatarUrl;

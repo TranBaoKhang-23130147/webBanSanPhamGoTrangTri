@@ -34,9 +34,6 @@
                     </button>
 
                 </div>
-<%--                <div class="category-table-wrapper">--%>
-<%--                    <table class="category-table">--%>
-
                         <div class="category-table-wrapper">
                             <table class="category-table">
                         <thead>
@@ -63,13 +60,6 @@
                             </tr>
                         </c:forEach>
                         </tbody>
-
-<%--                        <c:if test="${not empty sessionScope.msg}">--%>
-<%--                            <script>--%>
-<%--                                alert("${sessionScope.msg}");--%>
-<%--                            </script>--%>
-<%--                            <c:remove var="msg" scope="session" />--%>
-<%--                        </c:if>--%>
                     </table>
                 </div>
             </div>

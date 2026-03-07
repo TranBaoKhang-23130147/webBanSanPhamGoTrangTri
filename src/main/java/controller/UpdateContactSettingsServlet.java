@@ -32,7 +32,6 @@ public class UpdateContactSettingsServlet extends HttpServlet {
 
             boolean success = settingsDao.updateSettings(settings);
 
-            // ✅ redirect có contextPath
             String redirectUrl = req.getContextPath() + "/admin-contact-settings";
 
             if (success) {

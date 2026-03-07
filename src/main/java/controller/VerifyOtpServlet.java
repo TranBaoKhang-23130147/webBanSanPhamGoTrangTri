@@ -18,7 +18,6 @@ public class VerifyOtpServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
 
-// Trong VerifyOtpServlet.java, phần doPost
         String action = request.getParameter("action");
         if ("checkOnly".equals(action)) {
             String inputOtp = request.getParameter("otp");
@@ -30,7 +29,7 @@ public class VerifyOtpServlet extends HttpServlet {
             } else {
                 response.getWriter().write("{\"status\": \"error\"}");
             }
-            return; // Kết thúc xử lý
+            return;
         }
 
         String inputOtp = request.getParameter("otp");
@@ -39,7 +38,6 @@ public class VerifyOtpServlet extends HttpServlet {
         Long otpTime = (Long) session.getAttribute("OTP_TIME");
         User regUser = (User) session.getAttribute("REG_USER");
 
-        /* ================== VALIDATE ================== */
 
         if (sessionOtp == null || otpTime == null || regUser == null) {
             request.setAttribute("ERROR_MESSAGE", "Phiên đăng ký đã hết hạn. Vui lòng đăng ký lại!");
@@ -47,7 +45,6 @@ public class VerifyOtpServlet extends HttpServlet {
             return;
         }
 
-        // OTP hết hạn (5 phút)
         if (System.currentTimeMillis() - otpTime > 5 * 60 * 1000) {
             session.removeAttribute("OTP");
             session.removeAttribute("OTP_TIME");
@@ -58,7 +55,6 @@ public class VerifyOtpServlet extends HttpServlet {
             return;
         }
 
-        // OTP sai
         if (!sessionOtp.equals(inputOtp)) {
             request.setAttribute("SHOW_OTP", true);
             request.setAttribute("ERROR", "OTP không đúng!");
@@ -66,12 +62,10 @@ public class VerifyOtpServlet extends HttpServlet {
             return;
         }
 
-        /* ================== OTP ĐÚNG → ĐĂNG KÝ ================== */
 
         UserDao dao = new UserDao();
         dao.signup(regUser.getUsername(), regUser.getEmail(), regUser.getPassword());
 
-        // Xóa session tạm
         session.removeAttribute("OTP");
         session.removeAttribute("OTP_TIME");
         session.removeAttribute("REG_USER");

@@ -83,7 +83,6 @@
     </div>
 </section>
 <section id="productSection">
-<!--    <h3 class="titleProduct">Sản phẩm dành cho phòng bếp</h3>-->
     <div class="product-container">
 
         <form action="ProductFilterServlet" method="get">
@@ -141,7 +140,6 @@
                     </label>
                 </div>
                 <br><br>
-                <!-- 🔥 NÚT LỌC BẮT BUỘC -->
                 <button type="submit">LỌC SẢN PHẨM</button>
             </aside>
         </form>
@@ -158,7 +156,6 @@
                             <h2>${p.nameProduct}</h2>
 
                             <div class="rating">
-                                    <%-- Sửa logic hiển thị sao dựa trên số thực --%>
                                 <c:forEach begin="1" end="5" var="i">
                                     <i class="${i <= p.averageRating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
                                 </c:forEach>
@@ -178,7 +175,6 @@
                 </div>
             </c:forEach>
 
-            <%-- Hiển thị thông báo nếu không có sản phẩm nào --%>
             <c:if test="${empty listP}">
                 <p style="text-align: center; width: 100%;">Không tìm thấy sản phẩm nào phù hợp.</p>
             </c:if>
@@ -198,13 +194,10 @@
 </c:if>
 <div class="pagination-wrapper">
     <div class="pagination">
-
-        <!-- Prev -->
         <c:if test="${currentPage > 1}">
             <a href="?page=${currentPage - 1}" class="page-btn">«</a>
         </c:if>
 
-        <!-- Pages -->
         <c:forEach begin="${startPage}" end="${endPage}" var="i">
             <a href="?page=${i}"
                class="page-btn ${i == currentPage ? 'active' : ''}">
@@ -212,7 +205,6 @@
             </a>
         </c:forEach>
 
-        <!-- Next -->
         <c:if test="${currentPage < totalPages}">
             <a href="?page=${currentPage + 1}" class="page-btn">»</a>
         </c:if>

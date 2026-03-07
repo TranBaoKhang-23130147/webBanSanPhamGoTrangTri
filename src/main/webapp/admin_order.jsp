@@ -181,118 +181,6 @@
                                                 <span class="summary-amount total-final"><fmt:formatNumber value="${o.totalOrder}" pattern="#,###"/> VND</span>
                                             </div>
                                         </div> </div>
-                                        <style>
-
-                                            /* Khung bao ngoài tạo khoảng cách với các phần khác */
-                                            .summary-horizontal-card {
-                                                display: flex;
-                                                justify-content: space-between;
-                                                align-items: stretch; /* Để các vạch phân cách cao bằng nhau */
-                                                background: #ffffff;
-                                                border: 1px solid #edf2f7;
-                                                border-radius: 12px;
-                                                padding: 20px;
-                                                margin: 25px 0; /* Khoảng trắng trên dưới */
-                                                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-                                            }
-
-                                            /* Từng cụm thông tin */
-                                            .summary-section {
-                                                flex: 1;
-                                                display: flex;
-                                                flex-direction: column;
-                                                align-items: center;
-                                                justify-content: center;
-                                                padding: 0 10px;
-                                            }
-
-                                            /* Tiêu đề nhỏ phía trên */
-                                            .summary-title {
-                                                font-size: 11px;
-                                                color: #718096;
-                                                text-transform: uppercase;
-                                                letter-spacing: 1px;
-                                                margin-bottom: 8px; /* Khoảng cách giữa chữ và số */
-                                                font-weight: 700;
-                                            }
-
-                                            /* Con số hiển thị */
-                                            .summary-amount {
-                                                font-size: 16px;
-                                                color: #2d3748;
-                                                font-weight: 700;
-                                            }
-
-                                            /* Vạch đứng phân cách tinh tế */
-                                            .summary-divider-vertical {
-                                                width: 1px;
-                                                background-color: #e2e8f0;
-                                                margin: 10px 0;
-                                            }
-
-                                            /* Ô làm nổi bật Tổng cộng */
-                                            .total-box {
-                                                background: #fff;
-                                                border: 2px solid #fff5f5;
-                                                border-radius: 8px;
-                                                padding: 10px 15px;
-                                                margin-left: 10px;
-                                                box-shadow: 0 2px 4px rgba(229, 62, 62, 0.1);
-                                            }
-
-                                            .total-final {
-                                                color: #e53e3e; /* Màu đỏ nổi bật cho tổng số tiền */
-                                                font-size: 18px;
-                                            }
-                                            /* Giới hạn chiều cao vùng chứa nội dung Modal */
-                                            .modal-body-scroll {
-                                                max-height: 400px; /* Giới hạn chiều cao bảng sản phẩm */
-                                                overflow-y: auto;  /* Hiện thanh cuộn nếu nội dung quá dài */
-                                                margin-bottom: 15px;
-                                                border: 1px solid #eee;
-                                                padding: 10px;
-                                                border-radius: 5px;
-                                            }
-
-                                            /* Thu gọn form cập nhật */
-                                            .update-form-container {
-                                                background: #f4f7f6;
-                                                padding: 10px 15px !important; /* Giảm padding */
-                                                border-radius: 8px;
-                                                margin-top: 10px !important;
-                                            }
-
-                                            .update-form-container form {
-                                                gap: 8px !important; /* Giảm khoảng cách giữa các phần tử trong form */
-                                            }
-
-                                            /* Sửa lại Modal để có thể cuộn toàn bộ hộp thoại nếu cần */
-                                            .modal {
-                                                overflow-y: auto;
-                                                padding: 20px 0;
-                                            }
-
-                                            .modal-content {
-                                                margin: 2% auto !important; /* Đẩy modal lên sát trên hơn */
-                                                width: 60% !important; /* Nới rộng chiều ngang một chút để tránh bị quá dài */
-                                            }
-                                            .user-table-container {
-                                                max-height: 500px;       /* chỉnh cao thấp tùy bạn */
-                                                overflow-y: auto;
-                                                border: 1px solid #ddd;
-                                                border-radius: 8px;
-                                            }
-
-                                            /* giữ header đứng yên */
-                                            .user-table-container thead th {
-                                                position: sticky;
-                                                top: 0;
-                                                background: white;
-                                                z-index: 2;
-                                            }
-
-                                        </style>
-
 
                                     </div>
                                 </td>
@@ -301,15 +189,6 @@
                         </tbody>
                     </table>
                 </div>
-<%--                <div class="pagination-footer">--%>
-<%--                    <div class="pagination">--%>
-<%--                        <button class="page-link disabled">Quay lại</button>--%>
-<%--                        <button class="page-link active-page">1</button>--%>
-<%--                        <button class="page-link">2</button>--%>
-<%--                        <button class="page-link">3</button>--%>
-<%--                        <button class="page-link">Tiếp Theo</button>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
 
             </div>
         </main>
@@ -324,45 +203,6 @@
     </div>
 </div>
 </body>
-<script>
-    function showDetail(id) {
-        // Lấy dữ liệu từ cái div ẩn tương ứng với ID
-        const data = document.getElementById('data-order-' + id).innerHTML;
-        // Bỏ vào modal và hiện lên
-        document.getElementById('modalContainer').innerHTML = data;
-        document.getElementById('orderModal').style.display = 'block';
-    }
+<script src="${pageContext.request.contextPath}/js/order_admin.js"></script>
 
-    function closeModal() {
-        document.getElementById('orderModal').style.display = 'none';
-    }
-    function filterOrders() {
-        // 1. Lấy giá trị từ ô tìm kiếm và ô chọn trạng thái
-        let searchValue = document.getElementById('orderSearch').value.toUpperCase();
-        let statusValue = document.getElementById('statusFilter').value;
-
-        // 2. Lấy tất cả các dòng dữ liệu trong bảng
-        let rows = document.querySelectorAll('.order-row');
-
-        rows.forEach(row => {
-            // Lấy mã đơn hàng ở cột đầu tiên (td[0])
-            let orderId = row.getElementsByTagName('td')[0].textContent.toUpperCase();
-            // Lấy trạng thái từ thuộc tính data-status mình đã gắn
-            let orderStatus = row.getAttribute('data-status');
-
-            // Điều kiện khớp mã: mã đơn hàng chứa từ khóa tìm kiếm
-            let matchId = orderId.indexOf(searchValue) > -1;
-
-            // Điều kiện khớp trạng thái: Nếu chọn "Tất cả" hoặc giá trị khớp chính xác
-            let matchStatus = (statusValue === "") || (orderStatus === statusValue);
-
-            // Nếu thỏa mãn cả 2 thì hiện, không thì ẩn
-            if (matchId && matchStatus) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
-    }
-</script>
 </html>

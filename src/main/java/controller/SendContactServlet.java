@@ -29,7 +29,6 @@ public class SendContactServlet extends HttpServlet {
             String phone     = req.getParameter("phone");
             String message   = req.getParameter("message");
 
-            // Validation
             if (isEmpty(lastName) || isEmpty(firstName) ||
                     isEmpty(email) || isEmpty(phone) || isEmpty(message)) {
                 req.setAttribute("error", "Vui lòng điền đầy đủ thông tin liên hệ!");
@@ -37,14 +36,12 @@ public class SendContactServlet extends HttpServlet {
                 return;
             }
 
-            // Lấy email admin từ DB
             ContactSettings settings = settingsDao.getSettings();
             if (settings == null || isEmpty(settings.getEmail())) {
                 throw new Exception("Hệ thống chưa cấu hình email nhận liên hệ!");
             }
             String adminEmail = settings.getEmail().trim();
 
-            // Nội dung email
             String fullName = (lastName.trim() + " " + firstName.trim()).trim();
             String subject = "Liên hệ mới từ khách hàng: " + fullName;
 
@@ -56,11 +53,9 @@ public class SendContactServlet extends HttpServlet {
             body.append("Nội dung:\n").append(message.trim()).append("\n\n");
             body.append("Thời gian: ").append(new java.util.Date());
 
-            // Gửi mail
             boolean sent = mailUtil.sendEmail(adminEmail, subject, body.toString());
 
             if (sent) {
-                // Thành công: redirect về trang contact_user (không cần .jsp)
                 resp.sendRedirect("contact_user?success=true");
             } else {
                 req.setAttribute("error", "Không thể gửi email. Vui lòng thử lại!");

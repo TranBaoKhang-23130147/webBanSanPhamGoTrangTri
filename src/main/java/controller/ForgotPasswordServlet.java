@@ -23,7 +23,6 @@ public class ForgotPasswordServlet extends HttpServlet {
             return;
         }
 
-        // Tạo OTP
         String otp = String.valueOf((int)(Math.random() * 900000 + 100000));
 
         try {

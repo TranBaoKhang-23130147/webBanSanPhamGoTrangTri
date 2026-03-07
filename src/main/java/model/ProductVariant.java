@@ -1,4 +1,4 @@
-package model; // Thay đổi package cho đúng với cấu trúc dự án của bạn
+package model;
 
 public class ProductVariant {
     private int id;
@@ -8,12 +8,11 @@ public class ProductVariant {
     private String sku;
     private int inventoryQuantity;
     private double variantPrice;
+    private Integer soldQuantity;
 
-    // 1. Hàm khởi tạo không tham số (Bắt buộc nếu dùng một số Framework)
     public ProductVariant() {
     }
 
-    // 2. Hàm khởi tạo dùng khi thêm mới (Không cần ID vì ID tự tăng trong DB)
     public ProductVariant(int colorId, int sizeId, String sku, int inventoryQuantity, double variantPrice) {
         this.colorId = colorId;
         this.sizeId = sizeId;
@@ -22,7 +21,6 @@ public class ProductVariant {
         this.variantPrice = variantPrice;
     }
 
-    // 3. Hàm khởi tạo đầy đủ (Dùng khi lấy dữ liệu từ DB lên)
     public ProductVariant(int id, int productId, int colorId, int sizeId, String sku, int inventoryQuantity, double variantPrice) {
         this.id = id;
         this.productId = productId;
@@ -33,14 +31,12 @@ public class ProductVariant {
         this.variantPrice = variantPrice;
     }
 
-    // --- GETTERS AND SETTERS ---
-
-
-    private Integer soldQuantity;      // số lượng đã bán (nếu có)
-
-
-    public Integer getSoldQuantity() { return soldQuantity; }
-    public void setSoldQuantity(Integer soldQuantity) { this.soldQuantity = soldQuantity; }
+    public Integer getSoldQuantity() {
+        return soldQuantity;
+    }
+    public void setSoldQuantity(Integer soldQuantity) {
+        this.soldQuantity = soldQuantity;
+    }
 
     public int getId() {
         return id;
@@ -97,8 +93,6 @@ public class ProductVariant {
     public void setVariantPrice(double variantPrice) {
         this.variantPrice = variantPrice;
     }
-
-    // Ghi đè phương thức toString để dễ dàng Debug (Kiểm tra dữ liệu)
     @Override
     public String toString() {
         return "ProductVariant{" +

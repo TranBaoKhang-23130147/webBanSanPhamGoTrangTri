@@ -9,13 +9,13 @@ import model.Product;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "SearchController", value = "/search") // Đổi tên URL cho ngắn gọn
+@WebServlet(name = "SearchController", value = "/search")
 public class SearchController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String txtSearch = request.getParameter("txtSearch");
-        String categoryName = request.getParameter("category"); // NAME, KHÔNG PHẢI ID
+        String categoryName = request.getParameter("category");
 
         if (txtSearch == null) txtSearch = "";
         if (categoryName == null || categoryName.equals("all") || categoryName.equals("null")) {
@@ -26,7 +26,7 @@ public class SearchController extends HttpServlet {
 
         Integer categoryId = null;
         if (!categoryName.equals("all")) {
-            categoryId = dao.getCategoryIdByName(categoryName); // NAME → ID
+            categoryId = dao.getCategoryIdByName(categoryName);
         }
 
         List<Product> list = dao.searchProducts(txtSearch, categoryId);
@@ -42,6 +42,6 @@ public class SearchController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response); // Cho phép cả phương thức POST cũng chạy như GET
+        doGet(request, response); 
     }
 }

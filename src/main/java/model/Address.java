@@ -10,26 +10,19 @@ public class Address {
     private String name;
     private String phone;
     private int isDefault;
-    private String fullAddress; // Thêm dòng này
+    private String fullAddress;
 
-    // Setter để bạn có thể gọi a.setFullAddress(full)
-    public void setFullAddress(String fullAddress) {
-        this.fullAddress = fullAddress;
-    }
-
-    // Ghi đè lại Getter cũ để lấy giá trị từ biến thay vì nối chuỗi thủ công
-
-    // Constructor không tham số
     public Address() {
     }
 
-    // Hàm tiện ích để in địa chỉ đầy đủ
     public String getFullAddress() {
         if (detail == null || detail.isEmpty()) return "Chưa cập nhật";
         return detail + ", " + commune + ", " + district + ", " + province;
     }
+    public void setFullAddress(String fullAddress) {
+        this.fullAddress = fullAddress;
+    }
 
-    // --- GETTERS AND SETTERS ---
 
     public int getId() {
         return id;

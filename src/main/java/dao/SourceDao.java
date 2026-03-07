@@ -10,7 +10,6 @@ public class SourceDao {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
-    // 1. Lấy tất cả nhà cung cấp
     public List<Source> getAllSources() {
         List<Source> list = new ArrayList<>();
         String sql = "SELECT * FROM sources";
@@ -27,7 +26,6 @@ public class SourceDao {
         return list;
     }
 
-    // 2. Thêm nhà cung cấp mới
     public boolean insertSource(String name) {
         String sql = "INSERT INTO sources (sourcename) VALUES (?)";
         try {
@@ -41,7 +39,6 @@ public class SourceDao {
         return false;
     }
 
-    // 3. Tìm kiếm nhà cung cấp theo tên
     public List<Source> searchSourceByName(String keyword) {
         List<Source> list = new ArrayList<>();
         String sql = "SELECT * FROM sources WHERE source_name LIKE ?";
@@ -72,7 +69,6 @@ public class SourceDao {
         return false;
     }
 
-    // 5. Cập nhật nhà cung cấp (Dùng cho chức năng Edit)
     public boolean updateSource(int id, String name) {
         String sql = "UPDATE sources SET sourcename = ? WHERE id = ?";
         try {

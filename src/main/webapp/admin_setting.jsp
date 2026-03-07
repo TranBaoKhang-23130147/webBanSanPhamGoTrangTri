@@ -41,8 +41,6 @@
                             <form action="${pageContext.request.contextPath}/UpdateSettingServlet" method="post" class="basic-info-form">
 
 
-
-                                <!-- Họ tên & Tên hiển thị -->
                                 <div class="form-row">
                                     <div class="form-group half-width">
                                         <label>Họ và tên</label>
@@ -53,8 +51,6 @@
                                         <input type="text" name="display_name" value="${user.displayName}">
                                     </div>
                                 </div>
-
-                                <!-- Email & SĐT -->
                                 <div class="form-row">
                                     <div class="form-group half-width">
                                         <label>Email</label>
@@ -66,7 +62,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Giới tính & Ngày sinh -->
                                 <div class="form-row">
                                     <div class="form-group half-width">
                                         <label>Giới tính</label>
@@ -84,7 +79,6 @@
                                     </div>
                                 </div>
 
-                                <!-- ------------------- ĐỊA CHỈ ------------------- -->
                                 <h3>Địa chỉ</h3>
                                 <div class="form-row">
                                     <div class="form-group full-width">
@@ -115,7 +109,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Nút Lưu -->
                                 <div class="form-actions">
                                     <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
                                 </div>
@@ -123,10 +116,8 @@
                             </form>
                         </div>
 
-<%--ỏi mk--%>
                         <div class="settings-card" id="password">
                             <%
-                                // Lấy thông báo từ request
                                 String successMessage = (String) request.getAttribute("successMessage");
                                 String errorMessage = (String) request.getAttribute("errorMessage");
                             %>
@@ -332,8 +323,6 @@
                             </div>
                         </div>
 
-    <!--                    <div class="settings-card" id="connection2">-->
-    <!--                        <h2>Xóa tài khoản</h2>-->
 
                         <div class="settings-card" id="delete-account">
                             <h2>Xóa tài khoản</h2>

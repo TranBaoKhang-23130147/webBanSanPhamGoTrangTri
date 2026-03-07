@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,57 +17,6 @@
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
-<%--<div id="header">--%>
-<%--    <div id="logo"><img src="img/logo.png" class="image"/>--%>
-<%--        <div class="brand"> <div id="name-web">HOME DECOR</div>--%>
-<%--            <div id="sub-slogan">Nét mộc trong từng góc nhỏ</div></div>--%>
-<%--    </div>--%>
-
-<%--    <nav class="menu-bar">--%>
-
-<%--        <a class="menu" id="home" href="homepage_user.jsp"> TRANG CHỦ</a>--%>
-<%--        <div class="menu product-menu">--%>
-<%--            <a id="product" href="product_all_user.jsp">SẢN PHẨM</a>--%>
-<%--            <div class="submenu">--%>
-<%--                <a href="LivingroomDecorateServlet?category=trang-tri-phong-khach">--%>
-<%--                    TRANG TRÍ PHÒNG KHÁCH--%>
-<%--                </a>--%>
-<%--                <a href="BedroomDecorateServlet?category=trang-tri-phong-ngu">TRANG TRÍ PHÒNG NGỦ</a>--%>
-<%--                <a href="KitchenDecorateServlet?category=trang-tri-phong-bep">TRANG TRÍ PHÒNG BẾP</a>--%>
-<%--                <a href="HomeofficeDecorateServlet?category=trang-tri-phong-lam-viec">TRANG TRÍ PHÒNG LÀM VIỆC</a>--%>
-<%--                <a href="MiniitemDecorateServlet?category=do-trang-tri-mini">ĐỒ TRANG TRÍ MINI</a>--%>
-<%--                <a href="SourvenirServlet?category=qua-luu-niem">QUÀ LƯU NIỆM</a>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <a class="menu service" href="purchasing_policy_user.jsp">CHÍNH SÁCH MUA HÀNG--%>
-
-<%--        </a>--%>
-<%--        <a class="menu" id="introduce" href="introduce_user.jsp" >GIỚI THIỆU</a>--%>
-<%--        <a class="menu" id="contact" href="contact_user.jsp">LIÊN HỆ</a>--%>
-
-
-<%--    </nav>--%>
-<%--    <div class="icons">--%>
-<%--        <a class="nav_item" href="html/shopping_cart.jsp" id="cart-link" >--%>
-<%--            <i class="fas fa-shopping-cart"></i>--%>
-<%--        </a>--%>
-
-<%--        <a class="nav-item" href="html/search.html" id="search-link">--%>
-<%--            <i class="fas fa-search"></i>--%>
-<%--        </a>--%>
-
-<%--        <div class="user-login">--%>
-<%--            <i class="fas fa-user"></i>--%>
-<%--            <div class="user">--%>
-<%--                <a class="nav_item" href="mypage_user.jsp" id="login">Trang của tôi</a>--%>
-<%--                <a class="nav-item" href="homepage.html" id="register">Đăng xuất</a>--%>
-<%--            </div>--%>
-
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
-
-
 <section class="banner-product">
 
     <img
@@ -142,7 +90,6 @@
                     </label>
                 </div>
                 <br><br>
-                <!-- 🔥 NÚT LỌC BẮT BUỘC -->
                 <button type="submit">LỌC SẢN PHẨM</button>
             </aside>
         </form>
@@ -159,7 +106,6 @@
                             <h2>${p.nameProduct}</h2>
 
                             <div class="rating">
-                                    <%-- Sửa logic hiển thị sao dựa trên số thực --%>
                                 <c:forEach begin="1" end="5" var="i">
                                     <i class="${i <= p.averageRating ? 'ri-star-s-fill' : 'ri-star-s-line'}"></i>
                                 </c:forEach>
@@ -179,7 +125,6 @@
                 </div>
             </c:forEach>
 
-            <%-- Hiển thị thông báo nếu không có sản phẩm nào --%>
             <c:if test="${empty listP}">
                 <p style="text-align: center; width: 100%;">Không tìm thấy sản phẩm nào phù hợp.</p>
             </c:if>
@@ -200,12 +145,10 @@
 <div class="pagination-wrapper">
     <div class="pagination">
 
-        <!-- Prev -->
         <c:if test="${currentPage > 1}">
             <a href="?page=${currentPage - 1}" class="page-btn">«</a>
         </c:if>
 
-        <!-- Pages -->
         <c:forEach begin="${startPage}" end="${endPage}" var="i">
             <a href="?page=${i}"
                class="page-btn ${i == currentPage ? 'active' : ''}">
@@ -213,59 +156,12 @@
             </a>
         </c:forEach>
 
-        <!-- Next -->
         <c:if test="${currentPage < totalPages}">
             <a href="?page=${currentPage + 1}" class="page-btn">»</a>
         </c:if>
 
     </div>
 </div>
-<%--<div class="footer">--%>
-<%--    <div class="footer-container">--%>
-
-
-<%--        <div class="footer-col">--%>
-<%--            <h3>Về chúng tôi</h3>--%>
-
-
-<%--            <p>HOME DECOR</p>--%>
-
-<%--            <p><i class="fa-solid"></i> Địa chỉ: Trường Đại học Nông Lâm Thành phố Hồ Chí Minh</p>--%>
-<%--            <p><i class="fa-solid"></i> Số điện thoại: 0944459364</p>--%>
-<%--            <p><i class="fa-solid"></i> Email: 23130082@st.hcmuaf.edu.vn</p>--%>
-
-<%--            <div class="social-icons">--%>
-<%--                <a href="#"><i class="fab fa-facebook"></i></a>--%>
-<%--                <a href="#"><i class="fab fa-instagram"></i></a>--%>
-<%--                <a href="#"><i class="fab fa-tiktok"></i></a>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-
-<%--        <div class="footer-col">--%>
-<%--            <h3>Chính sách</h3>--%>
-<%--            <a href="introduce_user.jsp">Về tụi mình</a>--%>
-<%--            <a href="purchasing_policy_user.jsp">Chính sách Thanh toán</a>--%>
-<%--            <a href="purchasing_policy_user.jsp">Chính sách Giao hàng</a>--%>
-<%--            <a href="purchasing_policy_user.jsp">Chính sách Đổi trả</a>--%>
-<%--        </div>--%>
-
-
-<%--        <div class="footer-col">--%>
-<%--            <h3>Hỗ trợ khách hàng</h3>--%>
-<%--            <a href="product_all_user.jsp">Tất cả sản phẩm</a>--%>
-<%--        </div>--%>
-
-
-<%--        <div class="footer-col">--%>
-<%--            <h3>Liên kiết nhanh</h3>--%>
-<%--            <a href="homepage_user.jsp">Trang chủ</a>--%>
-<%--            <a href="purchasing_policy_user.jsp">Chính sách mua hàng</a>--%>
-<%--            <a href="introduce_user.jsp">Giới thiệu</a>--%>
-<%--            <a href="contact_user.jsp">Liên hệ</a>--%>
-<%--        </div>--%>
-
-<%--    </div>--%>
-<%--</div>--%>
 <jsp:include page="footer.jsp"></jsp:include>
 </body>
 <script src="js/decorate.js"></script>

@@ -24,10 +24,8 @@ public class HomeServlet extends HttpServlet {
 
         ProductDao dao = new ProductDao();
         List<Product> bestSellers = dao.getTop8BestSellers();
-        // Danh sách sản phẩm thường
         List<Product> products = dao.getProductsByPage(1, 8);
 
-        // Top nổi bật
         List<Product> top3Products = dao.getTop3FeaturedProducts();
 
         request.setAttribute("products", products);

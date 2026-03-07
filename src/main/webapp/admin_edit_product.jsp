@@ -8,14 +8,7 @@
     <link rel="stylesheet" href="css/user_admin.css">
     <link rel="stylesheet" href="css/admin_add_products.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .variant-item { margin-bottom: 20px; position: relative; border: 1px solid #eee; padding: 15px; border-radius: 8px; transition: all 0.3s; }
-        .variant-item.duplicate-error { border: 2px solid #e74c3c !important; background-color: #fdf2f2; }
-        .remove-variant { color: #e74c3c; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 10; font-size: 1.2rem; }
-        .remove-variant:hover { color: #c0392b; }
-        #image-preview img { width: 100px; height: 100px; object-fit: cover; border: 1px solid #ddd; border-radius: 5px; margin: 5px; }
-        .page-title { margin-bottom: 20px; color: #2c3e50; border-bottom: 2px solid #27ae60; padding-bottom: 10px; }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_edit_product.css">
 </head>
 <body>
 
@@ -172,46 +165,8 @@
     </div>
 </div>
 
-<script src="${pageContext.request.contextPath}/ckfinder/ckfinder.js"></script>
 <script>
-    // 1. Quản lý ảnh với CKFinder
-    function selectImagesWithCKFinder(targetInputId, targetPreviewId) {
-        var finder = new CKFinder();
-        finder.basePath = '${pageContext.request.contextPath}/ckfinder/';
-        finder.selectMultiple = true;
 
-        finder.selectActionFunction = function(fileUrl, data, allFiles) {
-
-            const input = document.getElementById(targetInputId);
-            const preview = document.getElementById(targetPreviewId);
-
-            const files = (allFiles && allFiles.length) ? allFiles : [{url: fileUrl}];
-            const names = [];
-
-            files.forEach(file => {
-                let fullPath = decodeURIComponent(file.url);
-                let fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1);
-                fileName = fileName.split('?')[0];
-                names.push(fileName);
-            });
-
-            // lưu ảnh vào hidden input
-            input.value = names.join(",");
-
-            // chỉ hiển thị chữ
-            preview.innerHTML = `
-            <div style="margin-top:10px;color:#27ae60;font-weight:600;">
-                <i class="fas fa-check-circle"></i>
-                Đã cập nhật ${names.length} ảnh thành công
-            </div>
-        `;
-        };
-
-        finder.popup();
-    }
-
-
-    // 2. Thêm biến thể mới - Lưu ý name phải khớp variantColor[], variantSize[]...
     function addVariant() {
         const container = document.getElementById('variant-container');
         const count = container.querySelectorAll('.variant-item').length + 1;
@@ -266,68 +221,13 @@
         }
     }
 
-    // 4. Kiểm tra trùng lặp
-    function checkDuplicateLive() {
-        const container = document.getElementById('variant-container');
-        const items = container.querySelectorAll('.variant-item');
-        const seen = new Set();
-
-        items.forEach(item => {
-            const colorSel = item.querySelector('select[name="variantColor[]"]');
-            const sizeSel = item.querySelector('select[name="variantSize[]"]');
-
-            if (colorSel && sizeSel && colorSel.value && sizeSel.value) {
-                const combo = colorSel.value + "-" + sizeSel.value;
-                if (seen.has(combo)) {
-                    item.classList.add('duplicate-error');
-                } else {
-                    seen.add(combo);
-                    item.classList.remove('duplicate-error');
-                }
-            }
-        });
-    }
-
-    // 5. Submit validation
-    document.getElementById('editProductForm').addEventListener('submit', function(e) {
-        const items = document.querySelectorAll('.variant-item');
-        const seen = new Set();
-        let hasError = false;
-
-        if (items.length === 0) {
-            alert('Lỗi: Phải có ít nhất 1 biến thể!');
-            e.preventDefault();
-            return;
-        }
-
-        items.forEach((item, index) => {
-            const colorSel = item.querySelector('select[name="variantColor[]"]');
-            const sizeSel = item.querySelector('select[name="variantSize[]"]');
-
-            if (!colorSel.value || !sizeSel.value) {
-                alert('Vui lòng chọn Màu và Size cho biến thể #' + (index + 1));
-                hasError = true;
-                return;
-            }
-
-            const combo = colorSel.value + "-" + sizeSel.value;
-            if (seen.has(combo)) {
-                alert('Lỗi: Biến thể bị trùng Màu và Kích thước!');
-                item.classList.add('duplicate-error');
-                hasError = true;
-            } else {
-                seen.add(combo);
-            }
-        });
-
-        if (hasError) e.preventDefault();
-    });
-
-    document.addEventListener('change', function(e) {
-        if (e.target.classList.contains('val-change')) {
-            checkDuplicateLive();
-        }
-    });
 </script>
+<script>
+    const contextPath = "${pageContext.request.contextPath}";
+</script>
+
+<script src="${pageContext.request.contextPath}/ckfinder/ckfinder.js"></script>
+
+<script src="${pageContext.request.contextPath}/js/admin_edit_product.js"></script>
 </body>
 </html>

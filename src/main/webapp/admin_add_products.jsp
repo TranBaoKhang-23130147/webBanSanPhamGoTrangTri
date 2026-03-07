@@ -13,11 +13,6 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_profile_style.css">
 
-    <style>
-        .variant-item { margin-bottom: 20px; position: relative; }
-        .remove-variant { color: red; cursor: pointer; position: absolute; top: 10px; right: 10px; }
-        select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 10px; }
-    </style>
 </head>
 <body>
 
@@ -28,14 +23,11 @@
         <main class="page-content-wrapper">
             <form action="admin-add-product" method="POST">
                 <div class="add-product-container">
-                    <%-- Kiểm tra thông báo từ Redirect (status=success) --%>
                     <c:if test="${param.status == 'success'}">
                         <div style="padding: 15px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 4px; margin-bottom: 20px;">
                             <i class="fas fa-check-circle"></i> Thêm sản phẩm thành công!
                         </div>
                     </c:if>
-
-                    <%-- Kiểm tra thông báo từ Request Attribute (Lỗi) --%>
                     <c:if test="${not empty message}">
                         <div style="padding: 15px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 4px; margin-bottom: 20px;">
                             <i class="fas fa-exclamation-triangle"></i> ${message}
@@ -55,8 +47,6 @@
                                     <label>Giá sản phẩm</label>
                                     <input type="number" name="basePrice" required>
                                 </div>
-
-                                <!-- Danh mục -->
                                 <div class="form-group">
                                     <label>Danh mục</label>
                                     <select name="categoryId">
@@ -66,8 +56,6 @@
                                         </c:forEach>
                                     </select>
                                 </div>
-
-                                <!-- Loại sản phẩm -->
                                 <div class="form-group">
                                     <label>Loại sản phẩm</label>
                                     <select name="typeId">
@@ -198,43 +186,8 @@
 
 
 <script src="${pageContext.request.contextPath}/ckfinder/ckfinder.js"></script>
+<script src="${pageContext.request.contextPath}/js/admin_add_product.js"></script>
 <script>
-    function selectImagesWithCKFinder(targetInputId, targetPreviewId) {
-        var finder = new CKFinder();
-        finder.basePath = '${pageContext.request.contextPath}/ckfinder/';
-        finder.selectMultiple = true;
-
-        finder.selectActionFunction = function(fileUrl, data, allFiles) {
-
-            const input = document.getElementById(targetInputId);
-            const preview = document.getElementById(targetPreviewId);
-
-            const files = (allFiles && allFiles.length) ? allFiles : [{url: fileUrl}];
-            const names = [];
-
-            files.forEach(file => {
-                let fullPath = decodeURIComponent(file.url);
-                let fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1);
-                fileName = fileName.split('?')[0];
-                names.push(fileName);
-            });
-
-            // lưu tên ảnh vào hidden input
-            input.value = names.join(",");
-
-            // chỉ hiển thị text
-            preview.innerHTML = `
-            <span style="color:green;font-weight:600;">
-                ✔ Đã thêm ${names.length} ảnh thành công
-            </span>
-        `;
-        };
-
-        finder.popup();
-    }
-
-
-    // 2. Hàm Thêm Biến Thể Mới
     function addVariant() {
         const container = document.getElementById('variant-container');
         const newVariant = document.createElement('div');
@@ -282,64 +235,6 @@
         container.appendChild(newVariant);
 
     }
-
-    // 3. Kiểm tra Trùng Lặp (Gọi khi Submit)
-    function validateVariants() {
-        const items = document.querySelectorAll('.variant-item');
-        const seen = new Set();
-        let errorMsg = "";
-
-        for (let i = 0; i < items.length; i++) {
-            const colorId = items[i].querySelector('select[name="colorId[]"]').value;
-            const sizeId = items[i].querySelector('select[name="sizeId[]"]').value;
-
-            if (!colorId || !sizeId) {
-                alert("Vui lòng chọn đầy đủ Màu và Size cho biến thể số " + (i + 1));
-                return false;
-            }
-
-            const combo = colorId + "-" + sizeId;
-            if (seen.has(combo)) {
-                const colorName = items[i].querySelector('select[name="colorId[]"] option:checked').text;
-                const sizeName = items[i].querySelector('select[name="sizeId[]"] option:checked').text;
-                errorMsg += `- Dòng ${i+1}: Trùng cặp [${colorName} - ${sizeName}]\n`;
-            }
-            seen.add(combo);
-        }
-
-        if (errorMsg) {
-            alert("LỖI TRÙNG BIẾN THỂ:\n" + errorMsg);
-            return false;
-        }
-        return true;
-    }
-
-    // 4. Cảnh báo thời gian thực (Đổi màu khung khi trùng)
-    function checkDuplicateLive() {
-        const items = document.querySelectorAll('.variant-item');
-        const seen = new Set();
-        items.forEach(item => {
-            const cId = item.querySelector('select[name="colorId[]"]').value;
-            const sId = item.querySelector('select[name="sizeId[]"]').value;
-            if (cId && sId) {
-                const key = cId + "-" + sId;
-                if (seen.has(key)) {
-                    item.style.border = "2px solid red";
-                } else {
-                    item.style.border = "1px solid #eee";
-                    seen.add(key);
-                }
-            }
-        });
-    }
-
-    // Gán sự kiện submit cho form
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.querySelector('form');
-        form.onsubmit = function() {
-            return validateVariants();
-        };
-    });
 </script>
 </body>
 </html>

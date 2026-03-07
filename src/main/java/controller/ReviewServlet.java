@@ -19,7 +19,6 @@ public class ReviewServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
 
-        // 1. Check login
         User user = (User) session.getAttribute("LOGGED_USER");
 
         if (user == null) {
@@ -28,7 +27,6 @@ public class ReviewServlet extends HttpServlet {
         }
 
         try {
-            // 2. Get parameters
             String productIdRaw = request.getParameter("productId");
             String ratingRaw = request.getParameter("rating");
             String comment = request.getParameter("comment");
@@ -38,7 +36,6 @@ public class ReviewServlet extends HttpServlet {
             System.out.println("rating: " + ratingRaw);
             System.out.println("comment: " + comment);
 
-            // 3. Validate productId
             if (productIdRaw == null || productIdRaw.isBlank()) {
                 session.setAttribute("errorMessage", "Sản phẩm không hợp lệ!");
                 response.sendRedirect("homepage_user.jsp");
@@ -47,7 +44,6 @@ public class ReviewServlet extends HttpServlet {
 
             int productId = Integer.parseInt(productIdRaw);
 
-            // 4. Validate rating
             if (ratingRaw == null || ratingRaw.isBlank()) {
                 session.setAttribute("errorMessage", "Bạn chưa chọn số sao!");
                 response.sendRedirect("detail?id=" + productId);
@@ -62,7 +58,6 @@ public class ReviewServlet extends HttpServlet {
                 return;
             }
 
-            // 5. Validate comment
             if (comment == null || comment.trim().length() < 10) {
                 session.setAttribute("errorMessage", "Bình luận phải ít nhất 10 ký tự!");
                 response.sendRedirect("detail?id=" + productId);
@@ -75,7 +70,6 @@ public class ReviewServlet extends HttpServlet {
                 return;
             }
 
-            // 6. Create review object
             Reviews review = new Reviews();
             review.setUserId(user.getId());
             review.setProductId(productId);
@@ -84,14 +78,12 @@ public class ReviewServlet extends HttpServlet {
 
             ReviewDao dao = new ReviewDao();
 
-            // 7. Check user already reviewed
             if (dao.hasUserReviewed(user.getId(), productId)) {
                 session.setAttribute("errorMessage", "Bạn đã đánh giá sản phẩm này rồi!");
                 response.sendRedirect("detail?id=" + productId);
                 return;
             }
 
-            // 8. Insert review
             boolean success = dao.addReview(review);
 
             if (success) {

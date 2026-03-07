@@ -11,9 +11,16 @@ public class Images {
         this.urlImage = urlImage;
     }
 
-    // Getters và Setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-    public String getUrlImage() { return urlImage; }
-    public void setUrlImage(String urlImage) { this.urlImage = urlImage; }
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public String getUrlImage() {
+        return urlImage;
+    }
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
 }

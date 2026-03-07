@@ -13,7 +13,6 @@ public class ContactSettingsDao {
                     "facebook_url = ?, instagram_url = ?, twitter_url = ?, google_url = ? " +
                     "WHERE id = 1";
 
-    // Lấy thông tin settings (chỉ có 1 bản ghi)
     public ContactSettings getSettings() {
         ContactSettings settings = null;
         Connection conn = null;
@@ -36,9 +35,8 @@ public class ContactSettingsDao {
                 settings.setTwitterUrl(rs.getString("twitter_url"));
                 settings.setGoogleUrl(rs.getString("google_url"));
             } else {
-                // Nếu chưa có bản ghi → tạo mặc định
                 createDefaultSettings();
-                return getSettings(); // gọi lại để lấy
+                return getSettings();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,7 +48,6 @@ public class ContactSettingsDao {
         return settings;
     }
 
-    // Tạo bản ghi mặc định nếu chưa có
     private void createDefaultSettings() {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -76,7 +73,6 @@ public class ContactSettingsDao {
         }
     }
 
-    // Cập nhật settings từ admin
     public boolean updateSettings(ContactSettings settings) {
         Connection conn = null;
         PreparedStatement ps = null;

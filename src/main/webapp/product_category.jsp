@@ -92,7 +92,6 @@
     <div class="pagination">
 
         <c:if test="${currentPage > 1}">
-            <%-- Quan trọng: Phải giữ lại cid=${param.cid} --%>
             <a href="CategoryController?cid=${param.cid}&page=${currentPage - 1}" class="page-btn">«</a>
         </c:if>
 

@@ -15,7 +15,6 @@ public class AdminDeleteCustomerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1. Kiểm tra bảo mật: Chỉ Admin đã đăng nhập mới được thực hiện xóa
         HttpSession session = request.getSession(false);
         User currentAdmin = (session != null) ? (User) session.getAttribute("LOGGED_USER") : null;
 
@@ -24,14 +23,12 @@ public class AdminDeleteCustomerServlet extends HttpServlet {
             return;
         }
 
-        // 2. Lấy tham số id người cần xóa và type (admin/user) từ URL
         String idRaw = request.getParameter("id");
         String type = request.getParameter("type");
 
         try {
             int userId = Integer.parseInt(idRaw);
 
-            // Chặn trường hợp Admin tự xóa chính mình
             if (userId == currentAdmin.getId()) {
                 session.setAttribute("msg", "Lỗi: Bạn không thể tự xóa tài khoản đang sử dụng!");
                 session.setAttribute("msgType", "error");
@@ -41,7 +38,6 @@ public class AdminDeleteCustomerServlet extends HttpServlet {
 
             UserDao dao = new UserDao();
 
-            // 3. Gọi hàm DAO xóa (đã có Transaction xử lý Address & Avatar)
             boolean success = dao.deleteUser(userId);
 
             if (success) {
@@ -58,9 +54,6 @@ public class AdminDeleteCustomerServlet extends HttpServlet {
             session.setAttribute("msgType", "error");
         }
 
-        // 4. Điều hướng quay lại trang danh sách phù hợp
-        // Lưu ý: Thay đổi các đường dẫn "admin-management" hay "admin-customers"
-        // cho khớp với cấu hình Servlet hiển thị danh sách của bạn.
         if ("admin".equalsIgnoreCase(type)) {
             response.sendRedirect("admin-management");
         } else {

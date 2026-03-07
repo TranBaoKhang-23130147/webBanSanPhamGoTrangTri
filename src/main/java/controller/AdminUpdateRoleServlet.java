@@ -16,12 +16,10 @@ public class AdminUpdateRoleServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Thiết lập kiểu dữ liệu trả về là JSON
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
         try {
-            // 1. Lấy dữ liệu từ Request
             String idStr = request.getParameter("id");
             String newRole = request.getParameter("role");
 
@@ -33,10 +31,8 @@ public class AdminUpdateRoleServlet extends HttpServlet {
             int adminId = Integer.parseInt(idStr);
             UserDao dao = new UserDao();
 
-            // 2. Gọi DAO cập nhật
             boolean success = dao.updateAdminRole(adminId, newRole);
 
-            // 3. Trả về kết quả cho AJAX
             if (success) {
                 response.getWriter().write("{\"status\":\"success\"}");
             } else {

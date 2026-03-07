@@ -19,10 +19,8 @@ public class AdminCountProductSourceServlet extends HttpServlet {
 
         ProductDao productDao = new ProductDao();
 
-        // Danh sách category
         List<Source> listS = productDao.getAllSources();
 
-        // Map<categoryId, soLuongSP>
         Map<Integer, Integer> productCountMap = productDao.countProductBySource();
 
         request.setAttribute("listS", listS);
