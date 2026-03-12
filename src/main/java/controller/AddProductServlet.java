@@ -3,26 +3,17 @@ package controller;
 import dao.ProductDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import model.Description;
-import model.Information;
-import model.Product;
-import model.ProductVariant;
+import jakarta.servlet.http.*;
+import model.*;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import static java.lang.Double.parseDouble;
 
 @WebServlet("/admin-add-product")
 public class AddProductServlet extends HttpServlet {
 
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -37,11 +28,12 @@ public class AddProductServlet extends HttpServlet {
         request.getRequestDispatcher("admin_add_products.jsp").forward(request, response);
     }
 
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         request.setCharacterEncoding("UTF-8");
 
+        ProductDao dao = new ProductDao();
         try {
             Information info = new Information();
             info.setMaterial(request.getParameter("material"));
@@ -55,134 +47,93 @@ public class AddProductServlet extends HttpServlet {
 
             Product p = new Product();
             p.setNameProduct(request.getParameter("productName"));
-            String basePriceStr = request.getParameter("basePrice");
-            if (basePriceStr != null && !basePriceStr.isEmpty()) {
-                p.setPrice(Double.parseDouble(basePriceStr));
-            }
-            p.setCategoryId(parseInt(request.getParameter("categoryId")));
-            p.setProductTypeId(parseInt(request.getParameter("typeId")));
-            p.setSourceId(parseInt(request.getParameter("sourceId")));
 
-            String mfgDateStr = request.getParameter("mfgDate");
-            if (mfgDateStr != null && !mfgDateStr.isEmpty()) {
-                p.setMfgDate(java.sql.Date.valueOf(mfgDateStr));
+            String price = request.getParameter("basePrice");
+            if(price != null && !price.isEmpty()){
+                p.setPrice(Double.parseDouble(price));
             }
 
-            String productImages = request.getParameter("productImages");
-            List<String> imagePaths = new ArrayList<>();
-            if (productImages != null && !productImages.isEmpty()) {
-                String[] imgs = productImages.split(",");
-                for (String img : imgs) {
-                    String trimmed = img.trim();
-                    if (!trimmed.isEmpty()) {
-                        imagePaths.add(trimmed);
-                    }
+            p.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
+            p.setProductTypeId(Integer.parseInt(request.getParameter("typeId")));
+            p.setSourceId(Integer.parseInt(request.getParameter("sourceId")));
+
+            String mfgDate = request.getParameter("mfgDate");
+            if(mfgDate != null && !mfgDate.isEmpty()){
+                p.setMfgDate(java.sql.Date.valueOf(mfgDate));
+            }
+            List<String> images = new ArrayList<>();
+            String imgStr = request.getParameter("productImages");
+
+            if(imgStr != null && !imgStr.isEmpty()){
+                String[] arr = imgStr.split(",");
+                for(String s : arr){
+                    images.add(s.trim());
                 }
             }
-
             String[] skus = request.getParameterValues("variantSKU[]");
-            String[] colorIds = request.getParameterValues("colorId[]");
-            String[] sizeIds = request.getParameterValues("sizeId[]");
-            String[] vPrices = request.getParameterValues("variantPrice[]");
+            String[] colors = request.getParameterValues("colorId[]");
+            String[] sizes = request.getParameterValues("sizeId[]");
+            String[] prices = request.getParameterValues("variantPrice[]");
             String[] stocks = request.getParameterValues("variantStock[]");
 
-            List<ProductVariant> variants = new ArrayList<>();
-            Set<String> variantKeySet = new HashSet<>();
-            boolean hasDuplicateVariant = false;
-            String duplicateErrorDetail = "";
+            List<ProductVariants> listVariant = new ArrayList<>();
 
-            String productName = request.getParameter("productName");
-            String shortProductName = (productName != null && !productName.isEmpty())
-                    ? productName.replaceAll("\\s+", "").substring(0, Math.min(6, productName.length())).toUpperCase()
-                    : "SP";
+            if(skus != null){
+                for(int i = 0; i < skus.length; i++){
 
-            ProductDao dao = new ProductDao();
+                    ProductVariants v = new ProductVariants();
 
-            if (skus != null && skus.length > 0) {
-                for (int i = 0; i < skus.length; i++) {
-                    if (colorIds[i] == null || sizeIds[i] == null || vPrices[i] == null || stocks[i] == null) {
-                        continue;
+                    v.setSku(skus[i]);
+
+                    v.setColor_id(Integer.parseInt(colors[i]));
+                    v.setSize_id(Integer.parseInt(sizes[i]));
+
+                    if(prices[i] != null && !prices[i].isEmpty()){
+                        v.setVariant_price(new BigDecimal(prices[i]));
                     }
 
-                    int colorId = parseInt(colorIds[i]);
-                    int sizeId = parseInt(sizeIds[i]);
-
-                    if (colorId > 0 && sizeId > 0) {
-                        ProductVariant v = new ProductVariant();
-                        v.setColorId(colorId);
-                        v.setSizeId(sizeId);
-                        v.setVariantPrice(parseDouble(vPrices[i]));
-                        v.setInventoryQuantity(parseInt(stocks[i]));
-
-                        String skuInput = (skus[i] != null) ? skus[i].trim() : "";
-                        if (skuInput.isEmpty()) {
-                            String colorShort = "C" + colorId;
-                            String sizeShort = "S" + sizeId;
-                            String randomPart = String.format("%04d", (int)(Math.random() * 10000));
-                            skuInput = shortProductName + "-" + colorShort + "-" + sizeShort + "-" + randomPart;
-                        }
-                        v.setSku(skuInput);
-
-                        String variantKey = colorId + "-" + sizeId;
-                        if (variantKeySet.contains(variantKey)) {
-                            hasDuplicateVariant = true;
-                            duplicateErrorDetail = " (màu ID: " + colorId + ", size ID: " + sizeId + ")";
-                            break;
-                        }
-                        variantKeySet.add(variantKey);
-
-                        variants.add(v);
+                    if(stocks[i] != null && !stocks[i].isEmpty()){
+                        v.setInventory_quantity(Integer.parseInt(stocks[i]));
                     }
+
+                    listVariant.add(v);
                 }
             }
 
-            if (hasDuplicateVariant) {
-                request.setAttribute("message", "LỖI: Có biến thể trùng màu sắc + kích thước!" + duplicateErrorDetail +
-                        "<br>Mỗi cặp (màu, kích thước) chỉ được xuất hiện 1 lần.");
-                forwardWithData(request, response);
+            if(listVariant.isEmpty()){
+                request.setAttribute("message","Phải có ít nhất 1 biến thể!");
+                loadData(request,response);
                 return;
             }
+            boolean check = dao.insertFullProduct(p, desc, info, listVariant, images);
 
-            if (variants.isEmpty()) {
-                request.setAttribute("message", "LỖI: Phải có ít nhất 1 biến thể hợp lệ (chọn cả màu sắc và kích thước)!");
-                forwardWithData(request, response);
-                return;
-            }
-
-            boolean success = dao.insertFullProduct(p, desc, info, variants, imagePaths);
-
-            if (success) {
+            if(check){
                 response.sendRedirect("admin-add-product?status=success");
-            } else {
-                request.setAttribute("message", "Thêm sản phẩm thất bại vào Database! Vui lòng kiểm tra lại dữ liệu.");
-                forwardWithData(request, response);
+            }else{
+                request.setAttribute("message","Thêm sản phẩm thất bại!");
+                loadData(request,response);
             }
 
         } catch (Exception e) {
+
             e.printStackTrace();
-            request.setAttribute("message", "Có lỗi xảy ra: " + e.getMessage());
-            forwardWithData(request, response);
+            request.setAttribute("message","Lỗi!");
+            loadData(request,response);
+
         }
     }
 
-    private void forwardWithData(HttpServletRequest request, HttpServletResponse response)
+    private void loadData(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         ProductDao dao = new ProductDao();
+
         request.setAttribute("listCategories", dao.getAllCategory());
         request.setAttribute("listTypes", dao.getAllProductTypes());
         request.setAttribute("listSources", dao.getAllSources());
         request.setAttribute("listColors", dao.getAllColors());
         request.setAttribute("listSizes", dao.getAllSizes());
 
-
         request.getRequestDispatcher("admin_add_products.jsp").forward(request, response);
-    }
-
-    private int parseInt(String v) {
-        try {
-            return (v == null || v.isEmpty()) ? 0 : Integer.parseInt(v);
-        } catch (NumberFormatException e) {
-            return 0;
-        }
     }
 }

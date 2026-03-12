@@ -16,7 +16,7 @@
     <%@ include file="admin_header.jsp" %>
     <div class="main-wrapper">
         <%@ include file="admin_sidebar.jsp" %>
-        <main class="page-content-wrapper">
+        <main class="content-wrapper">
             <form action="admin-edit-product" method="POST" id="editProductForm">
 
                 <input type="hidden" name="productId" value="${product.id}">
@@ -26,9 +26,9 @@
                 <div class="add-product-container">
                     <h1 class="page-title">Chỉnh sửa: ${product.nameProduct}</h1>
 
-                    <div class="product-form-layout">
+                    <div class="product-form">
                         <div class="form-column-left">
-                            <div class="card product-info-section">
+                            <div class="card product-info">
                                 <h2 class="card-title">Thông tin cơ bản</h2>
                                 <div class="form-group">
                                     <label for="productName">Tên sản phẩm</label>
@@ -92,7 +92,7 @@
                                 </div>
                             </div>
 
-                            <div class="card image-upload-section">
+                            <div class="card image-upload">
                                 <h2 class="card-title">Hình ảnh sản phẩm</h2>
                                 <div class="drop-area" onclick="selectImagesWithCKFinder('imageUrls', 'image-preview')" style="border: 2px dashed #ccc; padding: 20px; text-align: center; cursor: pointer;">
                                     <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: #7f8c8d;"></i>
@@ -111,7 +111,7 @@
                             <div id="variant-container">
                                 <c:forEach var="v" items="${product.variants}" varStatus="vStatus">
                                     <div class="card variant-item">
-                                        <input type="hidden" name="variantId[]" value="${v.id}">  <!-- THÊM DÒNG NÀY -->
+                                        <input type="hidden" name="variantId[]" value="${v.id}">
                                         <h2 class="card-title">Biến thể #${vStatus.count}</h2>
                                         <span class="remove-variant" onclick="removeVariant(this)">
                                             <i class="fas fa-trash"></i>

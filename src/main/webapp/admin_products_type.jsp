@@ -23,20 +23,20 @@
         <%@ include file="admin_sidebar.jsp" %>
 
         <main class="content">
-            <div class="category-management-container">
+            <div class="category-container">
                 <h2 class="page-title">Quản Lý Loại Sản Phẩm</h2>
 
-                <div class="search-filter-bar">
-                    <div class="search-input-group" style="flex-grow: 1;">
+                <div class="search-filter">
+                    <div class="search-input" style="flex-grow: 1;">
                         <input type="text" placeholder="Tìm kiếm loại sản phẩm"
                                class="search-input" id="searchInput" value="${keyword}">
                     </div>
-                    <button class="add-new-category-btn" onclick="openProductTypeModal()">
+                    <button class="add-new-category" onclick="openProductTypeModal()">
                         <i class="fa-solid fa-plus"></i> Thêm Loại SP Mới
                     </button>
                 </div>
 
-                <div class="category-table-wrapper">
+                <div class="category-wrapper">
                     <table class="category-table">
                         <thead>
                         <tr>

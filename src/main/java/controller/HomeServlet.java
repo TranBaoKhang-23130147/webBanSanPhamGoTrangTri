@@ -1,3 +1,4 @@
+// roi
 package controller;
 
 import dao.ProductDao;
@@ -29,14 +30,10 @@ public class HomeServlet extends HttpServlet {
         List<Product> top3Products = dao.getTop3FeaturedProducts();
 
         request.setAttribute("products", products);
-        request.setAttribute("products", bestSellers);
+        request.setAttribute("bestSeller", bestSellers);
         request.setAttribute("top3Products", top3Products);
 
-        if (user == null) {
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
-        } else {
-            request.getRequestDispatcher("/homepage_user.jsp").forward(request, response);
-        }
+        request.getRequestDispatcher("/homepage_user.jsp").forward(request, response);
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

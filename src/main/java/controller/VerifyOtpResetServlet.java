@@ -23,19 +23,19 @@ public class VerifyOtpResetServlet extends HttpServlet {
         Long otpTime = (Long) session.getAttribute("OTP_TIME");
 
         if (sessionOtp == null || otpTime == null) {
-            request.setAttribute("ERROR_MESSAGE", "OTP hết hạn!");
+            request.setAttribute("Error", "OTP hết hạn!");
             request.getRequestDispatcher("/login_forgot_password.jsp").forward(request, response);
             return;
         }
 
         if (System.currentTimeMillis() - otpTime > 5 * 60 * 1000) {
-            request.setAttribute("ERROR_MESSAGE", "OTP đã hết hạn!");
+            request.setAttribute("Error", "OTP đã hết hạn!");
             request.getRequestDispatcher("/login_forgot_password.jsp").forward(request, response);
             return;
         }
 
         if (!sessionOtp.equals(inputOtp)) {
-            request.setAttribute("ERROR_MESSAGE", "OTP không đúng!");
+            request.setAttribute("Error", "OTP không đúng!");
             request.getRequestDispatcher("/login_otp_pass.jsp").forward(request, response);
             return;
         }

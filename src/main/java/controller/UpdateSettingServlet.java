@@ -59,11 +59,6 @@ public class UpdateSettingServlet extends HttpServlet {
             birthDate = Date.valueOf(birthDateStr);
         }
 
-        Integer avatarId = null;
-        if (avatarIdStr != null && !avatarIdStr.isEmpty()) {
-            avatarId = Integer.parseInt(avatarIdStr);
-        }
-
         User u = new User();
         u.setId(sessionUser.getId());
         u.setUsername(fullName);
@@ -108,9 +103,9 @@ public class UpdateSettingServlet extends HttpServlet {
         String source = req.getParameter("source");
 
         if ("admin_profile".equals(source)) {
-            resp.sendRedirect(req.getContextPath() + "/AdminProfileServlet?msg=success");
+            resp.sendRedirect(req.getContextPath() + "/AdminProfileServlet");
         } else {
-            resp.sendRedirect(req.getContextPath() + "/UpdateSettingServlet?msg=success");
+            resp.sendRedirect(req.getContextPath() + "/UpdateSettingServlet");
         }
     }
 }

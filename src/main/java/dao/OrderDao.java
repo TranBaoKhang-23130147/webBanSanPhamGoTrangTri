@@ -14,27 +14,26 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 public class OrderDao {
-    public int getOrderCount() throws Exception {
+    public int getOrderCount() {
         String sql = "SELECT COUNT(*) AS cnt FROM orders WHERE payment_status = ? AND status = ?";
+
         try (Connection conn = DBContext.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, "Đã thanh toán");
             ps.setString(2, "Đã giao");
 
-            try(ResultSet rs = ps.executeQuery()){
-
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    int count = rs.getInt("cnt");
-                    System.out.println("Order Count from DB: " + count);
-                    return count;
+                    return rs.getInt("cnt");
                 }
             }
-            return 0;
+
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Failed to fetch order count!");
         }
+
+        return 0;
     }
     public List<Order> getOrdersByUserId(int userId) {
         List<Order> list = new ArrayList<>();
@@ -356,6 +355,138 @@ public class OrderDao {
             e.printStackTrace();
         }
         return 0.0;
+    }
+    public int checkout(int userId,
+                        String fullName,
+                        String phone,
+                        int addressId,
+                        String note,
+                        String paymentMethod,
+                        List<CartItem> cart) throws Exception {
+
+        try (Connection conn = DBContext.getConnection()) {
+
+            conn.setAutoCommit(false);
+
+            BigDecimal subTotal = BigDecimal.ZERO;
+
+            for (CartItem item : cart) {
+                BigDecimal itemTotal = item.getVariant().getVariant_price()
+                        .multiply(BigDecimal.valueOf(item.getQuantity()));
+
+                subTotal = subTotal.add(itemTotal);
+            }
+
+            BigDecimal tax = subTotal.multiply(BigDecimal.valueOf(0.08));
+            BigDecimal shipping = calculateShipping(subTotal);
+            BigDecimal total = subTotal.add(tax).add(shipping);
+
+            String sqlOrder = """
+                    INSERT INTO orders 
+                    (user_id, fullName, phone, address_id, note, createAt, status,
+                     payment_status, totalOrder, subTotal, taxAmount, shippingFee)
+                    VALUES (?, ?, ?, ?, ?, NOW(), 'Chờ xác nhận', ?, ?, ?, ?, ?)
+                    """;
+
+            String paymentStatus = paymentMethod.equals("COD")
+                    ? "Chưa thanh toán"
+                    : "Đã thanh toán";
+
+            int orderId;
+
+            try (PreparedStatement ps = conn.prepareStatement(sqlOrder, Statement.RETURN_GENERATED_KEYS)) {
+
+                ps.setInt(1, userId);
+                ps.setString(2, fullName);
+                ps.setString(3, phone);
+                ps.setInt(4, addressId);
+                ps.setString(5, note);
+                ps.setString(6, paymentStatus);
+
+                ps.setBigDecimal(7, total);
+                ps.setBigDecimal(8, subTotal);
+                ps.setBigDecimal(9, tax);
+                ps.setBigDecimal(10, shipping);
+
+                ps.executeUpdate();
+
+                ResultSet rs = ps.getGeneratedKeys();
+                rs.next();
+                orderId = rs.getInt(1);
+            }
+
+            insertOrderDetails(conn, orderId, cart);
+            updateStock(conn, cart);
+
+            conn.commit();
+
+            return orderId;
+        }
+    }
+
+    private void insertOrderDetails(Connection conn, int orderId, List<CartItem> cart) throws SQLException {
+
+        String sql = """
+                INSERT INTO order_details
+                (order_id, product_variant_id, quantity, total)
+                VALUES (?, ?, ?, ?)
+                """;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            for (CartItem item : cart) {
+
+                BigDecimal itemTotal = item.getVariant().getVariant_price()
+                        .multiply(BigDecimal.valueOf(item.getQuantity()));
+
+                ps.setInt(1, orderId);
+                ps.setInt(2, item.getVariant().getId());
+                ps.setInt(3, item.getQuantity());
+                ps.setBigDecimal(4, itemTotal);
+
+                ps.addBatch();
+            }
+
+            ps.executeBatch();
+        }
+    }
+
+    private void updateStock(Connection conn, List<CartItem> cart) throws SQLException {
+
+        String sql = """
+                UPDATE product_variants
+                SET inventory_quantity = inventory_quantity - ?
+                WHERE id = ? AND inventory_quantity >= ?
+                """;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            for (CartItem item : cart) {
+
+                int qty = item.getQuantity();
+
+                ps.setInt(1, qty);
+                ps.setInt(2, item.getVariant().getId());
+                ps.setInt(3, qty);
+
+                int rows = ps.executeUpdate();
+
+                if (rows == 0) {
+                    throw new SQLException("Không đủ tồn kho");
+                }
+            }
+        }
+    }
+
+    private BigDecimal calculateShipping(BigDecimal subTotal) {
+
+        if (subTotal.compareTo(BigDecimal.valueOf(1_000_000)) < 0)
+            return BigDecimal.valueOf(50_000);
+
+        if (subTotal.compareTo(BigDecimal.valueOf(3_000_000)) < 0)
+            return BigDecimal.valueOf(100_000);
+
+        return BigDecimal.valueOf(200_000);
     }
 
 }

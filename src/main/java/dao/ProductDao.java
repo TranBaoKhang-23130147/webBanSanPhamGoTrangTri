@@ -981,104 +981,104 @@ public class ProductDao {
         }
         return list;
     }
-        public List<ProductType> getAllProductTypes() {
-            List<ProductType> list = new ArrayList<>();
-            String sql = "SELECT id, product_type_name FROM product_types";
-            try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    ProductType pt = new ProductType();
-                    pt.setId(rs.getInt("id"));
-                    pt.setProductTypeName(rs.getString("product_type_name"));
-                    list.add(pt);
-                }
-            } catch (Exception e) { e.printStackTrace(); }
-            return list;
-        }
-
-        public List<ProductColor> getAllColors() {
-            List<ProductColor> list = new ArrayList<>();
-            String sql = "SELECT id, colorName FROM colors";
-            try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    ProductColor c = new ProductColor();
-                    c.setId(rs.getInt("id"));
-                    c.setColorName(rs.getString("colorName"));
-                    list.add(c);
-                }
-            } catch (Exception e) { e.printStackTrace(); }
-            return list;
-        }
-
-        public boolean deleteFullProduct(int productId) {
-
-            try (Connection conn = new DBContext().getConnection()) {
-
-                conn.setAutoCommit(false);
-
-                conn.prepareStatement(
-                                "DELETE FROM product_variants WHERE product_id=?")
-                        .executeUpdate();
-
-                PreparedStatement ps1 = conn.prepareStatement(
-                        "DELETE FROM product_images WHERE product_id=?");
-                ps1.setInt(1, productId);
-                ps1.executeUpdate();
-
-                PreparedStatement ps2 = conn.prepareStatement(
-                        "DELETE FROM products WHERE id=?");
-                ps2.setInt(1, productId);
-                ps2.executeUpdate();
-
-                conn.commit();
-                return true;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
+    public List<ProductType> getAllProductTypes() {
+        List<ProductType> list = new ArrayList<>();
+        String sql = "SELECT id, product_type_name FROM product_types";
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                ProductType pt = new ProductType();
+                pt.setId(rs.getInt("id"));
+                pt.setProductTypeName(rs.getString("product_type_name"));
+                list.add(pt);
             }
-        }
+        } catch (Exception e) { e.printStackTrace(); }
+        return list;
+    }
 
-        public int getTotalStockByProductId(int productId) {
-            int total = 0;
-            String sql = "SELECT SUM(inventory_quantity) FROM product_variants WHERE product_id = ?";
-            try (Connection conn = getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setInt(1, productId);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    total = rs.getInt(1);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+    public List<ProductColor> getAllColors() {
+        List<ProductColor> list = new ArrayList<>();
+        String sql = "SELECT id, colorName FROM colors";
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                ProductColor c = new ProductColor();
+                c.setId(rs.getInt("id"));
+                c.setColorName(rs.getString("colorName"));
+                list.add(c);
             }
-            return total;
+        } catch (Exception e) { e.printStackTrace(); }
+        return list;
+    }
+
+    public boolean deleteFullProduct(int productId) {
+
+        try (Connection conn = new DBContext().getConnection()) {
+
+            conn.setAutoCommit(false);
+
+            conn.prepareStatement(
+                            "DELETE FROM product_variants WHERE product_id=?")
+                    .executeUpdate();
+
+            PreparedStatement ps1 = conn.prepareStatement(
+                    "DELETE FROM product_images WHERE product_id=?");
+            ps1.setInt(1, productId);
+            ps1.executeUpdate();
+
+            PreparedStatement ps2 = conn.prepareStatement(
+                    "DELETE FROM products WHERE id=?");
+            ps2.setInt(1, productId);
+            ps2.executeUpdate();
+
+            conn.commit();
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
-        public boolean updateProductStatus(int productId, int status) {
-            String sql = "UPDATE products SET isActive = ? WHERE id = ?";
-            Connection conn = null;
-            PreparedStatement ps = null;
-            try {
-                conn = getConnection();
-                ps = conn.prepareStatement(sql);
-                ps.setInt(1, status);
-                ps.setInt(2, productId);
+    }
 
-                int rowsAffected = ps.executeUpdate();
-                System.out.println("Update products id=" + productId + " → rows affected: " + rowsAffected);
-
-                return rowsAffected > 0;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            } finally {
-                try { if (ps != null) ps.close(); } catch (Exception ignored) {}
-                try { if (conn != null) conn.close(); } catch (Exception ignored) {}
+    public int getTotalStockByProductId(int productId) {
+        int total = 0;
+        String sql = "SELECT SUM(inventory_quantity) FROM product_variants WHERE product_id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt(1);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        public int getSoldQuantityByVariantId(int variantId) {
-            String sql = """
+        return total;
+    }
+    public boolean updateProductStatus(int productId, int status) {
+        String sql = "UPDATE products SET isActive = ? WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, status);
+            ps.setInt(2, productId);
+
+            int rowsAffected = ps.executeUpdate();
+            System.out.println("Update products id=" + productId + " → rows affected: " + rowsAffected);
+
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            try { if (ps != null) ps.close(); } catch (Exception ignored) {}
+            try { if (conn != null) conn.close(); } catch (Exception ignored) {}
+        }
+    }
+    public int getSoldQuantityByVariantId(int variantId) {
+        String sql = """
         SELECT COALESCE(SUM(oi.quantity), 0)
         FROM order_details oi
         JOIN orders o ON oi.order_id = o.id
@@ -1086,22 +1086,22 @@ public class ProductDao {
           AND o.status NOT IN ('Đã hủy', 'Hoàn hàng')
     """;
 
-            try (Connection conn = new DBContext().getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-                ps.setInt(1, variantId);
-                ResultSet rs = ps.executeQuery();
+            ps.setInt(1, variantId);
+            ResultSet rs = ps.executeQuery();
 
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (rs.next()) {
+                return rs.getInt(1);
             }
-            return 0;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        public Information getInformationByProductId(int productId) {
-            String sql = """
+        return 0;
+    }
+    public Information getInformationByProductId(int productId) {
+        String sql = """
         SELECT i.*
         FROM products p
         JOIN description d ON p.description_id = d.id
@@ -1109,565 +1109,565 @@ public class ProductDao {
         WHERE p.id = ?
     """;
 
-            Connection connection = null;
-            try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setInt(1, productId);
-                ResultSet rs = ps.executeQuery();
+        Connection connection = null;
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
 
-                if (rs.next()) {
-                    Information info = new Information();
-                    info.setId(rs.getInt("id"));
-                    info.setMaterial(rs.getString("material"));
-                    info.setColor(rs.getString("color"));
-                    info.setSize(rs.getString("size"));
-                    info.setGuarantee(rs.getString("guarantee"));
-                    return info;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (rs.next()) {
+                Information info = new Information();
+                info.setId(rs.getInt("id"));
+                info.setMaterial(rs.getString("material"));
+                info.setColor(rs.getString("color"));
+                info.setSize(rs.getString("size"));
+                info.setGuarantee(rs.getString("guarantee"));
+                return info;
             }
-            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        public Description getDescriptionByProductId(int productId) {
-            String sql = """
+        return null;
+    }
+    public Description getDescriptionByProductId(int productId) {
+        String sql = """
         SELECT d.*
         FROM products p
         JOIN description d ON p.description_id = d.id
         WHERE p.id = ?
     """;
 
-            Connection connection = null;
-            try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setInt(1, productId);
-                ResultSet rs = ps.executeQuery();
+        Connection connection = null;
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
 
-                if (rs.next()) {
-                    Description d = new Description();
-                    d.setId(rs.getInt("id"));
-                    d.setIntroduce(rs.getString("introduce"));
-                    d.setHighlights(rs.getString("highlight"));
-                    d.setInformationId(rs.getInt("information_id"));
-                    return d;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (rs.next()) {
+                Description d = new Description();
+                d.setId(rs.getInt("id"));
+                d.setIntroduce(rs.getString("introduce"));
+                d.setHighlights(rs.getString("highlight"));
+                d.setInformationId(rs.getInt("information_id"));
+                return d;
             }
-            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        public List<Integer> getVariantIdsByProduct(int productId) {
-            List<Integer> ids = new ArrayList<>();
-            String sql = "SELECT id FROM product_variants WHERE product_id = ?";
+        return null;
+    }
+    public List<Integer> getVariantIdsByProduct(int productId) {
+        List<Integer> ids = new ArrayList<>();
+        String sql = "SELECT id FROM product_variants WHERE product_id = ?";
 
-            Connection connection = null;
-            try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setInt(1, productId);
-                ResultSet rs = ps.executeQuery();
-                while (rs.next()) {
-                    ids.add(rs.getInt("id"));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+        Connection connection = null;
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ids.add(rs.getInt("id"));
             }
-            return ids;
-        }public void deleteVariant(int variantId) {
-            String sql = "DELETE FROM product_variants WHERE id = ?";
-            Connection connection =null;
-            try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setInt(1, variantId);
-                ps.executeUpdate();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        public void updateVariant(int variantId, double price, int stock) {
-            String sql = """
+        return ids;
+    }public void deleteVariant(int variantId) {
+        String sql = "DELETE FROM product_variants WHERE id = ?";
+        Connection connection =null;
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, variantId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateVariant(int variantId, double price, int stock) {
+        String sql = """
         UPDATE product_variants
         SET variant_price = ?, inventory_quantity = ?
         WHERE id = ?
     """;
 
-            try (Connection conn = new DBContext().getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-                ps.setDouble(1, price);
-                ps.setInt(2, stock);
-                ps.setInt(3, variantId);
+            ps.setDouble(1, price);
+            ps.setInt(2, stock);
+            ps.setInt(3, variantId);
 
-                ps.executeUpdate();
+            ps.executeUpdate();
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 
-        public Map<Integer, Integer> countProductByType() {
-            Map<Integer, Integer> map = new HashMap<>();
+    public Map<Integer, Integer> countProductByType() {
+        Map<Integer, Integer> map = new HashMap<>();
 
-            String sql = """
+        String sql = """
         SELECT product_type_id, COUNT(*) AS total
         FROM products
         WHERE isActive = 1
         GROUP BY product_type_id
     """;
 
-            try (Connection con = getConnection();
-                 PreparedStatement ps = con.prepareStatement(sql);
-                 ResultSet rs = ps.executeQuery()) {
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
-                while (rs.next()) {
-                    map.put(
-                            rs.getInt("product_type_id"),
-                            rs.getInt("total")
-                    );
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            while (rs.next()) {
+                map.put(
+                        rs.getInt("product_type_id"),
+                        rs.getInt("total")
+                );
             }
-            return map;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        public Map<Integer, Integer> countProductByCategory() {
-            Map<Integer, Integer> map = new HashMap<>();
+        return map;
+    }
+    public Map<Integer, Integer> countProductByCategory() {
+        Map<Integer, Integer> map = new HashMap<>();
 
-            String sql = """
+        String sql = """
         SELECT category_id, COUNT(*) AS total
         FROM products
         WHERE isActive = 1
         GROUP BY category_id
     """;
 
-            try (Connection con = getConnection();
-                 PreparedStatement ps = con.prepareStatement(sql);
-                 ResultSet rs = ps.executeQuery()) {
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
-                while (rs.next()) {
-                    map.put(
-                            rs.getInt("category_id"),
-                            rs.getInt("total")
-                    );
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            while (rs.next()) {
+                map.put(
+                        rs.getInt("category_id"),
+                        rs.getInt("total")
+                );
             }
-            return map;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        public Map<Integer, Integer> countProductBySource() {
-            Map<Integer, Integer> map = new HashMap<>();
+        return map;
+    }
+    public Map<Integer, Integer> countProductBySource() {
+        Map<Integer, Integer> map = new HashMap<>();
 
-            String sql = """
+        String sql = """
         SELECT source_id, COUNT(*) AS total
         FROM products
         WHERE isActive = 1
         GROUP BY source_id
     """;
 
-            try (Connection con = getConnection();
-                 PreparedStatement ps = con.prepareStatement(sql);
-                 ResultSet rs = ps.executeQuery()) {
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
-                while (rs.next()) {
-                    map.put(
-                            rs.getInt("source_id"),
-                            rs.getInt("total")
-                    );
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            while (rs.next()) {
+                map.put(
+                        rs.getInt("source_id"),
+                        rs.getInt("total")
+                );
             }
-            return map;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        public boolean insertFullProduct(Product p, Description desc, Information info,
-                List<ProductVariant> variants, List<String> imagePaths) {
-            Connection conn = null;
-            try {
-                conn = new DBContext().getConnection();
-                conn.setAutoCommit(false);
+        return map;
+    }
+    public boolean insertFullProduct(Product p, Description desc, Information info,
+                                     List<ProductVariants> variants, List<String> imagePaths) {
+        Connection conn = null;
+        try {
+            conn = new DBContext().getConnection();
+            conn.setAutoCommit(false);
 
-                String sqlInfo = "INSERT INTO informations (material, color, size, guarantee) VALUES (?, ?, ?, ?)";
-                PreparedStatement psInfo = conn.prepareStatement(sqlInfo, Statement.RETURN_GENERATED_KEYS);
-                psInfo.setString(1, info.getMaterial());
-                psInfo.setString(2, info.getColor());
-                psInfo.setString(3, info.getSize());
-                psInfo.setString(4, info.getGuarantee());
-                psInfo.executeUpdate();
-                ResultSet rsInfo = psInfo.getGeneratedKeys();
-                if (!rsInfo.next()) { conn.rollback(); return false; }
-                int infoId = rsInfo.getInt(1);
+            String sqlInfo = "INSERT INTO informations (material, color, size, guarantee) VALUES (?, ?, ?, ?)";
+            PreparedStatement psInfo = conn.prepareStatement(sqlInfo, Statement.RETURN_GENERATED_KEYS);
+            psInfo.setString(1, info.getMaterial());
+            psInfo.setString(2, info.getColor());
+            psInfo.setString(3, info.getSize());
+            psInfo.setString(4, info.getGuarantee());
+            psInfo.executeUpdate();
+            ResultSet rsInfo = psInfo.getGeneratedKeys();
+            if (!rsInfo.next()) { conn.rollback(); return false; }
+            int infoId = rsInfo.getInt(1);
 
-                String sqlDesc = "INSERT INTO descriptions (introduce, highlights, information_id) VALUES (?, ?, ?)";
-                PreparedStatement psDesc = conn.prepareStatement(sqlDesc, Statement.RETURN_GENERATED_KEYS);
-                psDesc.setString(1, desc.getIntroduce());
-                psDesc.setString(2, desc.getHighlights());
-                psDesc.setInt(3, infoId);
-                psDesc.executeUpdate();
-                ResultSet rsDesc = psDesc.getGeneratedKeys();
-                if (!rsDesc.next()) { conn.rollback(); return false; }
-                int descId = rsDesc.getInt(1);
+            String sqlDesc = "INSERT INTO descriptions (introduce, highlights, information_id) VALUES (?, ?, ?)";
+            PreparedStatement psDesc = conn.prepareStatement(sqlDesc, Statement.RETURN_GENERATED_KEYS);
+            psDesc.setString(1, desc.getIntroduce());
+            psDesc.setString(2, desc.getHighlights());
+            psDesc.setInt(3, infoId);
+            psDesc.executeUpdate();
+            ResultSet rsDesc = psDesc.getGeneratedKeys();
+            if (!rsDesc.next()) { conn.rollback(); return false; }
+            int descId = rsDesc.getInt(1);
 
-                String sqlProd = "INSERT INTO products (name_product, price, category_id, source_id, product_type_id, description_id, mfg_date, isActive) VALUES (?, ?, ?, ?, ?, ?, ?, 1)";
-                PreparedStatement psProd = conn.prepareStatement(sqlProd, Statement.RETURN_GENERATED_KEYS);
-                psProd.setString(1, p.getNameProduct());
-                psProd.setDouble(2, p.getPrice());
-                int catId = p.getCategoryId();
-                if (catId > 0) {
-                    psProd.setInt(3, catId);
-                } else {
-                    psProd.setNull(3, Types.INTEGER);
+            String sqlProd = "INSERT INTO products (name_product, price, category_id, source_id, product_type_id, description_id, mfg_date, isActive) VALUES (?, ?, ?, ?, ?, ?, ?, 1)";
+            PreparedStatement psProd = conn.prepareStatement(sqlProd, Statement.RETURN_GENERATED_KEYS);
+            psProd.setString(1, p.getNameProduct());
+            psProd.setDouble(2, p.getPrice());
+            int catId = p.getCategoryId();
+            if (catId > 0) {
+                psProd.setInt(3, catId);
+            } else {
+                psProd.setNull(3, Types.INTEGER);
+            }
+            psProd.setInt(4, p.getSourceId());
+            if (p.getProductTypeId() > 0) {
+                psProd.setInt(5, p.getProductTypeId());
+            } else {
+                psProd.setNull(5, Types.INTEGER);
+            }
+            psProd.setInt(6, descId);
+            psProd.setDate(7, p.getMfgDate());
+            psProd.executeUpdate();
+            ResultSet rsProd = psProd.getGeneratedKeys();
+            if (!rsProd.next()) { conn.rollback(); return false; }
+            int productId = rsProd.getInt(1);
+
+            int primaryId = -1;
+            String sqlImg = "INSERT INTO images (urlImage) VALUES (?)";
+            String sqlPI = "INSERT INTO product_images (image_id, product_id) VALUES (?, ?)";
+            for (int i = 0; i < imagePaths.size(); i++) {
+                PreparedStatement psImg = conn.prepareStatement(sqlImg, Statement.RETURN_GENERATED_KEYS);
+                psImg.setString(1, imagePaths.get(i));
+                psImg.executeUpdate();
+                ResultSet rsImg = psImg.getGeneratedKeys();
+                if (rsImg.next()) {
+                    int imgId = rsImg.getInt(1);
+                    if (i == 0) primaryId = imgId;
+                    PreparedStatement psPI = conn.prepareStatement(sqlPI);
+                    psPI.setInt(1, imgId);
+                    psPI.setInt(2, productId);
+                    psPI.executeUpdate();
                 }
-                psProd.setInt(4, p.getSourceId());
-                if (p.getProductTypeId() > 0) {
-                    psProd.setInt(5, p.getProductTypeId());
-                } else {
-                    psProd.setNull(5, Types.INTEGER);
-                }
-                psProd.setInt(6, descId);
-                psProd.setDate(7, p.getMfgDate());
-                psProd.executeUpdate();
-                ResultSet rsProd = psProd.getGeneratedKeys();
-                if (!rsProd.next()) { conn.rollback(); return false; }
-                int productId = rsProd.getInt(1);
+            }
 
-                int primaryId = -1;
-                String sqlImg = "INSERT INTO images (urlImage) VALUES (?)";
-                String sqlPI = "INSERT INTO product_images (image_id, product_id) VALUES (?, ?)";
+            if (primaryId != -1) {
+                String sqlUp = "UPDATE products SET primary_image_id = ? WHERE id = ?";
+                PreparedStatement psUp = conn.prepareStatement(sqlUp);
+                psUp.setInt(1, primaryId);
+                psUp.setInt(2, productId);
+                psUp.executeUpdate();
+            }
+
+            String sqlVar = "INSERT INTO product_variants (product_id, color_id, size_id, sku, inventory_quantity, variant_price) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement psVar = conn.prepareStatement(sqlVar);
+            for (ProductVariants v : variants) {
+                psVar.setInt(1, productId);
+                psVar.setInt(2, v.getColor_id());
+                psVar.setInt(3, v.getSize_id());
+                psVar.setString(4, v.getSku());
+                psVar.setInt(5, v.getInventory_quantity());
+                psVar.setBigDecimal(6, v.getVariant_price());
+                psVar.addBatch();
+            }
+            psVar.executeBatch();
+
+            conn.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Lỗi ở bước: " + e.getMessage());
+            if (e instanceof SQLIntegrityConstraintViolationException) {
+                System.out.println("→ Vi phạm ràng buộc: " + e.getMessage());
+            }
+            try { if (conn != null) conn.rollback(); } catch (Exception ignored) {}
+            return false;
+        }
+    }
+    public boolean updateFullProduct(Product p, Description desc, Information info,
+                                     List<ProductVariants> newVariants, List<String> imagePaths) {
+        Connection conn = null;
+        try {
+            conn = new DBContext().getConnection();
+            conn.setAutoCommit(false);
+
+            int descId = -1;
+            int infoId = -1;
+            PreparedStatement psGetIds = conn.prepareStatement(
+                    "SELECT description_id FROM products WHERE id = ?");
+            psGetIds.setInt(1, p.getId());
+            ResultSet rsIds = psGetIds.executeQuery();
+            if (rsIds.next()) {
+                descId = rsIds.getInt("description_id");
+            } else {
+                throw new SQLException("Không tìm thấy sản phẩm với ID: " + p.getId());
+            }
+
+            PreparedStatement psGetInfoId = conn.prepareStatement(
+                    "SELECT information_id FROM descriptions WHERE id = ?");
+            psGetInfoId.setInt(1, descId);
+            ResultSet rsInfo = psGetInfoId.executeQuery();
+            if (rsInfo.next()) {
+                infoId = rsInfo.getInt("information_id");
+            } else {
+                throw new SQLException("Không tìm thấy description cho sản phẩm ID: " + p.getId());
+            }
+
+            String sqlInfo = "UPDATE informations SET material = ?, guarantee = ? WHERE id = ?";
+            PreparedStatement psInfo = conn.prepareStatement(sqlInfo);
+            psInfo.setString(1, info.getMaterial() != null ? info.getMaterial() : "");
+            psInfo.setString(2, info.getGuarantee() != null ? info.getGuarantee() : "");
+            psInfo.setInt(3, infoId);
+            int rowsInfo = psInfo.executeUpdate();
+            if (rowsInfo == 0) {
+                throw new SQLException("Không cập nhật được informations (id=" + infoId + ")");
+            }
+
+            String sqlDesc = "UPDATE descriptions SET introduce = ?, highlights = ? WHERE id = ?";
+            PreparedStatement psDesc = conn.prepareStatement(sqlDesc);
+            psDesc.setString(1, desc.getIntroduce() != null ? desc.getIntroduce() : "");
+            psDesc.setString(2, desc.getHighlights() != null ? desc.getHighlights() : "");
+            psDesc.setInt(3, descId);
+            int rowsDesc = psDesc.executeUpdate();
+            if (rowsDesc == 0) {
+                throw new SQLException("Không cập nhật được descriptions (id=" + descId + ")");
+            }
+
+            String sqlProd = "UPDATE products SET name_product=?, price=?, category_id=?, source_id=?, product_type_id=?, mfg_date=? WHERE id=?";
+            PreparedStatement psProd = conn.prepareStatement(sqlProd);
+            psProd.setString(1, p.getNameProduct());
+            psProd.setDouble(2, p.getPrice());
+            if (p.getCategoryId() > 0) psProd.setInt(3, p.getCategoryId()); else psProd.setNull(3, java.sql.Types.INTEGER);
+            psProd.setInt(4, p.getSourceId());
+            if (p.getProductTypeId() > 0) psProd.setInt(5, p.getProductTypeId()); else psProd.setNull(5, java.sql.Types.INTEGER);
+            psProd.setDate(6, p.getMfgDate());
+            psProd.setInt(7, p.getId());
+            int rowsProd = psProd.executeUpdate();
+            if (rowsProd == 0) {
+                throw new SQLException("Không cập nhật được sản phẩm chính (id=" + p.getId() + ")");
+            }
+
+            conn.prepareStatement("DELETE FROM product_images WHERE product_id = ?")
+                    .executeUpdate();
+
+            Integer primaryImageId = null;
+            if (imagePaths != null && !imagePaths.isEmpty()) {
                 for (int i = 0; i < imagePaths.size(); i++) {
-                    PreparedStatement psImg = conn.prepareStatement(sqlImg, Statement.RETURN_GENERATED_KEYS);
-                    psImg.setString(1, imagePaths.get(i));
+                    String url = imagePaths.get(i);
+                    if (url == null || url.trim().isEmpty()) continue;
+
+                    PreparedStatement psImg = conn.prepareStatement(
+                            "INSERT INTO images (urlImage) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+                    psImg.setString(1, url);
                     psImg.executeUpdate();
-                    ResultSet rsImg = psImg.getGeneratedKeys();
-                    if (rsImg.next()) {
-                        int imgId = rsImg.getInt(1);
-                        if (i == 0) primaryId = imgId;
-                        PreparedStatement psPI = conn.prepareStatement(sqlPI);
+                    ResultSet rs = psImg.getGeneratedKeys();
+                    if (rs.next()) {
+                        int imgId = rs.getInt(1);
+                        if (i == 0) primaryImageId = imgId;
+
+                        PreparedStatement psPI = conn.prepareStatement(
+                                "INSERT INTO product_images (image_id, product_id) VALUES (?, ?)");
                         psPI.setInt(1, imgId);
-                        psPI.setInt(2, productId);
+                        psPI.setInt(2, p.getId());
                         psPI.executeUpdate();
                     }
                 }
 
-                if (primaryId != -1) {
-                    String sqlUp = "UPDATE products SET primary_image_id = ? WHERE id = ?";
-                    PreparedStatement psUp = conn.prepareStatement(sqlUp);
-                    psUp.setInt(1, primaryId);
-                    psUp.setInt(2, productId);
+                if (primaryImageId != null) {
+                    PreparedStatement psUp = conn.prepareStatement(
+                            "UPDATE products SET primary_image_id = ? WHERE id = ?");
+                    psUp.setInt(1, primaryImageId);
+                    psUp.setInt(2, p.getId());
                     psUp.executeUpdate();
                 }
-
-                String sqlVar = "INSERT INTO product_variants (product_id, color_id, size_id, sku, inventory_quantity, variant_price) VALUES (?, ?, ?, ?, ?, ?)";
-                PreparedStatement psVar = conn.prepareStatement(sqlVar);
-                for (ProductVariant v : variants) {
-                    psVar.setInt(1, productId);
-                    psVar.setInt(2, v.getColorId());
-                    psVar.setInt(3, v.getSizeId());
-                    psVar.setString(4, v.getSku());
-                    psVar.setInt(5, v.getInventoryQuantity());
-                    psVar.setDouble(6, v.getVariantPrice());
-                    psVar.addBatch();
-                }
-                psVar.executeBatch();
-
-                conn.commit();
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Lỗi ở bước: " + e.getMessage());
-                if (e instanceof SQLIntegrityConstraintViolationException) {
-                    System.out.println("→ Vi phạm ràng buộc: " + e.getMessage());
-                }
-                try { if (conn != null) conn.rollback(); } catch (Exception ignored) {}
-                return false;
             }
-        }
-        public boolean updateFullProduct(Product p, Description desc, Information info,
-                List<ProductVariants> newVariants, List<String> imagePaths) {
-            Connection conn = null;
-            try {
-                conn = new DBContext().getConnection();
-                conn.setAutoCommit(false);
 
-                int descId = -1;
-                int infoId = -1;
-                PreparedStatement psGetIds = conn.prepareStatement(
-                        "SELECT description_id FROM products WHERE id = ?");
-                psGetIds.setInt(1, p.getId());
-                ResultSet rsIds = psGetIds.executeQuery();
-                if (rsIds.next()) {
-                    descId = rsIds.getInt("description_id");
+            List<ProductVariants> oldVariants = getVariantsByProductId(p.getId(), conn);
+
+            java.util.Map<Integer, ProductVariants> oldMap = new java.util.HashMap<>();
+            for (ProductVariants ov : oldVariants) {
+                oldMap.put(ov.getId(), ov);
+            }
+
+            PreparedStatement psUpdate = conn.prepareStatement(
+                    "UPDATE product_variants SET color_id=?, size_id=?, sku=?, inventory_quantity=?, variant_price=? WHERE id=?");
+            PreparedStatement psInsert = conn.prepareStatement(
+                    "INSERT INTO product_variants (product_id, color_id, size_id, sku, inventory_quantity, variant_price) VALUES (?,?,?,?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement psDelete = conn.prepareStatement("DELETE FROM product_variants WHERE id=?");
+
+            java.util.Set<Integer> processedIds = new java.util.HashSet<>();
+
+            for (ProductVariants nv : newVariants) {
+                if (nv.getColor_id() <= 0 || nv.getSize_id() <= 0 || nv.getSku() == null || nv.getSku().trim().isEmpty()) {
+                    throw new SQLException("Biến thể thiếu color/size/SKU hợp lệ");
+                }
+                if (nv.getVariant_price() == null) {
+                    nv.setVariant_price(BigDecimal.ZERO);
+                }
+
+                if (nv.getId() > 0) {
+                    psUpdate.setInt(1, nv.getColor_id());
+                    psUpdate.setInt(2, nv.getSize_id());
+                    psUpdate.setString(3, nv.getSku().trim());
+                    psUpdate.setInt(4, nv.getInventory_quantity());
+                    psUpdate.setBigDecimal(5, nv.getVariant_price());
+                    psUpdate.setInt(6, nv.getId());
+                    psUpdate.addBatch();
+                    processedIds.add(nv.getId());
                 } else {
-                    throw new SQLException("Không tìm thấy sản phẩm với ID: " + p.getId());
-                }
-
-                PreparedStatement psGetInfoId = conn.prepareStatement(
-                        "SELECT information_id FROM descriptions WHERE id = ?");
-                psGetInfoId.setInt(1, descId);
-                ResultSet rsInfo = psGetInfoId.executeQuery();
-                if (rsInfo.next()) {
-                    infoId = rsInfo.getInt("information_id");
-                } else {
-                    throw new SQLException("Không tìm thấy description cho sản phẩm ID: " + p.getId());
-                }
-
-                String sqlInfo = "UPDATE informations SET material = ?, guarantee = ? WHERE id = ?";
-                PreparedStatement psInfo = conn.prepareStatement(sqlInfo);
-                psInfo.setString(1, info.getMaterial() != null ? info.getMaterial() : "");
-                psInfo.setString(2, info.getGuarantee() != null ? info.getGuarantee() : "");
-                psInfo.setInt(3, infoId);
-                int rowsInfo = psInfo.executeUpdate();
-                if (rowsInfo == 0) {
-                    throw new SQLException("Không cập nhật được informations (id=" + infoId + ")");
-                }
-
-                String sqlDesc = "UPDATE descriptions SET introduce = ?, highlights = ? WHERE id = ?";
-                PreparedStatement psDesc = conn.prepareStatement(sqlDesc);
-                psDesc.setString(1, desc.getIntroduce() != null ? desc.getIntroduce() : "");
-                psDesc.setString(2, desc.getHighlights() != null ? desc.getHighlights() : "");
-                psDesc.setInt(3, descId);
-                int rowsDesc = psDesc.executeUpdate();
-                if (rowsDesc == 0) {
-                    throw new SQLException("Không cập nhật được descriptions (id=" + descId + ")");
-                }
-
-                String sqlProd = "UPDATE products SET name_product=?, price=?, category_id=?, source_id=?, product_type_id=?, mfg_date=? WHERE id=?";
-                PreparedStatement psProd = conn.prepareStatement(sqlProd);
-                psProd.setString(1, p.getNameProduct());
-                psProd.setDouble(2, p.getPrice());
-                if (p.getCategoryId() > 0) psProd.setInt(3, p.getCategoryId()); else psProd.setNull(3, java.sql.Types.INTEGER);
-                psProd.setInt(4, p.getSourceId());
-                if (p.getProductTypeId() > 0) psProd.setInt(5, p.getProductTypeId()); else psProd.setNull(5, java.sql.Types.INTEGER);
-                psProd.setDate(6, p.getMfgDate());
-                psProd.setInt(7, p.getId());
-                int rowsProd = psProd.executeUpdate();
-                if (rowsProd == 0) {
-                    throw new SQLException("Không cập nhật được sản phẩm chính (id=" + p.getId() + ")");
-                }
-
-                conn.prepareStatement("DELETE FROM product_images WHERE product_id = ?")
-                        .executeUpdate();
-
-                Integer primaryImageId = null;
-                if (imagePaths != null && !imagePaths.isEmpty()) {
-                    for (int i = 0; i < imagePaths.size(); i++) {
-                        String url = imagePaths.get(i);
-                        if (url == null || url.trim().isEmpty()) continue;
-
-                        PreparedStatement psImg = conn.prepareStatement(
-                                "INSERT INTO images (urlImage) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
-                        psImg.setString(1, url);
-                        psImg.executeUpdate();
-                        ResultSet rs = psImg.getGeneratedKeys();
-                        if (rs.next()) {
-                            int imgId = rs.getInt(1);
-                            if (i == 0) primaryImageId = imgId;
-
-                            PreparedStatement psPI = conn.prepareStatement(
-                                    "INSERT INTO product_images (image_id, product_id) VALUES (?, ?)");
-                            psPI.setInt(1, imgId);
-                            psPI.setInt(2, p.getId());
-                            psPI.executeUpdate();
-                        }
-                    }
-
-                    if (primaryImageId != null) {
-                        PreparedStatement psUp = conn.prepareStatement(
-                                "UPDATE products SET primary_image_id = ? WHERE id = ?");
-                        psUp.setInt(1, primaryImageId);
-                        psUp.setInt(2, p.getId());
-                        psUp.executeUpdate();
-                    }
-                }
-
-                List<ProductVariants> oldVariants = getVariantsByProductId(p.getId(), conn);
-
-                java.util.Map<Integer, ProductVariants> oldMap = new java.util.HashMap<>();
-                for (ProductVariants ov : oldVariants) {
-                    oldMap.put(ov.getId(), ov);
-                }
-
-                PreparedStatement psUpdate = conn.prepareStatement(
-                        "UPDATE product_variants SET color_id=?, size_id=?, sku=?, inventory_quantity=?, variant_price=? WHERE id=?");
-                PreparedStatement psInsert = conn.prepareStatement(
-                        "INSERT INTO product_variants (product_id, color_id, size_id, sku, inventory_quantity, variant_price) VALUES (?,?,?,?,?,?)",
-                        Statement.RETURN_GENERATED_KEYS);
-                PreparedStatement psDelete = conn.prepareStatement("DELETE FROM product_variants WHERE id=?");
-
-                java.util.Set<Integer> processedIds = new java.util.HashSet<>();
-
-                for (ProductVariants nv : newVariants) {
-                    if (nv.getColor_id() <= 0 || nv.getSize_id() <= 0 || nv.getSku() == null || nv.getSku().trim().isEmpty()) {
-                        throw new SQLException("Biến thể thiếu color/size/SKU hợp lệ");
-                    }
-                    if (nv.getVariant_price() == null) {
-                        nv.setVariant_price(BigDecimal.ZERO);
-                    }
-
-                    if (nv.getId() > 0) {
-                        psUpdate.setInt(1, nv.getColor_id());
-                        psUpdate.setInt(2, nv.getSize_id());
-                        psUpdate.setString(3, nv.getSku().trim());
-                        psUpdate.setInt(4, nv.getInventory_quantity());
-                        psUpdate.setBigDecimal(5, nv.getVariant_price());
-                        psUpdate.setInt(6, nv.getId());
-                        psUpdate.addBatch();
-                        processedIds.add(nv.getId());
-                    } else {
-                        psInsert.setInt(1, p.getId());
-                        psInsert.setInt(2, nv.getColor_id());
-                        psInsert.setInt(3, nv.getSize_id());
-                        psInsert.setString(4, nv.getSku().trim());
-                        psInsert.setInt(5, nv.getInventory_quantity());
-                        psInsert.setBigDecimal(6, nv.getVariant_price());
-                        psInsert.addBatch();
-                    }
-                }
-
-                for (Integer oldId : oldMap.keySet()) {
-                    if (!processedIds.contains(oldId)) {
-                        psDelete.setInt(1, oldId);
-                        psDelete.addBatch();
-                    }
-                }
-
-                psUpdate.executeBatch();
-                psInsert.executeBatch();
-                psDelete.executeBatch();
-
-                conn.commit();
-                return true;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                if (conn != null) {
-                    try { conn.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
-                }
-                return false;
-            } finally {
-                if (conn != null) {
-                    try {
-                        conn.setAutoCommit(true);
-                        conn.close();
-                    } catch (SQLException e) { e.printStackTrace(); }
+                    psInsert.setInt(1, p.getId());
+                    psInsert.setInt(2, nv.getColor_id());
+                    psInsert.setInt(3, nv.getSize_id());
+                    psInsert.setString(4, nv.getSku().trim());
+                    psInsert.setInt(5, nv.getInventory_quantity());
+                    psInsert.setBigDecimal(6, nv.getVariant_price());
+                    psInsert.addBatch();
                 }
             }
-        }
 
-        private List<ProductVariants> getVariantsByProductId(int productId, Connection conn) throws SQLException {
-            List<ProductVariants> variants = new ArrayList<>();
-            String sqlVar = "SELECT * FROM product_variants WHERE product_id = ?";
-            PreparedStatement psVar = conn.prepareStatement(sqlVar);
-            psVar.setInt(1, productId);
-            ResultSet rsVar = psVar.executeQuery();
-            while (rsVar.next()) {
-                ProductVariants v = new ProductVariants();
-                v.setId(rsVar.getInt("id"));
-                v.setSku(rsVar.getString("sku"));
-                v.setColor_id(rsVar.getInt("color_id"));
-                v.setSize_id(rsVar.getInt("size_id"));
-                v.setInventory_quantity(rsVar.getInt("inventory_quantity"));
-                v.setVariant_price(rsVar.getBigDecimal("variant_price"));
-                variants.add(v);
-            }
-            return variants;
-        }
-        public Product getFullProductById(int productId) {
-            Product p = null;
-            Connection conn = null;
-            try {
-                conn = new DBContext().getConnection();
-                String sql = "SELECT p.*, d.introduce, d.highlights, i.material, i.color, i.size, i.guarantee, i.id as info_id, d.id as desc_id " +
-                        "FROM products p " +
-                        "JOIN descriptions d ON p.description_id = d.id " +
-                        "JOIN informations i ON d.information_id = i.id " +
-                        "WHERE p.id = ?";
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setInt(1, productId);
-                ResultSet rs = ps.executeQuery();
-
-                if (rs.next()) {
-                    p = new Product();
-                    p.setId(rs.getInt("id"));
-                    p.setNameProduct(rs.getString("name_product"));
-                    p.setPrice(rs.getDouble("price"));
-                    p.setCategoryId(rs.getInt("category_id"));
-                    p.setProductTypeId(rs.getInt("product_type_id"));
-                    p.setSourceId(rs.getInt("source_id"));
-                    p.setMfgDate(rs.getDate("mfg_date"));
-
-                    Description desc = new Description();
-                    desc.setId(rs.getInt("desc_id"));
-                    desc.setIntroduce(rs.getString("introduce"));
-                    desc.setHighlights(rs.getString("highlights"));
-                    p.setDetailDescription(desc);
-
-                    Information info = new Information();
-                    info.setId(rs.getInt("info_id"));
-                    info.setMaterial(rs.getString("material"));
-                    info.setGuarantee(rs.getString("guarantee"));
-                    p.setInformation(info);
-
-                    List<String> images = new ArrayList<>();
-                    String sqlImg = "SELECT img.urlImage FROM images img JOIN product_images pi ON img.id = pi.image_id WHERE pi.product_id = ?";
-                    PreparedStatement psImg = conn.prepareStatement(sqlImg);
-                    psImg.setInt(1, productId);
-                    ResultSet rsImg = psImg.executeQuery();
-                    while (rsImg.next()) images.add(rsImg.getString("urlImage"));
-                    p.setListImages(images);
-                    p.setImagesRaw(String.join(",", images));
-
-                    List<ProductVariants> variants = new ArrayList<>();
-                    String sqlVar = "SELECT * FROM product_variants WHERE product_id = ?";
-                    PreparedStatement psVar = conn.prepareStatement(sqlVar);
-                    psVar.setInt(1, productId);
-                    ResultSet rsVar = psVar.executeQuery();
-                    while (rsVar.next()) {
-                        ProductVariants v = new ProductVariants();
-                        v.setId(rsVar.getInt("id"));
-                        v.setSku(rsVar.getString("sku"));
-                        v.setColor_id(rsVar.getInt("color_id"));
-                        v.setSize_id(rsVar.getInt("size_id"));
-                        v.setInventory_quantity(rsVar.getInt("inventory_quantity"));
-                        v.setVariant_price(rsVar.getBigDecimal("variant_price"));
-                        variants.add(v);
-                    }
-                    p.setVariants(variants);
+            for (Integer oldId : oldMap.keySet()) {
+                if (!processedIds.contains(oldId)) {
+                    psDelete.setInt(1, oldId);
+                    psDelete.addBatch();
                 }
-            } catch (Exception e) { e.printStackTrace(); }
-            return p;
-        }
+            }
 
-        public boolean addReview(Reviews review) {
-            String sql = "INSERT INTO reviews (user_id, product_id, rate, comment, createAt) VALUES (?, ?, ?, ?, GETDATE())";
-            try (Connection conn = new DBContext().getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setInt(1, review.getUserId());
-                ps.setInt(2, review.getProductId());
-                ps.setInt(3, review.getRating());
-                ps.setString(4, review.getComment());
-                return ps.executeUpdate() > 0;
-            } catch (Exception e) {
-                e.printStackTrace();
+            psUpdate.executeBatch();
+            psInsert.executeBatch();
+            psDelete.executeBatch();
+
+            conn.commit();
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (conn != null) {
+                try { conn.rollback(); } catch (SQLException ex) { ex.printStackTrace(); }
             }
             return false;
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException e) { e.printStackTrace(); }
+            }
         }
+    }
 
-        public double getAverageRating(int productId) {
+    private List<ProductVariants> getVariantsByProductId(int productId, Connection conn) throws SQLException {
+        List<ProductVariants> variants = new ArrayList<>();
+        String sqlVar = "SELECT * FROM product_variants WHERE product_id = ?";
+        PreparedStatement psVar = conn.prepareStatement(sqlVar);
+        psVar.setInt(1, productId);
+        ResultSet rsVar = psVar.executeQuery();
+        while (rsVar.next()) {
+            ProductVariants v = new ProductVariants();
+            v.setId(rsVar.getInt("id"));
+            v.setSku(rsVar.getString("sku"));
+            v.setColor_id(rsVar.getInt("color_id"));
+            v.setSize_id(rsVar.getInt("size_id"));
+            v.setInventory_quantity(rsVar.getInt("inventory_quantity"));
+            v.setVariant_price(rsVar.getBigDecimal("variant_price"));
+            variants.add(v);
+        }
+        return variants;
+    }
+    public Product getFullProductById(int productId) {
+        Product p = null;
+        Connection conn = null;
+        try {
+            conn = new DBContext().getConnection();
+            String sql = "SELECT p.*, d.introduce, d.highlights, i.material, i.color, i.size, i.guarantee, i.id as info_id, d.id as desc_id " +
+                    "FROM products p " +
+                    "JOIN descriptions d ON p.description_id = d.id " +
+                    "JOIN informations i ON d.information_id = i.id " +
+                    "WHERE p.id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
 
-            String sql = "SELECT IFNULL(AVG(rate),0) FROM reviews WHERE product_id=?";
+            if (rs.next()) {
+                p = new Product();
+                p.setId(rs.getInt("id"));
+                p.setNameProduct(rs.getString("name_product"));
+                p.setPrice(rs.getDouble("price"));
+                p.setCategoryId(rs.getInt("category_id"));
+                p.setProductTypeId(rs.getInt("product_type_id"));
+                p.setSourceId(rs.getInt("source_id"));
+                p.setMfgDate(rs.getDate("mfg_date"));
 
-            try (Connection conn = DBContext.getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
+                Description desc = new Description();
+                desc.setId(rs.getInt("desc_id"));
+                desc.setIntroduce(rs.getString("introduce"));
+                desc.setHighlights(rs.getString("highlights"));
+                p.setDetailDescription(desc);
 
-                ps.setInt(1, productId);
+                Information info = new Information();
+                info.setId(rs.getInt("info_id"));
+                info.setMaterial(rs.getString("material"));
+                info.setGuarantee(rs.getString("guarantee"));
+                p.setInformation(info);
 
-                ResultSet rs = ps.executeQuery();
+                List<String> images = new ArrayList<>();
+                String sqlImg = "SELECT img.urlImage FROM images img JOIN product_images pi ON img.id = pi.image_id WHERE pi.product_id = ?";
+                PreparedStatement psImg = conn.prepareStatement(sqlImg);
+                psImg.setInt(1, productId);
+                ResultSet rsImg = psImg.executeQuery();
+                while (rsImg.next()) images.add(rsImg.getString("urlImage"));
+                p.setListImages(images);
+                p.setImagesRaw(String.join(",", images));
 
-                if (rs.next()) {
-                    return rs.getDouble(1);
+                List<ProductVariants> variants = new ArrayList<>();
+                String sqlVar = "SELECT * FROM product_variants WHERE product_id = ?";
+                PreparedStatement psVar = conn.prepareStatement(sqlVar);
+                psVar.setInt(1, productId);
+                ResultSet rsVar = psVar.executeQuery();
+                while (rsVar.next()) {
+                    ProductVariants v = new ProductVariants();
+                    v.setId(rsVar.getInt("id"));
+                    v.setSku(rsVar.getString("sku"));
+                    v.setColor_id(rsVar.getInt("color_id"));
+                    v.setSize_id(rsVar.getInt("size_id"));
+                    v.setInventory_quantity(rsVar.getInt("inventory_quantity"));
+                    v.setVariant_price(rsVar.getBigDecimal("variant_price"));
+                    variants.add(v);
                 }
+                p.setVariants(variants);
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return p;
+    }
 
-            } catch (Exception e) {
-                e.printStackTrace();
+    public boolean addReview(Reviews review) {
+        String sql = "INSERT INTO reviews (user_id, product_id, rate, comment, createAt) VALUES (?, ?, ?, ?, GETDATE())";
+        try (Connection conn = new DBContext().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, review.getUserId());
+            ps.setInt(2, review.getProductId());
+            ps.setInt(3, review.getRating());
+            ps.setString(4, review.getComment());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public double getAverageRating(int productId) {
+
+        String sql = "SELECT IFNULL(AVG(rate),0) FROM reviews WHERE product_id=?";
+
+        try (Connection conn = DBContext.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, productId);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getDouble(1);
             }
 
-            return 0;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
+        return 0;
     }
+
+}

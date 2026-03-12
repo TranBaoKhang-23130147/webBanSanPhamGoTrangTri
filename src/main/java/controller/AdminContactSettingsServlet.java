@@ -21,7 +21,6 @@ public class AdminContactSettingsServlet extends HttpServlet {
             settings = new ContactSettings();
         }
         req.setAttribute("activePage", "contact");
-
         req.setAttribute("contact_setting", settings);
         req.getRequestDispatcher("/admin-contact-settings.jsp")
                 .forward(req, resp);

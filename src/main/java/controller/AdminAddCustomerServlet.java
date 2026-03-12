@@ -2,105 +2,93 @@ package controller;
 
 import dao.UserDao;
 import model.User;
+
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "AdminAddCustomerServlet", value = "/AdminAddCustomerServlet")
+@WebServlet("/AdminAddCustomerServlet")
 public class AdminAddCustomerServlet extends HttpServlet {
-    @Override
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
 
-        String action = request.getParameter("action");
-        HttpSession session = request.getSession();
         PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
+        UserDao dao = new UserDao();
+
+        String action = request.getParameter("action");
+
         if ("checkEmail".equals(action)) {
             String email = request.getParameter("email");
-            UserDao dao = new UserDao();
             boolean exists = dao.checkEmailExist(email);
-            out.print("{\"exists\": " + exists + "}");
-            out.flush();
+            out.print("{\"exists\":" + exists + "}");
             return;
         }
         if ("verifyOnly".equals(action)) {
-            String inputOtp = request.getParameter("otp");
+            String otp = request.getParameter("otp");
             String sessionOtp = (String) session.getAttribute("OTP");
 
-            if (sessionOtp != null && sessionOtp.equals(inputOtp)) {
-                out.print("{\"status\": \"success\"}");
+            if (sessionOtp != null && sessionOtp.equals(otp)) {
+                out.print("{\"status\":\"success\"}");
             } else {
-                out.print("{\"status\": \"error\"}");
+                out.print("{\"status\":\"error\"}");
             }
-            out.flush();
             return;
         }
-
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String password = request.getParameter("password");
         String role = request.getParameter("role");
-        String inputOtp = request.getParameter("otp");
+        String otp = request.getParameter("otp");
 
         String sessionOtp = (String) session.getAttribute("OTP");
         Long otpTime = (Long) session.getAttribute("OTP_TIME");
 
         try {
             String passwordPattern = "^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?\":{}|<>]).{8,}$";
-
             if (!password.matches(passwordPattern)) {
-                out.print("{\"status\": \"error\", \"message\": \"Mật khẩu phải có ít nhất 8 ký tự, bao gồm 1 chữ hoa và 1 ký tự đặc biệt.\"}");
+                out.print("{\"status\":\"error\",\"message\":\"Mật khẩu phải có ít nhất 8 ký tự, có chữ hoa và ký tự đặc biệt\"}");
                 return;
             }
-            if (username == null || email == null || password == null) {
-                out.print("{\"status\": \"error\", \"message\": \"Vui lòng điền đầy đủ thông tin bắt buộc.\"}");
-                return;
-            }
-
             if (sessionOtp == null || otpTime == null) {
-                out.print("{\"status\": \"error\", \"message\": \"Phiên xác thực đã hết hạn.\"}");
+                out.print("{\"status\":\"error\",\"message\":\"Phiên OTP không tồn tại\"}");
                 return;
             }
-
             if (System.currentTimeMillis() - otpTime > 5 * 60 * 1000) {
                 session.removeAttribute("OTP");
-                out.print("{\"status\": \"error\", \"message\": \"Mã OTP đã hết hạn.\"}");
+                session.removeAttribute("OTP_TIME");
+                out.print("{\"status\":\"error\",\"message\":\"OTP đã hết hạn\"}");
                 return;
             }
-
-            if (!sessionOtp.equals(inputOtp)) {
-                out.print("{\"status\": \"error\", \"message\": \"Mã OTP không chính xác.\"}");
+            if (!sessionOtp.equals(otp)) {
+                out.print("{\"status\":\"error\",\"message\":\"OTP không đúng\"}");
                 return;
             }
-
-            UserDao dao = new UserDao();
             if (dao.checkEmailExist(email)) {
-                out.print("{\"status\": \"error\", \"message\": \"Email này đã tồn tại trong hệ thống.\"}");
+                out.print("{\"status\":\"error\",\"message\":\"Email đã tồn tại\"}");
                 return;
             }
-
-            boolean success = dao.adminInsertUser(username, email, phone, password, role);
-
-            if (success) {
+            boolean check = dao.adminInsertUser(username, email, phone, password, role);
+            if (check) {
                 session.removeAttribute("OTP");
                 session.removeAttribute("OTP_TIME");
-                out.print("{\"status\": \"success\", \"message\": \"Thêm người dùng thành công!\"}");
+                out.print("{\"status\":\"success\",\"message\":\"Thêm người dùng thành công\"}");
             } else {
-                out.print("{\"status\": \"error\", \"message\": \"Không thể lưu vào cơ sở dữ liệu.\"}");
+                out.print("{\"status\":\"error\",\"message\":\"Không thể lưu dữ liệu\"}");
             }
-
         } catch (Exception e) {
             e.printStackTrace();
-            out.print("{\"status\": \"error\", \"message\": \"Lỗi server: " + e.getMessage() + "\"}");
-        } finally {
-            out.flush();
+            out.print("{\"status\":\"error\",\"message\":\"Lỗi\"}");
         }
+
+        out.flush();
     }
 }

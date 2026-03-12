@@ -18,9 +18,9 @@
     <form action="${pageContext.request.contextPath}/VerifyOtpResetServlet" method="post" class="otp-form">
         <h1>Nhập mã xác nhận</h1>
 
-        <c:if test="${not empty ERROR_MESSAGE}">
+        <c:if test="${not empty Error}">
             <div class="error-msg">
-                    ${ERROR_MESSAGE}
+                    ${Error}
             </div>
         </c:if>
 

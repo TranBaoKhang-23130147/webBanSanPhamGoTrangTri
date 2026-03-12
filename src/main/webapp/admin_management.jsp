@@ -39,7 +39,7 @@
                     </div>
                 </div>
 
-                <div class="customer-list-container">
+                <div class="customer-container">
                     <div class="table-responsive">
                         <table class="data-table">
                             <thead>

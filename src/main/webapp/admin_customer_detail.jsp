@@ -20,7 +20,7 @@
             <a href="customers" class="back-btn"><i class="fas fa-arrow-left"></i> Quay lại danh sách</a>
 
             <div class="detail-card">
-                <h2 style="color: #4e73df; margin-bottom: 25px; border-bottom: 2px solid #f1f1f1; padding-bottom: 10px;">
+                <h2 class="customer-title">
                     Hồ Sơ Khách Hàng: ${customer.displayName}
                 </h2>
 
@@ -28,66 +28,113 @@
                     <div class="avatar-box">
 
                         <img id="user-avatar-display"
+                             class="customer-avatar"
                              src="${pageContext.request.contextPath}${not empty customer.avatarUrl ? customer.avatarUrl : '/img/logo.png'}"
                              alt="Avatar"
-                             style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid #eee;"
                              onerror="this.src='${pageContext.request.contextPath}/img/logo.png';">
-                        <h3 style="margin-top: 15px;">${customer.username}</h3>
-                        <p class="status ${customer.status == 'Active' ? 'active-status' : 'inactive-status'}" style="display: inline-block; margin-top: 10px;">
+
+                        <h3 class="customer-username">${customer.username}</h3>
+
+                        <p class="status-box status ${customer.status == 'Active' ? 'active-status' : 'inactive-status'}">
                             ${customer.status == 'Active' ? 'Hoạt Động' : 'Đã Khóa'}
                         </p>
 
-                        <div style="text-align: left; margin-top: 25px; padding-left: 20px;">
-                            <h5 style="color: #555; font-size: 14px; text-transform: uppercase; margin-bottom: 12px;">
+                        <div class="setting-box">
+
+                            <h5 class="setting-title">
                                 <i class="fas fa-cog"></i> CÀI ĐẶT & QUYỀN RIÊNG TƯ
                             </h5>
-                            <ul style="list-style: none; padding: 0; margin: 0;">
-                                <li style="margin-bottom: 10px;">
-                                    <a href="javascript:void(0)" onclick="openEditForm()" style="text-decoration: none; color: #4e73df; font-size: 14px;">
-                                        <i class="fas fa-user-circle" style="width: 20px;"></i> Thông tin cá nhân
+
+                            <ul class="setting-list">
+
+                                <li class="setting-item">
+                                    <a href="javascript:void(0)" onclick="openEditForm()" class="setting-link">
+                                        <i class="fas fa-user-circle setting-icon"></i>
+                                        Thông tin cá nhân
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="javascript:void(0)" onclick="openPassForm()" style="text-decoration: none; color: #4e73df; font-size: 14px;">
-                                        <i class="fas fa-shield-alt" style="width: 20px;"></i> Mật khẩu và bảo mật
+
+                                <li class="setting-item">
+                                    <a href="javascript:void(0)" onclick="openPassForm()" class="setting-link">
+                                        <i class="fas fa-shield-alt setting-icon"></i>
+                                        Mật khẩu và bảo mật
                                     </a>
                                 </li>
-                                <li style="margin-bottom: 10px;margin-top: 10px;">
-                                <a href="${pageContext.request.contextPath}/AdminOrderHistoryController?userId=${customer.id}"
-                                   style="text-decoration: none; color: #4e73df; font-size: 14px; display:flex; align-items:center;">
-                                    <i class="fas fa-shopping-cart" style="width: 20px;"></i>
-                                    Xem lịch sử mua hàng
-                                </a>
-                            </li>
+
+                                <li class="setting-item">
+                                    <a href="${pageContext.request.contextPath}/AdminOrderHistoryController?userId=${customer.id}"
+                                       class="setting-link flex-link">
+                                        <i class="fas fa-shopping-cart setting-icon"></i>
+                                        Xem lịch sử mua hàng
+                                    </a>
+                                </li>
 
                             </ul>
                         </div>
                     </div>
 
+                    <div class="customer-info">
 
-                    <div>
-                        <h4 style="margin-bottom: 15px;"><i class="fas fa-info-circle"></i> Thông tin cơ bản</h4>
-                        <table style="width: 100%; border-collapse: collapse;">
-                            <tr><td style="padding: 8px 0; color: #666;">Email:</td><td><strong>${customer.email}</strong></td></tr>
-                            <tr><td style="padding: 8px 0; color: #666;">Số điện thoại:</td><td><strong>${customer.phone != null ? customer.phone : 'Chưa cập nhật'}</strong></td></tr>
-                            <tr><td style="padding: 8px 0; color: #666;">Giới tính:</td><td><strong>${customer.gender != null ? customer.gender : 'Chưa cập nhật'}</strong></td></tr>
-                            <tr><td style="padding: 8px 0; color: #666;">Ngày sinh:</td><td><strong><fmt:formatDate value="${customer.birthDate}" pattern="dd/MM/yyyy"/></strong></td></tr>
-                            <tr><td style="padding: 8px 0; color: #666;">Ngày tạo:</td><td><strong><fmt:formatDate value="${customer.createAt}" pattern="dd/MM/yyyy HH:mm"/></strong></td></tr>
+                        <h4 class="info-title">
+                            <i class="fas fa-info-circle"></i> Thông tin cơ bản
+                        </h4>
+
+                        <table class="info-table">
+
+                            <tr>
+                                <td class="info-label">Email:</td>
+                                <td><strong>${customer.email}</strong></td>
+                            </tr>
+
+                            <tr>
+                                <td class="info-label">Số điện thoại:</td>
+                                <td><strong>${customer.phone != null ? customer.phone : 'Chưa cập nhật'}</strong></td>
+                            </tr>
+
+                            <tr>
+                                <td class="info-label">Giới tính:</td>
+                                <td><strong>${customer.gender != null ? customer.gender : 'Chưa cập nhật'}</strong></td>
+                            </tr>
+
+                            <tr>
+                                <td class="info-label">Ngày sinh:</td>
+                                <td><strong><fmt:formatDate value="${customer.birthDate}" pattern="dd/MM/yyyy"/></strong></td>
+                            </tr>
+
+                            <tr>
+                                <td class="info-label">Ngày tạo:</td>
+                                <td><strong><fmt:formatDate value="${customer.createAt}" pattern="dd/MM/yyyy HH:mm"/></strong></td>
+                            </tr>
+
                         </table>
 
-                        <h4 style="margin-top: 30px; margin-bottom: 15px;"><i class="fas fa-map-marker-alt"></i> Sổ địa chỉ</h4>
-                        <c:if test="${empty addresses}">
-                            <p style="color: #999; font-style: italic;">Khách hàng chưa thêm địa chỉ nào.</p>
-                        </c:if>
-                        <c:forEach items="${addresses}" var="a">
-                            <div class="addr-item">
-                                <strong>${a.name}</strong> - ${a.phone}
-                                <c:if test="${a.isDefault == 1}"><span style="color: #4e73df; font-size: 11px; margin-left: 10px;">[MẶC ĐỊNH]</span></c:if>
-                                <div style="font-size: 13px; margin-top: 5px; color: #555;">${a.detail}, ${a.commune}, ${a.district}, ${a.province}</div>
-                            </div>
-                        </c:forEach>
-                    </div>
+                        <h4 class="address-title">
+                            <i class="fas fa-map-marker-alt"></i> Sổ địa chỉ
+                        </h4>
 
+                        <c:if test="${empty addresses}">
+                            <p class="no-address">Khách hàng chưa thêm địa chỉ nào.</p>
+                        </c:if>
+
+                        <c:forEach items="${addresses}" var="a">
+
+                            <div class="addr-item">
+
+                                <strong>${a.name}</strong> - ${a.phone}
+
+                                <c:if test="${a.isDefault == 1}">
+                                    <span class="default-address">[MẶC ĐỊNH]</span>
+                                </c:if>
+
+                                <div class="address-text">
+                                        ${a.detail}, ${a.commune}, ${a.district}, ${a.province}
+                                </div>
+
+                            </div>
+
+                        </c:forEach>
+
+                    </div>
                 </div>
             </div>
         </main>

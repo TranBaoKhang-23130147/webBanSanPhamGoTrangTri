@@ -15,6 +15,7 @@
 
 <section class="intro-banner">
     <div class="banner-content">
+
         <h1>HOME DECOR</h1>
         <p>Kiến tạo giá trị mộc trong từng góc nhỏ</p>
     </div>

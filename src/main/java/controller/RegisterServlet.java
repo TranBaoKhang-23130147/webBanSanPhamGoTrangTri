@@ -44,20 +44,20 @@ public class RegisterServlet extends HttpServlet {
 
 
         if (!password.equals(rePassword)) {
-            request.setAttribute("ERROR_MESSAGE", "Mật khẩu xác nhận không khớp!");
+            request.setAttribute("ErrorE", "Mật khẩu xác nhận không khớp!");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
             return;
         }
 
         if (dao.checkEmailExist(email)) {
-            request.setAttribute("ERROR_MESSAGE", "Email đã tồn tại!");
+            request.setAttribute("Error", "Email đã tồn tại!");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
             return;
         }
         String passwordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
         if (!password.matches(passwordRegex)) {
-            request.setAttribute("ERROR_MESSAGE",
+            request.setAttribute("Error",
                     "Mật khẩu phải có ít nhất 8 ký tự, gồm chữ in hoa, chữ thường, số và ký tự đặc biệt!");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
             return;
@@ -68,7 +68,7 @@ public class RegisterServlet extends HttpServlet {
             EmailUtil.sendOTP(email, otp);
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("ERROR_MESSAGE", "Không gửi được OTP qua email!");
+            request.setAttribute("Error", "Không gửi được OTP qua email!");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
             return;
         }

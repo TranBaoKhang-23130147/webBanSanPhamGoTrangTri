@@ -50,7 +50,7 @@ public class VerifyOtpServlet extends HttpServlet {
             session.removeAttribute("OTP_TIME");
             session.removeAttribute("REG_USER");
 
-            request.setAttribute("ERROR_MESSAGE", "OTP đã hết hạn. Vui lòng đăng ký lại!");
+            request.setAttribute("Error", "OTP đã hết hạn. Vui lòng đăng ký lại!");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
             return;
         }

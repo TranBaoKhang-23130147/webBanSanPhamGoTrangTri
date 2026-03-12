@@ -9,12 +9,10 @@
     <title>HOME DECOR - QUẢN LÝ THÔNG TIN LIÊN HỆ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_products.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_profile_style.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_category.css">
     <link rel="icon" href="${pageContext.request.contextPath}/img/logo.png">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_contact_settings.css">
     <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bootstrap-4/bootstrap-4.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin_contact_settings.css">
 </head>
 <body>
 <div class="admin-container">
@@ -22,9 +20,8 @@
     <div class="main-wrapper">
         <%@ include file="admin_sidebar.jsp" %>
         <main class="content">
-
-            <div class="admin-contact-wrapper">
-                <div class="admin-form-container">
+            <div class="admin-contact">
+                <div class="form-container">
                     <h2>Chỉnh sửa thông tin</h2>
                     <form action="${pageContext.request.contextPath}/update-contact-settings" method="POST">
                         <div class="form-group">
@@ -79,6 +76,5 @@
         </main>
     </div>
 </div>
-<script src="${pageContext.request.contextPath}/js/admin_category.js"></script>
 </body>
 </html>

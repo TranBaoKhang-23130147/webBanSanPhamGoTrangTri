@@ -7,8 +7,8 @@ public class ProductType {
 
     public ProductType() {}
 
-    public ProductType(int id, String productTypeName) {
-    }
+//    public ProductType(int id, String productTypeName) {
+//    }
 
     public long getTotalInventory() {
         return totalInventory;

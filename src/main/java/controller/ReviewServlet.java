@@ -12,45 +12,40 @@ import java.io.IOException;
 @WebServlet("/ReviewServlet")
 public class ReviewServlet extends HttpServlet {
 
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-        HttpSession session = request.getSession();
 
+        HttpSession session = request.getSession();
         User user = (User) session.getAttribute("LOGGED_USER");
 
         if (user == null) {
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            response.sendRedirect("login.jsp");
             return;
         }
 
         try {
-            String productIdRaw = request.getParameter("productId");
-            String ratingRaw = request.getParameter("rating");
+
+            String productIdStr = request.getParameter("productId");
+            String ratingStr = request.getParameter("rating");
             String comment = request.getParameter("comment");
 
-            System.out.println("=== ReviewServlet ===");
-            System.out.println("productId: " + productIdRaw);
-            System.out.println("rating: " + ratingRaw);
-            System.out.println("comment: " + comment);
-
-            if (productIdRaw == null || productIdRaw.isBlank()) {
+            if (productIdStr == null || productIdStr.equals("")) {
                 session.setAttribute("errorMessage", "Sản phẩm không hợp lệ!");
                 response.sendRedirect("homepage_user.jsp");
                 return;
             }
 
-            int productId = Integer.parseInt(productIdRaw);
+            int productId = Integer.parseInt(productIdStr);
 
-            if (ratingRaw == null || ratingRaw.isBlank()) {
+            if (ratingStr == null || ratingStr.equals("")) {
                 session.setAttribute("errorMessage", "Bạn chưa chọn số sao!");
                 response.sendRedirect("detail?id=" + productId);
                 return;
             }
 
-            int rating = Integer.parseInt(ratingRaw);
+            int rating = Integer.parseInt(ratingStr);
 
             if (rating < 1 || rating > 5) {
                 session.setAttribute("errorMessage", "Rating phải từ 1 đến 5!");
@@ -71,6 +66,7 @@ public class ReviewServlet extends HttpServlet {
             }
 
             Reviews review = new Reviews();
+
             review.setUserId(user.getId());
             review.setProductId(productId);
             review.setRating(rating);
@@ -84,21 +80,15 @@ public class ReviewServlet extends HttpServlet {
                 return;
             }
 
-            boolean success = dao.addReview(review);
+            boolean result = dao.addReview(review);
 
-            if (success) {
-                session.setAttribute("successMessage", "Cảm ơn bạn đã đánh giá sản phẩm ❤️");
+            if (result) {
+                session.setAttribute("successMessage", "Cảm ơn bạn đã đánh giá sản phẩm");
             } else {
                 session.setAttribute("errorMessage", "Không thể lưu đánh giá!");
             }
 
             response.sendRedirect("detail?id=" + productId);
-
-        } catch (NumberFormatException e) {
-
-            e.printStackTrace();
-            session.setAttribute("errorMessage", "Dữ liệu không hợp lệ!");
-            response.sendRedirect("homepage_user.jsp");
 
         } catch (Exception e) {
 

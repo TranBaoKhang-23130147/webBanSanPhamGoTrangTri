@@ -103,11 +103,11 @@
 
         <div class="cart-summary-container">
 
-<%--    <div class="voucher-input">--%>
-<%--        <span class="input-title">...</span>--%>
-<%--        <input type="text" placeholder="  ...">--%>
-<%--        <button class="apply-btn">Áp dụng</button>--%>
-<%--    </div>--%>
+    <div class="voucher-input">
+        <span class="input-title">Nhập Mã Khuyến Mãi</span>
+        <input type="text" placeholder="Voucher hoặc gift code" >
+        <button class="apply-btn">Áp dụng</button>
+    </div>
 
 
     <c:set var="total" value="0"/>

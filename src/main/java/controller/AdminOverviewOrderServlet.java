@@ -2,42 +2,35 @@ package controller;
 
 import dao.OrderDao;
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
 import model.User;
 
 import java.io.IOException;
 
-@WebServlet(name = "AdminOverviewOrderServlet", value = "/AdminOverviewOrderServlet")
+@WebServlet("/AdminOverviewOrderServlet")
 public class AdminOverviewOrderServlet extends HttpServlet {
-    private final OrderDao orderDao = new OrderDao();
 
+    OrderDao orderDao = new OrderDao();
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        resp.setCharacterEncoding("UTF-8");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-        HttpSession session = req.getSession(false);
-        User user = session != null ? (User) session.getAttribute("LOGGED_USER") : null;
+        HttpSession session = request.getSession(false);
+        User user = null;
+
+        if (session != null) {
+            user = (User) session.getAttribute("LOGGED_USER");
+        }
+
         if (user == null) {
-            resp.sendRedirect(req.getContextPath() + "/login.jsp");
+            response.sendRedirect("login.jsp");
             return;
         }
 
-        try {
-            int orderCount = orderDao.getOrderCount(); 
-            getServletContext().log("AdminOverviewOrderServlet: orderCount=" + orderCount);
-            req.setAttribute("orderCount", orderCount);
-            req.getRequestDispatcher("/admin_homepage.jsp").forward(req, resp);
-        } catch (Exception e) {
-            getServletContext().log("AdminOverviewOrderServlet error", e);
-            throw new ServletException(e);
-        }
-    }
+        int orderCount = orderDao.getOrderCount();
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.setAttribute("orderCount", orderCount);
+        request.getRequestDispatcher("admin_homepage.jsp").forward(request, response);
     }
 }

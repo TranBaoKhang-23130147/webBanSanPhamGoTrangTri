@@ -11,7 +11,6 @@
 
                 <i class="fas fa-home"></i>
                 <p>${c.categoryName.toUpperCase()}</p>
-                <span>Khám phá ngay</span>
             </div>
         </c:forEach>
     </div>

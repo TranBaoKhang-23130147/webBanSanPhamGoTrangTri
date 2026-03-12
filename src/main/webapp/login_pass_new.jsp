@@ -17,9 +17,9 @@
     <form action="${pageContext.request.contextPath}/ResetPasswordServlet" method="post" class="reset-form">
         <h1>Nhập mật khẩu mới</h1>
 
-        <c:if test="${not empty ERROR_MESSAGE}">
+        <c:if test="${not empty Error}">
             <div class="error-msg">
-                    ${ERROR_MESSAGE}
+                    ${Error}
             </div>
         </c:if>
 

@@ -66,7 +66,7 @@ function validateVariants() {
     }
 
     if (errorMsg) {
-        alert("LỖI TRÙNG BIẾN THỂ:\n" + errorMsg);
+        alert("Trùng biến tể :\n" + errorMsg);
         return false;
     }
     return true;
@@ -89,7 +89,6 @@ function checkDuplicateLive() {
     });
 }
 
-// Gán sự kiện submit cho form
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('form');
     form.onsubmit = function() {

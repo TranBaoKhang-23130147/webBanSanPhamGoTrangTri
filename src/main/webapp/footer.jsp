@@ -1,31 +1,19 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="model.User" %>
-<%
-    User user = (User) session.getAttribute("LOGGED_USER");
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="footer">
     <div class="footer-container">
-
-
         <div class="footer-col">
             <h3>Về chúng tôi</h3>
-
-
             <p>HOME DECOR</p>
-
             <p>
                 Số điện thoại: ${contactSettings.phone}
             </p>
-
             <p>
                 Email: ${contactSettings.email}
             </p>
-
             <p>
                 Địa chỉ: ${contactSettings.address}
             </p>
-
-
             <div class="social-icons">
                 <c:if test="${not empty contactSettings.facebookUrl}">
                     <a href="${contactSettings.facebookUrl}" target="_blank">
@@ -52,30 +40,25 @@
             </div>
 
         </div>
-
-
         <div class="footer-col">
             <h3>Chính sách</h3>
-            <a href="../introduce_user.jsp">Về tụi mình</a>
-            <a href="../purchasing_policy_user.jsp">Chính sách Thanh toán</a>
-            <a href="../purchasing_policy_user.jsp">Chính sách Giao hàng</a>
-            <a href="../purchasing_policy_user.jsp">Chính sách Đổi trả</a>
+            <a href="${pageContext.request.contextPath}/introduce_user.jsp">Về tụi mình</a>
+            <a href="${pageContext.request.contextPath}/purchasing_policy_user.jsp">Chính sách Thanh toán</a>
+            <a href="${pageContext.request.contextPath}/purchasing_policy_user.jsp">Chính sách Giao hàng</a>
+            <a href="${pageContext.request.contextPath}/purchasing_policy_user.jsp">Chính sách Đổi trả</a>
         </div>
-
 
         <div class="footer-col">
             <h3>Hỗ trợ khách hàng</h3>
-            <a href="../product_all_user.jsp">Tất cả sản phẩm</a>
+            <a href="${pageContext.request.contextPath}/product_all_user.jsp">Tất cả sản phẩm</a>
         </div>
-
 
         <div class="footer-col">
-            <h3>Liên kiết nhanh</h3>
-            <a href="../homepage_user.jsp">Trang chủ</a>
-            <a href="../purchasing_policy_user.jsp">Chính sách mua hàng</a>
-            <a href="../introduce_user.jsp">Giới thiệu</a>
-            <a href="../contact_user.jsp">Liên hệ</a>
+            <h3>Liên kết nhanh</h3>
+            <a href="${pageContext.request.contextPath}/homepage_user.jsp">Trang chủ</a>
+            <a href="${pageContext.request.contextPath}/purchasing_policy_user.jsp">Chính sách mua hàng</a>
+            <a href="${pageContext.request.contextPath}/introduce_user.jsp">Giới thiệu</a>
+            <a href="${pageContext.request.contextPath}/contact_user.jsp">Liên hệ</a>
         </div>
-
     </div>
 </div>

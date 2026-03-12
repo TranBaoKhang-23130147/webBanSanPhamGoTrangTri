@@ -23,7 +23,6 @@ public class AdminManagementServlet extends HttpServlet {
         request.getRequestDispatcher("admin_management.jsp").forward(request, response);
     }
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

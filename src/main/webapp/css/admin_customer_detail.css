@@ -701,4 +701,100 @@ overflow-y: auto;
         transform: translateY(0);
         opacity: 1;
     }
+}.customer-title{
+     color:#4e73df;
+     margin-bottom:25px;
+     border-bottom:2px solid #f1f1f1;
+     padding-bottom:10px;
+ }
+
+.customer-avatar{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid #eee;
+}
+
+.customer-username{
+    margin-top:15px;
+}
+
+.status-box{
+    display:inline-block;
+    margin-top:10px;
+}
+
+.setting-box{
+    text-align:left;
+    margin-top:25px;
+    padding-left:20px;
+}
+
+.setting-title{
+    color:#555;
+    font-size:14px;
+    text-transform:uppercase;
+    margin-bottom:12px;
+}
+
+.setting-list{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+.setting-item{
+    margin-bottom:10px;
+}
+
+.setting-link{
+    text-decoration:none;
+    color:#4e73df;
+    font-size:14px;
+}
+
+.flex-link{
+    display:flex;
+    align-items:center;
+}
+
+.setting-icon{
+    width:20px;
+}
+
+.info-title{
+    margin-bottom:15px;
+}
+
+.info-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.info-label{
+    padding:8px 0;
+    color:#666;
+}
+
+.address-title{
+    margin-top:30px;
+    margin-bottom:15px;
+}
+
+.no-address{
+    color:#999;
+    font-style:italic;
+}
+
+.default-address{
+    color:#4e73df;
+    font-size:11px;
+    margin-left:10px;
+}
+
+.address-text{
+    font-size:13px;
+    margin-top:5px;
+    color:#555;
 }

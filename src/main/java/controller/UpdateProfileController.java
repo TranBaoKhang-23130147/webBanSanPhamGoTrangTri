@@ -54,7 +54,6 @@ public class UpdateProfileController extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
 
         HttpSession session = request.getSession();
         User loggedUser = (User) session.getAttribute("LOGGED_USER");
@@ -65,11 +64,12 @@ public class UpdateProfileController extends HttpServlet {
         }
 
         UserDao userDao = new UserDao();
+
         try {
-            String fullName     = request.getParameter("fullName");
-            String displayName  = request.getParameter("displayName");
-            String phone        = request.getParameter("phone");
-            String gender       = request.getParameter("gender");
+            String fullName = request.getParameter("fullName");
+            String displayName = request.getParameter("displayName");
+            String phone = request.getParameter("phone");
+            String gender = request.getParameter("gender");
             String birthDateStr = request.getParameter("birthDate");
             String avatarUrlRaw = request.getParameter("avatar_id");
 
@@ -102,20 +102,13 @@ public class UpdateProfileController extends HttpServlet {
                 userToUpdate.setAvatarUrl(loggedUser.getAvatarUrl());
             }
 
-            boolean success = userDao.updateUserProfile(userToUpdate);
+            userDao.updateUserProfile(userToUpdate);
 
-            if (success) {
-                User updatedUser = userDao.getUserById(loggedUser.getId());
-                session.setAttribute("LOGGED_USER", updatedUser);
-                request.setAttribute("currentUser", updatedUser);
-                request.setAttribute("message", "Cập nhật hồ sơ thành công!");
-            } else {
-                request.setAttribute("error", "Lỗi: Không thể lưu vào Database.");
-            }
+            User updatedUser = userDao.getUserById(loggedUser.getId());
+            session.setAttribute("LOGGED_USER", updatedUser);
 
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("error", "Lỗi: " + e.getMessage());
         }
 
         doGet(request, response);

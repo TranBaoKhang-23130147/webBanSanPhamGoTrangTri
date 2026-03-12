@@ -119,22 +119,5 @@
 
         <br><br>
         <button type="submit">LỌC SẢN PHẨM</button>
-        <style>
-            aside.filter-sidebar button[type="submit"] {
-                width: 100%;
-                padding: 12px;
-                background-color: #8b5e3c !important;
-                color: #ffffff !important;
-                border: none;
-                border-radius: 5px;
-                font-weight: bold;
-                text-transform: uppercase;
-                cursor: pointer;
-                transition: background 0.3s ease;
-            }
-            aside.filter-sidebar button[type="submit"]:hover {
-                background-color: #333333 !important;
-            }
-        </style>
     </aside>
 </form>

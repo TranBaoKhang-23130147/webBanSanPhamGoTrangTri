@@ -502,7 +502,7 @@ body {
     top: calc(100% + 5px);
     border-radius: 6px;
     overflow: hidden;
-    max-height: 500px;
+    max-height: 500px;}
 
 .gmail-content, .notification-content {
     min-width: 250px;

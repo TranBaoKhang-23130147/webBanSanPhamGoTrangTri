@@ -15,7 +15,6 @@ public class UpdateAdminAddressServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
-
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
@@ -24,7 +23,6 @@ public class UpdateAdminAddressServlet extends HttpServlet {
             resp.sendRedirect("login.jsp");
             return;
         }
-
         Address addr = new Address();
         addr.setUserId(user.getId());
         addr.setName(req.getParameter("name"));

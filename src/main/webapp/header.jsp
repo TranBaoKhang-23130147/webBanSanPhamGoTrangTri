@@ -11,11 +11,9 @@
     </div>
 
     <nav class="menu-bar">
-
         <a class="menu" id="home" href="HomeServlet"> TRANG CHỦ</a>
         <div class="menu product-menu">
             <a id="product" href="ProductAllServlet">SẢN PHẨM</a>
-
                 <div class="submenu">
                     <c:forEach items="${listCC}" var="c">
                         <a href="CategoryController?cid=${c.id}">
@@ -24,9 +22,7 @@
                     </c:forEach>
                 </div>
         </div>
-
                 <a class="menu" id=" " href="purchasing_policy_user.jsp" >CHÍNH SÁCH MUA HÀNG</a>
-
         <a class="menu" id="introduce" href="introduce_user.jsp" >GIỚI THIỆU</a>
         <a class="menu" id="contact" href="contact_user.jsp">LIÊN HỆ</a>
 
@@ -55,7 +51,4 @@
             </div>
         </div>
     </div>
-
-
-
 </div>

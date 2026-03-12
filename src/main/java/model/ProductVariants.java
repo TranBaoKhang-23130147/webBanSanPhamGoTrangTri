@@ -133,4 +133,13 @@ public class ProductVariants {
                 && discount_end_date != null
                 && discount_end_date.after(new java.util.Date());
     }
+    @Override
+    public String toString() {
+        return "ProductVariant{" +
+                "id=" + id +
+                ", productId=" + product_id +
+                ", sku='" + sku + '\'' +
+                ", price=" + variant_price +
+                '}';
+    }
 }

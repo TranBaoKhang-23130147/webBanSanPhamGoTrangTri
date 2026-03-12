@@ -89,10 +89,6 @@
 
 </section>
 <jsp:include page="danh_muc_loc.jsp"></jsp:include>
-
-
-
-
 <jsp:include page="footer.jsp"></jsp:include>
 
 </body>

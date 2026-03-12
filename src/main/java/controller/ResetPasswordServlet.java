@@ -21,7 +21,7 @@
             String email = (String) session.getAttribute("RESET_EMAIL");
 
             if (email == null) {
-                request.setAttribute("ERROR_MESSAGE", "Phiên đổi mật khẩu đã hết hạn!");
+                request.setAttribute("Error", "Phiên đổi mật khẩu đã hết hạn!");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
                 return;
             }
@@ -30,7 +30,7 @@
             String rePassword = request.getParameter("re_password");
 
             if (!password.equals(rePassword)) {
-                request.setAttribute("ERROR_MESSAGE", "Mật khẩu không khớp!");
+                request.setAttribute("Error", "Mật khẩu không khớp!");
                 request.getRequestDispatcher("/login_pass_new.jsp").forward(request, response);
                 return;
             }
@@ -38,7 +38,7 @@
             String regex = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
             if (!password.matches(regex)) {
-                request.setAttribute("ERROR_MESSAGE",
+                request.setAttribute("Error",
                         "Mật khẩu phải có ít nhất 8 ký tự, gồm chữ in hoa, số và ký tự đặc biệt!");
                 request.getRequestDispatcher("/login_pass_new.jsp").forward(request, response);
                 return;
@@ -48,7 +48,7 @@
             boolean success = dao.updatePasswordByEmail(email, password);
 
             if (!success) {
-                request.setAttribute("ERROR_MESSAGE", "Không thể đổi mật khẩu!");
+                request.setAttribute("Error", "Không thể đổi mật khẩu!");
                 request.getRequestDispatcher("/login_pass_new.jsp").forward(request, response);
                 return;
             }

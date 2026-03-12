@@ -19,9 +19,9 @@
         <h1>Quên mật khẩu</h1>
         <p>Nhập email của bạn để nhận mã OTP.</p>
 
-        <c:if test="${not empty ERROR_MESSAGE}">
+        <c:if test="${not empty Error}">
             <div class="error-msg">
-                    ${ERROR_MESSAGE}
+                    ${Error}
             </div>
         </c:if>
 

@@ -301,34 +301,28 @@ public class UserDao {
     }
 
     public boolean deleteUser(int userId) throws Exception {
+
+        Connection conn = DBContext.getConnection();
+
         String deleteAddressSQL = "DELETE FROM addresses WHERE user_id = ?";
         String removeAvatarSQL = "UPDATE users SET avatar_id = NULL WHERE id = ?";
         String deleteUserSQL = "DELETE FROM users WHERE id = ?";
 
-        try (Connection conn = DBContext.getConnection()) {
-            conn.setAutoCommit(false);
+        PreparedStatement ps1 = conn.prepareStatement(deleteAddressSQL);
+        ps1.setInt(1, userId);
+        ps1.executeUpdate();
 
-            try (PreparedStatement psAddr = conn.prepareStatement(deleteAddressSQL);
-                 PreparedStatement psAvatar = conn.prepareStatement(removeAvatarSQL);
-                 PreparedStatement psUser = conn.prepareStatement(deleteUserSQL)) {
+        PreparedStatement ps2 = conn.prepareStatement(removeAvatarSQL);
+        ps2.setInt(1, userId);
+        ps2.executeUpdate();
 
-                psAddr.setInt(1, userId);
-                psAddr.executeUpdate();
+        PreparedStatement ps3 = conn.prepareStatement(deleteUserSQL);
+        ps3.setInt(1, userId);
 
-                psAvatar.setInt(1, userId);
-                psAvatar.executeUpdate();
+        int rows = ps3.executeUpdate();
 
-                psUser.setInt(1, userId);
-                int rows = psUser.executeUpdate();
+        return rows > 0;
 
-                conn.commit();
-                return rows > 0;
-
-            } catch (Exception e) {
-                conn.rollback();
-                throw e;
-            }
-        }
     }
     public int countAdmin() {
         String sql = "SELECT COUNT(*) FROM users WHERE role = 'Admin'";

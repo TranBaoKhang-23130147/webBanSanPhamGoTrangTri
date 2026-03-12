@@ -4,10 +4,11 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import dao.UserDao;
-import java.io.IOException;
 import model.User;
 
-@WebServlet(name = "AdminUpdateCustomerController", value = "/AdminUpdateCustomerController")
+import java.io.IOException;
+
+@WebServlet("/AdminUpdateCustomerController")
 public class AdminUpdateCustomerController extends HttpServlet {
 
     @Override
@@ -15,69 +16,60 @@ public class AdminUpdateCustomerController extends HttpServlet {
             throws ServletException, IOException {
 
         request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
 
         HttpSession session = request.getSession();
         User admin = (User) session.getAttribute("LOGGED_USER");
+
         if (admin == null) {
             response.sendRedirect("login.jsp");
             return;
         }
 
-        UserDao userDao = new UserDao();
         String userIdStr = request.getParameter("userId");
         if (userIdStr == null || userIdStr.isEmpty()) {
             response.sendRedirect("customers");
             return;
         }
+
         int customerId = Integer.parseInt(userIdStr);
 
         try {
-            String fullName     = request.getParameter("fullName");
-            String displayName  = request.getParameter("displayName");
-            String phone        = request.getParameter("phone");
-            String gender       = request.getParameter("gender");
-            String birthDateStr = request.getParameter("birthDate");
-            String avatarUrlRaw = request.getParameter("avatar_id");
 
-            String relativeAvatarUrl = null;
-            if (avatarUrlRaw != null && !avatarUrlRaw.trim().isEmpty()) {
-                relativeAvatarUrl = avatarUrlRaw.trim();
-                String contextPath = request.getContextPath();
-                if (relativeAvatarUrl.startsWith(contextPath)) {
-                    relativeAvatarUrl = relativeAvatarUrl.substring(contextPath.length());
-                }
+            UserDao dao = new UserDao();
+
+            User user = new User();
+            user.setId(customerId);
+            user.setUsername(request.getParameter("fullName"));
+            user.setDisplayName(request.getParameter("displayName"));
+            user.setPhone(request.getParameter("phone"));
+            user.setGender(request.getParameter("gender"));
+
+            String birthDate = request.getParameter("birthDate");
+            if (birthDate != null && !birthDate.isEmpty()) {
+                user.setBirthDate(java.sql.Date.valueOf(birthDate));
             }
 
-            User customerToUpdate = new User();
-            customerToUpdate.setId(customerId);
-            customerToUpdate.setUsername(fullName);
-            customerToUpdate.setDisplayName(displayName);
-            customerToUpdate.setPhone(phone);
-            customerToUpdate.setGender(gender);
+            String avatarUrl = request.getParameter("avatar_id");
 
-            if (birthDateStr != null && !birthDateStr.trim().isEmpty()) {
-                customerToUpdate.setBirthDate(java.sql.Date.valueOf(birthDateStr));
-            }
-
-            if (relativeAvatarUrl != null) {
-                int realImageId = userDao.getImageIdByUrl(relativeAvatarUrl);
-                customerToUpdate.setAvatarId(realImageId);
+            if (avatarUrl != null && !avatarUrl.isEmpty()) {
+                int imageId = dao.getImageIdByUrl(avatarUrl);
+                user.setAvatarId(imageId);
             } else {
-                User currentInfo = userDao.getUserById(customerId);
-                customerToUpdate.setAvatarId(currentInfo.getAvatarId());
+                User oldUser = dao.getUserById(customerId);
+                user.setAvatarId(oldUser.getAvatarId());
             }
 
-            boolean success = userDao.updateUserProfile(customerToUpdate);
+            boolean success = dao.updateUserProfile(user);
 
             if (success) {
-                response.sendRedirect(request.getContextPath() + "/admin/customer-detail?id=" + customerId + "&msg=success");
+                response.sendRedirect("admin/customer-detail?id=" + customerId + "&msg=success");
             } else {
-                response.sendRedirect(request.getContextPath() + "/admin/customer-detail?id=" + customerId + "&msg=error");
+                response.sendRedirect("admin/customer-detail?id=" + customerId + "&msg=error");
             }
+
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("CustomerDetailController?id=" + customerId + "&msg=exception");
+            response.sendRedirect("admin/customer-detail?id=" + customerId + "&msg=exception");
         }
     }
 }

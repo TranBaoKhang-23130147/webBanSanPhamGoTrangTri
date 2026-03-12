@@ -1,3 +1,4 @@
+// rooif
 package controller;
 
 import dao.UserDao;
@@ -23,11 +24,11 @@ public class LoginServlet extends HttpServlet {
         User user = dao.checkLogin(email, password);
 
         if (user == null) {
-            request.setAttribute("ERROR_MESSAGE", "Email hoặc mật khẩu không chính xác!");
+            request.setAttribute("Error", "Email hoặc mật khẩu không chính xác!");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
         } else {
             if (!"Active".equals(user.getStatus())) {
-                request.setAttribute("ERROR_MESSAGE", "Tài khoản của bạn đã bị khóa!");
+                request.setAttribute("Error", "Tài khoản của bạn đã bị khóa!");
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
                 return;
             }
@@ -36,8 +37,6 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("LOGGED_USER", user);
             if ("Admin".equalsIgnoreCase(user.getRole())) {
                 response.sendRedirect(request.getContextPath() + "/admin_homepage.jsp");
-
-
         } else if ("Staff".equalsIgnoreCase(user.getRole())) {
             response.sendRedirect(request.getContextPath() + "/AdminProfileServlet");}
             else {

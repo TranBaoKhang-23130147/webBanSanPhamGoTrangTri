@@ -29,7 +29,6 @@ public class ContactSettingsFilter implements Filter {
             ContactSettings settings = dao.getSettings();
             req.setAttribute("contactSettings", settings);
         }
-
         chain.doFilter(request, response);
     }
 }

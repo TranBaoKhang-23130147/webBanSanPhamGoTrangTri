@@ -194,7 +194,7 @@ body {
     margin-bottom: 20px;
 }
 
-.search-filter-bar {
+.search-filter {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -765,4 +765,74 @@ tbody tr:first-child td {
     top: 0;
     background: white;
     z-index: 2;
+}
+.order-detail-title{
+    border-bottom:2px solid #eee;
+    padding-bottom:10px;
+}
+
+.order-info-row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:15px;
+}
+
+.text-right{
+    text-align:right;
+}
+
+.order-detail-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:20px;
+}
+
+.order-table-header{
+    background:#f8f9fa;
+    border-bottom:2px solid #dee2e6;
+}
+
+.order-row-detail{
+    border-bottom:1px solid #eee;
+}
+
+.td-padding{
+    padding:10px;
+}
+
+.td-center{
+    padding:10px;
+    text-align:center;
+}
+
+.td-right{
+    padding:10px;
+    text-align:right;
+}
+
+.td-right-bold{
+    padding:10px;
+    text-align:right;
+    font-weight:bold;
+}
+
+.order-update-box{
+    background:#f4f7f6;
+    padding:15px;
+    border-radius:8px;
+    margin-top:20px;
+}
+
+.btn-update-order{
+    background:#27ae60;
+    color:white;
+    border:none;
+    padding:10px;
+    border-radius:4px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.btn-update-order:hover{
+    background:#219150;
 }

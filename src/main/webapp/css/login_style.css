@@ -37,11 +37,11 @@ body {
     transition: all 0.6s ease-in-out;
 
 }
-.sign-up-container{
+.sign-up{
     opacity: 0;
     z-index: 1;
 }
-.sign-in-container{
+.sign-in{
     z-index: 2;
 }
 form{
@@ -248,13 +248,13 @@ p {
     border: none;
     background-color: transparent;
 }
-.container.right-panel-active .sign-in-container {
+.container.right-panel-active .sign-in {
     transform: translateX(70%);
     opacity: 0;
     z-index: 1;
 }
 
-.container.right-panel-active .sign-up-container {
+.container.right-panel-active .sign-up {
     transform: translateX(70%);
     opacity: 1;
     z-index: 5;

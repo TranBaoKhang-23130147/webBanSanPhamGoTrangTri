@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="css/admin_products.css">
     <link rel="stylesheet" href="css/admin_profile_style.css">
     <link rel="stylesheet" href="css/admin_category.css">
-    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bootstrap-4/bootstrap-4.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 <body>
@@ -22,19 +20,19 @@
         <%@ include file="admin_sidebar.jsp" %>
         <main class="content">
 
-            <div class="category-management-container">
+            <div class="category-container">
                 <h2 class="page-title">Quản Lý Danh Mục Sản Phẩm</h2>
 
-                <div class="search-filter-bar">
-                    <div class="search-input-group" style="flex-grow: 1;">
+                <div class="search-filter">
+                    <div class="search-input" style="flex-grow: 1;">
                         <input type="text" placeholder="Tìm kiếm danh mục" class="search-input" id="searchInput" value="${keyword}">
                     </div>
-                    <button class="add-new-category-btn" onclick="openCategoryModal()">
+                    <button class="add-new-category" onclick="openCategoryModal()">
                         <i class="fa-solid fa-plus"></i> Thêm Danh Mục Mới
                     </button>
 
                 </div>
-                        <div class="category-table-wrapper">
+                        <div class="category-wrapper">
                             <table class="category-table">
                         <thead>
                         <tr>
@@ -85,24 +83,6 @@
 
     </div>
 </div>
-<c:if test="${not empty sessionScope.msg}">
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const message = "${sessionScope.msg}";
-            const type = ("${sessionScope.msgType}").trim().toLowerCase();
-
-            Swal.fire({
-                title: type === 'success' ? 'Thành công!' : 'Thông báo lỗi',
-                text: message,
-                icon: type === 'success' ? 'success' : 'error',
-                confirmButtonColor: type === 'success' ? '#28a745' : '#d33',
-                confirmButtonText: 'Đồng ý'
-            });
-        });
-    </script>
-    <c:remove var="msg" scope="session" />
-    <c:remove var="msgType" scope="session" />
-</c:if>
 <script src="js/admin_category.js"></script>
 </body>
 </html>

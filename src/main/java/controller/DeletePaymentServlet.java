@@ -9,6 +9,7 @@ import java.io.IOException;
 
 @WebServlet(name = "DeletePaymentServlet", value = "/DeletePaymentServlet")
 public class DeletePaymentServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -23,9 +24,12 @@ public class DeletePaymentServlet extends HttpServlet {
                 boolean isDeleted = dao.deletePayment(id);
 
                 if (isDeleted) {
-                    System.out.println("Xóa thành công thẻ ID: " + id);
+                    System.out.println("Xóa thẻ thành công: " + id);
+                } else {
+                    System.out.println("Không thể xóa thẻ: " + id);
                 }
-            } catch (NumberFormatException e) {
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

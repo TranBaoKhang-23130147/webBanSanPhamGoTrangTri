@@ -9,28 +9,25 @@ import model.User;
 
 import java.io.IOException;
 
-@WebServlet(name = "AddressServlet", value = "/AddressServlet")
+@WebServlet("/AddressServlet")
 public class AddressServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
     }
-    @Override
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        User user = (User) request.getSession().getAttribute("LOGGED_USER");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("LOGGED_USER");
         if (user == null) {
             response.sendRedirect("login.jsp");
             return;
         }
-
         int userId = user.getId();
         String action = request.getParameter("action");
-
         AddressDao dao = new AddressDao();
-
-        if ("add".equals(action)) {
+        if (action.equals("add")) {
             Address a = new Address();
             a.setUserId(userId);
             a.setName(request.getParameter("name"));
@@ -43,7 +40,7 @@ public class AddressServlet extends HttpServlet {
 
             dao.insert(a);
         }
-        else if ("update".equals(action)) {
+        if (action.equals("update")) {
             Address a = new Address();
             a.setId(Integer.parseInt(request.getParameter("id")));
             a.setUserId(userId);
@@ -56,16 +53,15 @@ public class AddressServlet extends HttpServlet {
 
             dao.update(a);
         }
-        else if ("delete".equals(action)) {
+        if (action.equals("delete")) {
             int id = Integer.parseInt(request.getParameter("id"));
             dao.delete(id, userId);
         }
-        else if ("default".equals(action)) {
+        if (action.equals("default")) {
             int id = Integer.parseInt(request.getParameter("id"));
             dao.setDefault(id, userId);
         }
 
         response.sendRedirect("MyPageServlet?tab=dia-chi");
     }
-
 }

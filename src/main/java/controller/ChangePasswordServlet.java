@@ -8,22 +8,15 @@ import model.User;
 import utils.PasswordUtils;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Map;
 
 @WebServlet(name = "ChangePasswordServlet", value = "/ChangePasswordServlet")
 public class ChangePasswordServlet extends HttpServlet {
+
     private final UserDao userDao = new UserDao();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         req.setCharacterEncoding("UTF-8");
 
         HttpSession session = req.getSession(false);
@@ -35,6 +28,7 @@ public class ChangePasswordServlet extends HttpServlet {
         }
 
         int userId = user.getId();
+
         String current = req.getParameter("currentPassword");
         String next = req.getParameter("newPassword");
         String confirm = req.getParameter("confirmPassword");
@@ -71,7 +65,6 @@ public class ChangePasswordServlet extends HttpServlet {
             } else {
                 req.setAttribute("errorMessage", "Lỗi hệ thống. Không thể cập nhật mật khẩu.");
             }
-
             req.getRequestDispatcher("admin_setting.jsp#password").forward(req, resp);
 
         } catch (Exception e) {

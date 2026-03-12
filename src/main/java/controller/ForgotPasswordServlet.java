@@ -18,7 +18,7 @@ public class ForgotPasswordServlet extends HttpServlet {
         UserDao dao = new UserDao();
 
         if (!dao.checkEmailExist(email)) {
-            request.setAttribute("ERROR_MESSAGE", "Email không tồn tại!");
+            request.setAttribute("Error", "Email không tồn tại!");
             request.getRequestDispatcher("/login_forgot_password.jsp").forward(request, response);
             return;
         }

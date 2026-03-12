@@ -15,34 +15,16 @@ import java.util.List;
 public class ProductAllServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        int page = 1;
-        int pageSize = 12;
-
-        String pageParam = request.getParameter("page");
-        if (pageParam != null) {
-            page = Integer.parseInt(pageParam);
-        }
-
         ProductDao dao = new ProductDao();
         CategoryDao cDao = new CategoryDao();
-
-        List<Product> list = dao.getProductsByPage(page, pageSize);
+        List<Product> list = dao.getAllProducts();
         List<Category> listCC = cDao.getAllCategory();
-
-        int totalProducts = dao.countAllProducts();
-        int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
-
         request.setAttribute("listCC", listCC);
         request.setAttribute("listType", dao.getAllProductTypes());
         request.setAttribute("listColor", dao.getAllColors());
         request.setAttribute("listP", list);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
-
         request.getRequestDispatcher("product_all_user.jsp").forward(request, response);
     }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

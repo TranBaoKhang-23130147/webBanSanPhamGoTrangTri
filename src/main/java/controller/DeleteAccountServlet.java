@@ -8,12 +8,8 @@ import model.User;
 
 import java.io.IOException;
 
-@WebServlet(name = "DeleteAccountServlet", value = "/DeleteAccountServlet")
+@WebServlet("/DeleteAccountServlet")
 public class DeleteAccountServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -27,12 +23,12 @@ public class DeleteAccountServlet extends HttpServlet {
 
         User user = (User) session.getAttribute("LOGGED_USER");
 
+        UserDao dao = new UserDao();
         try {
-            UserDao dao = new UserDao();
             boolean success = dao.deleteUser(user.getId());
 
             if (success) {
-                session.invalidate(); 
+                session.invalidate();
                 response.sendRedirect("login.jsp?msg=account_deleted");
             } else {
                 response.sendRedirect("admin_setting.jsp?error=delete_failed");
@@ -42,5 +38,6 @@ public class DeleteAccountServlet extends HttpServlet {
             e.printStackTrace();
             response.sendRedirect("admin_setting.jsp?error=server_error");
         }
+
     }
 }

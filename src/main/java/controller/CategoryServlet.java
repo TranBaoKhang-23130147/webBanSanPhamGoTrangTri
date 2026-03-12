@@ -8,17 +8,20 @@ import model.Category;
 
 import java.io.IOException;
 import java.util.List;
+
 @WebServlet(name = "CategoryServlet", urlPatterns = {"/category-manager", "/add-category", "/delete-category"})
 public class CategoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String action = request.getServletPath();
         CategoryDao dao = new CategoryDao();
 
         if (action.equals("/delete-category")) {
             int id = Integer.parseInt(request.getParameter("id"));
+
             if (dao.deleteCategory(id)) {
                 request.getSession().setAttribute("msg", "Đã xóa danh mục thành công!");
                 request.getSession().setAttribute("msgType", "success");
@@ -26,17 +29,15 @@ public class CategoryServlet extends HttpServlet {
                 request.getSession().setAttribute("msg", "Không thể xóa! Danh mục này đang chứa sản phẩm.");
                 request.getSession().setAttribute("msgType", "error");
             }
+
             response.sendRedirect(request.getContextPath() + "/AdminCountProductCategoryServlet");
             return;
         }
 
         String keyword = request.getParameter("keyword");
-
-        List<Category> listC = dao.getAllCategoriesWithTotalInventory(keyword);
-
-        request.setAttribute("listC", listC);
         if (keyword == null) keyword = "";
 
+        List<Category> listC = dao.getAllCategoriesWithTotalInventory(keyword);
 
         request.setAttribute("listC", listC);
         request.setAttribute("keyword", keyword);
@@ -48,7 +49,9 @@ public class CategoryServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         request.setCharacterEncoding("UTF-8");
+
         String name = request.getParameter("categoryName");
         CategoryDao dao = new CategoryDao();
 
@@ -59,5 +62,7 @@ public class CategoryServlet extends HttpServlet {
             request.getSession().setAttribute("msg", "Thêm danh mục thất bại!");
             request.getSession().setAttribute("msgType", "error");
         }
-        response.sendRedirect(request.getContextPath() + "/AdminCountProductCategoryServlet");    }
+
+        response.sendRedirect(request.getContextPath() + "/AdminCountProductCategoryServlet");
+    }
 }

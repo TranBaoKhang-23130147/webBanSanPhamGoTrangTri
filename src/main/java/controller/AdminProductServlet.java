@@ -1,14 +1,10 @@
 package controller;
 
 import dao.ProductDao;
-import jakarta.servlet.ServletException;
+import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import model.Category;
+import jakarta.servlet.http.*;
 import model.Product;
-import model.ProductType;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,7 +12,6 @@ import java.util.List;
 @WebServlet("/products")
 public class AdminProductServlet extends HttpServlet {
 
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -25,13 +20,16 @@ public class AdminProductServlet extends HttpServlet {
         String categoryId = request.getParameter("categoryId");
 
         ProductDao dao = new ProductDao();
+        List<Product> list;
 
-        List<Product> list = dao.searchProducts(keyword, typeId, categoryId);
         if ((keyword == null || keyword.isEmpty()) &&
                 (typeId == null || typeId.isEmpty()) &&
                 (categoryId == null || categoryId.isEmpty())) {
+
             list = dao.getAllProductsAdmin();
+
         } else {
+
             list = dao.searchProducts(keyword, typeId, categoryId);
         }
 
@@ -42,4 +40,3 @@ public class AdminProductServlet extends HttpServlet {
         request.getRequestDispatcher("admin_products.jsp").forward(request, response);
     }
 }
-

@@ -5,14 +5,9 @@ public class Description {
     private String introduce;
     private String highlights;
     private int informationId;
-
-
     private Information information;
 
     public Description() {}
-
-    public Description(String introduce, String highlights) {
-    }
 
     public int getId() {
         return id;

@@ -205,3 +205,69 @@
     border-radius: 12px;
     padding: 25px;
 }
+.breadcrumb{
+    margin-bottom:20px;
+    font-size:0.9rem;
+}
+
+.breadcrumb-link{
+    color:var(--primary-color);
+    text-decoration:none;
+}
+
+.breadcrumb-separator{
+    color:#ccc;
+    margin:0 10px;
+}
+
+.rating-wrapper{
+    margin-bottom:15px;
+    color:#f1c40f;
+}
+
+.rating-value{
+    color:#666;
+    font-size:0.9rem;
+}
+
+.review-count{
+    margin-left:10px;
+    color:#999;
+}
+
+.price-section{
+    margin-bottom:20px;
+}
+
+.current-price{
+    font-size:2rem;
+    font-weight:700;
+    color:#e67e22;
+}
+
+.inventory-title{
+    font-size:1rem;
+    margin-bottom:15px;
+    color:var(--text-color);
+}
+
+.size-group{
+    margin-top:15px;
+}
+
+.size-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:5px;
+}
+
+.current-variant-info{
+    margin:20px 0;
+    padding:10px;
+    background:#f9f9f9;
+    border-radius:5px;
+}
+
+#inventoryDisplay{
+    color:var(--primary-color);
+}

@@ -253,7 +253,7 @@
 
 .payment-detail .transaction-id {
     color: var(--secondary-color);
-
+}
 .page-content-wrapper {
     flex-grow: 1;
     padding: 30px;

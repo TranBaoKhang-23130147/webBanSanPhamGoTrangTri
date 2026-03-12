@@ -9,30 +9,37 @@ import java.io.IOException;
 
 @WebServlet(name = "DeleteCustomerServlet", value = "/DeleteCustomerServlet")
 public class DeleteCustomerServlet extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
+
         String idRaw = request.getParameter("id");
         String type = request.getParameter("type");
 
+        if (idRaw == null) {
+            response.sendRedirect("admin/customers");
+            return;
+        }
+
         try {
             int userId = Integer.parseInt(idRaw);
-            UserDao dao = new UserDao();
 
+            UserDao dao = new UserDao();
             boolean success = dao.deleteUser(userId);
 
             if (success) {
                 session.setAttribute("msg", "Đã xóa khách hàng thành công!");
                 session.setAttribute("msgType", "success");
             } else {
-                session.setAttribute("msg", "Không thể xóa khách hàng này!");
+                session.setAttribute("msg", "Không thể xóa khách hàng!");
                 session.setAttribute("msgType", "error");
             }
+
         } catch (Exception e) {
-            session.setAttribute("msg", "Lỗi: " + e.getMessage());
+            e.printStackTrace();
+            session.setAttribute("msg", "Có lỗi xảy ra!");
             session.setAttribute("msgType", "error");
         }
 
@@ -41,11 +48,5 @@ public class DeleteCustomerServlet extends HttpServlet {
         } else {
             response.sendRedirect(request.getContextPath() + "/admin/customers");
         }
-    }
-
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

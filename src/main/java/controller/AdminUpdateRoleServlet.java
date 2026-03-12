@@ -1,46 +1,31 @@
 package controller;
 
 import dao.UserDao;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
-@WebServlet(name = "AdminUpdateRoleServlet", value = "/AdminUpdateRoleServlet")
+@WebServlet("/AdminUpdateRoleServlet")
 public class AdminUpdateRoleServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json;charset=UTF-8");
 
         try {
-            String idStr = request.getParameter("id");
+            int adminId = Integer.parseInt(request.getParameter("id"));
             String newRole = request.getParameter("role");
 
-            if (idStr == null || newRole == null) {
-                response.getWriter().write("{\"status\":\"error\", \"message\":\"Thiếu dữ liệu\"}");
-                return;
-            }
-
-            int adminId = Integer.parseInt(idStr);
             UserDao dao = new UserDao();
-
             boolean success = dao.updateAdminRole(adminId, newRole);
 
-            if (success) {
-                response.getWriter().write("{\"status\":\"success\"}");
-            } else {
-                response.getWriter().write("{\"status\":\"error\", \"message\":\"Cập nhật thất bại\"}");
-            }
+            response.getWriter().print("{\"success\":" + success + "}");
 
         } catch (Exception e) {
-            response.getWriter().write("{\"status\":\"error\", \"message\":\"" + e.getMessage() + "\"}");
+            response.getWriter().print("{\"success\":false}");
         }
     }
 }
